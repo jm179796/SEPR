@@ -1,6 +1,6 @@
 # SEPR
 
-Team: 
+Team:
 Kieran Hall,
 Jack Mountain,
 Nico Pinedo,
