@@ -18,6 +18,7 @@ Contents
 
 .. toctree::
    :maxdepth: 2
+   :glob:
    Req1
    Risk1
    Plan1
