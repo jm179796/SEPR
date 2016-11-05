@@ -10,14 +10,8 @@ Contents:
 
 .. toctree::
    :maxdepth: 2
-* :ref:'Req1'
 
 
 
-Indices and tables
-==================
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
 
