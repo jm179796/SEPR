@@ -152,7 +152,7 @@ Research was carried out to determine how our requirements should be presented. 
 
     27. At the end of a game, the player with the highest score(4.a) is pronounced the winner **[3]**
 
-11. **The p****layer can get information about his owned plots of land and roboticons installed on them**
+11. **The player can get information about his owned plots of land and roboticons installed on them**
 
     28. By clicking on the tile the player can get information about resources that it is generating **[1.5.1]**
 

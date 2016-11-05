@@ -6,12 +6,22 @@
 Welcome to SEPR-DRTN's documentation!
 =====================================
 
-Contents:
+This is the documentation for our SEPR Project, begun by:
+Duck Related Team Name (In big massive letters)
+-----------------
+Get the code
+-------------
+
+The `source <https://github.com/jm179796/SEPR>`_ is available on Github. and the other website for the project is at 'SEPR <http://jm179796.github.io/SEPR/>'.
+
+Contents
+--------
 
 .. toctree::
    :maxdepth: 2
+   :glob:
 
-
-
-
-
+   Req1
+   Risk1
+   Plan1
+   Arch1
