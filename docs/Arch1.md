@@ -1,16 +1,16 @@
-# **Architecture**
+# Architecture
 
 ![image alt text](Arch0.png)
 
 In order to develop an initial structure of the proposed architecture we used a use case diagram to show, with the help of the requirements, an abstract idea of the typical actions that a player would carry out during his/her turn. This behavioural model is a very basic representation that uses mainly the key actions in each turn from the assessment brief as a basis, but it gave us an idea of some of the relationships between the objects in the game. For instance, placing a roboticon required interaction with both a tile and a roboticon, therefore we could deduce that the tile object would have to have an attribute tracking the roboticons that it contained.
 
-UML Class Diagram
+# UML Class Diagram
 
 As our software will be object orientated, we decided that the best way to represent the static architecture of the software abstractly would be through the use of a UML class diagram. This would allow us to create an overall impression of how the main classes linked together and any additional attributes/methods that would be required to link them. UML 2 was the specific language used with the standard notation. [1]
 
 To create the diagram, we used Lucidchart. One of the main reasons for doing so was because it was compatible with Google Drive which is the platform where all our documentation was initially stored. Because the software is both free and accessible online, it meant that no team member would have to download any software to their own computers or pay any kind of license fee. This meant the whole team could collaborate on the diagram without any hassle. It also worked like Google Drive in the sense that because it was stored using cloud storage, multiple users can edit the file at the same time. This became especially useful when we wanted to collaborate on the diagram during a team meeting. It also has a full range of shapes from the UML family that meant we could use standard UML notation and therefore avoid ambiguity on what shapes meant.      
 
-Justification of Model
+# Justification of Model
 
 One of the main objects we realised a player would interact with is the tiles of the map. As the tiles take on a rectangular appearance in a 4x4 grid as defined by our requirements, we decided that storing the tiles in a 2D array would be the most simplistic yet effective method. This is because it meant that the position of each tile could be determined by its position in the array instead of having attributes to store the x and y coordinates individually.These tiles would have their attributes, appearance and position defined before run time as the map isn’t randomly generated but assembled manually. The tiles will keep track of the player that owns it (if owned) as well as the roboticons that are stored on it. Due to tiles having the ability to store multiple roboticons, it would store them using an array of the roboticon’s ID’s. Tiles can only be acquired by a player if it’s adjacent to one that they currently own so a method is needed to acknowledge this, given another tile as the input. 
 
@@ -26,5 +26,5 @@ As phases 2 and 3 have distinct time limits, an object for each of them is neede
 
 All of these objects will be created with the use of some kind of core game engine that we will write ourselves, it will also call the methods for each object based on the core game elements and the interaction from the user. We felt that given that this class interacts with every other object and also contains them all there wasn’t really any need to include it in the UML diagram. 
 
-[1] "The class diagram", *Ibm.com*, 2016. [Online]. Available: http://www.ibm.com/developerworks/rational/library/content/RationalEdge/sep04/bell/. [Accessed: 04- Nov- 2016].
+[1] "The class diagram", Ibm.com, 2016. [Online]. Available: http://www.ibm.com/developerworks/rational/library/content/RationalEdge/sep04/bell/. [Accessed: 04- Nov- 2016].
 

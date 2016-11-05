@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Plan &#8212; SEPR-DRTN 1 documentation</title>
+    <title>Model and Method Selection &#8212; SEPR-DRTN 1 documentation</title>
     
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -51,19 +51,18 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="plan">
-<span id="plan"></span><h1><strong>Plan</strong><a class="headerlink" href="#plan" title="Permalink to this headline">¶</a></h1>
-<p><strong>Model and Method Selection</strong></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>In keeping with a formal developmental process, the work to be undertaken from this point on will need to be fit around an engineering **model **and carried forward by a supplementary **methodology**. These two terms are often used interchangeably, but they actually define entirely different things: whereas a model can set &quot;the order of the stages involved in software development&quot; [citation] and the overall criteria for moving between those stages [citation], a method will instead detail exactly how a team can navigate through those stages and meet the aforementioned criteria [citation]. This carries the obvious connotation that developmental methods can only be fit around engineering models, so it was understandably necessary to take a decision on an appropriate model before implementing and adapting a suitable methodology around the rest of the project.
+  <div class="section" id="model-and-method-selection">
+<span id="model-and-method-selection"></span><h1>Model and Method Selection<a class="headerlink" href="#model-and-method-selection" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-default"><div class="highlight"><pre><span></span>In keeping with a formal developmental process, the work to be undertaken from this point on will need to be fit around an engineering model and carried forward by a supplementary methodology. These two terms are often used interchangeably, but they actually define entirely different things: whereas a model can set &quot;the order of the stages involved in software development&quot; [citation] and the overall criteria for moving between those stages [citation], a method will instead detail exactly how a team can navigate through those stages and meet the aforementioned criteria [citation]. This carries the obvious connotation that developmental methods can only be fit around engineering models, so it was understandably necessary to take a decision on an appropriate model before implementing and adapting a suitable methodology around the rest of the project.
 
 Research was made into a variety of models - including the waterfall, spiral, V-model and evolutionary models, amongst others - and considerations were made on which of them would fit most optimally around the project’s scope and the upcoming commitments of the development team’s members. Unsurprisingly, each model had their own appreciable benefits: the waterfall model wouldn’t have required a great deal of planning to implement because of how linear it is, whereas the evolutionary and spiral models cater quite well to changes in customers’ requirements on account of their iterative components. However, in spite of their advantages, it was ultimately agreed that all of these traditional models were simply too rigid for a team of our size, experience and physical proximity to take up without compromising heavily on working efficiency.
 </pre></div>
 </div>
-<p>The project’s requirements **are **going to be altered as it goes on - there’s no doubt about that, given that many game-design decisions are typically made after stakeholders test prototypes - and being unable to respond to directional changes because of some rigorous engineering model’s arbitrary guidelines would severely impact upon the likelihood for a working, well-design game to be delivered within the project’s strict time-constraints. Furthermore; while documentation will be needed to create reference points from which further work and decisions can be derived, most traditional models call for particularly excessive amounts of documentation to be written up (especially about concepts and designs that end up having absolutely no developmental bearing whatsoever) and it simply wouldn’t be productive to write more than what is truly necessary to suitably inform all pending design decisions.</p>
+<p>The project’s requirements are going to be altered as it goes on - there’s no doubt about that, given that many game-design decisions are typically made after stakeholders test prototypes - and being unable to respond to directional changes because of some rigorous engineering model’s arbitrary guidelines would severely impact upon the likelihood for a working, well-design game to be delivered within the project’s strict time-constraints. Furthermore; while documentation will be needed to create reference points from which further work and decisions can be derived, most traditional models call for particularly excessive amounts of documentation to be written up (especially about concepts and designs that end up having absolutely no developmental bearing whatsoever) and it simply wouldn’t be productive to write more than what is truly necessary to suitably inform all pending design decisions.</p>
 <p>[FIGURE HERE]</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>Then, there’s the fact that the project concerns the development of a game: a type of product that, unlike a strictly functional application, can only be assessed subjectively and will differ in perceived &quot;quality&quot; from person-to-person. The game that comes out of this project will - in effect - only be as good as what the project’s primary stakeholder deems it to be, so a significant part of the work that the project carries will basically be dictated by that stakeholder. Traditional models, however, limit stakeholders’ influences during design and implementation phases: hence, if one was to be adopted for this project, the potential for our primary stakeholder’s requests to be ignored and for precious time to be wasted on implementing unrequested features instead would be drastically raised.
 
-Rather than fitting the rest of the project around a traditional model, then, it would be far more suitable to direct it ourselves by a set of principles with the aim of making it feel as efficient and as flexible as possible to get through. Hence, the next stage of the project will be fit around the **agile **philosophy, which is described in the figure that follows. This is a direct response to the traditional issues of software development that were raised in the last two paragraphs - as is exhibited by the &quot;agile manifesto&quot; - and along with enabling all of us to direct and work on the project in any manner that we or our primary stakeholder see fit, it should leave the door open for another team to pick the project up and run with it in whatever manner they may choose too.
+Rather than fitting the rest of the project around a traditional model, then, it would be far more suitable to direct it ourselves by a set of principles with the aim of making it feel as efficient and as flexible as possible to get through. Hence, the next stage of the project will be fit around the agile philosophy, which is described in the figure that follows. This is a direct response to the traditional issues of software development that were raised in the last two paragraphs - as is exhibited by the &quot;agile manifesto&quot; - and along with enabling all of us to direct and work on the project in any manner that we or our primary stakeholder see fit, it should leave the door open for another team to pick the project up and run with it in whatever manner they may choose too.
 </pre></div>
 </div>
 <table>
@@ -158,7 +157,7 @@ We don’t want to dictate the development practices that our successors will ha
   <tr>
     <td>Testing</td>
     <td>Travis CI</td>
-    <td>Augments our chosen VCS with external servers on which new commits can be tested prior to being pulled (through an online terminal), preventing the need for the files changed in such commits to be downloaded, compiled and tested manually instead</td>
+    <td>Augments our chosen VCS with external servers on which new commits can be tested prior to being pulled (through an online terminal), preventing the need for the files changed in such commits to be downloaded, compiled and tested manually instead. Allows the implementation of Continuous Integration</td>
   </tr>
 </table><p>Test-driven development</p>
 <p>Continuous integration</p>
@@ -176,7 +175,7 @@ We don’t want to dictate the development practices that our successors will ha
                         title="previous chapter">Risk Assessment &amp; Mitigation</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="Arch1.html"
-                        title="next chapter"><strong>Architecture</strong></a></p>
+                        title="next chapter">Architecture</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
