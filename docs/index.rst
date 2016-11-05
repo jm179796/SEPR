@@ -19,5 +19,7 @@ Contents
 .. toctree::
    :glob:
 
+   Req1
+   Risk1
    Plan1
    Arch1
