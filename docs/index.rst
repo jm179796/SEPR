@@ -11,7 +11,7 @@ Duck Related Team Name (In big massive letters)
 
 
 
-The `source <https://github.com/jm179796/SEPR>`_ is available on Github. and the other website for the project is available `here <http://jm179796.github.io/SEPR/>`.
+The `source <https://github.com/jm179796/SEPR>`_ is available on Github. Alongside the code full documentation in pdf form (Correct to Assessment 1) can be found there.
 
 Contents
 --------
@@ -19,6 +19,7 @@ Contents
 .. toctree::
    :maxdepth: 2
    :glob:
+   
    Req1
    Risk1
    Plan1
