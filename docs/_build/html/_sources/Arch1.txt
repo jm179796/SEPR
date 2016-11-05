@@ -1,6 +1,6 @@
 # **Architecture**
 
-![image alt text](image_0.png)
+![image alt text](Arch0.png)
 
 In order to develop an initial structure of the proposed architecture we used a use case diagram to show, with the help of the requirements, an abstract idea of the typical actions that a player would carry out during his/her turn. This behavioural model is a very basic representation that uses mainly the key actions in each turn from the assessment brief as a basis, but it gave us an idea of some of the relationships between the objects in the game. For instance, placing a roboticon required interaction with both a tile and a roboticon, therefore we could deduce that the tile object would have to have an attribute tracking the roboticons that it contained.
 
