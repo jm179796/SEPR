@@ -1,4 +1,5 @@
-# Model and Method Selection
+# Plan
+## Model and Method Selection
 
 	In keeping with a formal developmental process, the work to be undertaken from this point on will need to be fit around an engineering model and carried forward by a supplementary methodology. These two terms are often used interchangeably, but they actually define entirely different things: whereas a model can set "the order of the stages involved in software development" [citation] and the overall criteria for moving between those stages [citation], a method will instead detail exactly how a team can navigate through those stages and meet the aforementioned criteria [citation]. This carries the obvious connotation that developmental methods can only be fit around engineering models, so it was understandably necessary to take a decision on an appropriate model before implementing and adapting a suitable methodology around the rest of the project.
 
