@@ -48,7 +48,7 @@
           <div class="body" role="main">
             
   <p><strong>Architecture</strong></p>
-<p><img alt="image alt text" src="_images/image_0.png" /></p>
+<p>![image alt text](image_0.png)</p>
 <p>In order to develop an initial structure of the proposed architecture we used a use case diagram to show, with the help of the requirements, an abstract idea of the typical actions that a player would carry out during his/her turn. This behavioural model is a very basic representation that uses mainly the key actions in each turn from the assessment brief as a basis, but it gave us an idea of some of the relationships between the objects in the game. For instance, placing a roboticon required interaction with both a tile and a roboticon, therefore we could deduce that the tile object would have to have an attribute tracking the roboticons that it contained.</p>
 <p>UML Class Diagram</p>
 <p>As our software will be object orientated, we decided that the best way to represent the static architecture of the software abstractly would be through the use of a UML class diagram. This would allow us to create an overall impression of how the main classes linked together and any additional attributes/methods that would be required to link them. UML 2 was the specific language used with the standard notation. [1]</p>
@@ -61,7 +61,7 @@
 <p>The random effects that happen during the game will inherit from the effect class as they differ in the sense that they have a chance of happening variable and can also only happen once during the game. Each player will have a college that they play as during the game with its own specific starting tile and unique effect. The name of the college can be changed by the player however this will be stored as a different attribute so the key field of the college isn’t changed.</p>
 <p>As phases 2 and 3 have distinct time limits, an object for each of them is needed. This object will also contain the timer that will decrease using the ‘ReduceTime()’ method that will be called every second to decrease the time by 1. This is due to the time being stored in seconds also. ‘ResetTime()’ will be called when the player changes so the timer can be returned to it’s original length that is stored by the ‘StartTime’ attribute.</p>
 <p>All of these objects will be created with the use of some kind of core game engine that we will write ourselves, it will also call the methods for each object based on the core game elements and the interaction from the user. We felt that given that this class interacts with every other object and also contains them all there wasn’t really any need to include it in the UML diagram.</p>
-<p>[1] &#8220;The class diagram&#8221;, <em>Ibm.com</em>, 2016. [Online]. Available: http://www.ibm.com/developerworks/rational/library/content/RationalEdge/sep04/bell/. [Accessed: 04- Nov- 2016].</p>
+<p>[1] &#8220;The class diagram&#8221;, <em>Ibm.com</em>, 2016. [Online]. Available: <a class="reference external" href="http://www.ibm.com/developerworks/rational/library/content/RationalEdge/sep04/bell/">http://www.ibm.com/developerworks/rational/library/content/RationalEdge/sep04/bell/</a>. [Accessed: 04- Nov- 2016].</p>
 
 
           </div>
