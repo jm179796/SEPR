@@ -106,11 +106,7 @@ d) Roboticon Upgrade path design, showing multiple levels of resources acquisiti
 
 SEPR 2016-17 Scenario 1: Roboticon Colony of York
 
-						
-
 In the far distant future, the University of York campus has become the location of a colony, where freeholders compete to raise money, crops, and other resources in order to both survive and become the Vice-Chancellor of the Colony. You are to build a colonisation game for two players focusing on supply-and-demand economics, set on a futuristic University of York campus. The game will be round-based; each player takes a turn once in each round (the computer will also act as a player). In each turn, resources will be acquired and spent, random events (which may be good or bad) will take place, and an auction of resources will be held. Resources that are held at the end of the game (which will have a finite number of rounds) count towards the final score. The player with the highest score at the end of the game is spectacularly pronounced as the winner. Your game will ultimately have the following capabilities.
-
-				
 
 **●  A graphical user interface, which presents a map of the University, subdivided into ****_plots _****of land. Each plot should be of the same size, but may have different features (e.g., located next to a source of water, on a hill). Plots may partly or totally include buildings. At relevant times (see below) a player should be able to highlight a plot that they own and customise it in various ways.	**
 
