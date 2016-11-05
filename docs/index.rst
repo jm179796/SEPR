@@ -8,11 +8,10 @@ Welcome to SEPR-DRTN's documentation!
 
 This is the documentation for our SEPR Project, begun by:
 Duck Related Team Name (In big massive letters)
------------------
-Get the code
--------------
 
-The `source <https://github.com/jm179796/SEPR>`_ is available on Github. and the other website for the project is at 'SEPR <http://jm179796.github.io/SEPR/>'.
+
+
+The `source <https://github.com/jm179796/SEPR>`_ is available on Github. and the other website for the project is available `here <http://jm179796.github.io/SEPR/>`.
 
 Contents
 --------
