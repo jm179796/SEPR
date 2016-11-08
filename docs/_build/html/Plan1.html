@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>&lt;no title&gt; &#8212; SEPR-DRTN 1 documentation</title>
+    <title>Plan and method selection &#8212; SEPR-DRTN 1 documentation</title>
     
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -26,7 +26,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="top" title="SEPR-DRTN 1 documentation" href="index.html" />
-    <link rel="prev" title="Risk format justification" href="Risk1.html" /> 
+    <link rel="prev" title="Risk Assessment &amp; Mitigation" href="Risk1.html" /> 
   </head>
   <body role="document">
     <div class="related" role="navigation" aria-label="related navigation">
@@ -36,7 +36,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="Risk1.html" title="Risk format justification"
+          <a href="Risk1.html" title="Risk Assessment &amp; Mitigation"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">SEPR-DRTN 1 documentation</a> &#187;</li> 
       </ul>
@@ -47,8 +47,10 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <p>#Plan and method selection</p>
-<p>##Model and Method Selection</p>
+  <div class="section" id="plan-and-method-selection">
+<span id="plan-and-method-selection"></span><h1>Plan and method selection<a class="headerlink" href="#plan-and-method-selection" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="model-and-method-selection">
+<span id="model-and-method-selection"></span><h2>Model and Method Selection<a class="headerlink" href="#model-and-method-selection" title="Permalink to this headline">¶</a></h2>
 <p>In keeping with a formal developmental process, the work to be undertaken from this point on will need to be fit around an engineering model and carried forward by a supplementary methodology. These two terms are often used interchangeably, but they actually define entirely different things: whereas a model can set &#8220;the order of the stages involved in software development&#8221; [9] and the overall criteria for moving between those stages [9], a method will instead detail exactly how a team can navigate through those stages and meet the aforementioned criteria [9]. This carries the obvious connotation that developmental methods can only be fit around engineering models, so it was understandably necessary to take a decision on an appropriate model before implementing and adapting a suitable methodology around the rest of the project.</p>
 <p>Research was made into a variety of models - including the waterfall [9] [10], spiral [9], V-model [10] [11] and evolutionary models [9] [12], amongst others - and considerations were made on which of them would fit most optimally around the project’s scope and the upcoming commitments of the development team’s members. Unsurprisingly, each model had their own appreciable benefits: the waterfall model wouldn’t have required a great deal of planning to implement because of how linear it is [9] [10], whereas the evolutionary and spiral models cater quite well to changes in customers’ requirements on account of their iterative components. [9] [12] However, in spite of their advantages, it was ultimately agreed that all of these traditional models were simply too rigid for a team of our size, experience and physical proximity to take up without compromising heavily on working efficiency.</p>
 <p>The project’s requirements are going to be altered as it progresses, given that many game-design decisions are typically made after stakeholders test prototypes - and being unable to respond to directional changes because of some rigorous engineering model’s arbitrary guidelines would severely impact upon the likelihood for a working, well-design game to be delivered within the project’s strict time-constraints. Furthermore; while documentation will be needed to create reference points from which further work and decisions can be derived, most traditional models call for particularly excessive amounts of documentation to be written up [9] [10] [11] [12] (especially about concepts and designs that end up having absolutely no developmental bearing whatsoever) and it simply wouldn’t be productive to write more than what is truly necessary to suitably inform all pending design decisions.</p>
@@ -166,8 +168,10 @@ The scrum methodology was designed to help small, tightly-knit teams of develope
   </tr>
 </table><p>*The outcome of each task will be tested individually through *Travis CI *as such outcomes will be required to be
 committed to our VCS once they take form</p>
+</div>
 <hr class="docutils" />
-<p>##Method Implementation</p>
+<div class="section" id="method-implementation">
+<span id="method-implementation"></span><h2>Method Implementation<a class="headerlink" href="#method-implementation" title="Permalink to this headline">¶</a></h2>
 <table>
   <tr>
     <td>DRAFT FORMAT OF CHOSEN DEVELOPMENT METHOD | Agile - Scrum<p>Sprint Length: 6 Days           Sprint Starting Day: Wednesday      Sprint Meeting Days:
@@ -190,7 +194,9 @@ Prevent team members from falling behind in sprints (either due to underperforma
 ...or from completing additional work that’s unnecessary in the current sprint
 Assist team members with issues - whether they’re small or large - either by request or personal intuition</td></p>
   </tr>
-</table><p>##Justifications for Implementation Decisions</p>
+</table></div>
+<div class="section" id="justifications-for-implementation-decisions">
+<span id="justifications-for-implementation-decisions"></span><h2>Justifications for Implementation Decisions<a class="headerlink" href="#justifications-for-implementation-decisions" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li>Sprints ensue from week-to-week so that they align with the team’s shared university time-table</li>
 <li>Sprints begin on Wednesdays because the team generally has few other commitments to meet on that day, enabling each sprint to begin with a burst of work<ul>
@@ -205,9 +211,11 @@ Assist team members with issues - whether they’re small or large - either by r
 </ul>
 </li>
 </ul>
+</div>
 <hr class="docutils" />
-<p>##Project Plan</p>
-<p><strong>The complete timetabled plan for this project is too large to be shown here, so it has been left in the appendix.</strong></p>
+<div class="section" id="project-plan">
+<span id="project-plan"></span><h2>Project Plan<a class="headerlink" href="#project-plan" title="Permalink to this headline">¶</a></h2>
+<p><strong>The complete timetabled plan for this project is too large to be shown here, the file &#8220;SEPR Schedule.png&#8221; can be referred to to see this document (Located on the github).</strong></p>
 <p><strong>What follows on this page is a textual transcription of the plan, complete with priority numbers.</strong></p>
 <table>
   <tr>
@@ -277,16 +285,29 @@ Complete Final/Acceptance Tests on Inherited Solution (19/04/17 → 25/04/17)
 Write up final commentary on SEPR assessment (26/04/17 → 03/05/17)
 Create final presentation for inherited game (26/04/17 → 03/05/17)</td>
   </tr>
-</table>
+</table></div>
+</div>
+
 
           </div>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Plan and method selection</a><ul>
+<li><a class="reference internal" href="#model-and-method-selection">Model and Method Selection</a></li>
+<li><a class="reference internal" href="#method-implementation">Method Implementation</a></li>
+<li><a class="reference internal" href="#justifications-for-implementation-decisions">Justifications for Implementation Decisions</a></li>
+<li><a class="reference internal" href="#project-plan">Project Plan</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="Risk1.html"
-                        title="previous chapter">Risk format justification</a></p>
+                        title="previous chapter">Risk Assessment &amp; Mitigation</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -315,7 +336,7 @@ Create final presentation for inherited game (26/04/17 → 03/05/17)</td>
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="Risk1.html" title="Risk format justification"
+          <a href="Risk1.html" title="Risk Assessment &amp; Mitigation"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">SEPR-DRTN 1 documentation</a> &#187;</li> 
       </ul>

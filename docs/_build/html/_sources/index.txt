@@ -19,8 +19,8 @@ Contents
 .. toctree::
    :glob:
 
-   Req1
-   Req1-risks
-   Arch1
-   Risk1
-   Plan1
+   Requirements 1 <Req1>
+   Requirement Risks 1 <Req1-risks>
+   Architecture 1 <Arch1>
+   Risk Assessment 1 <Risk1>
+   Plan and Method Selection 1 <Plan1>

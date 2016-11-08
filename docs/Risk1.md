@@ -1,9 +1,11 @@
-#Risk Assessment & Mitigation
-##Risk Rating
+# Risk Assessment & Mitigation
+
+
+## Risk Rating
 
 To determine the overall damage to the project that a risk may have, we applied the likelihood and impact of the risks via a risk matrix to abstract a ‘risk rating’, ranking them from Low, Medium, High and Critical:
 
-![image alt text](Risk1Matrix.png)
+![image alt text](Risk0.png)
 
 **Impact Definitions**
 
