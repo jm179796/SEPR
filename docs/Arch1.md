@@ -1,5 +1,5 @@
 # Architecture
-
+Something not look right? We reccommend you use the most up to date and friendlier version of the documentation found [here](https://github.com/jm179796/SEPR/blob/Assessment1_Docs/Arch1.pdf "Architecture 1")
 ![image alt text](image_0.png)
 
 In order to develop an initial structure of the proposed architecture we used a use case diagram to show, with the help of the requirements, an abstract idea of the typical actions that a player would carry out during his/her turn. This behavioural model is a very basic representation that uses the key actions in each turn from the assessment brief as a basis, it gave us an idea of some of the objects that would be needed in the game and relationships between them. For instance, placing a roboticon required interaction with both a tile and a roboticon, therefore we could deduce that the tile object would have to have an attribute tracking the roboticons that it contained.
