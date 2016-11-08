@@ -1,5 +1,5 @@
 #Requirement Risks
-## **User Requirements**
+##User Requirement Risks
 
 1. **The game will not be convoluted and complex to play**
 
@@ -185,7 +185,7 @@ Risk: It takes too long to review background story.
 
 *Alternative/mitigation: Make it skippable, or have a second much shorter version like a title screen.  Make the context of the game clear through the game itself to add to the tone and the feel of the game rather than just a background story.*
 
-## **System Requirements**
+##System Requirement Risks
 
 13. **The main menu should offer the following options..**
 

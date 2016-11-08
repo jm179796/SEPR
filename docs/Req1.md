@@ -1,6 +1,6 @@
 #Requirements
 
-## **Requirements Elicitation Procedure**
+##Requirements Elicitation Procedure
 
 To determine the requirements for our system we conducted two interviews with our major stakeholders, they went as follows:
 
@@ -14,7 +14,7 @@ This interview involved our demo-ing of a hotseat UI and a side by side UI to de
 
 Alongside our stakeholder interviews we conducted research into resource management games **[7]** to feed into our ideas for UI and the game experience and mechanics overall. Focussing on determining a list of positive and negative points for each game we refined what features are enjoyed by the community and what features and factors make games less enjoyable to play. We also conducted a questionnaire **[4]** to communicate with our audience and get a feel for their experience of videogames and resource management games. Finally we did brief research into the law of supply and the law of demand **[5,6] **to allow the market to represent a real world market in a basic way.
 
-## **Presentation of Requirements**
+##Presentation of Requirements
 
 The main requirements have been listed in bold and numbered. Each main requirement has sub-requirements which provide finer details and justifications for that requirement. Any Numbers in **[ ]** at the end of a justification for a requirement refer to the bibliography. 
 
@@ -22,7 +22,7 @@ Research was carried out to determine how our requirements should be presented. 
 
 Each requirements’ associated risks were also discussed and considered thoroughly: these risks, along with alternative requirements that can be implemented should they present issues, are described on the project’s website and can be accessed through the site’s contents’ page.
 
-## **User Requirements**
+##User Requirements
 
 1. **The game will not be convoluted and complex to play**
 
@@ -162,7 +162,7 @@ Each requirements’ associated risks were also discussed and considered thoroug
 
     29. Customer and audience enjoy playing games with a narrative **[1.3.1]**** [4.4.1]**
 
-## **System Requirements**
+##System Requirements
 
 13. **The main menu should offer the following options..**
 

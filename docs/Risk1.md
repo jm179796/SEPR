@@ -1,5 +1,4 @@
 #Risk Assessment & Mitigation
-
 ##Risk Rating
 
 To determine the overall damage to the project that a risk may have, we applied the likelihood and impact of the risks via a risk matrix to abstract a ‘risk rating’, ranking them from Low, Medium, High and Critical:
@@ -34,7 +33,7 @@ To determine the overall damage to the project that a risk may have, we applied 
 
 The risks have been formatted into a table consisting of 3 columns; Risk name and description, Mitigation, and Overall Risk. The rows are sorted into descending order of overall risk rating so risks that would have the biggest impact are clearly visible and distinguishable. Risks are ranked by evaluating negative impact to project and likelihood of possibility.  The table suggests mitigation strategies, that would help effectively solve potential problems. 
 
-# Risks
+## Risks
 
 | Risk                                                                                                                       | Mitigation                                                                                                                                                                                                                                                                          | Overall Risk                     |
 |----------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------|
