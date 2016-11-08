@@ -1,4 +1,5 @@
 # Requirements
+Something not look right? We reccommend you use the most up to date and friendlier version of the documentation found [here](https://github.com/jm179796/SEPR/blob/Assessment1_Docs/Req1.pdf "Requirements 1")
 
 ## Requirements Elicitation Procedure
 

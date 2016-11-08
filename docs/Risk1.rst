@@ -1,5 +1,6 @@
 Risk Assessment & Mitigation
 ============================
+Something not look right? We reccommend you use the most up to date and friendlier version of the documentation found [here](https://github.com/jm179796/SEPR/blob/Assessment1_Docs/Risk1.pdf "Risk1")
 
 Risk Rating
 -----------
@@ -11,8 +12,6 @@ Critical:
 
 .. figure:: risk0.png
    :alt: image alt text
-
-   image alt text
 
 **Impact Definitions**
 

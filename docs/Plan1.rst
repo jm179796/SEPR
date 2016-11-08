@@ -1,5 +1,7 @@
 Plan and method selection
 =========================
+Something not look right? We reccommend you use the most up to date and friendlier version of the documentation found [here](https://github.com/jm179796/SEPR/blob/Assessment1_Docs/Plan1.pdf "Plan 1")
+
 
 Model and Method Selection
 --------------------------
