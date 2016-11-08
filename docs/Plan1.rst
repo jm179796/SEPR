@@ -76,8 +76,6 @@ to.
 .. figure:: plan0.png
    :alt: image alt text
 
-   image alt text
-
 Once an agile model was chosen for the project’s procedure, a
 methodology needed to be fit around it. Once again, numerous
 methodologies - including the extreme programming [15] [16], dynamic
@@ -95,8 +93,6 @@ schedule and individual commitments.
 
 .. figure:: plan1.png
    :alt: image alt text
-
-   image alt text
 
 +------------+-----+-----------------------------------------------------------+
 | LIST OF    |     |                                                           |
@@ -167,8 +163,6 @@ Method Implementation
 .. figure:: plan2.png
    :alt: image alt text
 
-   image alt text
-
 Justifications for Implementation Decisions
 -------------------------------------------
 
@@ -216,5 +210,3 @@ complete with priority numbers.**
 
 .. figure:: plan3.png
    :alt: image alt text
-
-   image alt text
