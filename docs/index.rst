@@ -20,6 +20,7 @@ Contents
    :glob:
 
    Req1
+   Req1-risks
+   Arch1
    Risk1
    Plan1
-   Arch1

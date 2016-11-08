@@ -1,27 +1,4 @@
-#Requirements
-
-## **Requirements Elicitation Procedure**
-
-To determine the requirements for our system we conducted two interviews with our major stakeholders, they went as follows:
-
-Stakeholder Interview 1**:**
-
-This interview was an initial discussion with our stakeholders to clarify points from the brief and to present our ideas from the initial brainstorm. The transcript can be found at **[1]**. Following this interview we elicited some key requirements and constructed two paper prototypes to quiz our stakeholders on features we were unsure of.
-
-Stakeholder Interview 2:
-
-This interview involved our demo-ing of a hotseat UI and a side by side UI to determine which method of multiplayer was prefered. The prototypes allowed us to adapt the UI on the fly and come up with a design solution that suited the stakeholders and audience
-
-Alongside our stakeholder interviews we conducted research into resource management games **[7]** to feed into our ideas for UI and the game experience and mechanics overall. Focussing on determining a list of positive and negative points for each game we refined what features are enjoyed by the community and what features and factors make games less enjoyable to play. We also conducted a questionnaire **[4]** to communicate with our audience and get a feel for their experience of videogames and resource management games. Finally we did brief research into the law of supply and the law of demand **[5,6] **to allow the market to represent a real world market in a basic way.
-
-## **Presentation of Requirements**
-
-The main requirements have been listed in bold and numbered. Each main requirement has sub-requirements which provide finer details and justifications for that requirement. Any Numbers in **[ ]** at the end of a justification for a requirement refer to the bibliography. 
-
-Research was carried out to determine how our requirements should be presented. The format is loosely based on the IEEE standard **[8]**. Originally we adopted a tabular format for the requirements, this was later replaced due to the amount of space that the structure of the format needed. The list format is more appropriate with our space constraints but still allows for a convenient numbering system.
-
-Each requirements’ associated risks were also discussed and considered thoroughly: these risks, along with alternative requirements that can be implemented should they present issues, are described on the project’s website and can be accessed through the site’s contents’ page.
-
+#Requirement Risks
 ## **User Requirements**
 
 1. **The game will not be convoluted and complex to play**
@@ -36,11 +13,21 @@ Each requirements’ associated risks were also discussed and considered thoroug
 
         4. *The computer opponent should be easy to win against ***[1.1.1.4]**
 
+*Risk: game could become too easy to win against computer opponent *[R1]
+
+*Risk: game could be too hard to win against *
+
+*Alternative/mitigation:  If the game is too hard the computer player should be changed to be too easy, the game being too easy fits closer to the brief of the game being used on open days. This purpose is more suited to an easy demo than a hard one*
+
     2. The timeframe for the game should be 10-20 minutes
 
         5. *Players will only be allowed to play the game in short sessions, so they must be able to complete it ***[1.4.1.2]**
 
         6. *Customer** does not enjoy long games** ***[1.7]**
+
+*Risk: the game duration doesn’t fit in this timeframe due to players taking too long/ being too quick when making decisions*
+
+*Alternative/mitigation: The game being shorter than 10 minutes is acceptable provided it demonstrates every aspect of the game described below within that time. The game being above 30 minutes is indicative of poor game development for our project. Testing should be done as to why the games are lasting this long and the requirements re-developed to accommodate this unforeseen issue.*
 
     3. The UI should be clear and beginner friendly
 
@@ -51,6 +38,10 @@ Each requirements’ associated risks were also discussed and considered thoroug
         9. *Only the current player’s resource information should be visible ***[2.8]**
 
         10. *The statistics of tiles should be hidden until they can be acquired, so the user can apply intuition to their strategy ***[2.9]**
+
+*Risk: the UI is too complex for the user to understand*
+
+*Alternative/mitigation:  Go back to designs, hold more prototype meetings with the customer and target the areas of the UI which are complicated to work out a more accessible solution*
 
 2. **The game should have a graphical user interface which presents a map of the University. **
 
@@ -70,6 +61,10 @@ Each requirements’ associated risks were also discussed and considered thoroug
 
     6. Plots must be all unallocated at the beginning of a game **[3]**
 
+Risk: Graphical user interface is not detailed enough. It is hard to distinguish different objects. Icons are too small.
+
+*Alternative/mitigation: Refactor the resolution of the window to accommodate the GUI fully, ensure all graphics are distinguishable, create new graphics in house if required.*
+
 3. **The game should support two opposing players (one of which may be computer-controlled) [1.4.1]**
 
     1. The user must be able to clearly distinguish between each player and their plots **[1.5.1]**
@@ -78,9 +73,17 @@ Each requirements’ associated risks were also discussed and considered thoroug
 
     7. Players should take alternating turns to play in a hot-seat style of gameplay **[1.4.1]**
 
+*Risk: Players may look at the screen during their opponent’s turn and gain an advantage over them*
+
+*Alternative/mitigation: Include in the tutorial a message informing players of good sportsmanship and the point of the game, remind them that ‘screen peeking’  is cheating and less fun.*
+
 4. **The game should take the general form of a resource-management simulator**
 
     8. The game will have a scoring system with final score based off of resource amounts at the end of the game** [3]**
+
+Risk: Resource-management logics implemented unrealistically. Some resources are too easy to gain and some are to difficult.
+
+*Alternative/mitigation: Either adjust the robots or the tile properties themselves to keep levels more realistic and less run-away.*
 
 5. **The player should have individual reserves of money and three different resources**
 
@@ -96,6 +99,10 @@ Each requirements’ associated risks were also discussed and considered thoroug
 
     13. These effects should vary from low impact effects to larger more meaningful displacements in gameplay. Events should never be ‘unfair’ and only used judiciously. **[1.6.1, 1.6.1.1]**
 
+Risk: Random effects may determine the outcome of the game**.**
+
+*Alternative/mitigation: Ensure any random effects don’t determine phases they shouldn’t, and that the effects for essentially a normal distribution not biased against one player or the other too heavily. As the customer said, employ randomness judiciously. *
+
 7. **The game should have a market which will be used to buy and sell resources and equipment**
 
     14. The market will portray "Supply and demand economics" as described in **[5,6]. [3]**
@@ -108,7 +115,7 @@ Each requirements’ associated risks were also discussed and considered thoroug
 
     17. The market will have a bar where money can be won or lost via gambling**[3]**
 
-8. **The player should be able to purchase a robot ("Roboticon") to produce resources[3]**
+8. **The player can purchase a robot ("Roboticon") to produce resources[3]**
 
     18. Resources cannot be produced without Roboticons.**[3]**
 
@@ -116,7 +123,7 @@ Each requirements’ associated risks were also discussed and considered thoroug
 
     20. Roboticons are assigned to a tile.**[3]**
 
-9. **The game should support rounds where each player has one turn. The round will have 5 phases**: **[3]**
+9. **The game should support rounds with 5 phases**: **[3]**
 
     21. Acquisition: each player may acquire a previously unoccupied plot of land.
 
@@ -146,21 +153,37 @@ Each requirements’ associated risks were also discussed and considered thoroug
 
         25. *It will not be necessary for the player to sell or buy resources at each auction phase*
 
+*	*Risk:  Different phases are not introduced to player clearly enough and it could cause confusion.
+
+*Alternative/mitigation: Add a title screen to the phases, or use a ticker across the top of the screen, go back to the user with some sort of proof of concept for introducing the phases and making the current phase clear to the user to embed into the design.*
+
+*Risk: phases may not be long enough for players to complete tasks in during allotted time*
+
+*Alternative/mitigation: either set the phase timers to be too long, or carry out tests to judge average player action speeds*
+
 10. **The game should end at the end of the round in which the last plot of land has been allocated**
 
     26. At the end of a game, the player with the highest score(4.a) is pronounced the winner **[3]**
 
-11. **The p****layer can get information about their owned plots of land and roboticons installed on them**
+11. **The player can get information about his owned plots of land and roboticons installed on them**
 
-    27. The player should be able to  get information about resources that it is generating **[1.5.1]**
+    27. By clicking on the tile the player can get information about resources that it is generating **[1.5.1]**
 
-    28. The player should be able to see the type of roboticon, it’s current level and the number of resources that it produces **[1.5.1]**
+    28. By clicking on a roboticon the player can see the type of roboticon, it’s current level and the number of resources that it produces **[1.5.1]**
 
-        26. *The p**layer can upgrade the roboticon using their money. The upgrade will enhance roboticon allowing it to generate more resources** ***[1.1.1.3]**
+        26. *The player can upgrade the roboticon using their money. The upgrade will enhance roboticon allowing it to generate more resources** ***[1.1.1.3]**
+
+**	**Risk: Information is not clearly represented
+
+*Alternative/mitigation:  Go back to the user with any current efforts, get a detailed list of issues and problems and the user’s ideas. Remake the information displays following this elicitation and return with a new design, repeat until all parties are happy.*
 
 12. **The game should provide a brief background story**
 
     29. Customer and audience enjoy playing games with a narrative **[1.3.1]**** [4.4.1]**
+
+Risk: It takes too long to review background story.
+
+*Alternative/mitigation: Make it skippable, or have a second much shorter version like a title screen.  Make the context of the game clear through the game itself to add to the tone and the feel of the game rather than just a background story.*
 
 ## **System Requirements**
 
@@ -186,21 +209,25 @@ Each requirements’ associated risks were also discussed and considered thoroug
 
         33. *Displays **a list of the top 5 overall scores in the game and a simplistic name attached to each one*
 
-14. **The game’s map, which will be assembled manually and not through random generation, will be grid-like in nature and presented to players from a non-isometric bird’s-eye perspective**
+14. **The game’s map, which will be assembled manually and not through random generation, will be grid-like in nature and presented to players from a bird’s-eye perspective**
 
     33. **Players should be allowed to acquire tiles for their chosen colleges as the game goes on**
 
         34. *Only tiles that are adjacent to players’ existing acquisitions will be acquirable*
 
-    34. **Tiles on the map should include:**
+    34. **Tiles on the map will include:**
 
         35. *A value for Ore, Water and Food resources on that tile (possibly 0)*
 
             1. *Values unseen before acquiring*
 
-        36. *At least three University departments and landmarks should be clearly visible ***[3]**
+        36. *At least three University departments and landmarks should be clearly visible***[3]**
 
         37. *In accordance with ***_1.c.iv_***. The tiles resources should be representative of the graphic on them. I.e. A Lake will have a fair amount of water etc.*
+
+*Risk: players may not be able to distinguish tiles*
+
+*Alternative/mitigation: use artistic design effectively to represent differences in tiles using the map itself, or overlay a dotted grid of some kind over the map*
 
 15. **The player will interface with the game via the use of a mouse and keyboard**
 
@@ -218,9 +245,13 @@ Each requirements’ associated risks were also discussed and considered thoroug
 
     40. A button in the corner which leads to the pause menu (19)
 
+Risk: players may not understand elements of the HUD
+
+Alternative/mitigation: use a combination of visual design, an in-game tutorial and tooltips if necessary to describe the HUD sufficiently
+
 17. **Players should be able to select tiles using the control scheme described in point [5] and plant available Roboticons onto them through tool-tip menus bound to each tile**
 
-    41. A tile’s tooltip will describe/present the following (provided they own it)
+    41. A tile’s tooltip will describe/present the following (Provided they own it)
 
         38. *The type of tile that it is; The type of resources that can be gained from it; what kind of Roboticon is working on it (if one’s working on the tile at all); options to assign or withdraw Roboticons from each tile and an option to upgrade the Roboticon working on the tile*
 
@@ -241,4 +272,8 @@ Each requirements’ associated risks were also discussed and considered thoroug
     46. Windows 10 should be supported as these are the operating systems that the university computers run
 
     47. It should not exceed a resolution of [1680 × 1050], as this is the resolution at which the monitors in the university’s CS department operate
+
+*Risk: The specification of the university computers changes drastically during the timeframe of when the game is finished and when it is demonstrated *
+
+*Alternative/mitigation: Refactor this requirement to comply with any new standards in the department*
 

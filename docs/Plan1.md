@@ -1,5 +1,6 @@
-#Plan
-Model and Method Selection
+#Plan and method selection
+
+##Model and Method Selection
 
 In keeping with a formal developmental process, the work to be undertaken from this point on will need to be fit around an engineering model and carried forward by a supplementary methodology. These two terms are often used interchangeably, but they actually define entirely different things: whereas a model can set "the order of the stages involved in software development" [9] and the overall criteria for moving between those stages [9], a method will instead detail exactly how a team can navigate through those stages and meet the aforementioned criteria [9]. This carries the obvious connotation that developmental methods can only be fit around engineering models, so it was understandably necessary to take a decision on an appropriate model before implementing and adapting a suitable methodology around the rest of the project.
 
@@ -137,7 +138,7 @@ The scrum methodology was designed to help small, tightly-knit teams of develope
 * * *
 
 
-**Method Implementation**
+##Method Implementation
 
 <table>
   <tr>
@@ -169,7 +170,7 @@ Assist team members with issues - whether they’re small or large - either by r
 </table>
 
 
-*Justifications for Implementation Decisions*
+##Justifications for Implementation Decisions
 
 * Sprints ensue from week-to-week so that they align with the team’s shared university time-table
 
@@ -190,7 +191,7 @@ Assist team members with issues - whether they’re small or large - either by r
 * * *
 
 
-**Project Plan**
+##Project Plan
 
 **The complete timetabled plan for this project is too large to be shown here, so it has been left in the appendix.**
 
