@@ -108,23 +108,23 @@ SEPR 2016-17 Scenario 1: Roboticon Colony of York
 
 In the far distant future, the University of York campus has become the location of a colony, where freeholders compete to raise money, crops, and other resources in order to both survive and become the Vice-Chancellor of the Colony. You are to build a colonisation game for two players focusing on supply-and-demand economics, set on a futuristic University of York campus. The game will be round-based; each player takes a turn once in each round (the computer will also act as a player). In each turn, resources will be acquired and spent, random events (which may be good or bad) will take place, and an auction of resources will be held. Resources that are held at the end of the game (which will have a finite number of rounds) count towards the final score. The player with the highest score at the end of the game is spectacularly pronounced as the winner. Your game will ultimately have the following capabilities.
 
-**●  A graphical user interface, which presents a map of the University, subdivided into ****_plots _****of land. Each plot should be of the same size, but may have different features (e.g., located next to a source of water, on a hill). Plots may partly or totally include buildings. At relevant times (see below) a player should be able to highlight a plot that they own and customise it in various ways.	**
+**  A graphical user interface, which presents a map of the University, subdivided into ****_plots _****of land. Each plot should be of the same size, but may have different features (e.g., located next to a source of water, on a hill). Plots may partly or totally include buildings. At relevant times (see below) a player should be able to highlight a plot that they own and customise it in various ways.	**
 
 **		**
 
-**●  Support for three types of resource: Food, Energy and Ore, which are produced and which may be bought and sold.		**
+**  Support for three types of resource: Food, Energy and Ore, which are produced and which may be bought and sold.		**
 
 **	**
 
-**●  A ****_market_****, which will be used to buy and sell resources and equipment. The market initially has 16 units of Food, 16 units of energy, and no Ore. It also has 12 Robotic Assistants (aka Roboticons). New Roboticons can only be produced if the market has Ore. The market should also have a pub with a bar at in which money can be won or lost via "gambling" (also known as gambling).	**
+**  A ****_market_****, which will be used to buy and sell resources and equipment. The market initially has 16 units of Food, 16 units of energy, and no Ore. It also has 12 Robotic Assistants (aka Roboticons). New Roboticons can only be produced if the market has Ore. The market should also have a pub with a bar at in which money can be won or lost via "gambling" (also known as gambling).	**
 
 **		**
 
-**●  Random effects that come into play during a round. Example random effects might include: a meteor shower that damages a plot of land; a volcanic eruption; solar flares that temporarily improve the production of a resource; the unexpected appearance of Donald Trump dressed as a leprechaun (which destroys food production), etc.	**
+**  Random effects that come into play during a round. Example random effects might include: a meteor shower that damages a plot of land; a volcanic eruption; solar flares that temporarily improve the production of a resource; the unexpected appearance of Donald Trump dressed as a leprechaun (which destroys food production), etc.	**
 
 **		**
 
-**●  Support for acquiring and selling resources: resources are Food, Energy, and Ore. Each can be exchanged for money, and sometimes can be purchased for money.**						
+**  Support for acquiring and selling resources: resources are Food, Energy, and Ore. Each can be exchanged for money, and sometimes can be purchased for money.**						
 
 **At the start of the game, all plots of land are unallocated, and each player has a small starting amount of money. As mentioned, the game is round-based. In each round, there are the following phases:				**
 
@@ -156,13 +156,13 @@ In the far distant future, the University of York campus has become the location
 
 Variation Points				
 
-1. ●  The game must support at least two players (one of which may be a computer). There is no requirement to support networked play			
+1.   The game must support at least two players (one of which may be a computer). There is no requirement to support networked play			
 
-2. ●  You must decide on the strengths and weaknesses of plots of land in terms of their production of different forms of resource: not all plots will be good for producing each type of resource. For example, a plot of land near water may be good for producing food or energy, but not ore, whereas a plot near a hill may be good for produce ore and energy, but not food.				
+2.   You must decide on the strengths and weaknesses of plots of land in terms of their production of different forms of resource: not all plots will be good for producing each type of resource. For example, a plot of land near water may be good for producing food or energy, but not ore, whereas a plot near a hill may be good for produce ore and energy, but not food.				
 
-3. ●  Each player, and their plots, must be uniquely identifiable on the map.			
+3.   Each player, and their plots, must be uniquely identifiable on the map.			
 
-4. ●  There is no requirement to support the entire University of York campus, but there must be at least three visibly identifiable landmarks (for marketing purposes)
+4.   There is no requirement to support the entire University of York campus, but there must be at least three visibly identifiable landmarks (for marketing purposes)
 
 5. 								
 
@@ -170,11 +170,11 @@ Variation Points
 
 7. You are building a game that should be playable and enjoyable by your SEPR cohort. However, there are two stakeholders that you must also accommodate.						
 
-1. *●  The customer: one of your lecturers will play the role of a customer who is interested in eventually trying to market and sell your game. Ultimately the customer is the person you must convince of the validity of your assumptions and decisions. This stakeholder can be contacted as often as you need and at any time (but do not expect an instant reply!).*
+1. *  The customer: one of your lecturers will play the role of a customer who is interested in eventually trying to market and sell your game. Ultimately the customer is the person you must convince of the validity of your assumptions and decisions. This stakeholder can be contacted as often as you need and at any time (but do not expect an instant reply!).*
 
 2. *				*
 
-3. *●  The University of York Communications Office: who is interested in using your game for its own promotional activities, e.g., at Open Days, UCAS Days. Please note that you can only communicate with this stakeholder through the lecturers* 
+3. *  The University of York Communications Office: who is interested in using your game for its own promotional activities, e.g., at Open Days, UCAS Days. Please note that you can only communicate with this stakeholder through the lecturers* 
 
 4. **							**
 
