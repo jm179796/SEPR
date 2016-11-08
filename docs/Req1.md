@@ -1,6 +1,8 @@
 # Requirements
 Something not look right? We reccommend you use the most up to date and friendlier version of the documentation found [here](https://github.com/jm179796/SEPR/blob/Assessment1_Docs/Req1.pdf "Requirements 1")
 
+In particular be aware that the nubering scheme in this format is not correct. To see the correct format please follow the link above to the github.
+
 ## Requirements Elicitation Procedure
 
 To determine the requirements for our system we conducted two interviews with our major stakeholders, they went as follows:

@@ -1,6 +1,8 @@
 # Requirement Risks
 Something not look right? We reccommend you use the most up to date and friendlier version of the documentation found [here](https://github.com/jm179796/SEPR/blob/Assessment1_Docs/RequirementRisks.pdf "Requirements risks")
 
+In particular be aware that the nubering scheme in this format is not correct. To see the correct format please follow the link above to the github.
+
 ## User Requirement Risks
 
 1. **The game will not be convoluted and complex to play**
