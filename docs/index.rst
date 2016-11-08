@@ -11,7 +11,7 @@ Duck Related Team Name (In big massive letters)
 
 
 
-The `source <https://github.com/jm179796/SEPR>`_ is available on Github. Alongside the code full documentation in pdf form (Correct to Assessment 1) can be found there.
+The `source <https://github.com/jm179796/SEPR>`_ is available on Github. Alongside the code full `documentation <https://github.com/jm179796/SEPR/tree/Assessment1_Docs>`_ in pdf form (Correct to Assessment 1) can be found there. We recommened using this `documentation <https://github.com/jm179796/SEPR/tree/Assessment1_Docs>`_ as the documentation found on this website isn't fully justified, in particular tables and the bibliography aren't present due to issues with markdown export. These are intended as a convinient overview when the pdfs on github can't be accessed.
 
 Contents
 --------
