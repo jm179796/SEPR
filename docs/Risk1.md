@@ -5,7 +5,7 @@
 
 To determine the overall damage to the project that a risk may have, we applied the likelihood and impact of the risks via a risk matrix to abstract a ‘risk rating’, ranking them from Low, Medium, High and Critical:
 
-![image alt text](Risk0.png)
+![image alt text](risk0.png)
 
 **Impact Definitions**
 
