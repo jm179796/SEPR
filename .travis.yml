@@ -5,3 +5,6 @@ jdk:
  
 before_install:
  - chmod +x gradlew
+ 
+ notifications:
+  slack: sepr-group:rGCohuMl2JcgwLI6CgD1VKFG
