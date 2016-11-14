@@ -10,7 +10,7 @@ public class BaseCaseTest {
 
 	@Test
     public void trueTest() {
-        assertThat("123",is("123"));
+        assertThat("123",is("12"));
     }
 
 }
