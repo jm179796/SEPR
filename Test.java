@@ -5,6 +5,6 @@ import org.junit.Test;
 public class Test {
 	@Test
     public static void main(String[] args) {
-        assertThat((1+1), is(2));
+        assertThat((1+2), is(2));
     }
 }
