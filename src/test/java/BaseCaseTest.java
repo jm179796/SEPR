@@ -7,7 +7,6 @@ import org.junit.Test;
 
 
 public class BaseCaseTest {
-
 	@Test
     public void trueTest() {
         assertThat("1234",is("1234"));
