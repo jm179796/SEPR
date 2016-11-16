@@ -3,10 +3,8 @@
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_6" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/../../../desktop/build/classes/main" />
     <exclude-output />
-    <content url="file://$MODULE_DIR$/../../../desktop/core/src/main">
-      <sourceFolder url="file://$MODULE_DIR$/../../../desktop/core/src/main/java" isTestSource="false" />
-    </content>
     <content url="file://$MODULE_DIR$/../../../desktop/src">
+      <sourceFolder url="file://$MODULE_DIR$/../../../desktop/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../../../desktop/src/main/resources" type="java-resource" />
     </content>
     <orderEntry type="inheritedJdk" />
@@ -15,10 +13,12 @@
     <orderEntry type="library" name="Gradle: com.badlogicgames.gdx:gdx-backend-lwjgl:1.9.4" level="project" />
     <orderEntry type="library" name="Gradle: com.badlogicgames.gdx:gdx-platform:natives-desktop:1.9.4" level="project" />
     <orderEntry type="library" name="Gradle: com.badlogicgames.gdx:gdx-box2d-platform:natives-desktop:1.9.4" level="project" />
+    <orderEntry type="library" name="Gradle: com.badlogicgames.gdx:gdx-bullet-platform:natives-desktop:1.9.4" level="project" />
     <orderEntry type="library" name="Gradle: com.badlogicgames.gdx:gdx-freetype-platform:natives-desktop:1.9.4" level="project" />
     <orderEntry type="library" name="Gradle: com.badlogicgames.gdx:gdx-tools:1.9.4" level="project" />
     <orderEntry type="library" name="Gradle: com.badlogicgames.gdx:gdx:1.9.4" level="project" />
     <orderEntry type="library" name="Gradle: com.badlogicgames.gdx:gdx-box2d:1.9.4" level="project" />
+    <orderEntry type="library" name="Gradle: com.badlogicgames.gdx:gdx-bullet:1.9.4" level="project" />
     <orderEntry type="library" name="Gradle: com.badlogicgames.box2dlights:box2dlights:1.4" level="project" />
     <orderEntry type="library" name="Gradle: com.badlogicgames.ashley:ashley:1.7.0" level="project" />
     <orderEntry type="library" name="Gradle: com.badlogicgames.gdx:gdx-freetype:1.9.4" level="project" />
