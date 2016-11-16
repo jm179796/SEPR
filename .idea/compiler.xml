@@ -25,6 +25,8 @@
       <module name="desktop_test" target="1.6" />
       <module name="DRTN-Game_main" target="1.5" />
       <module name="DRTN-Game_test" target="1.5" />
+      <module name="SEPR_main" target="1.8" />
+      <module name="SEPR_test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
