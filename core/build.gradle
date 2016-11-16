@@ -1,17 +1,17 @@
-apply plugin: 'java'
-
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+
 }
 
 sourceCompatibility = 1.6
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
-sourceSets.main.java.srcDirs = [ "src/" ]
+sourceSets.main.java.srcDirs = [ "core/src/main/java/" ]
+sourceSets.test.java.srcDirs = [ "core/src/test/java/" ]
+sourceSets.test.resources.srcDirs = [ "core/src/test/resources/" ]
 
 
 eclipse.project {

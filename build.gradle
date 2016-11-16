@@ -1,10 +1,7 @@
-apply plugin: 'java'
 
-dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-}
 
 buildscript {
+
     repositories {
         mavenLocal()
         mavenCentral()
@@ -18,7 +15,11 @@ buildscript {
 allprojects {
     apply plugin: "eclipse"
     apply plugin: "idea"
+    apply plugin: 'java'
 
+    dependencies {
+        testCompile 'junit:junit:4.12'
+    }
     version = '1.0'
     ext {
         appName = "DRTN-SEPR-Game"
@@ -40,7 +41,6 @@ allprojects {
 project(":desktop") {
     apply plugin: "java"
 
-
     dependencies {
         compile project(":core")
         compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
@@ -54,24 +54,16 @@ project(":desktop") {
 project(":core") {
     apply plugin: "java"
 
-
     dependencies {
-        testCompile 'junit:junit:4.12'
+
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         compile "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
         compile "com.badlogicgames.ashley:ashley:$ashleyVersion"
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-ai:$aiVersion"
-    }
-}
 
-sourceSets {
-
-    test {
-        java {
-            srcDirs = ["test/model"]  // Note @Peter's comment below
-        }
+        testCompile 'junit:junit:4.12'
     }
 }
 
