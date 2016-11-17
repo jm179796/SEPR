@@ -18,7 +18,7 @@ public class Player {
 
   private College College;
 
-  private List<Tile> TileList = new ArrayList<>();
+  private List<Tile> TileList = new ArrayList();
 
   private List<Roboticon> RoboticonList = new ArrayList();
 
