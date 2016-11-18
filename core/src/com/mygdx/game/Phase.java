@@ -13,6 +13,7 @@ public class Phase {
       this.TimeLeft = this.StartTime;
   }
   public void ReduceTime() {
+	  this.Timleft = Timeleft - 1;
   }
 
   public void ResetTime() {
