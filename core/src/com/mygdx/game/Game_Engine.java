@@ -1,5 +1,7 @@
 package com.mygdx.game;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
+
 
 public class Game_Engine {
 	
@@ -46,14 +48,33 @@ public class Game_Engine {
 		//customise Roboticon
 	}
 	
-	public static void Phase3(Player Player, Phase Phase){
-		while(Phase.GetTime() != 0){
-			//check for roboticon selection
-			//check for tile selection
-			//Tile.assignRoboticon(Roboticon)
-			
-		}
+	public static void Phase3(Player Player, Phase Phase) throws InterruptedException {
+        while (Phase.GetTime() != 0) {
+            //check for roboticon selection
+            //check for tile selection
+            //Tile.assignRoboticon(Roboticon)
+            TimeUnit.SECONDS.sleep(1);
+
+        }
+    }
+
+	public static void Phase4(Player Player, Phase Phase) throws InterruptedException {
+        while(Phase.GetTime() != 0){
+            //code for production of  resources
+            TimeUnit.SECONDS.sleep(1);
+
+         }
+
 	}
+
+	public static void Phase5(Player Player){
+        //code for user selection of stock type
+        //basic structure as follows
+        int price = Market.getPrice(Stock_Type);
+        Player.changeMoney(-price);
+        Market.Stock_type -= 1;
+        Player.varyResource(Stock_Type, 1);
+    }
 	
 	//public static void assignCollege(Player){
 		//code for detecting selected college
