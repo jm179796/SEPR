@@ -24,7 +24,7 @@ public class UnitTestExample {
 
 	@Test
 	public void oneEqualsOne() {
-		assertEquals(1, 2);
+		assertEquals(1, 1);
 	}
 
 }
