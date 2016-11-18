@@ -16,7 +16,7 @@ public class Tile {
 
   private Player Owner;
 
-  private List<Roboticon> Roboticon_List = new ArrayList();
+  private List<Roboticon> Roboticon_List = new ArrayList<Roboticon>();
 
   public Tile(int TileID, int EnergyCount, int FoodCount, int OreCount, boolean Landmark){
     this.TileID = TileID;
