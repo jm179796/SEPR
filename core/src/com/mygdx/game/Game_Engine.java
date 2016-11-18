@@ -70,10 +70,10 @@ public class Game_Engine {
 	public static void Phase5(Player Player){
         //code for user selection of stock type
         //basic structure as follows
-        int price = Market.getPrice(Stock_Type);
-        Player.changeMoney(-price);
-        Market.Stock_type -= 1;
-        Player.varyResource(Stock_Type, 1);
+        //int price = Market.getPrice(Stock_Type);
+        //Player.changeMoney(-price);
+        //Market.Stock_type -= 1;
+        //Player.varyResource(Stock_Type, 1);
     }
 	
 	//public static void assignCollege(Player){
