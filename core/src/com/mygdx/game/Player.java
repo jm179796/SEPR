@@ -18,9 +18,9 @@ public class Player {
 
   private College College;
 
-  private List<Tile> TileList = new ArrayList();
+  private List<Tile> TileList = new ArrayList<Tile>();
 
-  private List<Roboticon> RoboticonList = new ArrayList();
+  private List<Roboticon> RoboticonList = new ArrayList<Roboticon>();
 
   public Player(Integer PlayerID){
       this.PlayerID = PlayerID;
