@@ -53,7 +53,7 @@ public class Player {
       this.Money += cost;
   }
   public void varyResource(string resource, int amount){
-      Player.resource += amount;
+      //Player.resource += amount;
   }
 
 }
