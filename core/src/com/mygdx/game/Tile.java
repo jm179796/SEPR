@@ -8,7 +8,7 @@ public class Tile {
 
   private Integer EnergyCount;
 
-  private Integer FoodCount;
+  // private Integer FoodCount;
 
   private Integer OreCount;
 
@@ -21,7 +21,7 @@ public class Tile {
   public Tile(int TileID, int EnergyCount, int FoodCount, int OreCount, boolean Landmark){
     this.TileID = TileID;
     this.EnergyCount = EnergyCount;
-    this.FoodCount = FoodCount;
+    //this.FoodCount = FoodCount;
     this.OreCount = OreCount;
       this.Landmark = Landmark;
   }
