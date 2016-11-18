@@ -49,5 +49,11 @@ public class Player {
 
   public void calculateScore() {
   }
+  public void changeMoney(int cost){
+      this.Money += cost;
+  }
+  public void varyResource(string resource, int amount){
+      Player.resource += amount;
+  }
 
 }
