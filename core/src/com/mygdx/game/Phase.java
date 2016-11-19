@@ -17,7 +17,7 @@ public class Phase {
   }
 
   public void ResetTime() {
-    this.TimeLeft = this.StartTime;
+    TimeLeft = StartTime;
   }
   
   public int GetTime(){
