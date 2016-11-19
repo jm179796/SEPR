@@ -36,12 +36,16 @@ public class Roboticon {
     private Integer Upgrades[];
 
     /**
-     * Method to set the RoboticonID -- SHOULD BE DONE ON INSTANTIATION
+     * Constructor of the class
      *
-     * @param ID
+     * @param ID An integer uniquely defining the roboticon, starting at 0
+     * @param Player A Player object to own the roboticon
+     * @param Tile  A Tile object the roboticon is positioned on and therefore belongs to
      */
-    public void setID(int ID) {
+    public void Roboticon(int ID, Player Player, Tile Tile) {
         RoboticonID = ID;
+        this.CurrentTile = Tile;
+        this.Owner = Player;
     }
 
     /**
@@ -56,18 +60,8 @@ public class Roboticon {
     }
 
     /**
-     * Method to set the Player the roboticon belongs to -- SHOULD BE DONE ON INSTANCIATION
-     *
-     * @param Player
+     * A method to return an array of all possible upgrades available to the roboticon at its current state
      */
-    public void setOwner(Player Player) {
-        this.Owner = Player;
-    }
-
-    public void setCurrentTile(Tile Tile) {
-        this.CurrentTile = Tile;
-    }
-
     public void possibleUpgrades() {
         if (Level[0] >= MaxLevel) {
             Upgrades[0] = Level[0] += 1;
@@ -80,13 +74,20 @@ public class Roboticon {
         //}
     }
 
-    public void productionModifier() {
-        Integer Modifiers[]; // Array to return the modifier for resource production, stored [Ore, Energy, Food]
+    /**
+     * A method to return the production modifier offered by the roboticon.
+     * <p>
+     * Contains inherent randomness, not just a 1:1 ratio of level to return each phase of production. The modifier is used outside of
+     * this class to multiply the inherent resources located on that tile.
+     * </p>
+     */
+    public Integer[] productionModifier() {
+        Integer Modifiers[] = {1}; // Array to return the modifier for resource production, stored [Ore, Energy, Food]
         Integer Max = 50; Integer Min = 1;
         Random rand = new Random();
         int  n = rand.nextInt(50) + 1;
 
-//50 is the maximum and the 1 is our minimum
+        return Modifiers;
 
 
     }
