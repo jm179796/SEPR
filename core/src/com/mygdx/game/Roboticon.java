@@ -4,30 +4,62 @@ import com.sun.tools.javac.code.Attribute;
 import com.sun.tools.javac.util.List;
 import java.util.*;
 
-import java.sql.Array;
-
+/**
+ * @author Kieran Hall KJH532
+ * @version 1.0
+ * @since 1.0
+ */
 public class Roboticon {
-
+    /**
+     * Unique numerical identifier of the roboticon.
+     */
     public Integer RoboticonID;
-
-    private Integer MaxLevel = 3; //Variable to determine the maximum upgrade level of the robot
-
-    private Integer Level[] = {0,0,0}; //Variable to hold the current levels of the robot, stored [Ore, Energy, Food]
-
-    private Integer Upgrades[];
-    // Upgrade array, returns the possible levels of upgrade for the current robot. Stored as [Ore, Energy, Food]
-
+    /**
+     * Variable holding which player the roboticon belongs to.
+     */
     public Player Owner;
-
+    /**
+     * Variable holding what tile the roboticon is stored on.
+     */
     public Tile CurrentTile;
+    /**
+     * Integer variable determining the maximum level of roboticons allowed in the game.
+     */
+    private Integer MaxLevel = 3;
+    /**
+     * Array of integers holding the current level of the roboticon, stored as: [Ore, Energy, Food]
+     */
+    private Integer Level[] = {0, 0, 0};
+    /**
+     * Upgrade array, holds the possible levels of upgrade for the current robot. Stored as [Ore, Energy, Food]
+     */
+    private Integer Upgrades[];
 
-    public Roboticon(int ID) {
+    /**
+     * Method to set the RoboticonID -- SHOULD BE DONE ON INSTANTIATION
+     *
+     * @param ID
+     */
+    public void setID(int ID) {
         RoboticonID = ID;
     }
 
-    public void varyLevel() {
+    /**
+     * Method to upgrade a single level of the roboticon.
+     * <p>
+     * The parameter 'Resource' specifies 'Ore', 'Energy' or 'Food' to be upgraded one level.
+     * </p>
+     *
+     * @param Resource
+     */
+    public void upgrade(char Resource) {
     }
 
+    /**
+     * Method to set the Player the roboticon belongs to -- SHOULD BE DONE ON INSTANCIATION
+     *
+     * @param Player
+     */
     public void setOwner(Player Player) {
         this.Owner = Player;
     }
