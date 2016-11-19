@@ -36,8 +36,8 @@ public class Market {
   public void calculateNewCost() {
   }
 
-  public Integer getPrice(String Stock_Type){
-    return Price;
-  }
+  //public Integer getPrice(String Stock_Type){
+    //return Stock_Type.Price;
+  //}
 
 }

@@ -21,7 +21,7 @@ public class Phase {
   }
   
   public int GetTime(){
-	  return TimeLeft;
+	  return this.TimeLeft;
   } 
 
 }
