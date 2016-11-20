@@ -51,23 +51,23 @@ public class Game_Engine {
 	}
 	
 	public static void Phase3(Player Player) throws InterruptedException {
-       //timeLeft = 120
+       //timeLeft = 120;
 		// while (timeLeft > 0) {
             //check for roboticon selection
             //check for tile selection
-            //Tile.assignRoboticon(Roboticon)
+            //Tile.assignRoboticon(Roboticon);
             //TimeUnit.SECONDS.sleep(1);
-			//timeLeft -= 1
+			//timeLeft -= 1;
 
        // }
     }
 
 	public static void Phase4(Player Player) throws InterruptedException {
-        //timeLeft = 120
+        //timeLeft = 120;
 		//while(timeLeft > 0){
             //code for production of resources
             //TimeUnit.SECONDS.sleep(1);
-
+			//timeLeft -= 1;	
          //}
 
 	}
