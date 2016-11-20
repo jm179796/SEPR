@@ -1,8 +1,5 @@
 package com.mygdx.game;
 
-import com.sun.tools.javac.code.Attribute;
-import com.sun.tools.javac.util.List;
-
 import java.util.*;
 
 /**
