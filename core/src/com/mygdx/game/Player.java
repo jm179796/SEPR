@@ -46,14 +46,14 @@ public class Player {
         TileList.add(Tile);
     }
 
-  public void calculateScore() {
+    public void calculateScore() {
   }
-  public void changeMoney(int cost){
+    public void changeMoney(int cost){
       this.Money += cost;
   }
-  //public void varyResource(string resource, int amount){
-      //Player.resource += amount;
-  //}
+    //public void varyResource(string resource, int amount){
+        //Player.resource += amount;
+    //}
 
 
 }
