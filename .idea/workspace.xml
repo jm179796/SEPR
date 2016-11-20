@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f4047bf5-410a-4d42-a299-00aacbf1b5a1" name="Default" comment="">
+    <list default="true" id="f4047bf5-410a-4d42-a299-00aacbf1b5a1" name="Default" comment="Finished Roboticon class, successful grale build">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/com/mygdx/game/Roboticon.java" afterPath="$PROJECT_DIR$/core/src/com/mygdx/game/Roboticon.java" />
     </list>
     <ignored path="SEPR.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -73,8 +72,8 @@
       <file leaf-file-name="Roboticon.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/Roboticon.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="15" column="62" selection-start-line="15" selection-start-column="62" selection-end-line="15" selection-end-column="62" />
+            <state relative-caret-position="135">
+              <caret line="11" column="52" selection-start-line="11" selection-start-column="52" selection-end-line="11" selection-end-column="52" />
               <folding />
             </state>
           </provider>
@@ -1711,7 +1710,7 @@
       <option name="presentableId" value="Default" />
       <updated>1479558857739</updated>
       <workItem from="1479558862096" duration="5468000" />
-      <workItem from="1479643680651" duration="4624000" />
+      <workItem from="1479643680651" duration="5093000" />
     </task>
     <task id="LOCAL-00001" summary="Started adding comments and fleshing out code">
       <created>1479563977241</created>
@@ -1734,7 +1733,14 @@
       <option name="project" value="LOCAL" />
       <updated>1479650105559</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Finished Roboticon class, successful grale build">
+      <created>1479650474900</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1479650474901</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -1746,7 +1752,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10092000" />
+    <option name="totallyTimeSpent" value="10561000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="41" y="23" width="1879" height="1057" extended-state="6" />
@@ -1795,7 +1801,8 @@
     <MESSAGE value="Started adding comments and fleshing out code" />
     <MESSAGE value="Finished all roboticon comments, added constructor" />
     <MESSAGE value="Finished Roboticon class, added roboticon test file" />
-    <option name="LAST_COMMIT_MESSAGE" value="Finished Roboticon class, added roboticon test file" />
+    <MESSAGE value="Finished Roboticon class, successful grale build" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finished Roboticon class, successful grale build" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -1887,8 +1894,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/core/src/com/mygdx/game/Roboticon.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="62" selection-start-line="15" selection-start-column="62" selection-end-line="15" selection-end-column="62" />
+        <state relative-caret-position="135">
+          <caret line="11" column="52" selection-start-line="11" selection-start-column="52" selection-end-line="11" selection-end-column="52" />
           <folding />
         </state>
       </provider>
