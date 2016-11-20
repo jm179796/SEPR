@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.sun.tools.javac.code.Attribute;
 import com.sun.tools.javac.util.List;
+
 import java.util.*;
 
 /**
@@ -38,9 +39,9 @@ public class Roboticon {
     /**
      * Constructor of the class
      *
-     * @param ID An integer uniquely defining the roboticon, starting at 0
+     * @param ID     An integer uniquely defining the roboticon, starting at 0
      * @param Player A Player object to own the roboticon
-     * @param Tile  A Tile object the roboticon is positioned on and therefore belongs to
+     * @param Tile   A Tile object the roboticon is positioned on and therefore belongs to
      */
     public void Roboticon(int ID, Player Player, Tile Tile) {
         RoboticonID = ID;
@@ -56,13 +57,29 @@ public class Roboticon {
      *
      * @param Resource
      */
-    public void upgrade(char Resource) {
+    public void upgrade(String Resource) throws InvalidStringArgumentException {
+
+        if (Resource == "Ore") {
+            this.Level[0] += 1;
+
+        } else if (Resource == "Energy") {
+            this.Level[1] += 1;
+
+        } else if (Resource == "Food") {
+            this.Level[2] += 1;
+
+        } else {
+            throw new InvalidStringArgumentException(Resource);
+        }
+
     }
 
     /**
      * A method to return an array of all possible upgrades available to the roboticon at its current state
+     *
+     * @return Upgrades
      */
-    public void possibleUpgrades() {
+    public Integer[] possibleUpgrades() {
         if (Level[0] >= MaxLevel) {
             Upgrades[0] = Level[0] += 1;
         }
@@ -72,6 +89,8 @@ public class Roboticon {
         //if (Level[2] >= MaxLevel) {
         //    Upgrades[2] = Level[2] += 1;
         //}
+
+        return Upgrades;
     }
 
     /**
@@ -83,9 +102,10 @@ public class Roboticon {
      */
     public Integer[] productionModifier() {
         Integer Modifiers[] = {1}; // Array to return the modifier for resource production, stored [Ore, Energy, Food]
-        Integer Max = 50; Integer Min = 1;
+        Integer Max = 50;
+        Integer Min = 1;
         Random rand = new Random();
-        int  n = rand.nextInt(50) + 1;
+        int n = rand.nextInt(50) + 1;
 
         return Modifiers;
 
