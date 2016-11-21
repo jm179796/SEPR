@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.com.mygdx.game.engine;
 
 /**
  * @author Kieran Hall KJH532
