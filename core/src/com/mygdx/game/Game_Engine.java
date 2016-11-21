@@ -1,4 +1,4 @@
-package com.duck.game.unimplemented;
+package com.mygdx.game;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 

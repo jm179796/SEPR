@@ -1,4 +1,4 @@
-package com.duck.game.elements;
+package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
 

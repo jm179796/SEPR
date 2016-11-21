@@ -1,4 +1,4 @@
-package com.duck.game.UI;
+package com.mygdx.game;
 
 /**
  * Created by Joseph on 21/11/2016.
@@ -12,7 +12,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import java.util.Timer;
-import java.util.TimerTask;
 
 public class SplashScreen implements Screen {
 

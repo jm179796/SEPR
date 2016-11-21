@@ -1,8 +1,7 @@
-package com.duck.game.engine;
+package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.duck.game.UI.SplashScreen;
 
 public class Main extends Game {
 	private Game game;

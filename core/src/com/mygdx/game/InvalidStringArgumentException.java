@@ -1,4 +1,4 @@
-package com.duck.game.unimplemented;
+package com.mygdx.game;
 
 /**
  * @author Kieran Hall KJH532

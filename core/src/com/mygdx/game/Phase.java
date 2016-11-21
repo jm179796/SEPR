@@ -1,4 +1,4 @@
-package com.duck.game.unimplemented;
+package com.mygdx.game;
 public class Phase {
 
   public Integer PhaseNumber;
