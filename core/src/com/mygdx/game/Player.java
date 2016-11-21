@@ -87,7 +87,7 @@ public class Player {
     /**
      * Adds the specified tile to the players list of tiles.
      *
-     * @param Tile THe tile tha tis to be added to the player's tile list.
+     * @param Tile The tile that is to be added to the player's tile list.
      */
 
     public void assignTile(Tile Tile) {
