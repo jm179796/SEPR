@@ -29,6 +29,9 @@ public class MainMenu implements Screen {
         table = new Table();
         table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
+        //NEED TO SET LABEL STYLE
+        //ALSO NEED TO COMMENT ALL OF THIS GUBBINS
+
         testButton = new TextButton("TEST", new TextButton.TextButtonStyle());
         table.add(testButton);
         table.debug();
@@ -41,10 +44,8 @@ public class MainMenu implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         //OpenGL nonsense
 
-        batch.begin();
-        testimage.draw(batch);
-        batch.end();
-        //Draw splash logo in current batch
+        stage.act(delta);
+        stage.draw();
     }
 
     @Override
