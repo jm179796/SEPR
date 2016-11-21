@@ -48,13 +48,6 @@ public class SplashScreen implements Screen {
         //Draw splash logo in current batch
 
         game.setScreen(new MainMenu(game));
-
-        //timer.schedule(new TimerTask() {
-        //    @Override
-        //   public void run() {
-        //        game.setScreen(new MainMenu(game));
-        //    }
-        //}, 3000);
     }
 
     @Override

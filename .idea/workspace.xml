@@ -2,20 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f4047bf5-410a-4d42-a299-00aacbf1b5a1" name="Default" comment="Finished Roboticon class, successful grale build">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/assets/badlogic.jpg" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/core/src/com/mygdx/game/com/mygdx/game/UI/SplashScreen.java" afterPath="$PROJECT_DIR$/core/src/com/duck/game/UI/SplashScreen.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/core/src/com/mygdx/game/com/mygdx/game/engine/College.java" afterPath="$PROJECT_DIR$/core/src/com/duck/game/unimplemented/College.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/core/src/com/mygdx/game/com/mygdx/game/engine/Effect.java" afterPath="$PROJECT_DIR$/core/src/com/duck/game/unimplemented/Effect.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/core/src/com/mygdx/game/com/mygdx/game/engine/Game_Engine.java" afterPath="$PROJECT_DIR$/core/src/com/duck/game/unimplemented/Game_Engine.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/core/src/com/mygdx/game/com/mygdx/game/engine/InvalidStringArgumentException.java" afterPath="$PROJECT_DIR$/core/src/com/duck/game/unimplemented/InvalidStringArgumentException.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/core/src/com/mygdx/game/com/mygdx/game/engine/Market.java" afterPath="$PROJECT_DIR$/core/src/com/duck/game/unimplemented/Market.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/core/src/com/mygdx/game/com/mygdx/game/engine/Phase.java" afterPath="$PROJECT_DIR$/core/src/com/duck/game/unimplemented/Phase.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/core/src/com/mygdx/game/com/mygdx/game/engine/Player.java" afterPath="$PROJECT_DIR$/core/src/com/duck/game/unimplemented/Player.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/core/src/com/mygdx/game/com/mygdx/game/engine/Roboticon.java" afterPath="$PROJECT_DIR$/core/src/com/duck/game/unimplemented/Roboticon.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/core/src/com/mygdx/game/com/mygdx/game/engine/Tile.java" afterPath="$PROJECT_DIR$/core/src/com/duck/game/unimplemented/Tile.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/core/src/com/mygdx/game/com/mygdx/game/engine/drtnGame.java" afterPath="$PROJECT_DIR$/core/src/com/duck/game/engine/Main.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/desktop/src/com/mygdx/game/desktop/DesktopLauncher.java" afterPath="$PROJECT_DIR$/desktop/src/com/mygdx/game/desktop/DesktopLauncher.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/com/duck/game/UI/MainMenu.java" afterPath="$PROJECT_DIR$/core/src/com/duck/game/UI/MainMenu.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/com/duck/game/UI/SplashScreen.java" afterPath="$PROJECT_DIR$/core/src/com/duck/game/UI/SplashScreen.java" />
     </list>
     <ignored path="SEPR.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -81,11 +69,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SplashScreen.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="SplashScreen.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/src/com/duck/game/UI/SplashScreen.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="935">
-              <caret line="57" column="5" selection-start-line="57" selection-start-column="5" selection-end-line="57" selection-end-column="5" />
+            <state relative-caret-position="340">
+              <caret line="49" column="43" selection-start-line="49" selection-start-column="43" selection-end-line="49" selection-end-column="43" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -93,25 +81,25 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainMenu.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MainMenu.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/core/src/com/duck/game/UI/MainMenu.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="21" column="25" selection-start-line="21" selection-start-column="25" selection-end-line="21" selection-end-column="25" />
+            <state relative-caret-position="452">
+              <caret line="39" column="81" selection-start-line="39" selection-start-column="81" selection-end-line="39" selection-end-column="81" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#499#500#0" expanded="true" />
-                <element signature="e#531#532#0" expanded="true" />
+                <element signature="e#645#646#0" expanded="true" />
+                <element signature="e#677#678#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Market.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/src/com/duck/game/unimplemented/Market.java">
+      <file leaf-file-name="Button.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/src/com/duck/game/elements/Button.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="1" column="13" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
+            <state relative-caret-position="170">
+              <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -1054,8 +1042,9 @@
         <option value="$PROJECT_DIR$/core/src/com/mygdx/game/com/mygdx/game/com/mygdx/game/unimplemented/Market.java" />
         <option value="$PROJECT_DIR$/core/src/com/duck/game/com/mygdx/game/unimplemented/Market.java" />
         <option value="$PROJECT_DIR$/core/src/com/duck/game/unimplemented/Market.java" />
-        <option value="$PROJECT_DIR$/core/src/com/duck/game/UI/MainMenu.java" />
         <option value="$PROJECT_DIR$/core/src/com/duck/game/UI/SplashScreen.java" />
+        <option value="$PROJECT_DIR$/core/src/com/duck/game/elements/Button.java" />
+        <option value="$PROJECT_DIR$/core/src/com/duck/game/UI/MainMenu.java" />
       </list>
     </option>
   </component>
@@ -1073,10 +1062,9 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="54" />
-    <option name="y" value="-8" />
-    <option name="width" value="2514" />
-    <option name="height" value="1096" />
+    <option name="x" value="55" />
+    <option name="width" value="1147" />
+    <option name="height" value="1077" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -1285,6 +1273,32 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="engine" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SEPR" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SEPR" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="org.jetbrains.plugins.gradle.projectView.GradleTreeStructureProvider$GradleSourceSetDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="game" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="elements" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1836,7 +1850,7 @@
       <updated>1479558857739</updated>
       <workItem from="1479558862096" duration="5468000" />
       <workItem from="1479643680651" duration="5093000" />
-      <workItem from="1479731190171" duration="6159000" />
+      <workItem from="1479731190171" duration="7868000" />
     </task>
     <task id="LOCAL-00001" summary="Started adding comments and fleshing out code">
       <created>1479563977241</created>
@@ -1878,10 +1892,10 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="16720000" />
+    <option name="totallyTimeSpent" value="18429000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="54" y="-8" width="2514" height="1096" extended-state="6" />
+    <frame x="55" y="0" width="1147" height="1077" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1892,13 +1906,13 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3296146" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.336091" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.11168935" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24668436" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.07926341" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1750663" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -2036,14 +2050,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/com/duck/game/unimplemented/Market.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="13" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core/src/com/duck/game/unimplemented/InvalidStringArgumentException.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
@@ -2113,24 +2119,40 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/com/duck/game/UI/MainMenu.java">
+    <entry file="file://$PROJECT_DIR$/core/src/com/duck/game/UI/SplashScreen.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="21" column="25" selection-start-line="21" selection-start-column="25" selection-end-line="21" selection-end-column="25" />
+        <state relative-caret-position="340">
+          <caret line="49" column="43" selection-start-line="49" selection-start-column="43" selection-end-line="49" selection-end-column="43" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#499#500#0" expanded="true" />
-            <element signature="e#531#532#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/com/duck/game/UI/SplashScreen.java">
+    <entry file="file://$PROJECT_DIR$/core/src/com/duck/game/unimplemented/Market.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="935">
-          <caret line="57" column="5" selection-start-line="57" selection-start-column="5" selection-end-line="57" selection-end-column="5" />
+        <state relative-caret-position="17">
+          <caret line="1" column="13" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/com/duck/game/elements/Button.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/com/duck/game/UI/MainMenu.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="452">
+          <caret line="39" column="81" selection-start-line="39" selection-start-column="81" selection-end-line="39" selection-end-column="81" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#645#646#0" expanded="true" />
+            <element signature="e#677#678#0" expanded="true" />
           </folding>
         </state>
       </provider>

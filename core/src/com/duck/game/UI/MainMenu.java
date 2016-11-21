@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 /**
  * Created by Joseph on 21/11/2016.
@@ -17,6 +19,9 @@ public class MainMenu implements Screen {
 
     private SpriteBatch batch;
     private Sprite testimage;
+
+    private Stage stage;
+    private Table table;
 
     public MainMenu(Game game) {
         this.game = game;
@@ -29,6 +34,11 @@ public class MainMenu implements Screen {
         testimage = new Sprite(new Texture("SoonTMtest.png"));
         testimage.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         //Create logo sprite and match size to window size
+
+        stage = new Stage();
+        table = new Table();
+        table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
     }
 
     @Override
