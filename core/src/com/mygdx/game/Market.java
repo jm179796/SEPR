@@ -109,7 +109,23 @@ public class Market {
   }
 
   public void calculateNewCost() {
-      
+      int[][][] PriceArray = {
+              {100, 90, 80, 70, 60, 50, 40, 30, 20, 10, 0 }
+              {1, 1, 2, 3, 4, 5, 6, 8, 11, 15, 30}
+              {2, 2, 3, 4, 5, 6, 7, 9, 13, 20, 0}
+            }
+    private void SellPriceSetter(ResourcePriceStorage){
+        // ResourcePriceStorage = OreSellPrice, FoodSellPrice...
+
+
+    }
+
+
+    private void BuyPriceSetter(ResourcePriceStorage){
+
+    }
+
+
 
   }
 
