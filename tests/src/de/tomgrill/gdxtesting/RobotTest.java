@@ -16,22 +16,22 @@ import static org.junit.Assert.*;
  */
 public class RobotTest {
 
-    public Player TestPlayer = new Player(0);
-    public Tile TestTile = new Tile(0, 5, 5, 5, false);
-    public Roboticon TestRobot = new Roboticon(0, TestPlayer, TestTile);
+    private Player TestPlayer = new Player(0);
+    private Tile TestTile = new Tile(0, 5, 5, 5, false);
+    private Roboticon TestRobot = new Roboticon(0, TestPlayer, TestTile);
 
     /**
      * Tests confirming that a valid Roboticon can be upgraded.
      */
     @Test
     public void ValidUpgrade() {
-        Integer NewLevel[] = {1, 0, 0};
+        Integer NewLevel[] = {2, 1, 1};
         TestRobot.upgrade("Ore");
         assertArrayEquals(NewLevel, TestRobot.getLevel());
-        NewLevel[1] = 1;
+        NewLevel[1] = 2;
         TestRobot.upgrade("Energy");
         assertArrayEquals(NewLevel, TestRobot.getLevel());
-        NewLevel[2] = 1;
+        NewLevel[2] = 2;
         TestRobot.upgrade("Food");
         assertArrayEquals(NewLevel, TestRobot.getLevel());
     }
@@ -41,7 +41,7 @@ public class RobotTest {
      */
     @Test
     public void ValidUpgradeReturn() {
-        Integer TestUpgrades[] = {1, 1, 1};
+        Integer TestUpgrades[] = {2, 2, 2};
         assertArrayEquals(TestRobot.possibleUpgrades(), TestUpgrades);
     }
 

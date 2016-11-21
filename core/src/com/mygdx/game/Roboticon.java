@@ -11,17 +11,17 @@ public class Roboticon {
     /**
      * Unique numerical identifier of the roboticon.
      */
-    public Integer RoboticonID;
+    private Integer RoboticonID;
 
     /**
      * Variable holding which player the roboticon belongs to.
      */
-    public Player Owner;
+    private Player Owner;
 
     /**
      * Variable holding what tile the roboticon is stored on.
      */
-    public Tile CurrentTile;
+    private Tile CurrentTile;
 
     /**
      * Integer variable determining the maximum level of roboticons allowed in the game.
@@ -30,6 +30,9 @@ public class Roboticon {
 
     /**
      * Array of integers holding the current level of the roboticon, stored as: [Ore, Energy, Food]
+     * <p>
+     * Starts at 1 so as to allow any tile with a roboticon to produce resources.
+     * </p>
      */
     private Integer Level[] = {1, 1, 1};
 
@@ -54,16 +57,16 @@ public class Roboticon {
     public Integer[] getLevel() {
         return this.Level;
     }
+
     /**
      * Method to upgrade a single level of the roboticon.
      * <p>
      * The parameter 'Resource' specifies 'Ore', 'Energy' or 'Food' to be upgraded one level.
      * </p>
      *
-     * @param Resource
+     * @param Resource String holding the characters 'Ore', 'Energy' or 'Food'
      */
     public String upgrade(String Resource) {
-        ;
         if (Resource.equals("Ore")) {
             this.Level[0] += 1;
             return "Ore level increased";
