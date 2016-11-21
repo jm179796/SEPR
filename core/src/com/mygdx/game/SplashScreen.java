@@ -32,7 +32,7 @@ public class SplashScreen implements Screen {
         batch = new SpriteBatch();
         //Initialise sprite-batch
 
-        logo = new Sprite(new Texture("logo.png"));
+        logo = new Sprite(new Texture("image/logo.png"));
         logo.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         //Create logo sprite and match logo size to window size
     }

@@ -38,8 +38,9 @@ public class MainMenu implements Screen {
         //This is bound to change in the future for obvious reasons
 
         TextButton.TextButtonStyle menuButtonStyle = new TextButton.TextButtonStyle();
-        menuButtonStyle.font = new BitmapFont(Gdx.files.internal("font/white.fnt"), false);
+        menuButtonStyle.font = new BitmapFont(Gdx.files.internal("font/testfontbignoodle.ttf"), false);
         //Set up the format for the buttons on the menu
+        //NEED TO CONFIGURE FONT
 
         testButton = new TextButton("TEST", menuButtonStyle);
         //Initialise test button using defined style
@@ -52,7 +53,7 @@ public class MainMenu implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         //OpenGL nonsense
 
