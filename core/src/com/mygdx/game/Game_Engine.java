@@ -1,6 +1,4 @@
 package com.mygdx.game;
-import java.util.*;
-
 
 /**
  * @author Jack Mountain jm1797
@@ -10,7 +8,6 @@ import java.util.*;
 public class Game_Engine {
 	
 	public static void main() {
-
 		Player Player1 = new Player(1);
 		Player Player2 = new Player(2);
 		//assignCollege(Player1)
@@ -24,15 +21,13 @@ public class Game_Engine {
 			currentPhase += 1;
 			if (currentPhase > 5) {
 				currentPhase = 1;
-
-
 			}
 		}
 	}
 
 
 	//public static List createTiles()[
-			//need to decide how the tiles will be stored before this is implmented
+			//need to decide how the tiles will be stored before this is implemented
 
 			//]
 
@@ -43,11 +38,15 @@ public class Game_Engine {
 		//Tile.setOwner(Player);
 	}
 	
-	public static void Phase2(Player Player){
-		//detect the roboticon bought by the player
-		//Player.addRoboticon(Roboticon);
-		//Roboticon.setOwner(Player);
-		//customise Roboticon
+	public static void Phase2(Player Player) throws InterruptedException{
+		//timeLeft = 120;
+		//while(timeLeft > 0){
+			//detect the roboticon bought by the player
+				//Player.addRoboticon(Roboticon);
+				//Roboticon.setOwner(Player);
+				//customise Roboticon
+			//TimeUnit.SECONDS.sleep(1);
+			//timeLeft -= 1;
 	}
 	
 	public static void Phase3(Player Player) throws InterruptedException {
@@ -58,17 +57,11 @@ public class Game_Engine {
             //Tile.assignRoboticon(Roboticon);
             //TimeUnit.SECONDS.sleep(1);
 			//timeLeft -= 1;
-
-       // }
+		// }
     }
 
-	public static void Phase4(Player Player) throws InterruptedException {
-        //timeLeft = 120;
-		//while(timeLeft > 0){
-            //code for production of resources
-            //TimeUnit.SECONDS.sleep(1);
-			//timeLeft -= 1;	
-         //}
+	public static void Phase4(Player Player){
+		//code for production of resources
 
 	}
 
@@ -93,7 +86,11 @@ public class Game_Engine {
 			Phase1(Player);
 		}
 		else if(Phase == 2){
-			Phase2(Player);
+			try {
+				Phase2(Player);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 		else if(Phase == 3){
 			try {
@@ -103,11 +100,7 @@ public class Game_Engine {
 			}
 		}
 		else if(Phase == 4){
-			try {
-				Phase4(Player);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			Phase4(Player);
 		}
 		else{
 			Phase5(Player);
