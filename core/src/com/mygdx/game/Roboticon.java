@@ -12,26 +12,31 @@ public class Roboticon {
      * Unique numerical identifier of the roboticon.
      */
     public Integer RoboticonID;
+
     /**
      * Variable holding which player the roboticon belongs to.
      */
     public Player Owner;
+
     /**
      * Variable holding what tile the roboticon is stored on.
      */
     public Tile CurrentTile;
+
     /**
      * Integer variable determining the maximum level of roboticons allowed in the game.
      */
     private Integer MaxLevel = 3;
+
     /**
      * Array of integers holding the current level of the roboticon, stored as: [Ore, Energy, Food]
      */
-    private Integer Level[] = {0, 0, 0};
+    private Integer Level[] = {1, 1, 1};
+
     /**
      * Upgrade array, holds the possible levels of upgrade for the current robot. Stored as [Ore, Energy, Food]
      */
-    private Integer Upgrades[];
+    private Integer Upgrades[] = {0, 0, 0};
 
     /**
      * Constructor of the class
@@ -40,12 +45,15 @@ public class Roboticon {
      * @param Player A Player object to own the roboticon
      * @param Tile   A Tile object the roboticon is positioned on and therefore belongs to
      */
-    public void Roboticon(int ID, Player Player, Tile Tile) {
+    public Roboticon(int ID, Player Player, Tile Tile) {
         RoboticonID = ID;
         this.CurrentTile = Tile;
         this.Owner = Player;
     }
 
+    public Integer[] getLevel() {
+        return this.Level;
+    }
     /**
      * Method to upgrade a single level of the roboticon.
      * <p>
@@ -54,20 +62,23 @@ public class Roboticon {
      *
      * @param Resource
      */
-    public void upgrade(String Resource) throws InvalidStringArgumentException {
-
-        if (Resource == "Ore") {
+    public String upgrade(String Resource) {
+        ;
+        if (Resource.equals("Ore")) {
             this.Level[0] += 1;
+            return "Ore level increased";
 
-        } else if (Resource == "Energy") {
+        } else if (Resource.equals("Energy")) {
             this.Level[1] += 1;
+            return "Energy level increased";
 
-        } else if (Resource == "Food") {
+        } else if (Resource.equals("Food")) {
             this.Level[2] += 1;
+            return "Food level increased";
 
-        } else {
-            throw new InvalidStringArgumentException(Resource);
-        }
+        } else
+            return "Incorrect parameter passed, must be Ore, Energy or Food";
+
 
     }
 
@@ -77,17 +88,17 @@ public class Roboticon {
      * @return Upgrades
      */
     public Integer[] possibleUpgrades() {
-        if (Level[0] >= MaxLevel) {
-            Upgrades[0] = Level[0] += 1;
+        if (Level[0] <= MaxLevel) {
+            this.Upgrades[0] = this.Level[0] += 1;
         }
-        if (Level[1] >= MaxLevel) {
-            Upgrades[1] = Level[1] += 1;
+        if (Level[1] <= MaxLevel) {
+            this.Upgrades[1] = this.Level[1] += 1;
         }
-        //if (Level[2] >= MaxLevel) {
-        //    Upgrades[2] = Level[2] += 1;
-        //}
+        if (Level[2] <= MaxLevel) {
+            this.Upgrades[2] = this.Level[2] += 1;
+        }
 
-        return Upgrades;
+        return this.Upgrades;
     }
 
     /**
@@ -96,13 +107,19 @@ public class Roboticon {
      * Contains inherent randomness, not just a 1:1 ratio of level to return each phase of production. The modifier is used outside of
      * this class to multiply the inherent resources located on that tile.
      * </p>
+     *
+     * @return Modifiers Array to return the modifier for resource production, stored [Ore, Energy, Food]
      */
     public Integer[] productionModifier() {
-        Integer Modifiers[] = {1}; // Array to return the modifier for resource production, stored [Ore, Energy, Food]
-        Integer Max = 50;
+        Integer Modifiers[] = {1, 1, 1};
+        Integer Max = 5;
         Integer Min = 1;
         Random rand = new Random();
-        int n = rand.nextInt(50) + 1;
+
+        for (int i = 0; i < 3; i++) {
+            int n = rand.nextInt(Max) + Min;
+            Modifiers[i] = this.Level[i] * n;
+        }
 
         return Modifiers;
 
