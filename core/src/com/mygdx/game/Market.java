@@ -78,17 +78,22 @@ public class Market {
         switch(Stock_Type){
             case "ore":
                 if(Player.OreCount >= Quantity){
-                    OreStock = OreStock + Quantity;
+                    OreStock += Quantity;
+                    Player.Money += Quantity * OreSellPrice;
+                    Player.OreCount -= Quantity;
+                } else {
+                    System.out.println("Inscufficient resources");
                 }
-
-                // need to change players stock value and money
-
-            case "food": FoodStock = FoodStock + Quantity;
-                // need to change players stock value and money
-
+            case "food":
+                if(Player.FoodCount >= Quantity){
+                    FoodStock += Quantity;
+                    Player.Money += Quantity * FoodSellPrice;
+                    Player.FoodCount -= Quantity;
+                } else {
+                    System.out.println("Inscufficient resources");
+                }
             case "energy":
                 EnergyStock = EnergyStock + Quantity;
-                // need to change players stock value and money
 
     }
   }
