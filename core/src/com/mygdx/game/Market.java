@@ -116,8 +116,6 @@ public class Market {
             }
     private void SellPriceSetter(ResourcePriceStorage){
         // ResourcePriceStorage = OreSellPrice, FoodSellPrice...
-
-
     }
 
 
