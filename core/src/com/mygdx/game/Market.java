@@ -146,9 +146,7 @@ public class Market {
       } else {
           System.out.println("Wrong operator");
       }
-
   }
-
 
 }
 
