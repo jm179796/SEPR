@@ -150,53 +150,6 @@ public class Market {
 
 }
 
-  /*public void PriceCounter(int Stock, int costOfResoures, String oper) {
-      int cost = 0;
-      if (oper == "buy") {
-          cost = 16 / Stock + 2;
-          // Round(cost)
-      } else if (oper == "sell") {
-          cost = 16 / Stock;
-          // Round(cost)
-      } else {
-          System.out.println("Wrong operator");
-      }
-
-      if (cost < 1) {
-          costOfResoures = 1;
-      } else if (cost > 100) {
-          costOfResoures = 100;
-      } else {
-          costOfResoures = cost;
-      }
-      }
-
-    PriceCounter(OreStock, OreSellPrice, "sell");
-    PriceCounter(FoodStock, FoodSellPrice, "sell");
-    PriceCounter(EnergyStock, EnergySellPrice, "sell");
-    PriceCounter(OreStock, OreBuyPrice, "buy");
-    PriceCounter(FoodStock, FoodBuyPrice, "buy");
-    PriceCounter(EnergyStock, EnergyBuyPrice, "buy");
-*/
-
-     /* int[][][] PriceArray = {
-              {100, 90, 80, 70, 60, 50, 40, 30, 20, 10, 0 }
-              {1, 1, 2, 3, 4, 5, 6, 8, 11, 15, 30}
-              {2, 2, 3, 4, 5, 6, 7, 9, 13, 20, 0}
-            }
-    private void SellPriceSetter(ResourcePriceStorage){
-        // ResourcePriceStorage = OreSellPrice, FoodSellPrice...
-    }
-
-
-    private void BuyPriceSetter(ResourcePriceStorage){
-
-    }
-    */
-
-
-
-
   //public Integer getPrice(String Stock_Type){
     //return Stock_Type.Price;
   //}
