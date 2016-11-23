@@ -1,8 +1,10 @@
 package com.mygdx.game;
 
+import java.util.List;
+
 /**
  * @author Jack Mountain jm1797
- * @version 1.1
+ * @version 1.2
  * @since 1.0
  */
 public class Game_Engine {
@@ -61,7 +63,11 @@ public class Game_Engine {
     }
 
 	public static void Phase4(Player Player){
-		//code for production of resources
+		List<Tile> tileList = Player.getTileList();
+		for (Tile Tile : tileList){
+			Player = Tile.Produce(Player);
+		}
+
 
 	}
 
