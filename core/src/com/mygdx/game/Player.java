@@ -53,10 +53,25 @@ public class Player {
     public Player(Integer PlayerID) {
         this.PlayerID = PlayerID;
     }
+
+    /**
+     * Getter for the money attribute of the player
+     * @return Money Intgere value of the current money of the player
+     */
+    public Integer getMoney(){
+        return this.Money;
+    }
+
+    /**
+     * Setter for the money attribute
+     * @param NewMoney Integer value corresponding to the new money value desired
+     */
+    public void setMoney(Integer NewMoney){
+        this.Money = NewMoney;
+    }
     /**
      * Toggles the 'active' attribute of the player from True to False or False to True.
      */
-
     public void toggleActive() {
         if (this.Active == true) {
             this.Active = false;
