@@ -6,7 +6,8 @@
 hs_err_pid*
 
 ## Idea
-workspace.xml
+**/.idea/workspace.xml 
+**/.idea/tasks.xml
 ## Robovm
 robovm-build/
 
