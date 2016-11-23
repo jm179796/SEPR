@@ -2,6 +2,11 @@ package com.mygdx.game;
 
 import java.util.*;
 
+/**
+ * @author Martynas MM1544
+ * @version 1.0
+ * @since 1.0
+ */
 public class Market {
 
   private Integer OreStock = 0;
@@ -82,6 +87,8 @@ public class Market {
                     OreStock += Quantity;
                     this.Player.Money += Quantity * OreSellPrice;
                     this.Player.OreCount -= Quantity;
+                    calculateNewCost(OreStock, OreSellPrice, "sell");
+
                 } else {
                     System.out.println("Inscufficient resources");
                 }
@@ -90,6 +97,9 @@ public class Market {
                     FoodStock += Quantity;
                     this.Player.Money += Quantity * FoodSellPrice;
                     this.Player.FoodCount -= Quantity;
+
+                    calculateNewCost(FoodStock, FoodSellPrice, "sell");
+
                 } else {
                     System.out.println("Inscufficient resources");
                 }
@@ -98,6 +108,9 @@ public class Market {
                     EnergyStock += Quantity;
                     this.Player.Money += Quantity * EnergySellPrice;
                     this.Player.EnergyCount -= Quantity;
+
+                    calculateNewCost(EnergyStock, EnergySellPrice, "sell");
+
                 } else {
                     System.out.println("Inscufficient resources");
                 }
@@ -108,13 +121,41 @@ public class Market {
   public void gamble() {
   }
 
-  public void calculateNewCost() {
-      
+  public void calculateNewCost(int Stock, int costOfResources, String oper) {
+      double cost = 0;
+      if (Stock == 0 && oper == "buy") {
+          costOfResources = 0;
+      } else if (Stock == 0 && oper == "sell") {
+          costOfResources = 50;
+      } else if (oper == "buy") {
+          cost = 16 / Stock + 2;
+          int costInt = (int) Math.round(cost);
+          if (cost < 1) {
+              costOfResources = 1;
+          } else if (cost > 100) {
+              costOfResources = 100;
+          } else {
+              costOfResources = costInt;
+          }
 
-  }
+      } else if (oper == "sell") {
+          cost = 16 / Stock;
+          int costInt = (int) Math.round(cost);
+          if (cost < 1) {
+              costOfResources = 1;
+          } else if (cost > 100) {
+              costOfResources = 100;
+          } else {
+              costOfResources = costInt;
+          }
+      } else {
+          System.out.println("Wrong operator");
+      }
+
+}
 
   //public Integer getPrice(String Stock_Type){
     //return Stock_Type.Price;
   //}
 
-}
+
