@@ -2,6 +2,11 @@ package com.mygdx.game;
 
 import java.util.*;
 
+/**
+ * @author Martynas MM1544
+ * @version 1.0
+ * @since 1.0
+ */
 public class Market {
 
   private Integer OreStock = 0;
@@ -26,63 +31,6 @@ public class Market {
 
   private Integer RoboticonBuyPrice;
 
-<<<<<<< HEAD
-  public void buy(String Stock_Type, int Quantity, Player Player) {
-     // Player player = new Player(1);  // ??? what parameter needs to be passed to Player
-      switch (Stock_Type) {
-          case "ore":
-              if (Quantity < OreStock) {
-                  int OrePrice;
-                  OrePrice = OreBuyPrice * Quantity;
-                  if (this.Player.Money >= OrePrice) {
-                      OreStock -= Quantity;
-                      this.Player.Money -= OrePrice;
-                      this.Player.OreCount += Quantity;
-                      calculateNewCost(OreStock, OreBuyPrice, "buy");
-                  } else {
-                      System.out.println("Insufficient money");
-                  }
-              } else {
-                  System.out.println("Inscufficient resources");
-              }
-          case "food":
-              if (Quantity < FoodStock) {
-                  int FoodPrice;
-                  FoodPrice = FoodBuyPrice * Quantity;
-                  if (this.Player.Money >= FoodPrice) {
-                      FoodStock -= Quantity;
-                      this.Player.Money -= FoodPrice;
-                      this.Player.FoodCount += Quantity;
-                      calculateNewCost(FoodStock, FoodBuyPrice, "buy");
-                  } else {
-                      System.out.println("Insufficient money");
-                  }
-
-              } else {
-                  System.out.println("Inscufficient resources");
-              }
-          case "energy":
-              if (Quantity < EnergyStock) {
-                  int EnergyPrice;
-                  EnergyPrice = EnergyBuyPrice * Quantity;
-                  if (this.Player.Money >= EnergyPrice) {
-                      EnergyStock -= Quantity;
-                      this.Player.Money -= EnergyPrice;
-                      this.Player.EnergyCount += Quantity;
-                      calculateNewCost(EnergyStock, EnergyBuyPrice, "buy");
-                  } else {
-                      System.out.println("Insufficient money");
-                  }
-              } else {
-                  System.out.println("Inscufficient resources");
-              }
-
-      }
-  }
-
-
-  public void sell(String Stock_Type, int Quantity, Player Player) {
-=======
   public void buy(String Stock_Type, int Quantity ) {
     switch(Stock_Type){
       case "ore":
@@ -133,17 +81,14 @@ public class Market {
 
 
   public void sell(String Stock_Type, int Quantity) {
->>>>>>> master
         switch(Stock_Type){
             case "ore":
                 if(this.Player.OreCount >= Quantity){
                     OreStock += Quantity;
                     this.Player.Money += Quantity * OreSellPrice;
                     this.Player.OreCount -= Quantity;
-<<<<<<< HEAD
                     calculateNewCost(OreStock, OreSellPrice, "sell");
-=======
->>>>>>> master
+
                 } else {
                     System.out.println("Inscufficient resources");
                 }
@@ -152,10 +97,9 @@ public class Market {
                     FoodStock += Quantity;
                     this.Player.Money += Quantity * FoodSellPrice;
                     this.Player.FoodCount -= Quantity;
-<<<<<<< HEAD
+
                     calculateNewCost(FoodStock, FoodSellPrice, "sell");
-=======
->>>>>>> master
+
                 } else {
                     System.out.println("Inscufficient resources");
                 }
@@ -164,10 +108,9 @@ public class Market {
                     EnergyStock += Quantity;
                     this.Player.Money += Quantity * EnergySellPrice;
                     this.Player.EnergyCount -= Quantity;
-<<<<<<< HEAD
+
                     calculateNewCost(EnergyStock, EnergySellPrice, "sell");
-=======
->>>>>>> master
+
                 } else {
                     System.out.println("Inscufficient resources");
                 }
@@ -178,7 +121,6 @@ public class Market {
   public void gamble() {
   }
 
-<<<<<<< HEAD
   public void calculateNewCost(int Stock, int costOfResources, String oper) {
       double cost = 0;
       if (Stock == 0 && oper == "buy") {
@@ -209,12 +151,6 @@ public class Market {
       } else {
           System.out.println("Wrong operator");
       }
-=======
-  public void calculateNewCost() {
-      
-
->>>>>>> master
-  }
 
 }
 
