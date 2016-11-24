@@ -59,7 +59,7 @@ public class Tile {
     this.EnergyCount = EnergyCount;
     //this.FoodCount = FoodCount;
     this.EnergyModifier = EnergyModifier;
-    this.OreModifier = OreModifier
+    this.OreModifier = OreModifier;
     this.OreCount = OreCount;
     this.Landmark = Landmark;
   }
@@ -73,10 +73,10 @@ public class Tile {
     if(Roboticon_List.size() > 0) {
       for (Roboticon Roboticon : Roboticon_List) {
         Integer[] modifiers = Roboticon.productionModifier();
-        OreProduce = modifiers[0] * this.OreModifier;
+        Integer OreProduce = modifiers[0] * this.OreModifier;
         Player.varyResource("Ore", OreProduce);
         this.OreCount -= OreProduce;
-        EnergyProduce = modifiers[1] * this.EnergyModifier;
+        Integer EnergyProduce = modifiers[1] * this.EnergyModifier;
         Player.varyResource("Energy", EnergyProduce);
         this.EnergyCount -= EnergyProduce;
       }
