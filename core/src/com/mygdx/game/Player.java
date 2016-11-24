@@ -55,8 +55,15 @@ public class Player {
     }
 
     /**
+     * Getter for the tile list of the Player
+     * @return TileList A list of the tile objects that the player owns.
+     */
+    public List<Tile> getTileList(){
+        return this.TileList;
+    }
+    /**
      * Getter for the money attribute of the player
-     * @return Money Intgere value of the current money of the player
+     * @return Money Integer value of the current money of the player
      */
     public Integer getMoney(){
         return this.Money;
@@ -80,7 +87,6 @@ public class Player {
         }
     }
 
-    //add accessors
     /**
      * Changes the college of the player to the one that is specified.
      *
@@ -110,17 +116,30 @@ public class Player {
     }
 
     /**
-     * Increases/decreases the money that the player has.
+     * Increases/decreases the specified resource of the player by the specified amount
      *
-     * @param cost The amount that the player's money is to change by. Negative value for a decrease, positive for an increase.
+     * @param resource The resource that is to be modified.
+     * @param amount The amount that the player's resource is to change by. Negative value for a decrease, positive for an increase.
      */
-    public void changeMoney(int cost){
-      this.Money += cost;
-    }
 
-  //public void varyResource(string resource, int amount){
-        //Player.resource += amount;
-    //}
+    public void varyResource(String resource, int amount){
+        if(resource == "Ore"){
+            this.OreCount += amount;
+        }
+        else if(resource == "Energy"){
+            this.EnergyCount += amount;
+        }
+        //else if(resource == "Food"){
+            //this.FoodCount += amount;
+        //}
+
+        else if(resource =="Money"){
+            this.Money += amount;
+        }
+        else{
+            //exception for unknown value entered
+        }
+    }
 
     /**
      * Calculates the score of the player based on the resources that they own.
