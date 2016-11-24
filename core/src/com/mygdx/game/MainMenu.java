@@ -23,7 +23,7 @@ public class MainMenu implements Screen {
 
     private Stage stage;
     private Table table;
-    private TextButton testButton;
+    private TextButton[] buttons = new TextButton[3];
     //Establish menu environment and structure
 
     private TTFont menuFont;
@@ -58,18 +58,21 @@ public class MainMenu implements Screen {
         //FONTS NEED TO BE STORED AS .FNT FILES
         //STILL NEED TO SORT OUT BUTTON ANIMATIONS
 
-        testButton = new TextButton("TEST BUTTON", menuButtonStyle);
-        //Initialise test button using defined style
+        buttons[0] = new TextButton("Start Game", menuButtonStyle);
+        buttons[1] = new TextButton("How to Play", menuButtonStyle);
+        buttons[2] = new TextButton("Leaderboard", menuButtonStyle);
+        //Initialise menu buttons using defined style
 
-        //ROW 1
+        //ADD TITLE BAR
         menuFont.setSize(72);
         Label title = new Label("Duck-Related Game", new Label.LabelStyle(menuFont.font(), Color.BLACK));
         table.add(title);
 
-        //ROW 2
-        table.row();
-        table.add(testButton);
-
+        //ADD BUTTONS
+        for (int i = 0; i < buttons.length; i++) {
+            table.row();
+            table.add(buttons[i]);
+        }
         //FINALISE TABLE
         table.debug();
         stage.addActor(table);
