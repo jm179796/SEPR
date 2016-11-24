@@ -41,9 +41,9 @@ public class Market {
                         OreStock -= Quantity;
                         playersMoney -= OrePrice;
                         Player.setMoney(playersMoney);
-                        int playersOre = Player.getOreCount;
+                        int playersOre = Player.getOreCount();
                         playersOre += Quantity;
-                        Player.setOreCount(Quantity);
+                        Player.setOreCount(playersOre);
 
                         // thies both need to be merged in to one function
                         calculateNewCost(OreStock, OreBuyPrice, "buy");
@@ -61,7 +61,7 @@ public class Market {
                         FoodStock -= Quantity;
                         playersMoney -= FoodPrice;
                         Player.setMoney(playersMoney);
-                        int playersFood = Player.getFoodCount;
+                        int playersFood = Player.getFoodCount();
                         playersFood += Quantity;
                         Player.setFoodCount(playersFood);
                         calculateNewCost(FoodStock, FoodBuyPrice, "buy");
@@ -80,7 +80,7 @@ public class Market {
                         EnergyStock -= Quantity;
                         playersMoney -= EnergyPrice;
                         Player.setMoney(playersMoney);
-                        int playersEnergy = Player.getEnergyCount;
+                        int playersEnergy = Player.getEnergyCount();
                         playersEnergy += Quantity;
                         Player.setEnergyCount(playersEnergy);
                         calculateNewCost(EnergyStock, EnergyBuyPrice, "buy");
@@ -96,35 +96,46 @@ public class Market {
     }
 
 
-    public void sell(String Stock_Type, int Quantity) {
+    public void sell(String Stock_Type, int Quantity, Player Player) {
+        int playersMoney = Player.getMoney();
         switch (Stock_Type) {
             case "ore":
-                if (this.Player.OreCount >= Quantity) {
+                int playersOre = Player.getOreCount();
+                if (playersOre >= Quantity) {
                     OreStock += Quantity;
-                    this.Player.Money += Quantity * OreSellPrice;
-                    this.Player.OreCount -= Quantity;
+                    playersMoney += Quantity * OreSellPrice;
+                    Player.setMoney(playersMoney);
+                    playersOre -= Quantity;
+                    Player.setOreCount(playersOre);
+                    calculateNewCost(OreStock, OreBuyPrice, "buy");
                     calculateNewCost(OreStock, OreSellPrice, "sell");
 
                 } else {
                     System.out.println("Inscufficient resources");
                 }
             case "food":
-                if (this.Player.FoodCount >= Quantity) {
+                int playersFood = Player.getFoodCount;
+                if (playersFood >= Quantity) {
                     FoodStock += Quantity;
-                    this.Player.Money += Quantity * FoodSellPrice;
-                    this.Player.FoodCount -= Quantity;
-
+                    playersMoney += Quantity * FoodSellPrice;
+                    Player.setMoney(playersMoney);
+                    playersFood -= Quantity;
+                    Player.setFoodCount(playersFood);
+                    calculateNewCost(FoodStock, FoodBuyPrice, "Buy");
                     calculateNewCost(FoodStock, FoodSellPrice, "sell");
 
                 } else {
                     System.out.println("Inscufficient resources");
                 }
             case "energy":
-                if (this.Player.EnergyCount >= Quantity) {
+                int playersEnergy = Player.getEnergyCount;
+                if (playersEnergy >= Quantity) {
                     EnergyStock += Quantity;
-                    this.Player.Money += Quantity * EnergySellPrice;
-                    this.Player.EnergyCount -= Quantity;
-
+                    playersMoney += Quantity * EnergySellPrice;
+                    Player.setMoney(playersMoney);
+                    playersEnergy -= Quantity;
+                    Player.setEnergyCount(playersEnergy);
+                    calculateNewCost(EnergyStock, EnergyBuyPrice, "buy");
                     calculateNewCost(EnergyStock, EnergySellPrice, "sell");
 
                 } else {
