@@ -26,11 +26,8 @@ public class MainMenu implements Screen {
     private TextButton testButton;
     //Establish menu environment and structure
 
-    private FreeTypeFontGenerator TTFGenerator;
-    private FreeTypeFontGenerator.FreeTypeFontParameter TTFStyle = new FreeTypeFontGenerator.FreeTypeFontParameter();
-    //Set up a font-generator and a style configuration for it to work from
-    //The font-generator will serve to convert vector-type .TTF fonts into bitmapped .FNT fonts on the fly
-    //Just call an instance of the setFont() function to use it
+    private TTFont menuFont;
+    //Establish menu font
 
     public MainMenu(Game game) {
         this.game = game;
@@ -43,6 +40,9 @@ public class MainMenu implements Screen {
         table = new Table();
         //Initialise stage and button-table
 
+        menuFont = new TTFont(Gdx.files.internal("font/testfontbignoodle.ttf"), 36, Color.BLACK);
+        //Initialise menu font
+
         Gdx.input.setInputProcessor(stage);
         //Set the stage up to access user inputs
 
@@ -51,7 +51,7 @@ public class MainMenu implements Screen {
         //This is bound to change in the future for obvious reasons
 
         TextButton.TextButtonStyle menuButtonStyle = new TextButton.TextButtonStyle();
-        menuButtonStyle.font = setFont(Gdx.files.internal("font/testfontbignoodle.ttf"), 36, Color.BLACK);
+        menuButtonStyle.font = menuFont.font();
         menuButtonStyle.pressedOffsetX = 1;
         menuButtonStyle.pressedOffsetY = -1;
         //Set up the format for the buttons on the menu
@@ -59,12 +59,11 @@ public class MainMenu implements Screen {
         //STILL NEED TO SORT OUT BUTTON ANIMATIONS
 
         testButton = new TextButton("TEST BUTTON", menuButtonStyle);
-        testButton.pad(20);
         //Initialise test button using defined style
 
         //ROW 1
-        Label title = new Label("Duck-Related Game", new Label.LabelStyle(TTFGenerator.generateFont(TTFStyle), Color.BLACK));
-        title.setFontScale(2);
+        menuFont.setSize(72);
+        Label title = new Label("Duck-Related Game", new Label.LabelStyle(menuFont.font(), Color.BLACK));
         table.add(title);
 
         //ROW 2
@@ -113,66 +112,4 @@ public class MainMenu implements Screen {
     public void dispose() {
 
     }
-
-    public BitmapFont setFont(FileHandle fontFile, int size, Color color) {
-        TTFGenerator = new FreeTypeFontGenerator(fontFile);
-        TTFStyle.size = size;
-        TTFStyle.color = color;
-        TTFStyle.borderWidth = 0;
-        TTFStyle.borderColor = Color.BLACK;
-        TTFStyle.borderStraight = false;
-        TTFStyle.shadowOffsetX = 0;
-        TTFStyle.shadowOffsetY = 0;
-        TTFStyle.shadowColor = new Color(0, 0, 0, 0.75f);
-
-        return (TTFGenerator.generateFont(TTFStyle));
-    }
-    //Sets font without border or shadow
-
-    public BitmapFont setFont(FileHandle fontFile, int size, Color color, float borderWidth, Color borderColor, boolean borderStraight) {
-        TTFGenerator = new FreeTypeFontGenerator(fontFile);
-        TTFStyle.size = size;
-        TTFStyle.color = color;
-        TTFStyle.borderWidth = borderWidth;
-        TTFStyle.borderColor = borderColor;
-        TTFStyle.borderStraight = borderStraight;
-        TTFStyle.shadowOffsetX = 0;
-        TTFStyle.shadowOffsetY = 0;
-        TTFStyle.shadowColor = new Color(0, 0, 0, 0.75f);
-
-        return (TTFGenerator.generateFont(TTFStyle));
-    }
-    //Sets font without shadow but with border
-
-    public BitmapFont setFont(FileHandle fontFile, int size, Color color, int shadowOffsetX, int shadowOffsetY, Color shadowColor) {
-        TTFGenerator = new FreeTypeFontGenerator(fontFile);
-        TTFStyle.size = size;
-        TTFStyle.color = color;
-        TTFStyle.borderWidth = 0;
-        TTFStyle.borderColor = Color.BLACK;
-        TTFStyle.borderStraight = false;
-        TTFStyle.shadowOffsetX = shadowOffsetX;
-        TTFStyle.shadowOffsetY = shadowOffsetY;
-        TTFStyle.shadowColor = shadowColor;
-
-        return (TTFGenerator.generateFont(TTFStyle));
-    }
-    //Sets font without border but with shadow
-
-    public BitmapFont setFont(FileHandle fontFile, int size, Color color, float borderWidth, Color borderColor, boolean borderStraight, int shadowOffsetX, int shadowOffsetY, Color shadowColor) {
-        TTFGenerator = new FreeTypeFontGenerator(fontFile);
-        TTFStyle.size = size;
-        TTFStyle.color = color;
-        TTFStyle.borderWidth = borderWidth;
-        TTFStyle.borderColor = borderColor;
-        TTFStyle.borderStraight = borderStraight;
-        TTFStyle.shadowOffsetX = shadowOffsetX;
-        TTFStyle.shadowOffsetY = shadowOffsetY;
-        TTFStyle.shadowColor = shadowColor;
-
-        return (TTFGenerator.generateFont(TTFStyle));
-    }
-    //Sets font with border and shadow
-
-
 }
