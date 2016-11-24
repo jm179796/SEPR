@@ -59,7 +59,7 @@ public class Tile {
     this.EnergyCount = EnergyCount;
     //this.FoodCount = FoodCount;
     this.EnergyModifier = EnergyModifier;
-    this.OreModifier = OreModifier
+    this.OreModifier = OreModifier;
     this.OreCount = OreCount;
     this.Landmark = Landmark;
   }
