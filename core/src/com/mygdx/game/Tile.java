@@ -19,6 +19,16 @@ public class Tile {
    * An integer storing the amount of Ore resources available on the tile
    */
   private Integer OreCount;
+  
+  /**
+   * A modifier influincing how much energy is produced.
+   */
+  private Integer EnergyModifier;
+  
+  /**
+   * A modifier influincing how much ore is produced.
+   */
+  private Integer OreModifier;
 
   /**
    * A boolean signifying whether the tile contains a landmark or not
@@ -41,11 +51,15 @@ public class Tile {
    * @param EnergyCount The amount of energy resources that the tile initially stores.
    * @param OreCount The amount of ore resources that the tile initially stores.
    * @param Landmark A boolean to signify if the tile is to be a landmark or not.
+   * @param EnergyModifier The initial energy modifier of the tile.
+   * @param OreModifier  The initial ore modifier of the tile.
    */
-  public Tile(int TileID, int EnergyCount, int OreCount, boolean Landmark){
+  public Tile(int TileID, int EnergyCount, int OreCount, int EnergyModifier, int OreModifier, boolean Landmark){
     this.TileID = TileID;
     this.EnergyCount = EnergyCount;
     //this.FoodCount = FoodCount;
+    this.EnergyModifier = EnergyModifier;
+    this.OreModifier = OreModifier
     this.OreCount = OreCount;
     this.Landmark = Landmark;
   }
@@ -59,10 +73,12 @@ public class Tile {
     if(Roboticon_List.size() > 0) {
       for (Roboticon Roboticon : Roboticon_List) {
         Integer[] modifiers = Roboticon.productionModifier();
-        Player.varyResource("Ore", modifiers[0]);
-        this.OreCount -= modifiers[0];
-        Player.varyResource("Energy", modifiers[1]);
-        this.EnergyCount -= modifiers[1];
+        OreProduce = modifiers[0] * this.OreModifier;
+        Player.varyResource("Ore", OreProduce);
+        this.OreCount -= OreProduce;
+        EnergyProduce = modifiers[1] * this.EnergyModifier;
+        Player.varyResource("Energy", EnergyProduce);
+        this.EnergyCount -= EnergyProduce;
       }
     }
     return Player;
