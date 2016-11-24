@@ -1,5 +1,5 @@
 #DRTN SEPR
-Team: Kieran Hall, Jack Mountain, Nico Pinedo, Martynas Minskis, Joseph Leakey. \n
+##Team: Kieran Hall, Jack Mountain, Nico Pinedo, Martynas Minskis, Joseph Leakey.
 Master Build Status:      [![Build Status](https://travis-ci.org/jm179796/SEPR.svg?branch=master)](https://travis-ci.org/jm179796/SEPR)
 
 Development Build Status: [![Build Status](https://travis-ci.org/jm179796/SEPR.svg?branch=Development)](https://travis-ci.org/jm179796/SEPR)
