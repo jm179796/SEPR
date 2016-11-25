@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
 public class RobotTest {
 
     private Player TestPlayer = new Player(0);
-    private Tile TestTile = new Tile(0, 5, 5, 5, false);
+    private Tile TestTile = new Tile(0, 5, 5, 1, 1, false);
     private Roboticon TestRobot = new Roboticon(0, TestPlayer, TestTile);
 
     /**
