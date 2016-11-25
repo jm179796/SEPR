@@ -25,10 +25,15 @@ public class GameScreen implements Screen{
     //private Sprite map; //Declare map sprite and render-batch in which to put it
 
     private Stage stage;
-    private Table table;
+    private Table tableLeft;
+    private Table tableRight;
 
     private TTFont gameFont;
     //Establish menu font
+
+    private Image map;
+
+    private int tableWidth;
 
     public GameScreen(Game game) {
         this.game = game;
@@ -39,20 +44,29 @@ public class GameScreen implements Screen{
     @Override
     public void show() {
         stage = new Stage();
-        table = new Table();
+        tableLeft = new Table();
+        tableRight = new Table();
         //Initialise stage and button-table
 
         gameFont = new TTFont(Gdx.files.internal("font/testfontbignoodle.ttf"), 24, Color.WHITE);
+        //Set font for game interface
 
-        table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        //Fill the screen with the table
-        //This is bound to change in the future for obvious reasons
+        map = new Image(new Texture("image/TestMap.png"));
+        map.setPosition((Gdx.graphics.getWidth() / 2) - (map.getWidth() / 2), (Gdx.graphics.getHeight() / 2) - (map.getHeight() / 2));
+        //Initialise map texture
 
-        table.add(new Label("This is a label", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
+        tableLeft.setBounds(128, 0, tableWidth, Gdx.graphics.getHeight());
+        tableRight.setBounds(896, 0, tableWidth, Gdx.graphics.getHeight());
+        //Set table boundaries
 
-        table.debug();
-        stage.addActor(new Image(new Texture("image/TestMap.png")));
-        stage.addActor(table);
+        tableLeft.add(new Label("This is the left-hand table", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
+        tableRight.add(new Label("This is the right-hand table", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
+
+        tableLeft.debug();
+        tableRight.debug();
+        stage.addActor(map);
+        stage.addActor(tableLeft);
+        stage.addActor(tableRight);
 
         //batch = new SpriteBatch();
         //Initialise sprite-batch
