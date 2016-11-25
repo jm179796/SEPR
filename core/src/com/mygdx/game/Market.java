@@ -44,8 +44,6 @@ public class Market {
                         int playersOre = Player.getOreCount();
                         playersOre += Quantity;
                         Player.setOreCount(playersOre);
-
-                        // thies both need to be merged in to one function
                         calculateNewCost(OreStock, OreBuyPrice, "buy");
                         calculateNewCost(OreStock, OreSellPrice, "sell");
                     } else {
@@ -153,25 +151,19 @@ public class Market {
         if (Stock == 0 && oper == "buy") {
             costOfResources = 0;
         } else if (Stock == 0 && oper == "sell") {
-            costOfResources = 50;
+            costOfResources = 200;
+
+
         } else if (oper == "buy") {
-            cost = 16 / Stock + 2;
+            cost = 160 / Stock + 2;
             int costInt = (int) Math.round(cost);
-            if (cost < 1) {
-                costOfResources = 1;
-            } else if (cost > 100) {
-                costOfResources = 100;
-            } else {
-                costOfResources = costInt;
-            }
+            costOfResources = costInt;
 
         } else if (oper == "sell") {
-            cost = 16 / Stock;
+            cost = 160 / Stock;
             int costInt = (int) Math.round(cost);
-            if (cost < 1) {
+            if (costInt < 1) {
                 costOfResources = 1;
-            } else if (cost > 100) {
-                costOfResources = 100;
             } else {
                 costOfResources = costInt;
             }
