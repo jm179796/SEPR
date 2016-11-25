@@ -40,6 +40,8 @@ public class Tile {
    */
   private Player Owner;
 
+  private Integer[] Coordinates;
+
   /**
    * A list of the roboticons tht have been placed on the tile.
    */
@@ -48,13 +50,11 @@ public class Tile {
   /**
    * The constructor for the object
    * @param TileID The ID of the generated Tile.
-   * @param EnergyCount The amount of energy resources that the tile initially stores.
-   * @param OreCount The amount of ore resources that the tile initially stores.
+   * @param EnergyCount The multiplier for the production of energy.
+   * @param OreCount The multiplier for the production of ore.
    * @param Landmark A boolean to signify if the tile is to be a landmark or not.
-   * @param EnergyModifier The initial energy modifier of the tile.
-   * @param OreModifier  The initial ore modifier of the tile.
    */
-  public Tile(int TileID, int EnergyCount, int OreCount, int EnergyModifier, int OreModifier, boolean Landmark){
+  public Tile(int TileID, int EnergyCount, int OreCount, boolean Landmark, Integer[] Coordinates){
     this.TileID = TileID;
     this.EnergyCount = EnergyCount;
     //this.FoodCount = FoodCount;
@@ -62,6 +62,7 @@ public class Tile {
     this.OreModifier = OreModifier;
     this.OreCount = OreCount;
     this.Landmark = Landmark;
+    this.Coordinates = Coordinates;
   }
 
   /**
