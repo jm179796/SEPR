@@ -16,6 +16,7 @@ public class Game_Engine {
 		//assignCollege(Player1)
 		//assignCollege(Player2)
 		Market Market = new Market();
+		List<List<Tile>> TileList = createTiles();
 		int currentPhase = 1;
 		boolean gameRunning = true;
 		while (gameRunning) {
@@ -38,7 +39,7 @@ public class Game_Engine {
 	 * @return List A 2d array containing the tiles for the map. It is a 4x4 object.
 	 */
 
-	public static List createTiles() {
+	public static List<List<Tile>> createTiles() {
 		List<List<Tile>> TileList = new ArrayList<List<Tile>>();
 		for(int i = 0; i < TileList.size(); i++) {
 			TileList.add(new ArrayList<Tile>());
