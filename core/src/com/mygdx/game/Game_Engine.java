@@ -49,7 +49,8 @@ public class Game_Engine {
 		for(int x = 0; x < 4 ; x++){
 			for(int y = 0; y < 4 ; y++){
 				IDCount += 1;
-				TileList.get(x).add( new Tile(IDCount, 500, 500, rand.nextInt(3) + 1,  rand.nextInt(3) + 1, false));
+				Integer[] Coordinates = {x,y};
+				TileList.get(x).add( new Tile(IDCount,rand.nextInt(3) + 1,  rand.nextInt(3) + 1, false, Coordinates));
 			}
 		}
 		return TileList;
@@ -57,7 +58,7 @@ public class Game_Engine {
 
 	public static void Phase1(Player Player){
 		//detect selected tile of Player
-		//check if tile is adjacent to a player tile
+		//
 		//Player.assignTile(Tile);
 		//Tile.setOwner(Player);
 	}
