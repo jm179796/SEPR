@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
-import java.util.List;
+import java.util.*;
+
 
 /**
  * @author Jack Mountain jm1797
@@ -15,6 +16,7 @@ public class Game_Engine {
 		//assignCollege(Player1)
 		//assignCollege(Player2)
 		Market Market = new Market();
+		List<List<Tile>> TileList = createTiles();
 		int currentPhase = 1;
 		boolean gameRunning = true;
 		while (gameRunning) {
@@ -27,11 +29,31 @@ public class Game_Engine {
 		}
 	}
 
+	/**
+	 * This method creates a 4x4 array containing tile objects.
+	 * <p>
+	 * The ore and energy count are set to 500 initially, the ore and energy modifiers are set to a random integer
+	 * between 1 and 3. No tiles contain a landmark initially. This will be changed in another method so we can
+	 * specify which tiles have landmarks in accordance to the map.
+	 * </p>
+	 * @return List A 2d array containing the tiles for the map. It is a 4x4 object.
+	 */
 
-	//public static List createTiles()[
-			//need to decide how the tiles will be stored before this is implemented
-
-			//]
+	public static List<List<Tile>> createTiles() {
+		List<List<Tile>> TileList = new ArrayList<List<Tile>>();
+		for(int i = 0; i < TileList.size(); i++) {
+			TileList.add(new ArrayList<Tile>());
+		}
+		int IDCount = 0;
+		Random rand = new Random();
+		for(int x = 0; x < 4 ; x++){
+			for(int y = 0; y < 4 ; y++){
+				IDCount += 1;
+				TileList.get(x).add( new Tile(IDCount, 500, 500, rand.nextInt(3) + 1,  rand.nextInt(3) + 1, false));
+			}
+		}
+		return TileList;
+	}
 
 	public static void Phase1(Player Player){
 		//detect selected tile of Player
