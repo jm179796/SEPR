@@ -13,7 +13,7 @@ public class Player {
      */
     private Integer OreCount = 0;
 
-    //private Integer FoodCount = 0;
+    private Integer FoodCount = 0;
 
     /**
      *An integer storing the amount of energy a player owns.
@@ -75,6 +75,54 @@ public class Player {
      */
     public void setMoney(Integer NewMoney){
         this.Money = NewMoney;
+    }
+
+    /**
+     * Getter for OreCount
+     * @return this.OreCount the orecount of the player as an integer
+     */
+    public Integer getOreCount(){
+        return this.OreCount;
+    }
+
+    /**
+     * Getter for EnergyCount
+     * @return this.EnergyCount the Energycount of the player as an integer
+     */
+    public Integer getEnergyCount(){
+        return this.EnergyCount;
+    }
+
+    /**
+     * Getter for FoodCount
+     * @return this.FoodCount the Foodcount of the player as an integer
+     */
+    public Integer getFoodCount(){
+        return this.FoodCount;
+    }
+
+    /**
+     * Setter for Foodcount
+     * @param Newcount Integer value that the Foodcount is set to
+     */
+    public void setFoodCount(Integer Newcount){
+        this.FoodCount = Newcount;
+    }
+
+    /**
+     * Setter for Orecount
+     * @param Newcount Integer value that the Orecount is set to
+     */
+    public void setOreCount(Integer Newcount){
+        this.OreCount = Newcount;
+    }
+
+    /**
+     * Setter for Energycount
+     * @param Newcount Integer value that the Energycount is set to
+     */
+    public void setEnergyCount(Integer Newcount){
+        this.EnergyCount = Newcount;
     }
     /**
      * Toggles the 'active' attribute of the player from True to False or False to True.
