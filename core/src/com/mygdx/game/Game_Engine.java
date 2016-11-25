@@ -50,7 +50,7 @@ public class Game_Engine {
 			for(int y = 0; y < 4 ; y++){
 				IDCount += 1;
 				Integer[] Coordinates = {x,y};
-				TileList.get(x).add( new Tile(IDCount,rand.nextInt(3) + 1,  rand.nextInt(3) + 1, false, Coordinates));
+				TileList.get(x).add( new Tile(IDCount, rand.nextInt(3) + 1,  rand.nextInt(3) + 1, false, Coordinates));
 			}
 		}
 		return TileList;

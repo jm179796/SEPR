@@ -40,6 +40,9 @@ public class Tile {
    */
   private Player Owner;
 
+  /**
+   * The x and y coordinates of the tile on the map.
+   */
   private Integer[] Coordinates;
 
   /**
