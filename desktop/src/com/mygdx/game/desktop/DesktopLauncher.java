@@ -10,9 +10,10 @@ public class DesktopLauncher {
 
 		//GAME CONFIG
 		config.title = "Duck-Related Game";
-		config.width = 800;
-		config.height = 600;
+		config.width = 1024;
+		config.height = 512;
 		config.vSyncEnabled = true;
+		config.resizable = false;
 
 		new LwjglApplication(new Main(), config);
 	}
