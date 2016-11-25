@@ -32,15 +32,20 @@ public class Market {
     private Integer RoboticonBuyPrice;
 
     public void buy(String Stock_Type, int Quantity, Player Player) {
+        int playersMoney = Player.getMoney();
         switch (Stock_Type) {
             case "ore":
-                if (Quantity < OreStock) {
-                    int OrePrice;
-                    OrePrice = OreBuyPrice * Quantity;
-                    if (Player.getMoney() >= OrePrice) {
+                if (Quantity <= OreStock) {
+                    int OrePrice = OreBuyPrice * Quantity;
+                    if (playersMoney >= OrePrice) {
                         OreStock -= Quantity;
-                        this.Player.Money -= OrePrice;
-                        this.Player.OreCount += Quantity;
+                        playersMoney -= OrePrice;
+                        Player.setMoney(playersMoney);
+                        int playersOre = Player.getOreCount();
+                        playersOre += Quantity;
+                        Player.setOreCount(playersOre);
+                        calculateNewCost(OreStock, OreBuyPrice, "buy");
+                        calculateNewCost(OreStock, OreSellPrice, "sell");
                     } else {
                         System.out.println("Insufficient money");
                     }
@@ -48,13 +53,17 @@ public class Market {
                     System.out.println("Inscufficient resources");
                 }
             case "food":
-                if (Quantity < FoodStock) {
-                    int FoodPrice;
-                    FoodPrice = FoodBuyPrice * Quantity;
-                    if (this.Player.Money >= FoodPrice) {
+                if (Quantity <= FoodStock) {
+                    int FoodPrice = FoodBuyPrice * Quantity;
+                    if (playersMoney >= FoodPrice) {
                         FoodStock -= Quantity;
-                        this.Player.Money -= FoodPrice;
-                        this.Player.FoodCount += Quantity;
+                        playersMoney -= FoodPrice;
+                        Player.setMoney(playersMoney);
+                        int playersFood = Player.getFoodCount();
+                        playersFood += Quantity;
+                        Player.setFoodCount(playersFood);
+                        calculateNewCost(FoodStock, FoodBuyPrice, "buy");
+                        calculateNewCost(FoodStock, FoodSellPrice, "sell");
                     } else {
                         System.out.println("Insufficient money");
                     }
@@ -63,13 +72,17 @@ public class Market {
                     System.out.println("Inscufficient resources");
                 }
             case "energy":
-                if (Quantity < EnergyStock) {
-                    int EnergyPrice;
-                    EnergyPrice = EnergyBuyPrice * Quantity;
-                    if (this.Player.Money >= EnergyPrice) {
+                if (Quantity <= EnergyStock) {
+                    int EnergyPrice = EnergyBuyPrice * Quantity;
+                    if (playersMoney >= EnergyPrice) {
                         EnergyStock -= Quantity;
-                        this.Player.Money -= EnergyPrice;
-                        this.Player.EnergyCount += Quantity;
+                        playersMoney -= EnergyPrice;
+                        Player.setMoney(playersMoney);
+                        int playersEnergy = Player.getEnergyCount();
+                        playersEnergy += Quantity;
+                        Player.setEnergyCount(playersEnergy);
+                        calculateNewCost(EnergyStock, EnergyBuyPrice, "buy");
+                        calculateNewCost(EnergyStock, EnergySellPrice, "sell");
                     } else {
                         System.out.println("Insufficient money");
                     }
@@ -81,35 +94,46 @@ public class Market {
     }
 
 
-    public void sell(String Stock_Type, int Quantity) {
+    public void sell(String Stock_Type, int Quantity, Player Player) {
+        int playersMoney = Player.getMoney();
         switch (Stock_Type) {
             case "ore":
-                if (this.Player.OreCount >= Quantity) {
+                int playersOre = Player.getOreCount();
+                if (playersOre >= Quantity) {
                     OreStock += Quantity;
-                    this.Player.Money += Quantity * OreSellPrice;
-                    this.Player.OreCount -= Quantity;
+                    playersMoney += Quantity * OreSellPrice;
+                    Player.setMoney(playersMoney);
+                    playersOre -= Quantity;
+                    Player.setOreCount(playersOre);
+                    calculateNewCost(OreStock, OreBuyPrice, "buy");
                     calculateNewCost(OreStock, OreSellPrice, "sell");
 
                 } else {
                     System.out.println("Inscufficient resources");
                 }
             case "food":
-                if (this.Player.FoodCount >= Quantity) {
+                int playersFood = Player.getFoodCount;
+                if (playersFood >= Quantity) {
                     FoodStock += Quantity;
-                    this.Player.Money += Quantity * FoodSellPrice;
-                    this.Player.FoodCount -= Quantity;
-
+                    playersMoney += Quantity * FoodSellPrice;
+                    Player.setMoney(playersMoney);
+                    playersFood -= Quantity;
+                    Player.setFoodCount(playersFood);
+                    calculateNewCost(FoodStock, FoodBuyPrice, "Buy");
                     calculateNewCost(FoodStock, FoodSellPrice, "sell");
 
                 } else {
                     System.out.println("Inscufficient resources");
                 }
             case "energy":
-                if (this.Player.EnergyCount >= Quantity) {
+                int playersEnergy = Player.getEnergyCount;
+                if (playersEnergy >= Quantity) {
                     EnergyStock += Quantity;
-                    this.Player.Money += Quantity * EnergySellPrice;
-                    this.Player.EnergyCount -= Quantity;
-
+                    playersMoney += Quantity * EnergySellPrice;
+                    Player.setMoney(playersMoney);
+                    playersEnergy -= Quantity;
+                    Player.setEnergyCount(playersEnergy);
+                    calculateNewCost(EnergyStock, EnergyBuyPrice, "buy");
                     calculateNewCost(EnergyStock, EnergySellPrice, "sell");
 
                 } else {
@@ -127,25 +151,19 @@ public class Market {
         if (Stock == 0 && oper == "buy") {
             costOfResources = 0;
         } else if (Stock == 0 && oper == "sell") {
-            costOfResources = 50;
+            costOfResources = 200;
+
+
         } else if (oper == "buy") {
-            cost = 16 / Stock + 2;
+            cost = 160 / Stock + 2;
             int costInt = (int) Math.round(cost);
-            if (cost < 1) {
-                costOfResources = 1;
-            } else if (cost > 100) {
-                costOfResources = 100;
-            } else {
-                costOfResources = costInt;
-            }
+            costOfResources = costInt;
 
         } else if (oper == "sell") {
-            cost = 16 / Stock;
+            cost = 160 / Stock;
             int costInt = (int) Math.round(cost);
-            if (cost < 1) {
+            if (costInt < 1) {
                 costOfResources = 1;
-            } else if (cost > 100) {
-                costOfResources = 100;
             } else {
                 costOfResources = costInt;
             }
