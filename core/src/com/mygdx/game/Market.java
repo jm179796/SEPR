@@ -51,7 +51,7 @@ public class Market {
             } else {
                 System.out.println("Inscufficient resources");
             }
-        } else if("food".equals(Stock_Type)) {
+        } else if ("food".equals(Stock_Type)) {
             if (Quantity <= FoodStock) {
                 int FoodPrice = FoodBuyPrice * Quantity;
                 if (playersMoney >= FoodPrice) {
@@ -70,7 +70,7 @@ public class Market {
             } else {
                 System.out.println("Inscufficient resources");
             }
-        } else if("energy".equals(Stock_Type)) {
+        } else if ("energy".equals(Stock_Type)) {
             if (Quantity <= EnergyStock) {
                 int EnergyPrice = EnergyBuyPrice * Quantity;
                 if (playersMoney >= EnergyPrice) {
@@ -92,26 +92,25 @@ public class Market {
             System.out.println("Wrong Stock_Type passed");
         }
 
-        }
-
+    }
 
 
     public void sell(String Stock_Type, int Quantity, Player Player) {
         int playersMoney = Player.getMoney();
         if ("ore".equals(Stock_Type)) {
-                int playersOre = Player.getOreCount();
-                if (playersOre >= Quantity) {
-                    OreStock += Quantity;
-                    playersMoney += Quantity * OreSellPrice;
-                    Player.setMoney(playersMoney);
-                    playersOre -= Quantity;
-                    Player.setOreCount(playersOre);
-                    calculateNewCost(OreStock, OreBuyPrice, "buy");
-                    calculateNewCost(OreStock, OreSellPrice, "sell");
+            int playersOre = Player.getOreCount();
+            if (playersOre >= Quantity) {
+                OreStock += Quantity;
+                playersMoney += Quantity * OreSellPrice;
+                Player.setMoney(playersMoney);
+                playersOre -= Quantity;
+                Player.setOreCount(playersOre);
+                calculateNewCost(OreStock, OreBuyPrice, "buy");
+                calculateNewCost(OreStock, OreSellPrice, "sell");
 
-                } else {
-                    System.out.println("Inscufficient resources");
-                }
+            } else {
+                System.out.println("Inscufficient resources");
+            }
         } else if ("food".equals(Stock_Type)) {
             int playersFood = Player.getFoodCount();
             if (playersFood >= Quantity) {
@@ -126,25 +125,39 @@ public class Market {
             } else {
                 System.out.println("Inscufficient resources");
             }
-        } else if ("energy".equals(Stock_Type)){
-                int playersEnergy = Player.getEnergyCount();
-                if (playersEnergy >= Quantity) {
-                    EnergyStock += Quantity;
-                    playersMoney += Quantity * EnergySellPrice;
-                    Player.setMoney(playersMoney);
-                    playersEnergy -= Quantity;
-                    Player.setEnergyCount(playersEnergy);
-                    calculateNewCost(EnergyStock, EnergyBuyPrice, "buy");
-                    calculateNewCost(EnergyStock, EnergySellPrice, "sell");
+        } else if ("energy".equals(Stock_Type)) {
+            int playersEnergy = Player.getEnergyCount();
+            if (playersEnergy >= Quantity) {
+                EnergyStock += Quantity;
+                playersMoney += Quantity * EnergySellPrice;
+                Player.setMoney(playersMoney);
+                playersEnergy -= Quantity;
+                Player.setEnergyCount(playersEnergy);
+                calculateNewCost(EnergyStock, EnergyBuyPrice, "buy");
+                calculateNewCost(EnergyStock, EnergySellPrice, "sell");
 
-                } else {
-                    System.out.println("Inscufficient resources");
-                }
+            } else {
+                System.out.println("Inscufficient resources");
+            }
 
         }
     }
 
-    public void gamble() {
+    public Boolean gamble(int amountToGamble, Player Player) {
+        Random rand = new Random();
+        int result = rand.nextInt(1);
+        int playersMoney = Player.getMoney();
+        if (result == 0) {
+            playersMoney -= amountToGamble;
+            Player.setMoney(playersMoney);
+            return false;
+        }
+        else {
+            playersMoney += amountToGamble;
+            Player.setMoney(playersMoney);
+            return true;
+        }
+
     }
 
     public void calculateNewCost(int Stock, int costOfResources, String oper) {
