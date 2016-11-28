@@ -58,7 +58,14 @@ public class Game_Engine {
 
 	public static void Phase1(Player Player){
 		//detect selected tile of Player
-		//
+		//for(Tile adjacentTile:Player.getTileList()) {
+			//if (adjacentTile.getCoordinates()[0] - Tile.getCoordinates()[0] <= 1 && adjacentTile.getCoordinates()[0] - Tile.getCoordinates()[0] >= -1) {
+				//if (adjacentTile.getCoordinates()[1] - Tile.getCoordinates()[1] <= 1 && adjacentTile.getCoordinates()[1] - Tile.getCoordinates()[1] >= -1) {
+					//Player.assignTile(adjacentTile);
+					//adjacentTile.setOwner(Player);
+				//}
+			//}
+		//}
 		//Player.assignTile(Tile);
 		//Tile.setOwner(Player);
 	}

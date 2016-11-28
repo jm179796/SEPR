@@ -55,6 +55,10 @@ public class Tile {
     this.Coordinates = Coordinates;
   }
 
+  public Integer[] getCoordinates(){
+    return this.Coordinates;
+  }
+
   /**
    * Calculates how many resources are produced based on the amount of roboticons present and adds them to the player.
    * @param Player The player that is producing the resources.
