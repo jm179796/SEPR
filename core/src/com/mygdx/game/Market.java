@@ -64,6 +64,55 @@ public class Market {
     private Integer RoboticonBuyPrice;
 
     /**
+     * Getter  for OreStock
+     * @return this.OresStock is  integer ore stock value of a Market.
+     */
+    public Integer getOreStock(){
+        return this.OreStock;
+    }
+
+
+    /**
+     * Getter for OreSellPrice
+     * @return this.OreSellPrice returns ore selling price value as an integer.
+     */
+    public Integer getOreSellPrice(){
+        return this.OreSellPrice;
+    }
+
+    /**
+     * Setter for OreSellPrice.
+     * @param NewOreSellPrice integer value that OreSellPrice is set to.
+     */
+    public void setOreSellPrice(Integer NewOreSellPrice){
+        this.OreSellPrice = NewOreSellPrice;
+    }
+
+    /**
+     * Getter for OreBuyPrice.
+     * @return this.OreBuyPrice returns ore buying price as an integer.
+     */
+    public Integer getOreBuyPrice(){
+        return this.OreBuyPrice;
+    }
+
+    /**
+     * Setter for OreBuyPrice.
+     * @param NewOreBuyPrice integer value that OreBuyPrice is set to.
+     */
+    public void setOreBuyPrice(Integer NewOreBuyPrice){
+        this.OreBuyPrice = NewOreBuyPrice;
+    }
+
+    /**
+     * Setter for OreStock.
+     * @param NewOreStock integer value that OreStock is asigned to.
+     */
+    public void setOreStock(Integer NewOreStock){
+        this.OreStock = NewOreStock;
+    }
+
+    /**
      * A method that allows buying resources from the market.
      * <p>
      *Depending on what type of resources is passed ("ore", "food" or "energy") method checks whether it is sufficient
@@ -200,6 +249,7 @@ public class Market {
             }
 
         }
+
     }
 
 
@@ -220,7 +270,7 @@ public class Market {
         int playersMoney = Player.getMoney();
         if (amountToGamble <= playersMoney) {
             Random rand = new Random();
-            int result = rand.nextInt(1);
+            int result = rand.nextInt(2);
             if (result == 0) {
                 playersMoney -= amountToGamble;
                 Player.setMoney(playersMoney);
