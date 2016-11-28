@@ -89,8 +89,8 @@ public class Market {
                     int playersOre = Player.getOreCount();
                     playersOre += Quantity;
                     Player.setOreCount(playersOre);
-                    calculateNewCost(OreStock, OreBuyPrice, "buy");
-                    calculateNewCost(OreStock, OreSellPrice, "sell");
+                    OreBuyPrice = calculateNewCost(OreStock, OreBuyPrice, "buy");
+                    OreSellPrice = calculateNewCost(OreStock, OreSellPrice, "sell");
                 } else {
                     System.out.println("Insufficient money");
                 }
@@ -107,8 +107,8 @@ public class Market {
                     int playersFood = Player.getFoodCount();
                     playersFood += Quantity;
                     Player.setFoodCount(playersFood);
-                    calculateNewCost(FoodStock, FoodBuyPrice, "buy");
-                    calculateNewCost(FoodStock, FoodSellPrice, "sell");
+                    FoodBuyPrice = calculateNewCost(FoodStock, FoodBuyPrice, "buy");
+                    FoodSellPrice = calculateNewCost(FoodStock, FoodSellPrice, "sell");
                 } else {
                     System.out.println("Insufficient money");
                 }
@@ -126,8 +126,8 @@ public class Market {
                     int playersEnergy = Player.getEnergyCount();
                     playersEnergy += Quantity;
                     Player.setEnergyCount(playersEnergy);
-                    calculateNewCost(EnergyStock, EnergyBuyPrice, "buy");
-                    calculateNewCost(EnergyStock, EnergySellPrice, "sell");
+                    EnergyBuyPrice = calculateNewCost(EnergyStock, EnergyBuyPrice, "buy");
+                    EnergySellPrice = calculateNewCost(EnergyStock, EnergySellPrice, "sell");
                 } else {
                     System.out.println("Insufficient money");
                 }
@@ -164,8 +164,8 @@ public class Market {
                 Player.setMoney(playersMoney);
                 playersOre -= Quantity;
                 Player.setOreCount(playersOre);
-                calculateNewCost(OreStock, OreBuyPrice, "buy");
-                calculateNewCost(OreStock, OreSellPrice, "sell");
+                OreBuyPrice = calculateNewCost(OreStock, OreBuyPrice, "buy");
+                OreSellPrice = calculateNewCost(OreStock, OreSellPrice, "sell");
 
             } else {
                 System.out.println("Inscufficient resources");
@@ -178,8 +178,8 @@ public class Market {
                 Player.setMoney(playersMoney);
                 playersFood -= Quantity;
                 Player.setFoodCount(playersFood);
-                calculateNewCost(FoodStock, FoodBuyPrice, "Buy");
-                calculateNewCost(FoodStock, FoodSellPrice, "sell");
+                FoodBuyPrice = calculateNewCost(FoodStock, FoodBuyPrice, "Buy");
+                FoodSellPrice = calculateNewCost(FoodStock, FoodSellPrice, "sell");
 
             } else {
                 System.out.println("Inscufficient resources");
@@ -192,8 +192,8 @@ public class Market {
                 Player.setMoney(playersMoney);
                 playersEnergy -= Quantity;
                 Player.setEnergyCount(playersEnergy);
-                calculateNewCost(EnergyStock, EnergyBuyPrice, "buy");
-                calculateNewCost(EnergyStock, EnergySellPrice, "sell");
+                EnergyBuyPrice = calculateNewCost(EnergyStock, EnergyBuyPrice, "buy");
+                EnergySellPrice = calculateNewCost(EnergyStock, EnergySellPrice, "sell");
 
             } else {
                 System.out.println("Inscufficient resources");
@@ -232,7 +232,7 @@ public class Market {
             }
 
         }else {
-        return null;
+            return null;
         }
     }
 
@@ -250,19 +250,19 @@ public class Market {
      * @param costOfResources    Integer cost value of market resources.
      * @param oper               String value representing operations "buy" and "sell".
      */
-    private void calculateNewCost(int Stock, int costOfResources, String oper) {
+    private int calculateNewCost(int Stock, int costOfResources, String oper) {
         double cost;
-        if (Stock == 0 && oper == "buy") {
+        if (Stock == 0 && oper.equals("buy")) {
             costOfResources = 0;
-        } else if (Stock == 0 && oper == "sell") {
+        } else if (Stock == 0 && oper.equals("sell")) {
             costOfResources = 200;
 
 
-        } else if (oper == "buy") {
+        } else if (oper.equals("buy")) {
             cost = 160 / Stock + 2;
             costOfResources = (int) Math.round(cost);
 
-        } else if (oper == "sell") {
+        } else if (oper.equals("sell")) {
             cost = 160 / Stock;
             int costInt = (int) Math.round(cost);
             if (costInt < 1) {
@@ -273,6 +273,7 @@ public class Market {
         } else {
             System.out.println("Wrong operator");
         }
+        return costOfResources;
 
     }
     //public Integer getPrice(String Stock_Type){
