@@ -8,29 +8,75 @@ import java.util.*;
  * @since 1.0
  */
 public class Market {
-
+    /**
+     * Variable holding ore resource value.
+     */
     private Integer OreStock = 0;
 
+    /**
+     * Variable holding food resource value.
+     */
     private Integer FoodStock = 16;
 
+    /**
+     * Variable holding energy resource value.
+     */
     private Integer EnergyStock = 16;
 
+    /**
+     * Variable holding number of roboticons that are awailable on market.
+     */
     private Integer RoboticonStock = 12;
 
+    /**
+     * Variable holding ore resource selling price.
+     */
     private Integer OreSellPrice;
 
+    /**
+     * Variable holding food resource selling price.
+     */
     private Integer FoodSellPrice;
 
+    /**
+     * Variable holding energy resource selling price.
+     */
     private Integer EnergySellPrice;
 
+    /**
+     * Variable holding ore resource buying price.
+     */
     private Integer OreBuyPrice;
 
+    /**
+     * Variable holding food resource buying price.
+     */
     private Integer FoodBuyPrice;
 
+    /**
+     * Variable holding energy resource buying price.
+     */
     private Integer EnergyBuyPrice;
 
+    /**
+     * Variable holding roboticon buying price.
+     */
     private Integer RoboticonBuyPrice;
 
+    /**
+     * A method that allows buying resources from the market.
+     * <p>
+     *Depending on what type of resources is passed ("ore", "food" or "energy") method checks whether it is sufficient
+     * amount of that resource in market stock. Then it is checked whether does Player has enough money to buy required
+     * amount. Market stock value (e.g. OreStock) is reduced by the quantity that has been bought(Quantity). Players money
+     * (playersMoney) are reduced by the amount that was spent on the purchase. The value of Players resource stock is
+     * updated. New selling and buying prices, for that chosen resource, are calculated (calculateNewCost()).
+     * </p>
+     *
+     * @param Stock_Type    Type of resources (ore, energy or food) that is stored in the market.
+     * @param Quantity      The amount of resources that Player wants to buy.
+     * @param Player        A Player object.
+     */
     public void buy(String Stock_Type, int Quantity, Player Player) {
         int playersMoney = Player.getMoney();
         if ("ore".equals(Stock_Type)) {
@@ -51,7 +97,7 @@ public class Market {
             } else {
                 System.out.println("Inscufficient resources");
             }
-        } else if("food".equals(Stock_Type)) {
+        } else if ("food".equals(Stock_Type)) {
             if (Quantity <= FoodStock) {
                 int FoodPrice = FoodBuyPrice * Quantity;
                 if (playersMoney >= FoodPrice) {
@@ -70,7 +116,7 @@ public class Market {
             } else {
                 System.out.println("Inscufficient resources");
             }
-        } else if("energy".equals(Stock_Type)) {
+        } else if ("energy".equals(Stock_Type)) {
             if (Quantity <= EnergyStock) {
                 int EnergyPrice = EnergyBuyPrice * Quantity;
                 if (playersMoney >= EnergyPrice) {
@@ -92,26 +138,38 @@ public class Market {
             System.out.println("Wrong Stock_Type passed");
         }
 
-        }
+    }
 
 
-
+    /**
+     * A method that allows selling resources to the market.
+     * <p>
+     * Depending on what type of resources it is passed ("ore", "food" or "energy") method checks whether the Player has
+     * sufficient amount (Quantity) of resource that he is willing to sell. Market stock value (e.g. OreStock) is
+     * increased by the quantity that has been sold by Player. Players money(playersMoney) are increased by the amount
+     * that was gotten by selling resources. The value of Player's resource is decreased by the amount that has been sold.
+     * New selling and buying prices, for that chosen resource, are calculated (calculateNewCost()).
+     * </p>
+     * @param Stock_Type    Type of resources (ore, energy or food) that is stored in the market.
+     * @param Quantity      The amount of resources that Player wants to buy.
+     * @param Player        A Player object.
+     */
     public void sell(String Stock_Type, int Quantity, Player Player) {
         int playersMoney = Player.getMoney();
         if ("ore".equals(Stock_Type)) {
-                int playersOre = Player.getOreCount();
-                if (playersOre >= Quantity) {
-                    OreStock += Quantity;
-                    playersMoney += Quantity * OreSellPrice;
-                    Player.setMoney(playersMoney);
-                    playersOre -= Quantity;
-                    Player.setOreCount(playersOre);
-                    calculateNewCost(OreStock, OreBuyPrice, "buy");
-                    calculateNewCost(OreStock, OreSellPrice, "sell");
+            int playersOre = Player.getOreCount();
+            if (playersOre >= Quantity) {
+                OreStock += Quantity;
+                playersMoney += Quantity * OreSellPrice;
+                Player.setMoney(playersMoney);
+                playersOre -= Quantity;
+                Player.setOreCount(playersOre);
+                calculateNewCost(OreStock, OreBuyPrice, "buy");
+                calculateNewCost(OreStock, OreSellPrice, "sell");
 
-                } else {
-                    System.out.println("Inscufficient resources");
-                }
+            } else {
+                System.out.println("Inscufficient resources");
+            }
         } else if ("food".equals(Stock_Type)) {
             int playersFood = Player.getFoodCount();
             if (playersFood >= Quantity) {
@@ -126,29 +184,74 @@ public class Market {
             } else {
                 System.out.println("Inscufficient resources");
             }
-        } else if ("energy".equals(Stock_Type)){
-                int playersEnergy = Player.getEnergyCount();
-                if (playersEnergy >= Quantity) {
-                    EnergyStock += Quantity;
-                    playersMoney += Quantity * EnergySellPrice;
-                    Player.setMoney(playersMoney);
-                    playersEnergy -= Quantity;
-                    Player.setEnergyCount(playersEnergy);
-                    calculateNewCost(EnergyStock, EnergyBuyPrice, "buy");
-                    calculateNewCost(EnergyStock, EnergySellPrice, "sell");
+        } else if ("energy".equals(Stock_Type)) {
+            int playersEnergy = Player.getEnergyCount();
+            if (playersEnergy >= Quantity) {
+                EnergyStock += Quantity;
+                playersMoney += Quantity * EnergySellPrice;
+                Player.setMoney(playersMoney);
+                playersEnergy -= Quantity;
+                Player.setEnergyCount(playersEnergy);
+                calculateNewCost(EnergyStock, EnergyBuyPrice, "buy");
+                calculateNewCost(EnergyStock, EnergySellPrice, "sell");
 
-                } else {
-                    System.out.println("Inscufficient resources");
-                }
+            } else {
+                System.out.println("Inscufficient resources");
+            }
 
         }
     }
 
-    public void gamble() {
+
+    /**
+     * A method that allowes to gamble.
+     * <p>
+     * First it is checked whether a chosen amount of money is not higher than the total amount of Player's money.
+     * Number generator generates whether 0 or 1. If 0 is generated - Player loses and his money is reduced by the
+     * "amountToGamble". If 1 is generated - Player wins and his money is increased by the "amountToGamble".
+     * </p>
+     *
+     * @param amountToGamble    The amount of money that is meant to be spent for gambling.
+     * @param Player            A Player object.
+     * @return                  Returns True if Player has won, False if he lost and null if Player has less money than
+     * chosen amount of money to gamble with.
+     */
+    public Boolean gamble(int amountToGamble, Player Player) {
+        int playersMoney = Player.getMoney();
+        if (amountToGamble <= playersMoney) {
+            Random rand = new Random();
+            int result = rand.nextInt(1);
+            if (result == 0) {
+                playersMoney -= amountToGamble;
+                Player.setMoney(playersMoney);
+                return false;
+            } else {
+                playersMoney += amountToGamble;
+                Player.setMoney(playersMoney);
+                return true;
+            }
+
+        }else {
+        return null;
+        }
     }
 
-    public void calculateNewCost(int Stock, int costOfResources, String oper) {
-        double cost = 0;
+
+    /**
+     * A method that calculates cost of market selling and buying prices.
+     *
+     * <p>
+     *  When Stock value equals 0 and wanted operation is "buy", costOfResource value is set to 0. When Stock value is
+     *  equal to 0 and wanted operation is "sell", costOfResource value is set to 200.
+     *  If wanted operation is "buy", new buying price is calculated. If wanted operation is "sell", then new selling
+     *  price is calculated.
+     * </p>
+     * @param Stock              Integer values of market resources.
+     * @param costOfResources    Integer cost value of market resources.
+     * @param oper               String value representing operations "buy" and "sell".
+     */
+    private void calculateNewCost(int Stock, int costOfResources, String oper) {
+        double cost;
         if (Stock == 0 && oper == "buy") {
             costOfResources = 0;
         } else if (Stock == 0 && oper == "sell") {
@@ -157,8 +260,7 @@ public class Market {
 
         } else if (oper == "buy") {
             cost = 160 / Stock + 2;
-            int costInt = (int) Math.round(cost);
-            costOfResources = costInt;
+            costOfResources = (int) Math.round(cost);
 
         } else if (oper == "sell") {
             cost = 160 / Stock;
