@@ -55,6 +55,10 @@ public class Tile {
     this.Coordinates = Coordinates;
   }
 
+  /**
+   * Getter for the coordinates of the tile.
+   * @return The coordinates of the tile stored as an array.
+   */
   public Integer[] getCoordinates(){
     return this.Coordinates;
   }
@@ -92,6 +96,21 @@ public class Tile {
   }
 
   /**
+   * Setter for the ore count of the tile.
+   * @param Count What the count is to be changed to.
+   */
+  public void changeOreCount(int Count){
+    this.OreCount = Count;
+  }
+
+  /**
+   * Setter for the ore count of the tile.
+   * @param Count What the count is to be changed to.
+   */
+  public void changeEnergyCount(int Count){
+    this.EnergyCount = Count;
+  }
+  /**
    * Adds a roboticon to the roboticon list.
    * @param Roboticon The roboticon to be added to the list.
    */
@@ -108,10 +127,21 @@ public class Tile {
   }
 
   /**
-   * Checks if the inputed tile is adjacent to the tile.
+   * Checks if the inputted tile is adjacent to the tile by checking if either the x or the y coordinate has a distance greater than 1. If so then it is adjacent.
    * @param Tile The tile which is to be checked against.
+   * @return adjacent A boolean signifying whether the tiles are adjacent or not.
    */
-  public void isAdjacent( Tile Tile) {
+  public boolean isAdjacent( Tile Tile) {
+    boolean adjacent = false;
+    if (Tile.getCoordinates()[0] - this.getCoordinates()[0] <= 1 && Tile.getCoordinates()[0] - this.getCoordinates()[0] >= -1) {
+
+
+      if (Tile.getCoordinates()[1] - this.getCoordinates()[1] <= 1 && Tile.getCoordinates()[1] - this.getCoordinates()[1] >= -1) {
+        adjacent = true;
+      }
+    }
+
+  return adjacent;
   }
 
 }
