@@ -120,7 +120,7 @@ public class Market {
                 Player.setMoney(playersMoney);
                 playersFood -= Quantity;
                 Player.setFoodCount(playersFood);
-                calculateNewCost(FoodStock, FoodBuyPrice, "buy");
+                calculateNewCost(FoodStock, FoodBuyPrice, "Buy");
                 calculateNewCost(FoodStock, FoodSellPrice, "sell");
 
             } else {
