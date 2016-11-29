@@ -11,11 +11,14 @@ public class GameTimer extends com.badlogic.gdx.scenes.scene2d.ui.Label {
     private int minutes;
     private int seconds;
     private Timer timer;
+    //Declare a timer and some appropriate variables to track time
 
     public GameTimer(int minutes, int seconds, TTFont font) {
         super("", new LabelStyle(font.font(), font.color()));
+        //Set up timer label with the TTFont provided
 
         setTime(minutes, seconds);
+        //Render the time given
 
         timer = new Timer();
         timer.scheduleTask(new Timer.Task() {
@@ -23,16 +26,19 @@ public class GameTimer extends com.badlogic.gdx.scenes.scene2d.ui.Label {
             public void run() {
                 decrement();
             }
-        }, 1000);
+        }, 1, 1);
+        //Set up local timer to decrement internal time variables after every second
     }
 
     public void setTime(int minutes, int seconds) {
         if (seconds >= 60) {
             throw new ValueException("Invalid Number of Seconds");
+            //Check to see if the given time is valid
         } else {
             this.minutes = minutes;
             this.seconds = seconds;
-            updateTime();
+            this.setText(String.format("%02d", this.minutes) + ":" + String.format("%02d", this.seconds));
+            //Instantiate private time variables with new values and render it out
         }
     }
 
@@ -40,35 +46,27 @@ public class GameTimer extends com.badlogic.gdx.scenes.scene2d.ui.Label {
         if (seconds == 0) {
             if (minutes == 0) {
                 stop();
+                //Stop the timer if it ever reaches 0
             } else {
-                minutes -= 1;
-                seconds = 59;
-                updateTime();
+                setTime(minutes - 1, 59);
+                //Roll over to the next minute if the seconds counter ever reaches 0 and there are still minutes left on the clock
             }
         } else {
-            seconds -= 1;
-            updateTime();
+            setTime(minutes, seconds - 1);
+            //Decrement the seconds counter if there are still seconds on the clock
         }
     }
 
-    private void updateTime() {
-        this.setText(String.format("%02d", minutes) + ":" + String.format("%02d", seconds));
-    }
-
-    public int getMinutes() {
+    public int minutes() {
         return minutes;
     }
 
-    public int getSeconds() {
+    public int seconds() {
         return seconds;
     }
 
     public void start() {
-        if (minutes <= 0 && seconds <= 0) {
-            throw new RuntimeException("Timer Must Be Reset");
-        } else {
-            timer.start();
-        }
+        timer.start();
     }
 
     public void stop() {

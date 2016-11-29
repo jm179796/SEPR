@@ -16,26 +16,30 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Timer;
 import javafx.scene.control.Tab;
 
 public class GameScreen implements Screen{
 
-    private Game game; //Stores current game-state, enabling transitions between screens
-    //private SpriteBatch batch;
-    //private Sprite map; //Declare map sprite and render-batch in which to put it
+    private Game game;
+    //Stores current game-state, enabling transitions between screens
 
     private Stage stage;
     private Table tableLeft;
     private Table tableRight;
+    //Establish stage and side-hand tables
 
     private TTFont gameFont;
     //Establish menu font
 
     private Image map;
+    //Establish in-game map
 
     private float tableWidth;
+    //Establish variable for holding sizes of in-game tables
 
     private GameTimer timer;
+    //Establish game-timer
 
     public GameScreen(Game game) {
         this.game = game;
@@ -59,28 +63,27 @@ public class GameScreen implements Screen{
 
         tableWidth = (Gdx.graphics.getWidth() - map.getWidth()) / 2;
         //Set widths of side-hand tables
+        //This will always be 256 for as long as the size of the game's window is fixed
+        //The purpose of this variable is to facilitate the later implementation of window resizing
 
-        timer = new GameTimer(2, 0, gameFont);
+        timer = new GameTimer(0, 10, gameFont);
+        //Set up game timer
 
         tableLeft.setBounds(0, 0, tableWidth, Gdx.graphics.getHeight());
-        tableRight.setBounds(768, 0, tableWidth, Gdx.graphics.getHeight());
+        tableRight.setBounds((Gdx.graphics.getWidth() / 2) + (map.getWidth() / 2), 0, tableWidth, Gdx.graphics.getHeight());
         //Set table boundaries
 
         tableLeft.add(timer);
         tableRight.add(new Label("This is the right-hand table", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
+        //Add timer and test-label to side-hand tables
 
         tableLeft.debug();
         tableRight.debug();
+        //Render table boundaries for testing purposes
         stage.addActor(map);
         stage.addActor(tableLeft);
         stage.addActor(tableRight);
-
-        //batch = new SpriteBatch();
-        //Initialise sprite-batch
-
-        //map = new Sprite(new Texture("image/TestMap.png"));
-        //map.setSize(x,y); //sets window to size x,y
-
+        //Add map and tables to game screen
     }
 
     @Override
@@ -90,16 +93,12 @@ public class GameScreen implements Screen{
         //OpenGL nonsense
         //First instruction sets background colour
 
-        //batch.begin();
-        //map.draw(batch);
-        //batch.end();
-        //Draw map in batch
-
         stage.act(delta);
         stage.draw();
         //Draw the stage onto the screen
 
         timer.start();
+        //Start in-game timer
     }
 
     @Override
