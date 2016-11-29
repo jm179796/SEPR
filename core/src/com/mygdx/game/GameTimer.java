@@ -1,7 +1,6 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.utils.Timer;
-import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 
 /**
  * Created by Joseph on 29/11/2016.
@@ -13,12 +12,22 @@ public class GameTimer extends com.badlogic.gdx.scenes.scene2d.ui.Label {
     private Timer timer;
     //Declare a timer and some appropriate variables to track time
 
-    public GameTimer(int minutes, int seconds, TTFont font) {
-        super("", new LabelStyle(font.font(), font.color()));
-        //Set up timer label with the TTFont provided
+    private Runnable terminalMethod;
+    //Holds the method that will be executed when the local timer runs out
 
-        setTime(minutes, seconds);
-        //Render the time given
+    public GameTimer(int minutes, int seconds, TTFont font, Runnable end) {
+        super("", new LabelStyle(font.font(), font.color()));
+        //Set up timer label with the provided TTFont
+
+        if ((minutes == 0 && seconds == 0) || minutes < 0 || seconds < 0) {
+            throw new RuntimeException("Invalid Internal Time");
+        } else {
+            setTime(minutes, seconds);
+        }
+        //Set and render the provided amount of time
+
+        this.terminalMethod = end;
+        //Set up the given terminal method for execution when the private timer runs out
 
         timer = new Timer();
         timer.scheduleTask(new Timer.Task() {
@@ -27,33 +36,55 @@ public class GameTimer extends com.badlogic.gdx.scenes.scene2d.ui.Label {
                 decrement();
             }
         }, 1, 1);
-        //Set up local timer to decrement internal time variables after every second
+        //Set up the local timer to decrement internal time variables after every second
     }
 
+    public GameTimer(int minutes, int seconds, TTFont font) {
+        this(minutes, seconds, font, new Runnable() {
+            @Override
+            public void run() {
+                return;
+            }
+        });
+    }
+    //Alternative constructor that establishes a timer without a useful terminal method
+
+    public GameTimer(int seconds, TTFont font, Runnable end) {
+        this(0, seconds, font, end);
+    }
+    //Alternative constructor that sets a timer to count down from a number of seconds
+
+    public GameTimer(int seconds, TTFont font) {
+        this(0, seconds, font, new Runnable() {
+            @Override
+            public void run() {
+                return;
+            }
+        });
+    }
+    //Alternative constructor that sets a timer without a useful terminal method to count down from a number of seconds
+
     public void setTime(int minutes, int seconds) {
-        if (seconds >= 60) {
-            throw new ValueException("Invalid Number of Seconds");
-            //Check to see if the given time is valid
-        } else {
-            this.minutes = minutes;
-            this.seconds = seconds;
-            this.setText(String.format("%02d", this.minutes) + ":" + String.format("%02d", this.seconds));
-            //Instantiate private time variables with new values and render it out
-        }
+        this.minutes = minutes + (seconds / 60);
+        this.seconds = seconds % 60;
+        this.setText(String.format("%02d", this.minutes) + ":" + String.format("%02d", this.seconds));
+        //Instantiate private time variables with new values and render it out
     }
 
     private void decrement() {
-        if (seconds == 0) {
-            if (minutes == 0) {
-                stop();
-                //Stop the timer if it ever reaches 0
-            } else {
-                setTime(minutes - 1, 59);
-                //Roll over to the next minute if the seconds counter ever reaches 0 and there are still minutes left on the clock
-            }
+        if (seconds == 0 && minutes > 0) {
+            setTime(minutes - 1, 59);
+            //Roll over on to the next minute if the seconds' counter ever reaches 0 and there are still minutes left on the clock
         } else {
             setTime(minutes, seconds - 1);
             //Decrement the seconds counter if there are still seconds on the clock
+        }
+
+        if (minutes == 0 && seconds == 0) {
+            timer.stop();
+            terminalMethod.run();
+            //Stop the timer if it ever reaches 0...
+            //...and execute the object's terminal method
         }
     }
 
@@ -73,4 +104,8 @@ public class GameTimer extends com.badlogic.gdx.scenes.scene2d.ui.Label {
         timer.stop();
     }
 
+    private void setTerminalMethod(Runnable terminalMethod) {
+        this.terminalMethod = terminalMethod;
+    }
+    //Allow for the timer's terminal method to be reset
 }

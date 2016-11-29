@@ -29,6 +29,8 @@ public class GameScreen implements Screen{
     private Table tableRight;
     //Establish stage and side-hand tables
 
+    private Table buttonGrid;
+
     private TTFont gameFont;
     //Establish menu font
 
@@ -66,7 +68,13 @@ public class GameScreen implements Screen{
         //This will always be 256 for as long as the size of the game's window is fixed
         //The purpose of this variable is to facilitate the later implementation of window resizing
 
-        timer = new GameTimer(0, 10, gameFont);
+        timer = new GameTimer(120, gameFont, new Runnable() {
+            @Override
+            public void run() {
+                tableLeft.row();
+                tableLeft.add(new Label("This pops up when the timer runs out", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
+            }
+        });
         //Set up game timer
 
         tableLeft.setBounds(0, 0, tableWidth, Gdx.graphics.getHeight());
@@ -84,6 +92,9 @@ public class GameScreen implements Screen{
         stage.addActor(tableLeft);
         stage.addActor(tableRight);
         //Add map and tables to game screen
+
+        timer.start();
+        //Start in-game timer
     }
 
     @Override
@@ -96,9 +107,6 @@ public class GameScreen implements Screen{
         stage.act(delta);
         stage.draw();
         //Draw the stage onto the screen
-
-        timer.start();
-        //Start in-game timer
     }
 
     @Override
