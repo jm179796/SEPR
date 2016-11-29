@@ -326,6 +326,18 @@ public class Market {
         return costOfResources;
 
     }
+
+
+    public void buyRoboticon(int RoboticonID, Player player, Tile tile) {
+        if(RoboticonStock > 0) {
+            RoboticonStock -= 1;
+        } else System.out.println("No available Roboticons");
+
+        Roboticon NewRoboticon = new Roboticon(RoboticonID, player, tile);
+        tile.addRoboticon(NewRoboticon);
+        player.addRoboticon(NewRoboticon);
+    }
+
     //public Integer getPrice(String Stock_Type){
     //return Stock_Type.Price;
     //}

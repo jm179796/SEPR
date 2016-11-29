@@ -1,6 +1,7 @@
 package de.tomgrill.gdxtesting;
 
 import org.junit.Test;
+import org.junit.Before;
 import com.mygdx.game.*;
 
 import java.util.Arrays;
@@ -20,6 +21,15 @@ public class marketTest {
 
 
 
+
+    @Before
+    public void setUp() {
+        TestPlayer.setOreCount(10);
+        TestPlayer.setMoney(10);
+        TestMarket.setOreSellPrice(10);
+        TestMarket.setOreBuyPrice(10);
+        TestMarket.setOreStock(10);
+    }
     /**
      * Tests sell method.
      * <p>
@@ -73,23 +83,23 @@ public class marketTest {
 
     }
 
-    @Test
-    public void gambleTest() {
-        //TestPlayer.setMoney(100);
-        //System.out.println(TestPlayer.getMoney());
-       // TestMarket.gamble(50, TestPlayer);
-        //System.out.println(TestPlayer.getMoney());
-
-        TestPlayer.setMoney(50);
-        System.out.println(TestPlayer.getMoney());
-
-        TestMarket.gamble(50, TestPlayer);
-        Integer TestMoney = 0;
-        assertEquals(TestMoney, TestPlayer.getMoney());
-
-        //System.out.println(TestPlayer.getMoney());
-    }
-
+//    @Test
+//    public void gambleTest() {
+//        //TestPlayer.setMoney(100);
+//        //System.out.println(TestPlayer.getMoney());
+//       // TestMarket.gamble(50, TestPlayer);
+//        //System.out.println(TestPlayer.getMoney());
+//
+//        TestPlayer.setMoney(50);
+//        System.out.println(TestPlayer.getMoney());
+//
+//        TestMarket.gamble(50, TestPlayer);
+//        Integer TestMoney = 0;
+//        assertEquals(TestMoney, TestPlayer.getMoney());
+//
+//        //System.out.println(TestPlayer.getMoney());
 }
+
+
 
 

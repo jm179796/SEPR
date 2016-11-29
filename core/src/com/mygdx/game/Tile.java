@@ -47,6 +47,9 @@ public class Tile {
    */
   private List<Roboticon> Roboticon_List = new ArrayList<Roboticon>();
 
+  public void addRoboticon(Roboticon roboticon) {
+    Roboticon_List.add(roboticon);
+  }
   /**
    * The constructor for the object
    * @param TileID The ID of the generated Tile.
