@@ -33,7 +33,9 @@ public class GameScreen implements Screen{
 
     private Image map;
 
-    private int tableWidth;
+    private float tableWidth;
+
+    private GameTimer timer;
 
     public GameScreen(Game game) {
         this.game = game;
@@ -55,11 +57,16 @@ public class GameScreen implements Screen{
         map.setPosition((Gdx.graphics.getWidth() / 2) - (map.getWidth() / 2), (Gdx.graphics.getHeight() / 2) - (map.getHeight() / 2));
         //Initialise map texture
 
-        tableLeft.setBounds(128, 0, tableWidth, Gdx.graphics.getHeight());
-        tableRight.setBounds(896, 0, tableWidth, Gdx.graphics.getHeight());
+        tableWidth = (Gdx.graphics.getWidth() - map.getWidth()) / 2;
+        //Set widths of side-hand tables
+
+        timer = new GameTimer(2, 0, gameFont);
+
+        tableLeft.setBounds(0, 0, tableWidth, Gdx.graphics.getHeight());
+        tableRight.setBounds(768, 0, tableWidth, Gdx.graphics.getHeight());
         //Set table boundaries
 
-        tableLeft.add(new Label("This is the left-hand table", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
+        tableLeft.add(timer);
         tableRight.add(new Label("This is the right-hand table", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
 
         tableLeft.debug();
@@ -91,6 +98,8 @@ public class GameScreen implements Screen{
         stage.act(delta);
         stage.draw();
         //Draw the stage onto the screen
+
+        timer.start();
     }
 
     @Override
