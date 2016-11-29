@@ -71,6 +71,13 @@ public class Market {
         return this.OreStock;
     }
 
+    /**
+     * Setter for OreStock.
+     * @param NewOreStock integer value that OreStock is asigned to.
+     */
+    public void setOreStock(Integer NewOreStock){
+        this.OreStock = NewOreStock;
+    }
 
     /**
      * Getter for OreSellPrice
@@ -105,12 +112,101 @@ public class Market {
     }
 
     /**
-     * Setter for OreStock.
-     * @param NewOreStock integer value that OreStock is asigned to.
+     * Getter  for FoodStock
+     * @return this.FoodStock is  integer food stock value of a Market.
      */
-    public void setOreStock(Integer NewOreStock){
-        this.OreStock = NewOreStock;
+    public Integer getFoodStock(){
+        return this.FoodStock;
     }
+
+    /**
+     * Setter for FoodStock.
+     * @param NewFoodStock integer value that FoodStock is asigned to.
+     */
+    public void setFoodStock(Integer NewFoodStock){
+        this.FoodStock = NewFoodStock;
+    }
+
+    /**
+     * Getter for FoodSellPrice
+     * @return this.FoodSellPrice returns food selling price value as an integer.
+     */
+    public Integer getFoodSellPrice(){
+        return this.FoodSellPrice;
+    }
+
+    /**
+     * Setter for FoodSellPrice.
+     * @param NewFoodSellPrice integer value that FoodSellPrice is set to.
+     */
+    public void setFoodSellPrice(Integer NewFoodSellPrice){
+        this.FoodSellPrice = NewFoodSellPrice;
+    }
+
+    /**
+     * Getter for FoodBuyPrice.
+     * @return this.FoodBuyPrice returns food buying price as an integer.
+     */
+    public Integer getFoodBuyPrice(){
+        return this.FoodBuyPrice;
+    }
+
+    /**
+     * Setter for FoodBuyPrice.
+     * @param NewFoodBuyPrice integer value that FoodBuyPrice is set to.
+     */
+    public void setFoodBuyPrice(Integer NewFoodBuyPrice){
+        this.FoodBuyPrice = NewFoodBuyPrice;
+    }
+
+    /**
+     * Getter  for EnergyStock
+     * @return this.EnergyStock is  integer energy stock value of a Market.
+     */
+    public Integer getEnergyStock(){
+        return this.EnergyStock;
+    }
+
+    /**
+     * Setter for EnergyStock.
+     * @param NewEnergyStock integer value that EnergyStock is asigned to.
+     */
+    public void setEnergyStock(Integer NewEnergyStock){
+        this.EnergyStock = NewEnergyStock;
+    }
+
+    /**
+     * Getter for EnergySellPrice
+     * @return this.EnergySellPrice returns energy selling price value as an integer.
+     */
+    public Integer getEnergySellPrice(){
+        return this.EnergySellPrice;
+    }
+
+    /**
+     * Setter for EnergySellPrice.
+     * @param NewEnergySellPrice integer value that EnergySellPrice is set to.
+     */
+    public void setEnergySellPrice(Integer NewEnergySellPrice){
+        this.EnergySellPrice = NewEnergySellPrice;
+    }
+
+    /**
+     * Getter for EnergyBuyPrice.
+     * @return this.EnergyBuyPrice returns energy buying price as an integer.
+     */
+    public Integer getEnergyBuyPrice(){
+        return this.EnergyBuyPrice;
+    }
+
+    /**
+     * Setter for EnergyBuyPrice.
+     * @param NewEnergyBuyPrice integer value that EnergyBuyPrice is set to.
+     */
+    public void setEnergyBuyPrice(Integer NewEnergyBuyPrice){
+        this.EnergyBuyPrice = NewEnergyBuyPrice;
+    }
+
 
     /**
      * A method that allows buying resources from the market.
@@ -227,7 +323,7 @@ public class Market {
                 Player.setMoney(playersMoney);
                 playersFood -= Quantity;
                 Player.setFoodCount(playersFood);
-                FoodBuyPrice = calculateNewCost(FoodStock, FoodBuyPrice, "Buy");
+                FoodBuyPrice = calculateNewCost(FoodStock, FoodBuyPrice, "buy");
                 FoodSellPrice = calculateNewCost(FoodStock, FoodSellPrice, "sell");
 
             } else {
@@ -306,7 +402,6 @@ public class Market {
             costOfResources = 0;
         } else if (Stock == 0 && oper.equals("sell")) {
             costOfResources = 200;
-
 
         } else if (oper.equals("buy")) {
             cost = 160 / Stock + 2;
