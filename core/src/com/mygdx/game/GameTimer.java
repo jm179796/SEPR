@@ -36,7 +36,9 @@ public class GameTimer extends com.badlogic.gdx.scenes.scene2d.ui.Label {
                 decrement();
             }
         }, 1, 1);
+        timer.stop();
         //Set up the local timer to decrement internal time variables after every second
+        //The "timer.stop()" instruction prevents the timer from starting as soon as it's instantiated
     }
 
     public GameTimer(int minutes, int seconds, TTFont font) {
@@ -104,8 +106,17 @@ public class GameTimer extends com.badlogic.gdx.scenes.scene2d.ui.Label {
         timer.stop();
     }
 
-    private void setTerminalMethod(Runnable terminalMethod) {
+    public void setTerminalMethod(Runnable terminalMethod) {
         this.terminalMethod = terminalMethod;
     }
-    //Allow for the timer's terminal method to be reset
+    //Allows for the timer's terminal method to be reset
+
+    public Runnable getTerminalMethod() {
+        return this.terminalMethod;
+    }
+
+    public void runTerminalMethod() {
+        this.terminalMethod.run();
+    }
+    //Allows for the timer's terminal method to be run at any time
 }
