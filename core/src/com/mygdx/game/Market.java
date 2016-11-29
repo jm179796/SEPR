@@ -327,15 +327,30 @@ public class Market {
 
     }
 
-
-    public void buyRoboticon(int RoboticonID, Player player, Tile tile) {
-        if(RoboticonStock > 0) {
-            RoboticonStock -= 1;
+    /**
+     * A method that allows to buy a Roboticon.
+     * <p>
+     * Ferst method checks whether there are any available roboticons left. Then it is checked whether player has enough
+     * money to buy Roboticon. Roboticon object is created and assigned to Tile and to Player objects. Robotikon stock
+     * number is decreased by one. Player's money are decreased by amount that was spent on purchase.
+     * </p>
+     * @param RoboticonID   An integer uniquely defining the Roboticon, starting at 0.
+     * @param Player        A Player object that owns the Roboticon.
+     * @param Tile          A Tile object the Roboticon is positioned on and belongs to it.
+     */
+    public void buyRoboticon(int RoboticonID, Player Player, Tile Tile) {
+        if (RoboticonStock > 0) {
+            if (Player.getMoney() >= RoboticonBuyPrice) {
+                Roboticon NewRoboticon = new Roboticon(RoboticonID, Player, Tile);
+                Tile.assignRoboticon(NewRoboticon);
+                Player.addRoboticon(NewRoboticon);
+                RoboticonStock -= 1;
+                Player.setMoney(Player.getMoney() - RoboticonBuyPrice);
+            } else {
+                System.out.println("Insufficient money");
+            }
         } else System.out.println("No available Roboticons");
 
-        Roboticon NewRoboticon = new Roboticon(RoboticonID, player, tile);
-        tile.addRoboticon(NewRoboticon);
-        player.addRoboticon(NewRoboticon);
     }
 
     //public Integer getPrice(String Stock_Type){
