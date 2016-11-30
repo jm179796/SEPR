@@ -20,14 +20,12 @@ public class Drawer {
     }
 
 
-    public void rectangle(ShapeRenderer renderer, Color color, ShapeRenderer.ShapeType type, int x, int y, int width, int height, boolean endAfterDraw) {
-        if (renderer.isDrawing() && renderer.getCurrentType() != type) {
-            renderer.set(type);
-        } else if (!renderer.isDrawing()) {
-            renderer.begin(type);
-        }
-        //Set renderer to render given shape-type if it isn't set to render that type already...
-        //...or turn it on if it's currently inactive
+    public void rectangle(ShapeRenderer.ShapeType type, Color color, int x, int y, int width, int height) {
+        ShapeRenderer renderer = new ShapeRenderer();
+        //Establish shape-renderer
+
+        renderer.begin(type);
+        //Activate the renderer
 
         renderer.setColor(color);
         //Set the colour of the rectangle to be rendered
@@ -35,30 +33,16 @@ public class Drawer {
         renderer.rect(x, Gdx.graphics.getHeight() - y, width, height);
         //Render a rectangle with the specified parameters
 
-        if (endAfterDraw == true) {
-            renderer.end();
-        }
-        //Shut the renderer down if the user wants to
+        renderer.end();
+        //Shut the renderer down after the shape has been drawn
     }
 
-    public void rectangle(ShapeRenderer renderer, Color color, ShapeRenderer.ShapeType type, int x, int y, int width, int height) {
-        rectangle(renderer, color, type, x, y, width, height, false);
+    public void filledRectangle(Color color, int x, int y, int width, int height) {
+        rectangle(ShapeRenderer.ShapeType.Filled, color, x, y, width, height);
     }
 
-    public void filledRectangle(ShapeRenderer renderer, Color color, int x, int y, int width, int height, boolean endAfterDraw) {
-        rectangle(renderer, color, ShapeRenderer.ShapeType.Filled, x, y, width, height, endAfterDraw);
-    }
-
-    public void filledRectangle(ShapeRenderer renderer, Color color, int x, int y, int width, int height) {
-        rectangle(renderer, color, ShapeRenderer.ShapeType.Filled, x, y, width, height, false);
-    }
-
-    public void lineRectangle(ShapeRenderer renderer, Color color, int x, int y, int width, int height, boolean endAfterDraw) {
-        rectangle(renderer, color, ShapeRenderer.ShapeType.Line, x, y, width, height, endAfterDraw);
-    }
-
-    public void lineRectangle(ShapeRenderer renderer, Color color, int x, int y, int width, int height) {
-        rectangle(renderer, color, ShapeRenderer.ShapeType.Line, x, y, width, height, false);
+    public void lineRectangle(Color color, int x, int y, int width, int height) {
+        rectangle(ShapeRenderer.ShapeType.Line, color, x, y, width, height);
     }
 
     public void debug(Stage stage) {

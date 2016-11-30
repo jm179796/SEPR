@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Align;
 import com.mygdx.game.Drawer;
 
 public class GameScreen implements Screen{
@@ -42,7 +43,7 @@ public class GameScreen implements Screen{
     private Button[] tileButtons;
     //Establish invisible buttons to lay over the map's tiles
 
-    private float tableWidth;
+    private int tableWidth;
     //Establish variable for holding sizes of in-game tables
 
     private GameTimer timer;
@@ -101,21 +102,13 @@ public class GameScreen implements Screen{
         stage.addActor(tileGrid);
         //Populate tile-grid with invisible buttons and deploy it on to the stage
 
-        tableWidth = (Gdx.graphics.getWidth() - map.getWidth()) / 2;
+        tableWidth = (int) ((Gdx.graphics.getWidth() - map.getWidth()) / 2);
         //Set widths of side-hand tables
         //This will always be 256 for as long as the size of the game's window is fixed
         //The purpose of this variable is to facilitate the later implementation of window resizing
 
         gameFont.setSize(120);
-        timer = new GameTimer(5, gameFont, Color.WHITE, new Runnable() {
-            @Override
-            public void run() {
-                gameFont.setSize(24);
-
-                tableLeft.row();
-                tableLeft.add(new Label("This pops up when the timer runs out", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
-            }
-        });
+        timer = new GameTimer(120, gameFont, Color.WHITE);
         //Set up game timer
         //"Runnable" parameter specifies code to be executed when the timer runs out
 
@@ -123,7 +116,7 @@ public class GameScreen implements Screen{
         constructRightTable();
         //Construct and deploy side-hand tables
 
-        drawer.debug(stage);
+        //drawer.debug(stage);
         //Call this to draw temporary debug lines around all of the actors on the stage
 
         timer.start();
@@ -141,7 +134,8 @@ public class GameScreen implements Screen{
         stage.draw();
         //Draw the stage onto the screen
 
-        drawer.filledRectangle(new ShapeRenderer(), Color.WHITE, 50, 50, 50, 10, true);
+        drawer.filledRectangle(Color.WHITE, 0, (int) (timer.getHeight()), tableWidth, 1);
+        drawer.filledRectangle(Color.WHITE, 0, (int) (timer.getHeight() + foodCounter.getHeight() + waterCounter.getHeight() + oreCounter.getHeight() + 20), tableWidth, 1);
     }
 
     @Override
@@ -183,6 +177,9 @@ public class GameScreen implements Screen{
         tableLeft.setBounds(0, 0, tableWidth, Gdx.graphics.getHeight());
         //Set boundaries of left-hand table
 
+        tableLeft.center().top();
+        //Shift the table towards the top of the screen
+
         tableLeft.add(timer).top();
 
         gameFont.setSize(24);
@@ -191,11 +188,14 @@ public class GameScreen implements Screen{
         oreCounter = new Label("Test", new Label.LabelStyle(gameFont.font(), Color.WHITE));
 
         tableLeft.row();
-        tableLeft.add(new LabelledElement("Food", gameFont, Color.WHITE, foodCounter, 150));
+        tableLeft.add(new LabelledElement("Food", gameFont, Color.WHITE, foodCounter, 175)).padTop(10);
         tableLeft.row();
-        tableLeft.add(new LabelledElement("Water", gameFont, Color.WHITE, waterCounter, 150));
+        tableLeft.add(new LabelledElement("Water", gameFont, Color.WHITE, waterCounter, 175));
         tableLeft.row();
-        tableLeft.add(new LabelledElement("Ore", gameFont, Color.WHITE, oreCounter, 150));
+        tableLeft.add(new LabelledElement("Ore", gameFont, Color.WHITE, oreCounter, 175));
+
+        tableLeft.row();
+        tableLeft.add(new Label("Roboticon Shop Area", new Label.LabelStyle(gameFont.font(), Color.WHITE))).padTop(20);
 
         stage.addActor(tableLeft);
         //Add left-hand table to the stage
