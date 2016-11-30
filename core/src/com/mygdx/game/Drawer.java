@@ -19,7 +19,6 @@ public class Drawer {
         //Import current game-state
     }
 
-
     public void rectangle(ShapeRenderer.ShapeType type, Color color, int x, int y, int width, int height) {
         ShapeRenderer renderer = new ShapeRenderer();
         //Establish shape-renderer

@@ -11,7 +11,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import java.util.Timer;
+import com.badlogic.gdx.utils.Timer;
 
 public class SplashScreen implements Screen {
 
@@ -21,6 +21,12 @@ public class SplashScreen implements Screen {
     private SpriteBatch batch;
     private Sprite logo;
     //Declare logo sprite and render-batch in which to put it
+
+    private Timer timer;
+    //Declare the timer which will be used to stall the splash screen
+
+    private int delay;
+    //Establish the delay over which the splash-screen will remain active
 
     public SplashScreen(Game game) {
         this.game = game;
@@ -33,30 +39,37 @@ public class SplashScreen implements Screen {
         //Initialise sprite-batch
 
         logo = new Sprite(new Texture("image/logo.png"));
-        logo.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        //Create logo sprite and match logo size to window size
+        logo.setSize(logo.getWidth() / (float) 2.3, logo.getHeight() / (float) 2.3);
+        logo.setCenter(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
+        //Create logo sprite and re-size/re-position it to fit into game window
+
+        delay = 3;
+        //Set the splash-screen's delay
+
+        timer = new Timer();
+        timer.scheduleTask(new Timer.Task() {
+            @Override
+            public void run() {
+                game.setScreen(new MainMenu(game));
+                dispose();
+            }
+        }, delay);
+        //Establish and configure delay timer
     }
 
     @Override
     public void render(float delta) {
-        //Timer timer = new Timer();
-        //Establish timer
-        //TIMER IS BROKEN RIGHT NOW SO THIS HAS BEEN DISABLED FOR THE MOMENT
-
-        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        //This pile of red tape needs to be here for some reason
+        //Set splash-screen background colour
 
         batch.begin();
         logo.draw(batch);
         batch.end();
-        //Draw splash logo in current batch
+        //Draw logo texture on screen
 
-        //DELAY CODE WILL GO HERE...
-        //...WHEN I WORK OUT HOW TO IMPLEMENT THE TIMER PROPERLY
-
-        game.setScreen(new MainMenu(game));
-        //Switch to main menu after delay
+        timer.start();
+        //Start the delay timer
     }
 
     //About the stuff below...
