@@ -29,6 +29,8 @@ public class CollegeScreen implements Screen {
     private Game game; //Stores current game-state, enabling transitions between screens
     private Stage stage;
     private Table tableCentre;
+    private Table tableP1; //Player 1 Table
+    private Table tableP2; //Player 2 Table
     private TTFont CollegeFont; //Establish College Menu font
     private TextButton[] buttons = new TextButton[5]; //Establish menu environment and structure
 
@@ -39,48 +41,23 @@ public class CollegeScreen implements Screen {
 
     @Override
     public void show() {
+
         stage = new Stage();
-        tableCentre = new Table();
-        //Initialise stage and button-table
+        //Initialise stage
+        Gdx.input.setInputProcessor(stage);
+        //Set the stage up to access user inputs
 
         CollegeFont = new TTFont(Gdx.files.internal("font/testfontbignoodle.ttf"), 36);
         //Initialise menu font
 
-        Gdx.input.setInputProcessor(stage);
-        //Set the stage up to access user inputs
-
-        tableCentre.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        //Fill the screen with the table
-        //This is bound to change in the future for obvious reasons
-
-        TextButton.TextButtonStyle menuButtonStyle = new TextButton.TextButtonStyle();
-        menuButtonStyle.font = CollegeFont.font();
-        menuButtonStyle.pressedOffsetX = 1;
-        menuButtonStyle.pressedOffsetY = -1;
-        //Set up the format for the buttons on the menu
-
-        buttons[0] = new TextButton("Alcuin", menuButtonStyle); //Initialise College buttons using defined style
-        buttons[1] = new TextButton("Derwent", menuButtonStyle);
-        buttons[2] = new TextButton("James", menuButtonStyle);
-        buttons[3] = new TextButton("Vanbrugh", menuButtonStyle);
-        buttons[4] = new TextButton("Wentworth", menuButtonStyle);
-
-        //ADD TITLE BAR
-        CollegeFont.setSize(46);
-        Label title = new Label("College Selection Screen\n" , new Label.LabelStyle(CollegeFont.font(), Color.BLACK));
-        tableCentre.add(title);
-
-        //ADD BUTTONS
-        for (int i = 0; i < buttons.length; i++) {
-            tableCentre.row();
-            tableCentre.add(buttons[i]);
-        }
-
-        //FINALISE TABLE
+        //Construct Tables
+        constructCentreTable();
+        constructP1Table();
+        constructP2Table();
+        tableP1.debug();
+        tableP2.debug();
         tableCentre.debug();
-        stage.addActor(tableCentre);
         //"Debug" instruction renders temporary borders around elements
-
 
     }
 
@@ -122,4 +99,73 @@ public class CollegeScreen implements Screen {
     public void dispose() {
 
     }
+
+    public void constructP1Table() {
+        tableP1 = new Table();
+        //Construct player 1 table
+
+        tableP1.setBounds(32, 0, 256, Gdx.graphics.getHeight());
+        //Set boundaries of player 1 table
+
+        CollegeFont.setSize(36);
+        tableP1.add(new Label("Player 1", new Label.LabelStyle(CollegeFont.font(), Color.BLACK)));
+
+        stage.addActor(tableP1);
+        //Add player 1 table to the stage
+
+
+    }
+
+    public void constructP2Table() {
+        tableP2 = new Table();
+        //Construct player 2 table
+
+        tableP2.setBounds(Gdx.graphics.getWidth() - 32 - 256, 0, 256, Gdx.graphics.getHeight());
+        //Set boundaries of player 2 table
+
+        CollegeFont.setSize(36);
+        tableP2.add(new Label("Player 2", new Label.LabelStyle(CollegeFont.font(), Color.BLACK)));
+
+        stage.addActor(tableP2);
+        //Add player 2 table to the stage
+
+
+    }
+
+    public void constructCentreTable() {
+        tableCentre = new Table();
+        //construct centre table
+
+        tableCentre.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        //Fill the screen with the table
+
+        TextButton.TextButtonStyle collegeButtonStyle = new TextButton.TextButtonStyle();
+        collegeButtonStyle.font = CollegeFont.font();
+        collegeButtonStyle.fontColor = Color.BLACK;
+        collegeButtonStyle.pressedOffsetX = 1;
+        collegeButtonStyle.pressedOffsetY = -1;
+        //Set up the format for the buttons in centre table
+
+        //ADD TITLE BAR
+        CollegeFont.setSize(46);
+        Label title = new Label("College Selection Screen\n" , new Label.LabelStyle(CollegeFont.font(), Color.BLACK));
+        tableCentre.add(title);
+
+        buttons[0] = new TextButton("Alcuin", collegeButtonStyle); //Initialise college buttons using defined style
+        buttons[1] = new TextButton("Derwent", collegeButtonStyle);
+        buttons[2] = new TextButton("James", collegeButtonStyle);
+        buttons[3] = new TextButton("Vanbrugh", collegeButtonStyle);
+        buttons[4] = new TextButton("Wentworth", collegeButtonStyle);
+
+
+
+        //ADD BUTTONS
+        for (int i = 0; i < buttons.length; i++) {
+            tableCentre.row();
+            tableCentre.add(buttons[i]);
+        }
+
+        stage.addActor(tableCentre);
+    }
+
 }

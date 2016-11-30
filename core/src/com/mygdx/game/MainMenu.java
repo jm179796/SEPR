@@ -69,7 +69,7 @@ public class MainMenu implements Screen {
         buttons[0] = new TextButton("Start Game", menuButtonStyle);
         buttons[0].addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
-                game.setScreen(new GameScreen(game));
+                game.setScreen(new CollegeScreen(game));
             }
         });
         buttons[1] = new TextButton("How to Play", menuButtonStyle);
