@@ -10,16 +10,10 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.utils.Align;
-import com.mygdx.game.Drawer;
 
 public class GameScreen implements Screen{
 
@@ -40,7 +34,7 @@ public class GameScreen implements Screen{
     private Table tileGrid;
     //Establish grid of buttons over central map
 
-    private Button[] tileButtons;
+    private Tile[] tiles;
     //Establish invisible buttons to lay over the map's tiles
 
     private int tableWidth;
@@ -82,25 +76,37 @@ public class GameScreen implements Screen{
         tileGrid = new Table();
         //Initialise tile-grid
 
-        tileButtons = new Button[16];
+        tiles = new Tile[16];
         //Initialise tile-buttons
 
         tileGrid.setBounds((Gdx.graphics.getWidth() / 2) - (map.getWidth() / 2), 0, map.getWidth(), map.getHeight());
         for (int y = 0; y < 4; y++) {
             for (int x = 0; x < 4; x++) {
-                tileButtons[(y * 4) + x] = new Button(new Button.ButtonStyle());
-                tileButtons[(y * 4) + x].addListener(new ChangeListener() {
-                    @Override
-                    public void changed(ChangeEvent event, Actor actor) {
-                        tileClick();
-                    }
-                });
-                tileGrid.add(tileButtons[(y * 4) + x]).width(map.getWidth() / 4).height(map.getHeight() / 4);
+                if ((y * 4) + x != 7) {
+                    final int fx = x;
+                    final int fy = y;
+
+                    tiles[(y * 4) + x] = new Tile(new Runnable() {
+                        @Override
+                        public void run() {
+                            drawer.addTableRow(tableLeft, new Label("Tile " + ((fy * 4) + fx + 1) + " was clicked", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
+                        }
+                    });
+                } else {
+                    tiles[(y * 4) + x] = new Tile(new Runnable() {
+                        @Override
+                        public void run() {
+                            drawer.addTableRow(tableRight, new Label("This one's different :D", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
+                        }
+                    });
+                }
+                tileGrid.add(tiles[(y * 4) + x]).width(map.getWidth() / 4).height(map.getHeight() / 4);
             }
             tileGrid.row();
         }
         stage.addActor(tileGrid);
         //Populate tile-grid with invisible buttons and deploy it on to the stage
+        //At the moment, it's set up to show how different tiles can be assigned different functions
 
         tableWidth = (int) ((Gdx.graphics.getWidth() - map.getWidth()) / 2);
         //Set widths of side-hand tables
@@ -116,7 +122,7 @@ public class GameScreen implements Screen{
         constructRightTable();
         //Construct and deploy side-hand tables
 
-        //drawer.debug(stage);
+        drawer.debug(stage);
         //Call this to draw temporary debug lines around all of the actors on the stage
 
         timer.start();
@@ -167,12 +173,6 @@ public class GameScreen implements Screen{
         //batch.dispose();
         //game.dispose();
     }
-
-    public void tileClick() {
-        tableLeft.row();
-        tableLeft.add(new Label("A tile was clicked", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
-    }
-    //NEED TO ADD AND IMPLEMENT INDEX PARAMETER TO ALLOW FOR TILES TO BE DIFFERENTIATED
 
     public void constructLeftTable() {
         tableLeft = new Table();

@@ -6,6 +6,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -27,6 +28,53 @@ public class SplashScreen implements Screen {
 
     private int delay;
     //Establish the delay over which the splash-screen will remain active
+
+    private InputProcessor inputProcessor = new InputProcessor() {
+        @Override
+        public boolean keyDown(int keycode) {
+            timer.stop();
+            game.setScreen(new MainMenu(game));
+            return false;
+        }
+
+        @Override
+        public boolean keyUp(int keycode) {
+            return false;
+        }
+
+        @Override
+        public boolean keyTyped(char character) {
+            return false;
+        }
+
+        @Override
+        public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+            timer.stop();
+            game.setScreen(new MainMenu(game));
+            return false;
+        }
+
+        @Override
+        public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+            return false;
+        }
+
+        @Override
+        public boolean touchDragged(int screenX, int screenY, int pointer) {
+            return false;
+        }
+
+        @Override
+        public boolean mouseMoved(int screenX, int screenY) {
+            return false;
+        }
+
+        @Override
+        public boolean scrolled(int amount) {
+            return false;
+        }
+    };
+    //Required to detect inputs
 
     public SplashScreen(Game game) {
         this.game = game;
@@ -51,10 +99,13 @@ public class SplashScreen implements Screen {
             @Override
             public void run() {
                 game.setScreen(new MainMenu(game));
-                dispose();
             }
         }, delay);
         //Establish and configure delay timer
+
+        Gdx.input.setInputProcessor(inputProcessor);
+        //Set the splash-screen to detect inputs
+        //If a keystroke or a mouse-click is detected, open the menu straight away
     }
 
     @Override

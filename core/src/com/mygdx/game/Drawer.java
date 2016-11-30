@@ -52,13 +52,12 @@ public class Drawer {
     }
     //Draws temporary debug lines around all of the actors on the stage
 
-    public void addTableRow(Table table, Actor actor) {
-        table.row();
-        table.add(actor);
-    }
-
     public void addTableRow(Table table, Actor actor, float padTop, float padLeft, float padBottom, float padRight) {
         table.row();
         table.add(actor).pad(padTop, padLeft, padBottom, padRight);
+    }
+
+    public void addTableRow(Table table, Actor actor) {
+        addTableRow(table, actor, 0, 0, 0, 0);
     }
 }

@@ -41,8 +41,13 @@ public class MainMenu implements Screen {
     }
     //Import current game-state
 
+    private Drawer drawer;
+    //Import standard drawing functions
+
     @Override
     public void show() {
+        drawer = new Drawer(game);
+
         stage = new Stage();
         table = new Table();
         //Initialise stage and button-table
@@ -51,7 +56,7 @@ public class MainMenu implements Screen {
         //Initialise menu font
 
         Gdx.input.setInputProcessor(stage);
-        //Set the stage up to access user inputs
+        //Set the stage up to accept user inputs
 
         table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         //Fill the screen with the table
@@ -63,7 +68,6 @@ public class MainMenu implements Screen {
         menuButtonStyle.pressedOffsetX = 1;
         menuButtonStyle.pressedOffsetY = -1;
         //Set up the format for the buttons on the menu
-        //FONTS NEED TO BE STORED AS .FNT FILES
         //STILL NEED TO SORT OUT BUTTON ANIMATIONS
 
         buttons[0] = new TextButton("Start Game", menuButtonStyle);
@@ -78,19 +82,17 @@ public class MainMenu implements Screen {
 
         //ADD TITLE BAR
         menuFont.setSize(72);
-        Label title = new Label("Duck-Related Game", new Label.LabelStyle(menuFont.font(), Color.BLACK));
-        table.add(title);
+        drawer.addTableRow(table, new Label("Duck-Related Game with a Half-Arsed Menu", new Label.LabelStyle(menuFont.font(), Color.BLACK)), 0, 0, 30, 0);
 
         //ADD BUTTONS
         for (int i = 0; i < buttons.length; i++) {
-            table.row();
-            table.add(buttons[i]);
+            drawer.addTableRow(table, buttons[i]);
         }
 
         //FINALISE TABLE
-        table.debug();
         stage.addActor(table);
-        //"Debug" instruction renders temporary borders around elements
+
+        drawer.debug(stage);
     }
 
     @Override
