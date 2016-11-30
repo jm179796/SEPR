@@ -41,43 +41,66 @@ public class TTFont {
         BMFont = TTFGenerator.generateFont(TTFStyle);
     }
 
-    @Setter
+    /**
+     * @Setter
+     * @param fontFile
+     */
     public void setFont(FileHandle fontFile) {
         TTFGenerator = new FreeTypeFontGenerator(fontFile);
 
         BMFont = TTFGenerator.generateFont(TTFStyle);
     }
 
-    @Getter
+    /**
+     * @Getter
+     * @return
+     */
+
     public BitmapFont font() {
         return BMFont;
     }
 
-    @Setter
+    /**
+     * @Setter
+     * @param size
+     */
     public void setSize(int size) {
         TTFStyle.size = size;
 
         BMFont = TTFGenerator.generateFont(TTFStyle);
     }
 
-    @Getter
+    /**
+     *  @Getter
+     * @return
+     */
     public int size() {
         return TTFStyle.size;
     }
 
-    @Setter
+    /**
+     * @Setter
+     * @param color
+     */
     public void setColor(Color color) {
         TTFStyle.color = color;
 
         BMFont = TTFGenerator.generateFont(TTFStyle);
     }
 
-    @Getter
+    /**
+     * @Getter
+     * @return
+     */
     public Color color() {
         return TTFStyle.color;
     }
 
-    @Setter
+    /**
+     * @Setter
+     * @param borderWidth
+     * @param borderColor
+     */
     public void setBorder(float borderWidth, Color borderColor) {
         TTFStyle.borderWidth = borderWidth;
         TTFStyle.borderColor = borderColor;
