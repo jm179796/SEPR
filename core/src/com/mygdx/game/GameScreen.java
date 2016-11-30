@@ -10,12 +10,14 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class GameScreen implements Screen{
@@ -60,6 +62,9 @@ public class GameScreen implements Screen{
         buttonGrid = new Table();
         //Initialise stage, side-tables and button-grid
 
+        Gdx.input.setInputProcessor(stage);
+        //Prepares the stage to accept user inputs
+
         gameFont = new TTFont(Gdx.files.internal("font/testfontbignoodle.ttf"), 24, Color.WHITE);
         //Set font for game interface
 
@@ -86,8 +91,9 @@ public class GameScreen implements Screen{
         for (int y = 0; y < 4; y++) {
             for (int x = 0; x < 4; x++) {
                 tileButtons[(y * 4) + x] = new Button(new Button.ButtonStyle());
-                tileButtons[(y * 4) + x].addListener(new ClickListener() {
-                    public void clicked(InputEvent event) {
+                tileButtons[(y * 4) + x].addListener(new ChangeListener() {
+                    @Override
+                    public void changed(ChangeEvent event, Actor actor) {
                         tileClick();
                     }
                 });
