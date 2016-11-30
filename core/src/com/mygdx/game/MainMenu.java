@@ -47,7 +47,7 @@ public class MainMenu implements Screen {
         table = new Table();
         //Initialise stage and button-table
 
-        menuFont = new TTFont(Gdx.files.internal("font/testfontbignoodle.ttf"), 36, Color.BLACK);
+        menuFont = new TTFont(Gdx.files.internal("font/testfontbignoodle.ttf"), 36);
         //Initialise menu font
 
         Gdx.input.setInputProcessor(stage);
@@ -59,6 +59,7 @@ public class MainMenu implements Screen {
 
         TextButton.TextButtonStyle menuButtonStyle = new TextButton.TextButtonStyle();
         menuButtonStyle.font = menuFont.font();
+        menuButtonStyle.fontColor = Color.BLACK;
         menuButtonStyle.pressedOffsetX = 1;
         menuButtonStyle.pressedOffsetY = -1;
         //Set up the format for the buttons on the menu

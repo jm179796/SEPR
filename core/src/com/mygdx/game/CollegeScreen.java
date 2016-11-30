@@ -43,7 +43,7 @@ public class CollegeScreen implements Screen {
         tableCentre = new Table();
         //Initialise stage and button-table
 
-        CollegeFont = new TTFont(Gdx.files.internal("font/testfontbignoodle.ttf"), 36, Color.BLACK);
+        CollegeFont = new TTFont(Gdx.files.internal("font/testfontbignoodle.ttf"), 36);
         //Initialise menu font
 
         Gdx.input.setInputProcessor(stage);

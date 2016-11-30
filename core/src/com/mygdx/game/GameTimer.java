@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.Timer;
 
 /**
@@ -15,8 +16,8 @@ public class GameTimer extends com.badlogic.gdx.scenes.scene2d.ui.Label {
     private Runnable terminalMethod;
     //Holds the method that will be executed when the local timer runs out
 
-    public GameTimer(int minutes, int seconds, TTFont font, Runnable end) {
-        super("", new LabelStyle(font.font(), font.color()));
+    public GameTimer(int minutes, int seconds, TTFont font, Color color, Runnable end) {
+        super("", new LabelStyle(font.font(), color));
         //Set up timer label with the provided TTFont
 
         if ((minutes == 0 && seconds == 0) || minutes < 0 || seconds < 0) {
@@ -41,8 +42,8 @@ public class GameTimer extends com.badlogic.gdx.scenes.scene2d.ui.Label {
         //The "timer.stop()" instruction prevents the timer from starting as soon as it's instantiated
     }
 
-    public GameTimer(int minutes, int seconds, TTFont font) {
-        this(minutes, seconds, font, new Runnable() {
+    public GameTimer(int minutes, int seconds, TTFont font, Color color) {
+        this(minutes, seconds, font, color, new Runnable() {
             @Override
             public void run() {
                 return;
@@ -51,13 +52,13 @@ public class GameTimer extends com.badlogic.gdx.scenes.scene2d.ui.Label {
     }
     //Alternative constructor that establishes a timer without a useful terminal method
 
-    public GameTimer(int seconds, TTFont font, Runnable end) {
-        this(0, seconds, font, end);
+    public GameTimer(int seconds, TTFont font, Color color, Runnable end) {
+        this(0, seconds, font, color, end);
     }
     //Alternative constructor that sets a timer to count down from a number of seconds
 
-    public GameTimer(int seconds, TTFont font) {
-        this(0, seconds, font, new Runnable() {
+    public GameTimer(int seconds, TTFont font, Color color) {
+        this(0, seconds, font, color, new Runnable() {
             @Override
             public void run() {
                 return;

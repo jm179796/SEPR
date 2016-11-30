@@ -58,7 +58,7 @@ public class GameScreen implements Screen{
         Gdx.input.setInputProcessor(stage);
         //Prepare the local stage and set it up to accept inputs
 
-        gameFont = new TTFont(Gdx.files.internal("font/testfontbignoodle.ttf"), Color.WHITE);
+        gameFont = new TTFont(Gdx.files.internal("font/testfontbignoodle.ttf"));
         //Set fonts for game interface
 
         map = new Image(new Texture("image/TestMap.png"));
@@ -95,7 +95,7 @@ public class GameScreen implements Screen{
         //The purpose of this variable is to facilitate the later implementation of window resizing
 
         gameFont.setSize(120);
-        timer = new GameTimer(5, gameFont, new Runnable() {
+        timer = new GameTimer(5, gameFont, Color.WHITE, new Runnable() {
             @Override
             public void run() {
                 gameFont.setSize(24);
