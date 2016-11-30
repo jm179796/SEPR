@@ -171,6 +171,11 @@ public class GameScreen implements Screen{
 
         tableLeft.add(timer).expand().top();
 
+        //gameFont.setSize(24);
+        //tableLeft.row();
+        //tableLeft.add(new LabelledElement("Food", gameFont, Color.WHITE, new Label("0", new Label.LabelStyle(gameFont.font(), Color.WHITE)), 100));
+        //TESTING LABELLEDELEMENT CLASS
+
         stage.addActor(tableLeft);
         //Add left-hand table to the stage
     }

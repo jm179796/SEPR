@@ -12,19 +12,21 @@ import java.awt.*;
  */
 public class LabelledElement extends Table {
 
-    public LabelledElement(String labelText, TTFont labelFont, boolean labelRight, Actor actor) {
+    public LabelledElement(String labelText, TTFont labelFont, Color labelColor, boolean labelRight, Actor actor, float spacing) {
         super();
+        //Set up table format
 
         if (labelRight == false) {
-            this.add(new Label(labelText, new Label.LabelStyle(labelFont.font(), Color.BLACK)));
+            this.add(new Label(labelText, new Label.LabelStyle(labelFont.font(), labelColor))).left().width(spacing);
             this.add(actor);
         } else {
             this.add(actor);
-            this.add(new Label(labelText, new Label.LabelStyle(labelFont.font(), Color.BLACK)));
+            this.add(new Label(labelText, new Label.LabelStyle(labelFont.font(), labelColor))).right().width(spacing);
         }
+        //Add label and actor to the table in whatever order the user specifies
     }
 
-    public LabelledElement(String labelText, TTFont labelFont, Actor actor) {
-        this(labelText, labelFont, false, actor);
+    public LabelledElement(String labelText, TTFont labelFont, Color labelColor, Actor actor, float spacing) {
+        this(labelText, labelFont, labelColor, false, actor, spacing);
     }
 }
