@@ -31,7 +31,7 @@ public class CollegeScreen implements Screen {
     private Table tableCentre;
     private Table tableP1; //Player 1 Table
     private Table tableP2; //Player 2 Table
-    private TTFont CollegeFont; //Establish College Menu font
+    private TTFont CollegeFont; //Establish college menu font
     private TextButton[] buttons = new TextButton[5]; //Establish menu environment and structure
 
     public CollegeScreen(Game game) {
@@ -54,9 +54,10 @@ public class CollegeScreen implements Screen {
         constructCentreTable();
         constructP1Table();
         constructP2Table();
+        /**
         tableP1.debug();
         tableP2.debug();
-        tableCentre.debug();
+        tableCentre.debug();*/
         //"Debug" instruction renders temporary borders around elements
 
     }
@@ -107,8 +108,8 @@ public class CollegeScreen implements Screen {
         tableP1.setBounds(32, 0, 256, Gdx.graphics.getHeight());
         //Set boundaries of player 1 table
 
-        CollegeFont.setSize(36);
-        tableP1.add(new Label("Player 1", new Label.LabelStyle(CollegeFont.font(), Color.BLACK)));
+        CollegeFont.setSize(42);
+        tableP1.add(new Label("Player 1\n", new Label.LabelStyle(CollegeFont.font(), Color.BLACK)));
 
         stage.addActor(tableP1);
         //Add player 1 table to the stage
@@ -123,8 +124,27 @@ public class CollegeScreen implements Screen {
         tableP2.setBounds(Gdx.graphics.getWidth() - 32 - 256, 0, 256, Gdx.graphics.getHeight());
         //Set boundaries of player 2 table
 
-        CollegeFont.setSize(36);
+
+
+        CollegeFont.setSize(42);
         tableP2.add(new Label("Player 2", new Label.LabelStyle(CollegeFont.font(), Color.BLACK)));
+
+        CollegeFont.setSize(28);
+        tableP2.row();
+        tableP2.add(new Label("\n\n..........Emblem..........\n\n\n", new Label.LabelStyle(CollegeFont.font(), Color.BLACK)));
+
+        tableP2.row();
+        tableP2.add(new Label("College Name", new Label.LabelStyle(CollegeFont.font(), Color.BLACK)));
+
+        CollegeFont.setSize(16);
+        tableP2.row();
+        tableP2.add(new Label("Description\n\n\n\n", new Label.LabelStyle(CollegeFont.font(), Color.BLACK)));
+
+        CollegeFont.setSize(28);
+        tableP2.row();
+        tableP2.add(new Label("\nReady Button", new Label.LabelStyle(CollegeFont.font(), Color.BLACK)));
+
+
 
         stage.addActor(tableP2);
         //Add player 2 table to the stage
@@ -164,6 +184,9 @@ public class CollegeScreen implements Screen {
             tableCentre.row();
             tableCentre.add(buttons[i]);
         }
+
+        tableCentre.row();
+        tableCentre.add(new Label("\n\n", new Label.LabelStyle(CollegeFont.font(), Color.BLACK)));
 
         stage.addActor(tableCentre);
     }
