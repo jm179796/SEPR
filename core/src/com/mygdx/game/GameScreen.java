@@ -134,8 +134,12 @@ public class GameScreen implements Screen{
         stage.draw();
         //Draw the stage onto the screen
 
+        drawer.lineRectangle(Color.WHITE, (int) map.getX(), (int) map.getY(), (int) map.getWidth(), (int) map.getHeight());
+        //Draw border around the map
+
         drawer.filledRectangle(Color.WHITE, 0, (int) (timer.getHeight()), tableWidth, 1);
         drawer.filledRectangle(Color.WHITE, 0, (int) (timer.getHeight() + foodCounter.getHeight() + waterCounter.getHeight() + oreCounter.getHeight() + 20), tableWidth, 1);
+        //Draw lines in left-hand table
     }
 
     @Override

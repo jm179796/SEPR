@@ -30,7 +30,7 @@ public class Drawer {
         renderer.setColor(color);
         //Set the colour of the rectangle to be rendered
 
-        renderer.rect(x, Gdx.graphics.getHeight() - y, width, height);
+        renderer.rect(x, Gdx.graphics.getHeight() - y - height, width, height);
         //Render a rectangle with the specified parameters
 
         renderer.end();
