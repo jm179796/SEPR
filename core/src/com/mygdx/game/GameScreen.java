@@ -10,6 +10,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -17,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.mygdx.game.Drawer;
 
 public class GameScreen implements Screen{
 
@@ -28,14 +30,17 @@ public class GameScreen implements Screen{
     private Table tableRight;
     //Establish stage and side-hand tables
 
-    private Table tileGrid;
-    //Establish grid of buttons over central map
-
     private TTFont gameFont;
     //Establish font
 
     private Image map;
     //Establish in-game map
+
+    private Table tileGrid;
+    //Establish grid of buttons over central map
+
+    private Button[] tileButtons;
+    //Establish invisible buttons to lay over the map's tiles
 
     private float tableWidth;
     //Establish variable for holding sizes of in-game tables
@@ -43,8 +48,13 @@ public class GameScreen implements Screen{
     private GameTimer timer;
     //Establish game-timer
 
-    private Button[] tileButtons;
-    //Establish invisible buttons to lay over the map's tiles
+    private Label foodCounter;
+    private Label waterCounter;
+    private Label oreCounter;
+    //Establish resource-counter labels
+
+    private Drawer drawer;
+    //Import standard drawing functions
 
     public GameScreen(Game game) {
         this.game = game;
@@ -54,6 +64,8 @@ public class GameScreen implements Screen{
 
     @Override
     public void show() {
+        drawer = new Drawer(game);
+
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
         //Prepare the local stage and set it up to accept inputs
@@ -111,7 +123,7 @@ public class GameScreen implements Screen{
         constructRightTable();
         //Construct and deploy side-hand tables
 
-        debug(stage);
+        drawer.debug(stage);
         //Call this to draw temporary debug lines around all of the actors on the stage
 
         timer.start();
@@ -128,6 +140,8 @@ public class GameScreen implements Screen{
         stage.act(delta);
         stage.draw();
         //Draw the stage onto the screen
+
+        drawer.filledRectangle(new ShapeRenderer(), Color.WHITE, 50, 50, 50, 1, true);
     }
 
     @Override
@@ -169,12 +183,19 @@ public class GameScreen implements Screen{
         tableLeft.setBounds(0, 0, tableWidth, Gdx.graphics.getHeight());
         //Set boundaries of left-hand table
 
-        tableLeft.add(timer).expand().top();
+        tableLeft.add(timer).top();
 
-        //gameFont.setSize(24);
-        //tableLeft.row();
-        //tableLeft.add(new LabelledElement("Food", gameFont, Color.WHITE, new Label("0", new Label.LabelStyle(gameFont.font(), Color.WHITE)), 100));
-        //TESTING LABELLEDELEMENT CLASS
+        gameFont.setSize(24);
+        foodCounter = new Label("Test", new Label.LabelStyle(gameFont.font(), Color.WHITE));
+        waterCounter = new Label("Test", new Label.LabelStyle(gameFont.font(), Color.WHITE));
+        oreCounter = new Label("Test", new Label.LabelStyle(gameFont.font(), Color.WHITE));
+
+        tableLeft.row();
+        tableLeft.add(new LabelledElement("Food", gameFont, Color.WHITE, foodCounter, 150));
+        tableLeft.row();
+        tableLeft.add(new LabelledElement("Water", gameFont, Color.WHITE, waterCounter, 150));
+        tableLeft.row();
+        tableLeft.add(new LabelledElement("Ore", gameFont, Color.WHITE, oreCounter, 150));
 
         stage.addActor(tableLeft);
         //Add left-hand table to the stage
@@ -193,11 +214,4 @@ public class GameScreen implements Screen{
         stage.addActor(tableRight);
         //Add right-hand table to the stage
     }
-
-    public void debug(Stage stage) {
-        for (Actor a : stage.getActors()) {
-            a.debug();
-        }
-    }
-    //Draws temporary debug lines around all of the actors on the stage
 }
