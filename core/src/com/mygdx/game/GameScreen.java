@@ -141,7 +141,7 @@ public class GameScreen implements Screen{
         stage.draw();
         //Draw the stage onto the screen
 
-        drawer.filledRectangle(new ShapeRenderer(), Color.WHITE, 50, 50, 50, 1, true);
+        drawer.filledRectangle(new ShapeRenderer(), Color.WHITE, 50, 50, 50, 10, true);
     }
 
     @Override
