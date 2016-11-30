@@ -43,7 +43,7 @@ public class CollegeScreen implements Screen {
         tableCentre = new Table();
         //Initialise stage and button-table
 
-        CollegeFont = new TTFont(Gdx.files.internal("font/testfontbignoodle.ttf"), 36, Color.WHITE);
+        CollegeFont = new TTFont(Gdx.files.internal("font/testfontbignoodle.ttf"), 36, Color.BLACK);
         //Initialise menu font
 
         Gdx.input.setInputProcessor(stage);
@@ -67,7 +67,7 @@ public class CollegeScreen implements Screen {
 
         //ADD TITLE BAR
         CollegeFont.setSize(46);
-        Label title = new Label("College Selection Screen", new Label.LabelStyle(CollegeFont.font(), Color.WHITE));
+        Label title = new Label("College Selection Screen\n" , new Label.LabelStyle(CollegeFont.font(), Color.BLACK));
         tableCentre.add(title);
 
         //ADD BUTTONS
@@ -87,7 +87,7 @@ public class CollegeScreen implements Screen {
     @Override
     public void render(float delta) {
 
-        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         //OpenGL Code
         //First instruction sets background colour
