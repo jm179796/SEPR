@@ -36,23 +36,83 @@ public class TTFont {
      * @param fontFile
      * @param size
      * @param color
+     * @param borderWidth
+     * @param borderColor
+     * @param borderStraight
+     * @param shadowOffsetX
+     * @param shadowOffsetY
+     * @param shadowColor
      */
-    public TTFont(FileHandle fontFile, int size, Color color) {
+    public TTFont(FileHandle fontFile, int size, Color color, float borderWidth, Color borderColor, boolean borderStraight, int shadowOffsetX, int shadowOffsetY, Color shadowColor) {
         TTFGenerator = new FreeTypeFontGenerator(fontFile);
         TTFStyle = new FreeTypeFontGenerator.FreeTypeFontParameter();
         //Initialise font-generator and font-style objects
 
         TTFStyle.size = size;
         TTFStyle.color = color;
-        TTFStyle.borderWidth = 0;
-        TTFStyle.borderColor = Color.BLACK;
-        TTFStyle.borderStraight = false;
-        TTFStyle.shadowOffsetX = 0;
-        TTFStyle.shadowOffsetY = 0;
-        TTFStyle.shadowColor = new Color(0, 0, 0, 0.75f);
-        //Initialise default font settings
+        TTFStyle.borderWidth = borderWidth;
+        TTFStyle.borderColor = borderColor;
+        TTFStyle.borderStraight = borderStraight;
+        TTFStyle.shadowOffsetX = shadowOffsetX;
+        TTFStyle.shadowOffsetY = shadowOffsetY;
+        TTFStyle.shadowColor = shadowColor;
+        //Set font attributes
 
         BMFont = TTFGenerator.generateFont(TTFStyle);
+        //Generate font
+    }
+
+    /**
+     * Constructor
+     * @param fontFile
+     * @param size
+     * @param color
+     * @param shadowOffsetX
+     * @param shadowOffsetY
+     * @param shadowColor
+     */
+    public TTFont(FileHandle fontFile, int size, Color color, int shadowOffsetX, int shadowOffsetY, Color shadowColor) {
+        this(fontFile, size, color, 0, Color.BLACK, false, shadowOffsetX, shadowOffsetY, shadowColor);
+    }
+
+    /**
+     * Constructor
+     * @param fontFile
+     * @param size
+     * @param color
+     * @param borderWidth
+     * @param borderColor
+     * @param borderStraight
+     */
+    public TTFont(FileHandle fontFile, int size, Color color, float borderWidth, Color borderColor, boolean borderStraight) {
+        this(fontFile, size, color, borderWidth, borderColor, borderStraight, 0, 0, new Color(0, 0, 0, 0.75f));
+    }
+
+    /**
+     * Constructor
+     * @param fontFile
+     * @param size
+     * @param color
+     */
+    public TTFont(FileHandle fontFile, int size, Color color) {
+        this(fontFile, size, color, 0, Color.BLACK, false, 0, 0, new Color(0, 0, 0, 0.75f));
+    }
+
+    /**
+     * Constructor
+     * @param fontFile
+     * @param color
+     */
+    public TTFont(FileHandle fontFile, Color color) {
+        this(fontFile, 16, color, 0, Color.BLACK, false, 0, 0, new Color(0, 0, 0, 0.75f));
+    }
+
+    /**
+     * Constructor
+     * @param fontFile
+     */
+    public TTFont(FileHandle fontFile) {
+        this(fontFile, 16, Color.WHITE, 0, Color.BLACK, false, 0, 0, new Color(0, 0, 0, 0.75f));
     }
 
     /**

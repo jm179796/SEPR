@@ -32,7 +32,7 @@ public class GameScreen implements Screen{
     //Establish grid of buttons over central map
 
     private TTFont gameFont;
-    //Establish menu font
+    //Establish font
 
     private Image map;
     //Establish in-game map
@@ -58,8 +58,8 @@ public class GameScreen implements Screen{
         Gdx.input.setInputProcessor(stage);
         //Prepare the local stage and set it up to accept inputs
 
-        gameFont = new TTFont(Gdx.files.internal("font/testfontbignoodle.ttf"), 24, Color.WHITE);
-        //Set font for game interface
+        gameFont = new TTFont(Gdx.files.internal("font/testfontbignoodle.ttf"), Color.WHITE);
+        //Set fonts for game interface
 
         map = new Image(new Texture("image/TestMap.png"));
         map.setPosition((Gdx.graphics.getWidth() / 2) - (map.getWidth() / 2), (Gdx.graphics.getHeight() / 2) - (map.getHeight() / 2));
@@ -94,9 +94,12 @@ public class GameScreen implements Screen{
         //This will always be 256 for as long as the size of the game's window is fixed
         //The purpose of this variable is to facilitate the later implementation of window resizing
 
-        timer = new GameTimer(120, gameFont, new Runnable() {
+        gameFont.setSize(120);
+        timer = new GameTimer(5, gameFont, new Runnable() {
             @Override
             public void run() {
+                gameFont.setSize(24);
+
                 tableLeft.row();
                 tableLeft.add(new Label("This pops up when the timer runs out", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
             }
@@ -108,10 +111,10 @@ public class GameScreen implements Screen{
         constructRightTable();
         //Construct and deploy side-hand tables
 
-        //debug(stage);
+        debug(stage);
         //Call this to draw temporary debug lines around all of the actors on the stage
 
-        //timer.start();
+        timer.start();
         //Start in-game timer
     }
 
@@ -166,7 +169,7 @@ public class GameScreen implements Screen{
         tableLeft.setBounds(0, 0, tableWidth, Gdx.graphics.getHeight());
         //Set boundaries of left-hand table
 
-        tableLeft.add(timer);
+        tableLeft.add(timer).expand().top();
 
         stage.addActor(tableLeft);
         //Add left-hand table to the stage
@@ -179,6 +182,7 @@ public class GameScreen implements Screen{
         tableRight.setBounds((Gdx.graphics.getWidth() / 2) + (map.getWidth() / 2), 0, tableWidth, Gdx.graphics.getHeight());
         //Set boundaries of right-hand table
 
+        gameFont.setSize(24);
         tableRight.add(new Label("This is the right-hand table", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
 
         stage.addActor(tableRight);
