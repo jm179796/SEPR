@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 /**
  * Created by Joseph on 30/11/2016.
@@ -50,4 +51,14 @@ public class Drawer {
         }
     }
     //Draws temporary debug lines around all of the actors on the stage
+
+    public void addTableRow(Table table, Actor actor) {
+        table.row();
+        table.add(actor);
+    }
+
+    public void addTableRow(Table table, Actor actor, float padTop, float padLeft, float padBottom, float padRight) {
+        table.row();
+        table.add(actor).pad(padTop, padLeft, padBottom, padRight);
+    }
 }

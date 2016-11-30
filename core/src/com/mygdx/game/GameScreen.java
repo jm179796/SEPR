@@ -191,15 +191,11 @@ public class GameScreen implements Screen{
         waterCounter = new Label("Test", new Label.LabelStyle(gameFont.font(), Color.WHITE));
         oreCounter = new Label("Test", new Label.LabelStyle(gameFont.font(), Color.WHITE));
 
-        tableLeft.row();
-        tableLeft.add(new LabelledElement("Food", gameFont, Color.WHITE, foodCounter, 175)).padTop(10);
-        tableLeft.row();
-        tableLeft.add(new LabelledElement("Water", gameFont, Color.WHITE, waterCounter, 175));
-        tableLeft.row();
-        tableLeft.add(new LabelledElement("Ore", gameFont, Color.WHITE, oreCounter, 175));
+        drawer.addTableRow(tableLeft, new LabelledElement("Food", gameFont, Color.WHITE, foodCounter, 175), 10, 0, 0, 0);
+        drawer.addTableRow(tableLeft, new LabelledElement("Water", gameFont, Color.WHITE, waterCounter, 175));
+        drawer.addTableRow(tableLeft, new LabelledElement("Ore", gameFont, Color.WHITE, oreCounter, 175));
 
-        tableLeft.row();
-        tableLeft.add(new Label("Roboticon Shop Area", new Label.LabelStyle(gameFont.font(), Color.WHITE))).padTop(20);
+        drawer.addTableRow(tableLeft, new Label("Roboticon Shop Area", new Label.LabelStyle(gameFont.font(), Color.WHITE)), 20, 0, 0, 0);
 
         stage.addActor(tableLeft);
         //Add left-hand table to the stage
