@@ -11,14 +11,12 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class GameScreen implements Screen{
 
@@ -30,7 +28,7 @@ public class GameScreen implements Screen{
     private Table tableRight;
     //Establish stage and side-hand tables
 
-    private Table buttonGrid;
+    private Table tileGrid;
     //Establish grid of buttons over central map
 
     private TTFont gameFont;
@@ -57,37 +55,24 @@ public class GameScreen implements Screen{
     @Override
     public void show() {
         stage = new Stage();
-        tableLeft = new Table();
-        tableRight = new Table();
-        buttonGrid = new Table();
-        //Initialise stage, side-tables and button-grid
-
         Gdx.input.setInputProcessor(stage);
-        //Prepares the stage to accept user inputs
+        //Prepare the local stage and set it up to accept inputs
 
         gameFont = new TTFont(Gdx.files.internal("font/testfontbignoodle.ttf"), 24, Color.WHITE);
         //Set font for game interface
 
         map = new Image(new Texture("image/TestMap.png"));
         map.setPosition((Gdx.graphics.getWidth() / 2) - (map.getWidth() / 2), (Gdx.graphics.getHeight() / 2) - (map.getHeight() / 2));
-        //Initialise map texture
+        stage.addActor(map);
+        //Initialise and deploy map texture
+
+        tileGrid = new Table();
+        //Initialise tile-grid
 
         tileButtons = new Button[16];
         //Initialise tile-buttons
 
-        tableWidth = (Gdx.graphics.getWidth() - map.getWidth()) / 2;
-        //Set widths of side-hand tables
-        //This will always be 256 for as long as the size of the game's window is fixed
-        //The purpose of this variable is to facilitate the later implementation of window resizing
-
-        tableLeft.setBounds(0, 0, tableWidth, Gdx.graphics.getHeight());
-        tableRight.setBounds((Gdx.graphics.getWidth() / 2) + (map.getWidth() / 2), 0, tableWidth, Gdx.graphics.getHeight());
-        //Set side-table boundaries
-
-        tableRight.add(new Label("This is the right-hand table", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
-        //Add timer and test-label to side-hand tables
-
-        buttonGrid.setBounds((Gdx.graphics.getWidth() / 2) - (map.getWidth() / 2), 0, map.getWidth(), map.getHeight());
+        tileGrid.setBounds((Gdx.graphics.getWidth() / 2) - (map.getWidth() / 2), 0, map.getWidth(), map.getHeight());
         for (int y = 0; y < 4; y++) {
             for (int x = 0; x < 4; x++) {
                 tileButtons[(y * 4) + x] = new Button(new Button.ButtonStyle());
@@ -97,11 +82,17 @@ public class GameScreen implements Screen{
                         tileClick();
                     }
                 });
-                buttonGrid.add(tileButtons[(y * 4) + x]).width(map.getWidth() / 4).height(map.getHeight() / 4);
+                tileGrid.add(tileButtons[(y * 4) + x]).width(map.getWidth() / 4).height(map.getHeight() / 4);
             }
-            buttonGrid.row();
+            tileGrid.row();
         }
-        //Set up button-grid over the map and populate it with invisible buttons
+        stage.addActor(tileGrid);
+        //Populate tile-grid with invisible buttons and deploy it on to the stage
+
+        tableWidth = (Gdx.graphics.getWidth() - map.getWidth()) / 2;
+        //Set widths of side-hand tables
+        //This will always be 256 for as long as the size of the game's window is fixed
+        //The purpose of this variable is to facilitate the later implementation of window resizing
 
         timer = new GameTimer(120, gameFont, new Runnable() {
             @Override
@@ -110,19 +101,15 @@ public class GameScreen implements Screen{
                 tableLeft.add(new Label("This pops up when the timer runs out", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
             }
         });
-        tableLeft.add(timer);
         //Set up game timer
         //"Runnable" parameter specifies code to be executed when the timer runs out
 
-        tableLeft.debug();
-        tableRight.debug();
-        buttonGrid.debug();
-        //Render table boundaries for testing purposes
-        stage.addActor(map);
-        stage.addActor(tableLeft);
-        stage.addActor(tableRight);
-        stage.addActor(buttonGrid);
-        //Add map, side-tables and button-grid to game-screen
+        constructLeftTable();
+        constructRightTable();
+        //Construct and deploy side-hand tables
+
+        //debug(stage);
+        //Call this to draw temporary debug lines around all of the actors on the stage
 
         //timer.start();
         //Start in-game timer
@@ -172,4 +159,36 @@ public class GameScreen implements Screen{
     }
     //NEED TO ADD AND IMPLEMENT INDEX PARAMETER TO ALLOW FOR TILES TO BE DIFFERENTIATED
 
+    public void constructLeftTable() {
+        tableLeft = new Table();
+        //Construct left-hand table
+
+        tableLeft.setBounds(0, 0, tableWidth, Gdx.graphics.getHeight());
+        //Set boundaries of left-hand table
+
+        tableLeft.add(timer);
+
+        stage.addActor(tableLeft);
+        //Add left-hand table to the stage
+    }
+
+    public void constructRightTable() {
+        tableRight = new Table();
+        //Construct right-hand table
+
+        tableRight.setBounds((Gdx.graphics.getWidth() / 2) + (map.getWidth() / 2), 0, tableWidth, Gdx.graphics.getHeight());
+        //Set boundaries of right-hand table
+
+        tableRight.add(new Label("This is the right-hand table", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
+
+        stage.addActor(tableRight);
+        //Add right-hand table to the stage
+    }
+
+    public void debug(Stage stage) {
+        for (Actor a : stage.getActors()) {
+            a.debug();
+        }
+    }
+    //Draws temporary debug lines around all of the actors on the stage
 }
