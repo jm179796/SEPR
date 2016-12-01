@@ -11,7 +11,7 @@ public class Tile extends Button {
   /**
    * The ID number that the tile is uniquely identified by
    */
-  public int TileID;
+  //public int TileID;
 
   /**
    * A modifier influencing how much energy is produced.
@@ -37,7 +37,7 @@ public class Tile extends Button {
   /**
    * The x and y coordinates of the tile on the map.
    */
-  private int[] Coordinates;
+  //private int[] Coordinates;
 
   /**
    * The roboticon that has been placed on the tile.
@@ -51,21 +51,22 @@ public class Tile extends Button {
 
   /**
    * The constructor for the object
-   * @param TileID The ID of the generated Tile.
+   //* @param TileID The ID of the generated Tile.
    * @param EnergyCount The multiplier for the production of energy.
    * @param OreCount The multiplier for the production of ore.
    * @param Landmark A boolean to signify if the tile is to be a landmark or not.
    * @param runnable An object encapsulating a method that can be executed when the tile is clicked on
    */
-  public Tile(int TileID, int EnergyCount, int OreCount, boolean Landmark, final Runnable runnable){
+  public Tile(int EnergyCount, int OreCount, boolean Landmark, final Runnable runnable){
     super(new ButtonStyle());
 	
-	this.TileID = TileID;
+	//this.TileID = TileID;
     this.EnergyCount = EnergyCount;
     //this.FoodCount = FoodCount;
     this.OreCount = OreCount;
     this.Landmark = Landmark;
-    this.Coordinates = Coordinates;
+    //this.Coordinates = Coordinates;
+
 	this.runnable = runnable;
 	
 	addListener(new ChangeListener() {
@@ -77,12 +78,37 @@ public class Tile extends Button {
   }
 
   /**
+   * Alternative constrcutor for the object which doesn't encapsulate internal functionality
+   //* @param TileID The ID of the generated Tile.
+   * @param EnergyCount The multiplier for the production of energy.
+   * @param OreCount The multiplier for the production of ore.
+   * @param Landmark A boolean to signify if the tile is to be a landmark or not.
+   */
+  public Tile(int EnergyCount, int OreCount, boolean Landmark){
+    super(new ButtonStyle());
+
+    //this.TileID = TileID;
+    this.EnergyCount = EnergyCount;
+    //this.FoodCount = FoodCount;
+    this.OreCount = OreCount;
+    this.Landmark = Landmark;
+    //this.Coordinates = Coordinates;
+
+    this.runnable = new Runnable() {
+      @Override
+      public void run() {
+        return;
+      }
+    };
+  }
+
+  /**
    * Getter for the coordinates of the tile.
    * @return The coordinates of the tile stored as an array.
    */
-  public int[] getCoordinates(){
-    return this.Coordinates;
-  }
+  //public int[] getCoordinates(){
+  //  return this.Coordinates;
+  //}
 
   /**
    * Calculates how many resources are produced based on the amount of roboticons present and adds them to the player.
@@ -152,18 +178,18 @@ public class Tile extends Button {
    * @param Tile The tile which is to be checked against.
    * @return adjacent A boolean signifying whether the tiles are adjacent or not.
    */
-  public boolean isAdjacent( Tile Tile) {
-    boolean adjacent = false;
-    if (Tile.getCoordinates()[0] - this.getCoordinates()[0] <= 1 && Tile.getCoordinates()[0] - this.getCoordinates()[0] >= -1) {
+  //public boolean isAdjacent( Tile Tile) {
+  //  boolean adjacent = false;
+  //  if (Tile.getCoordinates()[0] - this.getCoordinates()[0] <= 1 && Tile.getCoordinates()[0] - this.getCoordinates()[0] >= -1) {
 
 
-      if (Tile.getCoordinates()[1] - this.getCoordinates()[1] <= 1 && Tile.getCoordinates()[1] - this.getCoordinates()[1] >= -1) {
-        adjacent = true;
-      }
-    }
+  //    if (Tile.getCoordinates()[1] - this.getCoordinates()[1] <= 1 && Tile.getCoordinates()[1] - this.getCoordinates()[1] >= -1) {
+  //      adjacent = true;
+  //    }
+  //  }
 
-    return adjacent;
-  }
+  //  return adjacent;
+  //}
   
   /**
    * Returns the tile's associated function

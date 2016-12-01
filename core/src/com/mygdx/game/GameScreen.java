@@ -80,24 +80,16 @@ public class GameScreen implements Screen{
         tileGrid.setBounds((Gdx.graphics.getWidth() / 2) - (map.getWidth() / 2), 0, map.getWidth(), map.getHeight());
         for (int y = 0; y < 4; y++) {
             for (int x = 0; x < 4; x++) {
-                if ((y * 4) + x != 7) {
-                    final int fx = x;
-                    final int fy = y;
+                final int fx = x;
+                final int fy = y;
 
-                    tiles[(y * 4) + x] = new Tile(new Runnable() {
-                        @Override
-                        public void run() {
-                            drawer.addTableRow(tableLeft, new Label("Tile " + ((fy * 4) + fx + 1) + " was clicked", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
-                        }
-                    });
-                } else {
-                    tiles[(y * 4) + x] = new Tile(new Runnable() {
-                        @Override
-                        public void run() {
-                            drawer.addTableRow(tableRight, new Label("This one's different :D", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
-                        }
-                    });
-                }
+                tiles[(y * 4) + x] = new Tile(0, 0, false, new Runnable() {
+                    @Override
+                    public void run() {
+                        drawer.addTableRow(tableLeft, new Label("Tile " + ((fy * 4) + fx + 1) + " was clicked", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
+                    }
+                });
+
                 tileGrid.add(tiles[(y * 4) + x]).width(map.getWidth() / 4).height(map.getHeight() / 4);
             }
             tileGrid.row();
