@@ -64,6 +64,151 @@ public class Market {
     private Integer RoboticonBuyPrice;
 
     /**
+     * Getter  for OreStock
+     * @return this.OresStock is  integer ore stock value of a Market.
+     */
+    public Integer getOreStock(){
+        return this.OreStock;
+    }
+
+    /**
+     * Setter for OreStock.
+     * @param NewOreStock integer value that OreStock is asigned to.
+     */
+    public void setOreStock(Integer NewOreStock){
+        this.OreStock = NewOreStock;
+    }
+
+    /**
+     * Getter for OreSellPrice
+     * @return this.OreSellPrice returns ore selling price value as an integer.
+     */
+    public Integer getOreSellPrice(){
+        return this.OreSellPrice;
+    }
+
+    /**
+     * Setter for OreSellPrice.
+     * @param NewOreSellPrice integer value that OreSellPrice is set to.
+     */
+    public void setOreSellPrice(Integer NewOreSellPrice){
+        this.OreSellPrice = NewOreSellPrice;
+    }
+
+    /**
+     * Getter for OreBuyPrice.
+     * @return this.OreBuyPrice returns ore buying price as an integer.
+     */
+    public Integer getOreBuyPrice(){
+        return this.OreBuyPrice;
+    }
+
+    /**
+     * Setter for OreBuyPrice.
+     * @param NewOreBuyPrice integer value that OreBuyPrice is set to.
+     */
+    public void setOreBuyPrice(Integer NewOreBuyPrice){
+        this.OreBuyPrice = NewOreBuyPrice;
+    }
+
+    /**
+     * Getter  for FoodStock
+     * @return this.FoodStock is  integer food stock value of a Market.
+     */
+    public Integer getFoodStock(){
+        return this.FoodStock;
+    }
+
+    /**
+     * Setter for FoodStock.
+     * @param NewFoodStock integer value that FoodStock is asigned to.
+     */
+    public void setFoodStock(Integer NewFoodStock){
+        this.FoodStock = NewFoodStock;
+    }
+
+    /**
+     * Getter for FoodSellPrice
+     * @return this.FoodSellPrice returns food selling price value as an integer.
+     */
+    public Integer getFoodSellPrice(){
+        return this.FoodSellPrice;
+    }
+
+    /**
+     * Setter for FoodSellPrice.
+     * @param NewFoodSellPrice integer value that FoodSellPrice is set to.
+     */
+    public void setFoodSellPrice(Integer NewFoodSellPrice){
+        this.FoodSellPrice = NewFoodSellPrice;
+    }
+
+    /**
+     * Getter for FoodBuyPrice.
+     * @return this.FoodBuyPrice returns food buying price as an integer.
+     */
+    public Integer getFoodBuyPrice(){
+        return this.FoodBuyPrice;
+    }
+
+    /**
+     * Setter for FoodBuyPrice.
+     * @param NewFoodBuyPrice integer value that FoodBuyPrice is set to.
+     */
+    public void setFoodBuyPrice(Integer NewFoodBuyPrice){
+        this.FoodBuyPrice = NewFoodBuyPrice;
+    }
+
+    /**
+     * Getter  for EnergyStock
+     * @return this.EnergyStock is  integer energy stock value of a Market.
+     */
+    public Integer getEnergyStock(){
+        return this.EnergyStock;
+    }
+
+    /**
+     * Setter for EnergyStock.
+     * @param NewEnergyStock integer value that EnergyStock is asigned to.
+     */
+    public void setEnergyStock(Integer NewEnergyStock){
+        this.EnergyStock = NewEnergyStock;
+    }
+
+    /**
+     * Getter for EnergySellPrice
+     * @return this.EnergySellPrice returns energy selling price value as an integer.
+     */
+    public Integer getEnergySellPrice(){
+        return this.EnergySellPrice;
+    }
+
+    /**
+     * Setter for EnergySellPrice.
+     * @param NewEnergySellPrice integer value that EnergySellPrice is set to.
+     */
+    public void setEnergySellPrice(Integer NewEnergySellPrice){
+        this.EnergySellPrice = NewEnergySellPrice;
+    }
+
+    /**
+     * Getter for EnergyBuyPrice.
+     * @return this.EnergyBuyPrice returns energy buying price as an integer.
+     */
+    public Integer getEnergyBuyPrice(){
+        return this.EnergyBuyPrice;
+    }
+
+    /**
+     * Setter for EnergyBuyPrice.
+     * @param NewEnergyBuyPrice integer value that EnergyBuyPrice is set to.
+     */
+    public void setEnergyBuyPrice(Integer NewEnergyBuyPrice){
+        this.EnergyBuyPrice = NewEnergyBuyPrice;
+    }
+
+
+    /**
      * A method that allows buying resources from the market.
      * <p>
      *Depending on what type of resources is passed ("ore", "food" or "energy") method checks whether it is sufficient
@@ -89,8 +234,8 @@ public class Market {
                     int playersOre = Player.getOreCount();
                     playersOre += Quantity;
                     Player.setOreCount(playersOre);
-                    calculateNewCost(OreStock, OreBuyPrice, "buy");
-                    calculateNewCost(OreStock, OreSellPrice, "sell");
+                    OreBuyPrice = calculateNewCost(OreStock, OreBuyPrice, "buy");
+                    OreSellPrice = calculateNewCost(OreStock, OreSellPrice, "sell");
                 } else {
                     System.out.println("Insufficient money");
                 }
@@ -107,8 +252,8 @@ public class Market {
                     int playersFood = Player.getFoodCount();
                     playersFood += Quantity;
                     Player.setFoodCount(playersFood);
-                    calculateNewCost(FoodStock, FoodBuyPrice, "buy");
-                    calculateNewCost(FoodStock, FoodSellPrice, "sell");
+                    FoodBuyPrice = calculateNewCost(FoodStock, FoodBuyPrice, "buy");
+                    FoodSellPrice = calculateNewCost(FoodStock, FoodSellPrice, "sell");
                 } else {
                     System.out.println("Insufficient money");
                 }
@@ -126,8 +271,8 @@ public class Market {
                     int playersEnergy = Player.getEnergyCount();
                     playersEnergy += Quantity;
                     Player.setEnergyCount(playersEnergy);
-                    calculateNewCost(EnergyStock, EnergyBuyPrice, "buy");
-                    calculateNewCost(EnergyStock, EnergySellPrice, "sell");
+                    EnergyBuyPrice = calculateNewCost(EnergyStock, EnergyBuyPrice, "buy");
+                    EnergySellPrice = calculateNewCost(EnergyStock, EnergySellPrice, "sell");
                 } else {
                     System.out.println("Insufficient money");
                 }
@@ -164,8 +309,8 @@ public class Market {
                 Player.setMoney(playersMoney);
                 playersOre -= Quantity;
                 Player.setOreCount(playersOre);
-                calculateNewCost(OreStock, OreBuyPrice, "buy");
-                calculateNewCost(OreStock, OreSellPrice, "sell");
+                OreBuyPrice = calculateNewCost(OreStock, OreBuyPrice, "buy");
+                OreSellPrice = calculateNewCost(OreStock, OreSellPrice, "sell");
 
             } else {
                 System.out.println("Inscufficient resources");
@@ -178,8 +323,8 @@ public class Market {
                 Player.setMoney(playersMoney);
                 playersFood -= Quantity;
                 Player.setFoodCount(playersFood);
-                calculateNewCost(FoodStock, FoodBuyPrice, "Buy");
-                calculateNewCost(FoodStock, FoodSellPrice, "sell");
+                FoodBuyPrice = calculateNewCost(FoodStock, FoodBuyPrice, "buy");
+                FoodSellPrice = calculateNewCost(FoodStock, FoodSellPrice, "sell");
 
             } else {
                 System.out.println("Inscufficient resources");
@@ -192,14 +337,16 @@ public class Market {
                 Player.setMoney(playersMoney);
                 playersEnergy -= Quantity;
                 Player.setEnergyCount(playersEnergy);
-                calculateNewCost(EnergyStock, EnergyBuyPrice, "buy");
-                calculateNewCost(EnergyStock, EnergySellPrice, "sell");
+                EnergyBuyPrice = calculateNewCost(EnergyStock, EnergyBuyPrice, "buy");
+                EnergySellPrice = calculateNewCost(EnergyStock, EnergySellPrice, "sell");
+
 
             } else {
                 System.out.println("Inscufficient resources");
             }
 
         }
+
     }
 
 
@@ -220,7 +367,7 @@ public class Market {
         int playersMoney = Player.getMoney();
         if (amountToGamble <= playersMoney) {
             Random rand = new Random();
-            int result = rand.nextInt(1);
+            int result = rand.nextInt(2);
             if (result == 0) {
                 playersMoney -= amountToGamble;
                 Player.setMoney(playersMoney);
@@ -232,7 +379,7 @@ public class Market {
             }
 
         }else {
-        return null;
+            return null; //throw an error or prevent them clicking it in the first place
         }
     }
 
@@ -250,19 +397,18 @@ public class Market {
      * @param costOfResources    Integer cost value of market resources.
      * @param oper               String value representing operations "buy" and "sell".
      */
-    private void calculateNewCost(int Stock, int costOfResources, String oper) {
+    private int calculateNewCost(int Stock, int costOfResources, String oper) {
         double cost;
-        if (Stock == 0 && oper == "buy") {
+        if (Stock == 0 && oper.equals("buy")) {
             costOfResources = 0;
-        } else if (Stock == 0 && oper == "sell") {
+        } else if (Stock == 0 && oper.equals("sell")) {
             costOfResources = 200;
 
-
-        } else if (oper == "buy") {
+        } else if (oper.equals("buy")) {
             cost = 160 / Stock + 2;
             costOfResources = (int) Math.round(cost);
 
-        } else if (oper == "sell") {
+        } else if (oper.equals("sell")) {
             cost = 160 / Stock;
             int costInt = (int) Math.round(cost);
             if (costInt < 1) {
@@ -273,8 +419,36 @@ public class Market {
         } else {
             System.out.println("Wrong operator");
         }
+        return costOfResources;
 
     }
+
+    /**
+     * A method that allows to buy a Roboticon.
+     * <p>
+     * Ferst method checks whether there are any available roboticons left. Then it is checked whether player has enough
+     * money to buy Roboticon. Roboticon object is created and assigned to Tile and to Player objects. Robotikon stock
+     * number is decreased by one. Player's money are decreased by amount that was spent on purchase.
+     * </p>
+     * @param RoboticonID   An integer uniquely defining the Roboticon, starting at 0.
+     * @param Player        A Player object that owns the Roboticon.
+     * @param Tile          A Tile object the Roboticon is positioned on and belongs to it.
+     */
+    public void buyRoboticon(int RoboticonID, Player Player, Tile Tile) {
+        if (RoboticonStock > 0) {
+            if (Player.getMoney() >= RoboticonBuyPrice) {
+                Roboticon NewRoboticon = new Roboticon(RoboticonID, Player, Tile);
+                Tile.assignRoboticon(NewRoboticon);
+                Player.addRoboticon(NewRoboticon);
+                RoboticonStock -= 1;
+                Player.setMoney(Player.getMoney() - RoboticonBuyPrice);
+            } else {
+                System.out.println("Insufficient money");
+            }
+        } else System.out.println("No available Roboticons");
+
+    }
+
     //public Integer getPrice(String Stock_Type){
     //return Stock_Type.Price;
     //}
