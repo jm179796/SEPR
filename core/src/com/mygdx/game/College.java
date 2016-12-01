@@ -14,7 +14,7 @@ public class College {
   /**
    * The effect(bonus) that the college uniquely has.
    */
-  private Effect Effect;
+  //private Effect Effect;
   /**
    * The player is playing as the college.
    */
