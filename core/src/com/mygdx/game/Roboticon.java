@@ -88,7 +88,7 @@ public class Roboticon {
     /**
      * A method to return an array of all possible upgrades available to the roboticon at its current state
      *
-     * @return Upgrades
+     * @return Upgrades Returns an Integer Array in the form [Ore, Energy, Food]
      */
     public Integer[] possibleUpgrades() {
         if (Level[0] <= MaxLevel) {

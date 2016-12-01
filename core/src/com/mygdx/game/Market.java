@@ -340,6 +340,7 @@ public class Market {
                 EnergyBuyPrice = calculateNewCost(EnergyStock, EnergyBuyPrice, "buy");
                 EnergySellPrice = calculateNewCost(EnergyStock, EnergySellPrice, "sell");
 
+
             } else {
                 System.out.println("Inscufficient resources");
             }
@@ -378,7 +379,7 @@ public class Market {
             }
 
         }else {
-            return null;
+            return null; //throw an error or prevent them clicking it in the first place
         }
     }
 

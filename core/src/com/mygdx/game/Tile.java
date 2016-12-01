@@ -1,6 +1,5 @@
 package com.mygdx.game;
 
-import java.util.*;
 
 public class Tile {
 
@@ -10,28 +9,18 @@ public class Tile {
   public Integer TileID;
 
   /**
-   * An integer storing the amount of Energy resources available on the tile.
+   * A modifier influencing how much energy is produced.
    */
   private Integer EnergyCount;
 
   // private Integer FoodCount;
   /**
-   * An integer storing the amount of Ore resources available on the tile
+   * A modifier influencing how much ore is produced.
    */
   private Integer OreCount;
   
   /**
-   * A modifier influincing how much energy is produced.
-   */
-  private Integer EnergyModifier;
-  
-  /**
-   * A modifier influincing how much ore is produced.
-   */
-  private Integer OreModifier;
-
-  /**
-   * A boolean signifying whether the tile contains a landmark or not
+   * A modifier influencing how much ore is produced.
    */
   private Boolean Landmark;
 
@@ -40,12 +29,15 @@ public class Tile {
    */
   private Player Owner;
 
+  /**
+   * The x and y coordinates of the tile on the map.
+   */
   private Integer[] Coordinates;
 
   /**
-   * A list of the roboticons tht have been placed on the tile.
+   * The roboticon that has been placed on the tile.
    */
-  private List<Roboticon> Roboticon_List = new ArrayList<Roboticon>();
+  private Roboticon roboticonStored;
 
   /**
    * The constructor for the object
@@ -58,11 +50,17 @@ public class Tile {
     this.TileID = TileID;
     this.EnergyCount = EnergyCount;
     //this.FoodCount = FoodCount;
-    this.EnergyModifier = EnergyModifier;
-    this.OreModifier = OreModifier;
     this.OreCount = OreCount;
     this.Landmark = Landmark;
     this.Coordinates = Coordinates;
+  }
+
+  /**
+   * Getter for the coordinates of the tile.
+   * @return The coordinates of the tile stored as an array.
+   */
+  public Integer[] getCoordinates(){
+    return this.Coordinates;
   }
 
   /**
@@ -71,17 +69,13 @@ public class Tile {
    * @return Player The player object after it's resource values have  been modified.
    */
   public Player Produce(Player Player){
-    if(Roboticon_List.size() > 0) {
-      for (Roboticon Roboticon : Roboticon_List) {
-        Integer[] modifiers = Roboticon.productionModifier();
-        Integer OreProduce = modifiers[0] * this.OreModifier;
-        Player.varyResource("Ore", OreProduce);
-        this.OreCount -= OreProduce;
-        Integer EnergyProduce = modifiers[1] * this.EnergyModifier;
-        Player.varyResource("Energy", EnergyProduce);
-        this.EnergyCount -= EnergyProduce;
-      }
-    }
+	Integer[] modifiers = this.roboticonStored.productionModifier();
+    Integer OreProduce = modifiers[0] * this.OreCount;
+    Player.varyResource("Ore", OreProduce);
+    this.OreCount -= OreProduce;
+    Integer EnergyProduce = modifiers[1] * this.EnergyCount;
+    Player.varyResource("Energy", EnergyProduce);
+    this.EnergyCount -= EnergyProduce;
     return Player;
   }
 
@@ -102,11 +96,26 @@ public class Tile {
   }
 
   /**
+   * Setter for the ore count of the tile.
+   * @param Count What the count is to be changed to.
+   */
+  public void changeOreCount(int Count){
+    this.OreCount = Count;
+  }
+
+  /**
+   * Setter for the ore count of the tile.
+   * @param Count What the count is to be changed to.
+   */
+  public void changeEnergyCount(int Count){
+    this.EnergyCount = Count;
+  }
+  /**
    * Adds a roboticon to the roboticon list.
    * @param Roboticon The roboticon to be added to the list.
    */
   public void assignRoboticon( Roboticon Roboticon) {
-      Roboticon_List.add(Roboticon);
+      roboticonStored = Roboticon;
   }
 
   /**
@@ -114,14 +123,25 @@ public class Tile {
    * @param Roboticon The roboticon to be removed.
    */
   public void unassignRoboticon( Roboticon Roboticon) {
-      Roboticon_List.remove(Roboticon);
+      roboticonStored = null;
   }
 
   /**
-   * Checks if the inputted tile is adjacent to the tile.
+   * Checks if the inputted tile is adjacent to the tile by checking if either the x or the y coordinate has a distance greater than 1. If so then it is adjacent.
    * @param Tile The tile which is to be checked against.
+   * @return adjacent A boolean signifying whether the tiles are adjacent or not.
    */
-  public void isAdjacent( Tile Tile) {
+  public boolean isAdjacent( Tile Tile) {
+    boolean adjacent = false;
+    if (Tile.getCoordinates()[0] - this.getCoordinates()[0] <= 1 && Tile.getCoordinates()[0] - this.getCoordinates()[0] >= -1) {
+
+
+      if (Tile.getCoordinates()[1] - this.getCoordinates()[1] <= 1 && Tile.getCoordinates()[1] - this.getCoordinates()[1] >= -1) {
+        adjacent = true;
+      }
+    }
+
+  return adjacent;
   }
 
 }
