@@ -1,23 +1,28 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
-public class Tile {
+import java.lang.*;
+
+public class Tile extends Button {
 
   /**
    * The ID number that the tile is uniquely identified by
    */
-  public Integer TileID;
+  public int TileID;
 
   /**
    * A modifier influencing how much energy is produced.
    */
-  private Integer EnergyCount;
+  private int EnergyCount;
 
   // private Integer FoodCount;
   /**
    * A modifier influencing how much ore is produced.
    */
-  private Integer OreCount;
+  private int OreCount;
   
   /**
    * A modifier influencing how much ore is produced.
@@ -32,12 +37,17 @@ public class Tile {
   /**
    * The x and y coordinates of the tile on the map.
    */
-  private Integer[] Coordinates;
+  private int[] Coordinates;
 
   /**
    * The roboticon that has been placed on the tile.
    */
   private Roboticon roboticonStored;
+  
+  /**
+   * Object holding executable method that can be assigned to the tile
+   */
+  private Runnable runnable;
 
   /**
    * The constructor for the object
@@ -45,21 +55,32 @@ public class Tile {
    * @param EnergyCount The multiplier for the production of energy.
    * @param OreCount The multiplier for the production of ore.
    * @param Landmark A boolean to signify if the tile is to be a landmark or not.
+   * @param runnable An object encapsulating a method that can be executed when the tile is clicked on
    */
-  public Tile(int TileID, int EnergyCount, int OreCount, boolean Landmark, Integer[] Coordinates){
-    this.TileID = TileID;
+  public Tile(int TileID, int EnergyCount, int OreCount, boolean Landmark, final Runnable runnable){
+    super(new ButtonStyle());
+	
+	this.TileID = TileID;
     this.EnergyCount = EnergyCount;
     //this.FoodCount = FoodCount;
     this.OreCount = OreCount;
     this.Landmark = Landmark;
     this.Coordinates = Coordinates;
+	this.runnable = runnable;
+	
+	addListener(new ChangeListener() {
+        @Override
+        public void changed(ChangeEvent event, Actor actor) {
+            runnable.run();
+        }
+    });
   }
 
   /**
    * Getter for the coordinates of the tile.
    * @return The coordinates of the tile stored as an array.
    */
-  public Integer[] getCoordinates(){
+  public int[] getCoordinates(){
     return this.Coordinates;
   }
 
@@ -141,7 +162,20 @@ public class Tile {
       }
     }
 
-  return adjacent;
+    return adjacent;
   }
+  
+  /**
+   * Returns the tile's associated function
+   */
+  public Runnable getFunction() {
+        return runnable;
+    }
 
+  /**
+   * Runs the tile's associated function
+   */
+  public void runFunction() {
+        runnable.run();
+    }
 }
