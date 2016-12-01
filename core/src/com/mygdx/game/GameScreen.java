@@ -100,7 +100,7 @@ public class GameScreen implements Screen{
                 buttonGrid.add(tileButtons[(y * 4) + x]).width(map.getWidth() / 4).height(map.getHeight() / 4);
             }
             buttonGrid.row();
-        }}}}
+        }}}
         //Set up button-grid over the map and populate it with invisible buttons
 
         timer = new GameTimer(120, gameFont, new Runnable() {
