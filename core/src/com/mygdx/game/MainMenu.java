@@ -52,7 +52,7 @@ public class MainMenu implements Screen {
         table = new Table();
         //Initialise stage and button-table
 
-        menuFont = new TTFont(Gdx.files.internal("font/testfontbignoodle.ttf"), 36);
+        menuFont = new TTFont(Gdx.files.internal("core/assets/font/testfontbignoodle.ttf"), 36);
         //Initialise menu font
 
         Gdx.input.setInputProcessor(stage);
