@@ -83,7 +83,7 @@ public class GameScreen implements Screen{
                 final int fx = x;
                 final int fy = y;
 
-                tiles[(y * 4) + x] = new Tile(0, 0, false, new Runnable() {
+                tiles[(y * 4) + x] = new Tile(0, 0,0, false, new Runnable() {
                     @Override
                     public void run() {
                         drawer.addTableRow(tableLeft, new Label("Tile " + ((fy * 4) + fx + 1) + " was clicked", new Label.LabelStyle(gameFont.font(), Color.WHITE)));

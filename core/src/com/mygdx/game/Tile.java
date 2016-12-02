@@ -18,7 +18,8 @@ public class Tile extends Button {
    */
   private int EnergyCount;
 
-  // private Integer FoodCount;
+  private Integer FoodCount;
+
   /**
    * A modifier influencing how much ore is produced.
    */
@@ -57,12 +58,12 @@ public class Tile extends Button {
    * @param Landmark A boolean to signify if the tile is to be a landmark or not.
    * @param runnable An object encapsulating a method that can be executed when the tile is clicked on
    */
-  public Tile(int EnergyCount, int OreCount, boolean Landmark, final Runnable runnable){
+  public Tile(int EnergyCount, int OreCount, int FoodCount, boolean Landmark, final Runnable runnable){
     super(new ButtonStyle());
 	
 	//this.TileID = TileID;
     this.EnergyCount = EnergyCount;
-    //this.FoodCount = FoodCount;
+    this.FoodCount = FoodCount;
     this.OreCount = OreCount;
     this.Landmark = Landmark;
     //this.Coordinates = Coordinates;

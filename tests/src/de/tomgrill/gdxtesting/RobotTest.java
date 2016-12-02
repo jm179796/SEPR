@@ -1,5 +1,7 @@
 package de.tomgrill.gdxtesting;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import org.junit.Test;
 import com.mygdx.game.*;
 
@@ -17,8 +19,12 @@ import static org.junit.Assert.*;
 public class RobotTest {
 
     private Player TestPlayer = new Player(0);
-    private Integer[] Tilexy = {1,1};
-    private Tile TestTile = new Tile(0, 5,5,  false, Tilexy );
+    private Tile TestTile = new Tile(0, 5, 5, true, new Runnable() {
+        @Override
+        public void run() {
+
+        }
+    });
     private Roboticon TestRobot = new Roboticon(0, TestPlayer, TestTile);
 
     /**
