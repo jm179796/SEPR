@@ -77,30 +77,30 @@ public class Tile extends Button {
     });
   }
 
-  /**
-   * Alternative constrcutor for the object which doesn't encapsulate internal functionality
-   //* @param TileID The ID of the generated Tile.
-   * @param EnergyCount The multiplier for the production of energy.
-   * @param OreCount The multiplier for the production of ore.
-   * @param Landmark A boolean to signify if the tile is to be a landmark or not.
-   */
-  public Tile(int EnergyCount, int OreCount, boolean Landmark){
-    super(new ButtonStyle());
+  ///**
+  // * Alternative constrcutor for the object which doesn't encapsulate internal functionality
+  // //* @param TileID The ID of the generated Tile.
+  // * @param EnergyCount The multiplier for the production of energy.
+  // * @param OreCount The multiplier for the production of ore.
+  // * @param Landmark A boolean to signify if the tile is to be a landmark or not.
+  // */
+  //public Tile(int EnergyCount, int OreCount, boolean Landmark){
+  //  super(new ButtonStyle());
 
     //this.TileID = TileID;
-    this.EnergyCount = EnergyCount;
+    //this.EnergyCount = EnergyCount;
     //this.FoodCount = FoodCount;
-    this.OreCount = OreCount;
-    this.Landmark = Landmark;
+    //this.OreCount = OreCount;
+    //this.Landmark = Landmark;
     //this.Coordinates = Coordinates;
 
-    this.runnable = new Runnable() {
-      @Override
-      public void run() {
-        return;
-      }
-    };
-  }
+    //this.runnable = new Runnable() {
+    //  @Override
+    //  public void run() {
+    //    return;
+    //  }
+    //};
+  //}
 
   /**
    * Getter for the coordinates of the tile.
