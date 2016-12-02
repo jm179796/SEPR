@@ -10,6 +10,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 
@@ -112,6 +113,8 @@ public class GameScreen implements Screen{
         constructRightTable();
         //Construct and deploy side-hand tables
 
+        getTile(tileGrid, 3, 3).runFunction();
+
         drawer.debug(stage);
         //Call this to draw temporary debug lines around all of the actors on the stage
 
@@ -207,4 +210,14 @@ public class GameScreen implements Screen{
         stage.addActor(tableRight);
         //Add right-hand table to the stage
     }
+
+    public Tile getTile(Table tileGrid, int x, int y) {
+        return (Tile) tileGrid.getChildren().get((y * tileGrid.getColumns()) + x);
+    }
+    //Returns the tile-type object held in the provided TileGrid at the specified co-ordinates
+
+    public Tile getTile(Table tileGrid, int i) {
+        return (Tile) tileGrid.getChildren().get(i);
+    }
+    //Returns the tile-type object held in the provided TileGrid at the specified position
 }
