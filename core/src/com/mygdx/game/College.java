@@ -20,19 +20,26 @@ public class College {
    */
 
   private Player Owner;
+
+  /**
+   * The description of the College.
+   */
+  private String Description;
+
   /**
    * The starting tile for the college.
    */
-
   private Tile StartingTile;
 
   /**
    * The constructor for the class.
    * @param Name The name of the college.
+   * @param Description The description of the college.
    * @param Starting_Tile The tile that the college will start on
    */
-  public College(String Name, Tile Starting_Tile){
+  public College(String Name, String Description, Tile Starting_Tile){
     this.Name = Name;
+    this.Description = Description;
     this.StartingTile = Starting_Tile;
   }
 

@@ -13,6 +13,7 @@ public class Game_Engine {
 	public static void main() {
 		Player Player1 = new Player(1);
 		Player Player2 = new Player(2);
+
 		//assignCollege(Player1) NEEDS USER INPUT
 		//assignCollege(Player2) NEEDS USER INPUT
 		Market Market = new Market();

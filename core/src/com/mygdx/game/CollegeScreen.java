@@ -5,10 +5,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 /**
  * Created by Nico on 25/11/2016.
@@ -44,10 +46,10 @@ public class CollegeScreen implements Screen {
         constructCentreTable();
         constructP1Table();
         constructP2Table();
-        /**
+
         tableP1.debug();
         tableP2.debug();
-        tableCentre.debug();*/
+        tableCentre.debug();
         //"Debug" instruction renders temporary borders around elements
 
     }
@@ -88,6 +90,7 @@ public class CollegeScreen implements Screen {
 
     @Override
     public void dispose() {
+        
 
     }
 
@@ -167,7 +170,11 @@ public class CollegeScreen implements Screen {
         buttons[3] = new TextButton("Vanbrugh", collegeButtonStyle);
         buttons[4] = new TextButton("Wentworth", collegeButtonStyle);
 
+        buttons[0].addListener(new ChangeListener() {
+            public void changed(ChangeEvent event, Actor actor) {
 
+            }
+        });
 
         //ADD BUTTONS
         for (int i = 0; i < buttons.length; i++) {
