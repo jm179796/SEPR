@@ -12,7 +12,10 @@ public class Player {
      * An integer storing the amount of ore the player owns.
      */
     private Integer OreCount = 0;
-
+    
+    /**
+     * An integer storing the amount of food a player owns.
+     */
     private Integer FoodCount = 0;
 
     /**
@@ -177,9 +180,9 @@ public class Player {
         else if(resource == "Energy"){
             this.EnergyCount += amount;
         }
-        //else if(resource == "Food"){
-            //this.FoodCount += amount;
-        //}
+        else if(resource == "Food"){
+            this.FoodCount += amount;
+        }
 
         else if(resource =="Money"){
             this.Money += amount;
