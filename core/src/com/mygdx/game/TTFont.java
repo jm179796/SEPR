@@ -222,4 +222,8 @@ public class TTFont {
 
         BMFont = TTFGenerator.generateFont(TTFStyle);
     }
+
+    public void dispose() {
+        BMFont.dispose();
+    }
 }

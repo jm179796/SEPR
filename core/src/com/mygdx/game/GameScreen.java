@@ -160,8 +160,11 @@ public class GameScreen implements Screen{
 
     @Override
     public void dispose() {
-        //batch.dispose();
-        //game.dispose();
+        gameFont.dispose();
+        //Dispose of the core BitmapFont object within this TTFont object
+
+        stage.dispose();
+        //Dispose of the stage
     }
 
     public void constructLeftTable() {

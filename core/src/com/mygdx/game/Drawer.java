@@ -35,6 +35,9 @@ public class Drawer {
 
         renderer.end();
         //Shut the renderer down after the shape has been drawn
+
+        renderer.dispose();
+        //Get rid of the renderer now that it isn't useful anymore
     }
 
     public void filledRectangle(Color color, int x, int y, int width, int height) {

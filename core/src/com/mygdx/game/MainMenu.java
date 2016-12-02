@@ -129,6 +129,8 @@ public class MainMenu implements Screen {
 
     @Override
     public void dispose() {
+        menuFont.dispose();
 
+        stage.dispose();
     }
 }
