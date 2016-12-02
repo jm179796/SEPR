@@ -17,7 +17,10 @@ public class Tile extends Button {
    * A modifier influencing how much energy is produced.
    */
   private int EnergyCount;
-
+  
+  /**
+   * A modifier influencing how much food is produced.
+   */
   private Integer FoodCount;
 
   /**
