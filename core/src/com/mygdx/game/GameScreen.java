@@ -10,9 +10,10 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 public class GameScreen implements Screen{
 
@@ -45,6 +46,12 @@ public class GameScreen implements Screen{
     private Label foodCounter;
     private Label waterCounter;
     private Label oreCounter;
+
+    private Player Player1 = new Player(1);
+    private Player Player2 = new Player(2);
+    private Market Market = new Market();
+    private int phase = 1;
+    private int currentPlayer = 1;
     //Establish resource-counter labels
 
     private Drawer drawer;
@@ -72,32 +79,9 @@ public class GameScreen implements Screen{
         stage.addActor(map);
         //Initialise and deploy map texture
 
-        tileGrid = new Table();
-        //Initialise tile-grid
 
-        tiles = new Tile[16];
-        //Initialise tile-buttons
 
-        tileGrid.setBounds((Gdx.graphics.getWidth() / 2) - (map.getWidth() / 2), 0, map.getWidth(), map.getHeight());
-        for (int y = 0; y < 4; y++) {
-            for (int x = 0; x < 4; x++) {
-                final int fx = x;
-                final int fy = y;
-
-                tiles[(y * 4) + x] = new Tile(0, 0,0, false, new Runnable() {
-                    @Override
-                    public void run() {
-                        drawer.addTableRow(tableLeft, new Label("Tile " + ((fy * 4) + fx + 1) + " was clicked", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
-                    }
-                });
-
-                tileGrid.add(tiles[(y * 4) + x]).width(map.getWidth() / 4).height(map.getHeight() / 4);
-            }
-            tileGrid.row();
-        }
-        stage.addActor(tileGrid);
-        //Populate tile-grid with invisible buttons and deploy it on to the stage
-        //At the moment, it's set up to show how different tiles can be assigned different functions
+        constructTileGrid();
 
         tableWidth = (int) ((Gdx.graphics.getWidth() - map.getWidth()) / 2);
         //Set widths of side-hand tables
@@ -209,6 +193,34 @@ public class GameScreen implements Screen{
 
         stage.addActor(tableRight);
         //Add right-hand table to the stage
+    }
+
+    public void constructTileGrid(){
+        tileGrid = new Table();
+        //Initialise tile-grid
+
+        tiles = new Tile[16];
+        //Initialise tile-buttons
+
+        tileGrid.setBounds((Gdx.graphics.getWidth() / 2) - (map.getWidth() / 2), 0, map.getWidth(), map.getHeight());
+        for (int y = 0; y < 4; y++) {
+            for (int x = 0; x < 4; x++) {
+                final int fx = x;
+                final int fy = y;
+
+                tiles[(y * 4) + x] = new Tile(0, 0,0, false, new Runnable() {
+                    @Override
+                    public void run() {
+                        drawer.addTableRow(tableLeft, new Label("Tile " + ((fy * 4) + fx + 1) + " was clicked", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
+                    }
+                });
+
+                tileGrid.add(tiles[(y * 4) + x]).width(map.getWidth() / 4).height(map.getHeight() / 4);
+            }
+            tileGrid.row();
+        }
+
+        stage.addActor(tileGrid);
     }
 
     public Tile getTile(Table tileGrid, int x, int y) {
