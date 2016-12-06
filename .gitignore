@@ -8,6 +8,13 @@ hs_err_pid*
 ## Idea
 **/.idea/workspace.xml 
 **/.idea/tasks.xml
+.idea/**
+!.idea/runConfigurations/
+.idea/runConfigurations/**
+!.idea/runConfigurations/Tests.xml
+!.idea/runConfigurations/Desktop.xml
+*.xml
+
 ## Robovm
 robovm-build/
 
@@ -66,10 +73,8 @@ nb-configuration.xml
 
 .gradle
 gradle-app.setting
-build/
 
 ## OS Specific
 .DS_Store
 Thumbs.db
-*.xml
-*.xml
+
