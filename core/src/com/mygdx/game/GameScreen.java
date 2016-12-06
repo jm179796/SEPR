@@ -75,10 +75,10 @@ public class GameScreen implements Screen{
         Gdx.input.setInputProcessor(stage);
         //Prepare the local stage and set it up to accept inputs
 
-        gameFont = new TTFont(Gdx.files.internal("core/assets/font/testfontbignoodle.ttf"));
+        gameFont = new TTFont(Gdx.files.internal("font/testfontbignoodle.ttf"));
         //Set fonts for game interface
 
-        map = new Image(new Texture("core/assets/image/TestMap.png"));
+        map = new Image(new Texture("image/TestMap.png"));
         map.setPosition((Gdx.graphics.getWidth() / 2) - (map.getWidth() / 2), (Gdx.graphics.getHeight() / 2) - (map.getHeight() / 2));
         stage.addActor(map);
         //Initialise and deploy map texture
