@@ -10,9 +10,10 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 public class GameScreen implements Screen{
 
@@ -43,8 +44,14 @@ public class GameScreen implements Screen{
     //Establish game-timer
 
     private Label foodCounter;
-    private Label waterCounter;
+    private Label energyCounter;
     private Label oreCounter;
+
+
+    private Player[] Players = new Player[3];
+    private Market Market = new Market();
+    private int phase = 1;
+    private int currentPlayer = 1;
     //Establish resource-counter labels
 
     private Drawer drawer;
@@ -52,6 +59,10 @@ public class GameScreen implements Screen{
 
     public GameScreen(Game game) {
         this.game = game;
+        Player Player1 = new Player(1);
+        Player Player2 = new Player(2);
+        Players[1] = Player1;
+        Players[2] = Player2;
         //Import current game-state
     }
 
@@ -72,32 +83,9 @@ public class GameScreen implements Screen{
         stage.addActor(map);
         //Initialise and deploy map texture
 
-        tileGrid = new Table();
-        //Initialise tile-grid
 
-        tiles = new Tile[16];
-        //Initialise tile-buttons
 
-        tileGrid.setBounds((Gdx.graphics.getWidth() / 2) - (map.getWidth() / 2), 0, map.getWidth(), map.getHeight());
-        for (int y = 0; y < 4; y++) {
-            for (int x = 0; x < 4; x++) {
-                final int fx = x;
-                final int fy = y;
-
-                tiles[(y * 4) + x] = new Tile(0, 0,0, false, new Runnable() {
-                    @Override
-                    public void run() {
-                        drawer.addTableRow(tableLeft, new Label("Tile " + ((fy * 4) + fx + 1) + " was clicked", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
-                    }
-                });
-
-                tileGrid.add(tiles[(y * 4) + x]).width(map.getWidth() / 4).height(map.getHeight() / 4);
-            }
-            tileGrid.row();
-        }
-        stage.addActor(tileGrid);
-        //Populate tile-grid with invisible buttons and deploy it on to the stage
-        //At the moment, it's set up to show how different tiles can be assigned different functions
+        constructTileGrid();
 
         tableWidth = (int) ((Gdx.graphics.getWidth() - map.getWidth()) / 2);
         //Set widths of side-hand tables
@@ -137,7 +125,7 @@ public class GameScreen implements Screen{
         //Draw border around the map
 
         drawer.filledRectangle(Color.WHITE, 0, (int) (timer.getHeight()), tableWidth, 1);
-        drawer.filledRectangle(Color.WHITE, 0, (int) (timer.getHeight() + foodCounter.getHeight() + waterCounter.getHeight() + oreCounter.getHeight() + 20), tableWidth, 1);
+        drawer.filledRectangle(Color.WHITE, 0, (int) (timer.getHeight() + foodCounter.getHeight() + energyCounter.getHeight() + oreCounter.getHeight() + 20), tableWidth, 1);
         //Draw lines in left-hand table
     }
 
@@ -183,12 +171,12 @@ public class GameScreen implements Screen{
         tableLeft.add(timer).top();
 
         gameFont.setSize(24);
-        foodCounter = new Label("Test", new Label.LabelStyle(gameFont.font(), Color.WHITE));
-        waterCounter = new Label("Test", new Label.LabelStyle(gameFont.font(), Color.WHITE));
-        oreCounter = new Label("Test", new Label.LabelStyle(gameFont.font(), Color.WHITE));
+        foodCounter = new Label(Players[currentPlayer].getFoodCount().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
+        energyCounter = new Label(Players[currentPlayer].getEnergyCount().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
+        oreCounter = new Label(Players[currentPlayer].getOreCount().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
 
         drawer.addTableRow(tableLeft, new LabelledElement("Food", gameFont, Color.WHITE, foodCounter, 175), 10, 0, 0, 0);
-        drawer.addTableRow(tableLeft, new LabelledElement("Water", gameFont, Color.WHITE, waterCounter, 175));
+        drawer.addTableRow(tableLeft, new LabelledElement("Energy", gameFont, Color.WHITE, energyCounter, 175));
         drawer.addTableRow(tableLeft, new LabelledElement("Ore", gameFont, Color.WHITE, oreCounter, 175));
 
         drawer.addTableRow(tableLeft, new Label("Roboticon Shop Area", new Label.LabelStyle(gameFont.font(), Color.WHITE)), 20, 0, 0, 0);
@@ -209,6 +197,34 @@ public class GameScreen implements Screen{
 
         stage.addActor(tableRight);
         //Add right-hand table to the stage
+    }
+
+    public void constructTileGrid(){
+        tileGrid = new Table();
+        //Initialise tile-grid
+
+        tiles = new Tile[16];
+        //Initialise tile-buttons
+
+        tileGrid.setBounds((Gdx.graphics.getWidth() / 2) - (map.getWidth() / 2), 0, map.getWidth(), map.getHeight());
+        for (int y = 0; y < 4; y++) {
+            for (int x = 0; x < 4; x++) {
+                final int fx = x;
+                final int fy = y;
+
+                tiles[(y * 4) + x] = new Tile(0, 0,0, false, new Runnable() {
+                    @Override
+                    public void run() {
+                        drawer.addTableRow(tableLeft, new Label("Tile " + ((fy * 4) + fx + 1) + " was clicked", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
+                    }
+                });
+
+                tileGrid.add(tiles[(y * 4) + x]).width(map.getWidth() / 4).height(map.getHeight() / 4);
+            }
+            tileGrid.row();
+        }
+
+        stage.addActor(tileGrid);
     }
 
     public Tile getTile(Table tileGrid, int x, int y) {
