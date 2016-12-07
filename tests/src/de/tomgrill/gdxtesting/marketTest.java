@@ -1,8 +1,10 @@
 package de.tomgrill.gdxtesting;
 
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.Before;
 import com.mygdx.game.*;
+import org.junit.rules.ExpectedException;
 
 import java.util.Arrays;
 
@@ -18,7 +20,7 @@ import static org.junit.Assert.*;
 public class marketTest {
     private Player TestPlayer = new Player(0);
     private Market TestMarket = new Market();
-    //private Tile TestTile = new Tile(2, 100, 100, false, (1,2));
+
 
 
 
@@ -70,11 +72,19 @@ public class marketTest {
         TestMarket.setEnergyStock(10);
     }
 
+    private void setUpEnergy3() {
+        TestPlayer.setEnergyCount(10);
+        TestPlayer.setMoney(100);
+        TestMarket.setEnergySellPrice(10);
+        TestMarket.setEnergyBuyPrice(10);
+        TestMarket.setEnergyStock(100);
+    }
 
-   // @Test
-   // public void buyRoboticonTest(){
-   //     TestMarket.buyRoboticon(1, TestPlayer, );
-   // }
+
+    // @Test
+    // public void buyRoboticonTest(){
+    //     TestMarket.buyRoboticon(1, TestPlayer, );
+    // }
 
     /**
      * Tests sell method for ore resource.
@@ -83,7 +93,7 @@ public class marketTest {
      * </p>
      */
     @Test
-    public void sellOreTest() {
+    public void sellOreTest() throws Exception {
         setUpOre();
         TestMarket.sell("ore", 10, TestPlayer);
         Integer TestOreCount = 0;
@@ -105,7 +115,7 @@ public class marketTest {
      * </p>
      */
     @Test
-    public void sellFoodTest() {
+    public void sellFoodTest() throws Exception {
         setUpFood();
         TestMarket.sell("food", 10, TestPlayer);
         Integer TestFoodCount = 0;
@@ -129,17 +139,79 @@ public class marketTest {
     @Test
     public void sellEnergyTest() {
         setUpEnergy();
-        TestMarket.sell("energy", 10, TestPlayer);
-        Integer TestEnergyCount = 0;
-        assertEquals(TestEnergyCount, TestPlayer.getEnergyCount());
-        Integer TestMoney = 110;
-        assertEquals(TestMoney, TestPlayer.getMoney());
-        Integer TestSellPrice = 8;
-        assertEquals(TestSellPrice, TestMarket.getEnergySellPrice());
-        Integer TestBuyPrice = 10;
-        assertEquals(TestBuyPrice, TestMarket.getEnergyBuyPrice());
-        Integer TestFoodStock = 20;
-        assertEquals(TestFoodStock, TestMarket.getEnergyStock());
+        try {
+            TestMarket.sell("energy", 10, TestPlayer);
+            Integer TestEnergyCount = 0;
+            assertEquals(TestEnergyCount, TestPlayer.getEnergyCount());
+            Integer TestMoney = 110;
+            assertEquals(TestMoney, TestPlayer.getMoney());
+            Integer TestSellPrice = 8;
+            assertEquals(TestSellPrice, TestMarket.getEnergySellPrice());
+            Integer TestBuyPrice = 10;
+            assertEquals(TestBuyPrice, TestMarket.getEnergyBuyPrice());
+            Integer TestFoodStock = 20;
+            assertEquals(TestFoodStock, TestMarket.getEnergyStock());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+    /**
+     * Tests sell method for energy resource, when energyStock is < then required energy.
+     * <p>
+     *     Exception("Insufficient resources") is thrown.
+     *     Initial values of EnergyCount, Money, EnergySellPrice, EnergyBuyPrice are set to 10.
+     * </p>
+     */
+    @Test
+    public void sellEnergyException() {
+        setUpEnergy();
+        try {
+            TestMarket.sell("energy", 100, TestPlayer);
+            Integer TestEnergyCount = 0;
+            assertEquals(TestEnergyCount, TestPlayer.getEnergyCount());
+            Integer TestMoney = 110;
+            assertEquals(TestMoney, TestPlayer.getMoney());
+            Integer TestSellPrice = 8;
+            assertEquals(TestSellPrice, TestMarket.getEnergySellPrice());
+            Integer TestBuyPrice = 10;
+            assertEquals(TestBuyPrice, TestMarket.getEnergyBuyPrice());
+            Integer TestFoodStock = 20;
+            assertEquals(TestFoodStock, TestMarket.getEnergyStock());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     * Tests buy method for energy resource, when players money is < than required required amount to buy.
+     * <p>
+     *     Exception("Insufficient money") is thrown.
+     *     Initial values of EnergyCount, Money, EnergySellPrice, EnergyBuyPrice are set to 10.
+     * </p>
+     */
+    @Test
+    public void buyEnergyException() throws Exception {
+        setUpEnergy3();
+        try {
+            TestMarket.buy("energy", 100, TestPlayer);
+            Integer TestEnergyCount = 20;
+            assertEquals(TestEnergyCount, TestPlayer.getEnergyCount());
+            Integer TestMoney = 0;
+            assertEquals(TestMoney, TestPlayer.getMoney());
+            Integer TestSellPrice = 200;
+            assertEquals(TestSellPrice, TestMarket.getEnergySellPrice());
+            Integer TestBuyPrice = 0;
+            assertEquals(TestBuyPrice, TestMarket.getEnergyBuyPrice());
+            Integer TestFoodStock = 0;
+            assertEquals(TestFoodStock, TestMarket.getEnergyStock());
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
     }
 
     /**
@@ -149,7 +221,7 @@ public class marketTest {
      * </p>
      */
     @Test
-    public void buyOreTest() {
+    public void buyOreTest() throws Exception {
         setUpOre2();
         TestMarket.buy("ore", 10, TestPlayer);
         Integer TestOreCount = 20;
@@ -172,7 +244,7 @@ public class marketTest {
      * </p>
      */
     @Test
-    public void buyFoodTest() {
+    public void buyFoodTest() throws Exception {
         setUpFood2();
         TestMarket.buy("food", 10, TestPlayer);
         Integer TestFoodCount = 20;
@@ -195,7 +267,7 @@ public class marketTest {
      * </p>
      */
     @Test
-    public void buyEnergyTest() {
+    public void buyEnergyTest() throws Exception {
         setUpEnergy2();
         TestMarket.buy("energy", 10, TestPlayer);
         Integer TestEnergyCount = 20;
@@ -227,7 +299,3 @@ public class marketTest {
 //
 //        //System.out.println(TestPlayer.getMoney());
 }
-
-
-
-

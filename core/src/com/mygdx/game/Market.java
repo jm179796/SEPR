@@ -222,7 +222,7 @@ public class Market {
      * @param Quantity      The amount of resources that Player wants to buy.
      * @param Player        A Player object.
      */
-    public void buy(String Stock_Type, int Quantity, Player Player) {
+    public void buy(String Stock_Type, int Quantity, Player Player) throws Exception {
         int playersMoney = Player.getMoney();
         if ("ore".equals(Stock_Type)) {
             if (Quantity <= OreStock) {
@@ -237,10 +237,10 @@ public class Market {
                     OreBuyPrice = calculateNewCost(OreStock, OreBuyPrice, "buy");
                     OreSellPrice = calculateNewCost(OreStock, OreSellPrice, "sell");
                 } else {
-                    System.out.println("Insufficient money");
+                    throw new Exception("Insufficient money");
                 }
             } else {
-                System.out.println("Inscufficient resources");
+                throw new Exception("Insufficient resources");
             }
         } else if ("food".equals(Stock_Type)) {
             if (Quantity <= FoodStock) {
@@ -255,11 +255,11 @@ public class Market {
                     FoodBuyPrice = calculateNewCost(FoodStock, FoodBuyPrice, "buy");
                     FoodSellPrice = calculateNewCost(FoodStock, FoodSellPrice, "sell");
                 } else {
-                    System.out.println("Insufficient money");
+                    throw new Exception("Insufficient money");
                 }
 
             } else {
-                System.out.println("Inscufficient resources");
+                throw new Exception("Inscufficient resources");
             }
         } else if ("energy".equals(Stock_Type)) {
             if (Quantity <= EnergyStock) {
@@ -274,13 +274,13 @@ public class Market {
                     EnergyBuyPrice = calculateNewCost(EnergyStock, EnergyBuyPrice, "buy");
                     EnergySellPrice = calculateNewCost(EnergyStock, EnergySellPrice, "sell");
                 } else {
-                    System.out.println("Insufficient money");
+                    throw new Exception("Insufficient money");
                 }
             } else {
-                System.out.println("Inscufficient resources");
+                throw new Exception("Inscufficient resources");
             }
         } else {
-            System.out.println("Wrong Stock_Type passed");
+            throw new Exception("Wrong Stock_Type passed");
         }
 
     }
@@ -299,7 +299,7 @@ public class Market {
      * @param Quantity      The amount of resources that Player wants to buy.
      * @param Player        A Player object.
      */
-    public void sell(String Stock_Type, int Quantity, Player Player) {
+    public void sell(String Stock_Type, int Quantity, Player Player) throws Exception {
         int playersMoney = Player.getMoney();
         if ("ore".equals(Stock_Type)) {
             int playersOre = Player.getOreCount();
@@ -313,7 +313,7 @@ public class Market {
                 OreSellPrice = calculateNewCost(OreStock, OreSellPrice, "sell");
 
             } else {
-                System.out.println("Inscufficient resources");
+                throw new Exception("Inscufficient resources");
             }
         } else if ("food".equals(Stock_Type)) {
             int playersFood = Player.getFoodCount();
@@ -327,7 +327,7 @@ public class Market {
                 FoodSellPrice = calculateNewCost(FoodStock, FoodSellPrice, "sell");
 
             } else {
-                System.out.println("Inscufficient resources");
+                throw new Exception("Inscufficient resources");
             }
         } else if ("energy".equals(Stock_Type)) {
             int playersEnergy = Player.getEnergyCount();
@@ -342,7 +342,7 @@ public class Market {
 
 
             } else {
-                System.out.println("Inscufficient resources");
+                throw new Exception("Inscufficient resources");
             }
 
         }
@@ -397,7 +397,7 @@ public class Market {
      * @param costOfResources    Integer cost value of market resources.
      * @param oper               String value representing operations "buy" and "sell".
      */
-    private int calculateNewCost(int Stock, int costOfResources, String oper) {
+    private int calculateNewCost(int Stock, int costOfResources, String oper) throws Exception {
         double cost;
         if (Stock == 0 && oper.equals("buy")) {
             costOfResources = 0;
@@ -417,7 +417,7 @@ public class Market {
                 costOfResources = costInt;
             }
         } else {
-            System.out.println("Wrong operator");
+            throw new Exception("Wrong operator");
         }
         return costOfResources;
 
@@ -434,20 +434,26 @@ public class Market {
      * @param Player        A Player object that owns the Roboticon.
      * @param Tile          A Tile object the Roboticon is positioned on and belongs to it.
      */
-    public void buyRoboticon(int RoboticonID, Player Player, Tile Tile) {
+    public void buyRoboticon(int RoboticonID, Player Player, Tile Tile) throws Exception {
         if (RoboticonStock > 0) {
             if (Player.getMoney() >= RoboticonBuyPrice) {
-                Roboticon NewRoboticon = new Roboticon(RoboticonID, Player, Tile);
-                Tile.assignRoboticon(NewRoboticon);
-                Player.addRoboticon(NewRoboticon);
-                RoboticonStock -= 1;
-                Player.setMoney(Player.getMoney() - RoboticonBuyPrice);
-            } else {
-                System.out.println("Insufficient money");
+                if (OreStock > 0) {
+                    Roboticon NewRoboticon = new Roboticon(RoboticonID, Player, Tile);
+                    Tile.assignRoboticon(NewRoboticon);
+                    Player.addRoboticon(NewRoboticon);
+                    RoboticonStock -= 1;
+                    Player.setMoney(Player.getMoney() - RoboticonBuyPrice);
+                } else {
+                    throw new Exception("Insufficient ore");
+                }
+            } else {throw new Exception("Insufficient money");
             }
-        } else System.out.println("No available Roboticons");
+        }else {
+            throw new Exception("No available Roboticons");
+        }
 
     }
+
 
     //public Integer getPrice(String Stock_Type){
     //return Stock_Type.Price;
