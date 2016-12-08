@@ -2,10 +2,14 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 /**
@@ -46,6 +50,25 @@ public class Drawer {
 
     public void lineRectangle(Color color, int x, int y, int width, int height) {
         rectangle(ShapeRenderer.ShapeType.Line, color, x, y, width, height);
+    }
+
+    public void borderedRectangle(Color fillColor, Color lineColor, int x, int y, int width, int height) {
+        rectangle(ShapeRenderer.ShapeType.Filled, fillColor, x, y, width, height);
+        rectangle(ShapeRenderer.ShapeType.Line, lineColor, x, y, width, height);
+    }
+
+    public void text(String text, TTFont font, int x, int y) {
+        SpriteBatch batch = new SpriteBatch();
+
+        Camera camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+        batch.setProjectionMatrix(camera.combined);
+
+        batch.begin();
+
+        font.font().draw(batch, text, x - (Gdx.graphics.getWidth() / 2), (Gdx.graphics.getHeight() / 2) - y);
+
+        batch.end();
     }
 
     public void debug(Stage stage) {

@@ -1,17 +1,28 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import java.lang.*;
 
 public class Tile extends Button {
 
-  /**
-   * The ID number that the tile is uniquely identified by
-   */
-  //public int TileID;
+    /**
+     * Holds game-state
+     */
+  private Game game;
+
+    /**
+     * Uniquely identifies the tile
+     */
+    private int ID;
 
   /**
    * A modifier influencing how much energy is produced.
@@ -39,11 +50,6 @@ public class Tile extends Button {
   private Player Owner;
 
   /**
-   * The x and y coordinates of the tile on the map.
-   */
-  //private int[] Coordinates;
-
-  /**
    * The roboticon that has been placed on the tile.
    */
   private Roboticon roboticonStored;
@@ -53,6 +59,20 @@ public class Tile extends Button {
    */
   private Runnable runnable;
 
+  private Drawer drawer;
+
+  private final int tooltipWidth;
+  private final int tooltipHeight;
+  private final int tooltipCursorSpace;
+    private final int tooltipTextSpace;
+
+  private final Color tooltipFillColor;
+  private final Color tooltipLineColor;
+
+  private final TTFont tooltipFont;
+
+  private boolean mouseOver;
+
   /**
    * The constructor for the object
    //* @param TileID The ID of the generated Tile.
@@ -61,58 +81,53 @@ public class Tile extends Button {
    * @param Landmark A boolean to signify if the tile is to be a landmark or not.
    * @param runnable An object encapsulating a method that can be executed when the tile is clicked on
    */
-  public Tile(int EnergyCount, int OreCount, int FoodCount, boolean Landmark, final Runnable runnable){
+  public Tile(Game game, int ID, int EnergyCount, int OreCount, int FoodCount, boolean Landmark, final Runnable runnable){
     super(new ButtonStyle());
-	
-	//this.TileID = TileID;
+
+    this.game = game;
+
+    this.drawer = new Drawer(this.game);
+
+      this.ID = ID;
+
+    tooltipWidth = 100;
+    tooltipHeight = 50;
+    tooltipCursorSpace = 3;
+      tooltipTextSpace = 3;
+
+    tooltipFillColor = Color.GRAY;
+    tooltipLineColor = Color.BLACK;
+
+    tooltipFont = new TTFont(new FileHandle("font/testfontbignoodle.ttf"), 24);
+
+    mouseOver = false;
+
     this.EnergyCount = EnergyCount;
     this.FoodCount = FoodCount;
     this.OreCount = OreCount;
     this.Landmark = Landmark;
-    //this.Coordinates = Coordinates;
 
 	this.runnable = runnable;
-	
+
 	addListener(new ChangeListener() {
         @Override
         public void changed(ChangeEvent event, Actor actor) {
             runnable.run();
         }
     });
+
+    addListener(new ClickListener() {
+        @Override
+        public void enter(InputEvent event, float x, float y, int pointer, Actor actor) {
+          mouseOver = true;
+        }
+
+        @Override
+        public void exit(InputEvent event, float x, float y, int pointer, Actor actor) {
+          mouseOver = false;
+        }
+    });
   }
-
-  ///**
-  // * Alternative constrcutor for the object which doesn't encapsulate internal functionality
-  // //* @param TileID The ID of the generated Tile.
-  // * @param EnergyCount The multiplier for the production of energy.
-  // * @param OreCount The multiplier for the production of ore.
-  // * @param Landmark A boolean to signify if the tile is to be a landmark or not.
-  // */
-  //public Tile(int EnergyCount, int OreCount, boolean Landmark){
-  //  super(new ButtonStyle());
-
-    //this.TileID = TileID;
-    //this.EnergyCount = EnergyCount;
-    //this.FoodCount = FoodCount;
-    //this.OreCount = OreCount;
-    //this.Landmark = Landmark;
-    //this.Coordinates = Coordinates;
-
-    //this.runnable = new Runnable() {
-    //  @Override
-    //  public void run() {
-    //    return;
-    //  }
-    //};
-  //}
-
-  /**
-   * Getter for the coordinates of the tile.
-   * @return The coordinates of the tile stored as an array.
-   */
-  //public int[] getCoordinates(){
-  //  return this.Coordinates;
-  //}
 
   /**
    * Calculates how many resources are produced based on the amount of roboticons present and adds them to the player.
@@ -176,24 +191,6 @@ public class Tile extends Button {
   public void unassignRoboticon( Roboticon Roboticon) {
       roboticonStored = null;
   }
-
-  /**
-   * Checks if the inputted tile is adjacent to the tile by checking if either the x or the y coordinate has a distance greater than 1. If so then it is adjacent.
-   * @param Tile The tile which is to be checked against.
-   * @return adjacent A boolean signifying whether the tiles are adjacent or not.
-   */
-  //public boolean isAdjacent( Tile Tile) {
-  //  boolean adjacent = false;
-  //  if (Tile.getCoordinates()[0] - this.getCoordinates()[0] <= 1 && Tile.getCoordinates()[0] - this.getCoordinates()[0] >= -1) {
-
-
-  //    if (Tile.getCoordinates()[1] - this.getCoordinates()[1] <= 1 && Tile.getCoordinates()[1] - this.getCoordinates()[1] >= -1) {
-  //      adjacent = true;
-  //    }
-  //  }
-
-  //  return adjacent;
-  //}
   
   /**
    * Returns the tile's associated function
@@ -207,5 +204,16 @@ public class Tile extends Button {
    */
   public void runFunction() {
         runnable.run();
+    }
+
+    public void drawTooltip() {
+      if (mouseOver == true) {
+        drawer.borderedRectangle(tooltipFillColor, tooltipLineColor, Gdx.input.getX() - tooltipWidth - tooltipCursorSpace, Gdx.input.getY() - tooltipHeight - tooltipCursorSpace, tooltipWidth, tooltipHeight);
+        drawer.text("Tile " + this.ID, tooltipFont, Gdx.input.getX() - tooltipWidth - tooltipCursorSpace + tooltipTextSpace, Gdx.input.getY() - tooltipHeight - tooltipCursorSpace + tooltipTextSpace);
+      }
+    }
+
+    public int ID() {
+        return this.ID;
     }
 }

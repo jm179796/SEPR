@@ -47,7 +47,6 @@ public class GameScreen implements Screen{
     private Label energyCounter;
     private Label oreCounter;
 
-
     private Player[] Players = new Player[3];
     private Market Market = new Market();
     private int phase = 1;
@@ -83,8 +82,6 @@ public class GameScreen implements Screen{
         stage.addActor(map);
         //Initialise and deploy map texture
 
-
-
         constructTileGrid();
 
         tableWidth = (int) ((Gdx.graphics.getWidth() - map.getWidth()) / 2);
@@ -100,8 +97,6 @@ public class GameScreen implements Screen{
         constructLeftTable();
         constructRightTable();
         //Construct and deploy side-hand tables
-
-        getTile(tileGrid, 3, 3).runFunction();
 
         drawer.debug(stage);
         //Call this to draw temporary debug lines around all of the actors on the stage
@@ -127,6 +122,10 @@ public class GameScreen implements Screen{
         drawer.filledRectangle(Color.WHITE, 0, (int) (timer.getHeight()), tableWidth, 1);
         drawer.filledRectangle(Color.WHITE, 0, (int) (timer.getHeight() + foodCounter.getHeight() + energyCounter.getHeight() + oreCounter.getHeight() + 20), tableWidth, 1);
         //Draw lines in left-hand table
+
+        for (Tile tile : tiles) {
+            tile.drawTooltip();
+        }
     }
 
     @Override
@@ -212,7 +211,7 @@ public class GameScreen implements Screen{
                 final int fx = x;
                 final int fy = y;
 
-                tiles[(y * 4) + x] = new Tile(0, 0,0, false, new Runnable() {
+                tiles[(y * 4) + x] = new Tile(this.game, (y * 4) + x + 1, 0, 0, 0, false, new Runnable() {
                     @Override
                     public void run() {
                         drawer.addTableRow(tableLeft, new Label("Tile " + ((fy * 4) + fx + 1) + " was clicked", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
