@@ -1,5 +1,6 @@
 package de.tomgrill.gdxtesting;
 
+import com.badlogic.gdx.Game;
 import org.junit.Test;
 import com.mygdx.game.*;
 import org.junit.runner.RunWith;
@@ -17,8 +18,9 @@ import static org.junit.Assert.*;
 @RunWith(GdxTestRunner.class)
 public class RoboticonTest {
 
+    private Game game;
     private Player TestPlayer = new Player(0);
-    private Tile TestTile = new Tile(0, 0, 0, true, new Runnable() {
+    private Tile TestTile = new Tile(game, 0, 0, 0, 0, true, new Runnable() {
         @Override
         public void run() {
 
