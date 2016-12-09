@@ -69,6 +69,8 @@ public class Drawer {
         font.font().draw(batch, text, x - (Gdx.graphics.getWidth() / 2), (Gdx.graphics.getHeight() / 2) - y);
 
         batch.end();
+
+        batch.dispose();
     }
 
     public void debug(Stage stage) {
