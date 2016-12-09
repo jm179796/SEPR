@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Timer;
 
 import java.lang.*;
 
@@ -71,7 +72,7 @@ public class Tile extends Button {
 
   private final TTFont tooltipFont;
 
-  private boolean mouseOver;
+  private boolean tooltipActive;
 
   /**
    * The constructor for the object
@@ -100,7 +101,7 @@ public class Tile extends Button {
 
     tooltipFont = new TTFont(new FileHandle("font/testfontbignoodle.ttf"), 24);
 
-    mouseOver = false;
+    tooltipActive = false;
 
     this.EnergyCount = EnergyCount;
     this.FoodCount = FoodCount;
@@ -117,14 +118,31 @@ public class Tile extends Button {
     });
 
     addListener(new ClickListener() {
+        Boolean mouseOver = false;
+
         @Override
         public void enter(InputEvent event, float x, float y, int pointer, Actor actor) {
           mouseOver = true;
+
+          Timer timer = new Timer();
+
+          timer.scheduleTask(new Timer.Task() {
+            @Override
+            public void run() {
+              if (mouseOver == true) {
+                tooltipActive = true;
+              }
+            }
+          }, (float) 0.5);
+
+          timer.start();
         }
 
         @Override
         public void exit(InputEvent event, float x, float y, int pointer, Actor actor) {
           mouseOver = false;
+
+          tooltipActive = false;
         }
     });
   }
@@ -207,7 +225,7 @@ public class Tile extends Button {
     }
 
     public void drawTooltip() {
-      if (mouseOver == true) {
+      if (tooltipActive == true) {
         drawer.borderedRectangle(tooltipFillColor, tooltipLineColor, Gdx.input.getX() - tooltipWidth - tooltipCursorSpace, Gdx.input.getY() - tooltipHeight - tooltipCursorSpace, tooltipWidth, tooltipHeight);
         drawer.text("Tile " + this.ID, tooltipFont, Gdx.input.getX() - tooltipWidth - tooltipCursorSpace + tooltipTextSpace, Gdx.input.getY() - tooltipHeight - tooltipCursorSpace + tooltipTextSpace);
       }
