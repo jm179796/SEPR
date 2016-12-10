@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
 @RunWith(GdxTestRunner.class)
 public class RoboticonTest {
 
-    private Main game = new Main();
+    private Game game = new Main();
     private Player TestPlayer = new Player(0);
     private Tile TestTile = new Tile(game, 0, 0, 0, 0, true, new Runnable() {
         @Override
