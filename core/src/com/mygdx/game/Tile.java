@@ -118,7 +118,7 @@ public class Tile extends Button {
    * @param Player The player that is producing the resources.
    * @return Player The player object after it's resource values have  been modified.
    */
-  private Player Produce(Player Player) {
+  public Player Produce(Player Player) {
       Integer[] modifiers = this.roboticonStored.productionModifier();
     Integer OreProduce = modifiers[0] * this.OreCount;
     Player.varyResource("Ore", OreProduce);
@@ -164,7 +164,7 @@ public class Tile extends Button {
    * Adds a roboticon to the roboticon list.
    * @param Roboticon The roboticon to be added to the list.
    */
-  private void assignRoboticon(Roboticon Roboticon) {
+  public void assignRoboticon(Roboticon Roboticon) {
       roboticonStored = Roboticon;
   }
 
@@ -190,7 +190,7 @@ public class Tile extends Button {
         runnable.run();
     }
 
-    private void drawTooltip() {
+    public void drawTooltip() {
         if (mouseOver) {
         drawer.borderedRectangle(tooltipFillColor, tooltipLineColor, Gdx.input.getX() - tooltipWidth - tooltipCursorSpace, Gdx.input.getY() - tooltipHeight - tooltipCursorSpace, tooltipWidth, tooltipHeight);
         drawer.text("Tile " + this.ID, tooltipFont, Gdx.input.getX() - tooltipWidth - tooltipCursorSpace + tooltipTextSpace, Gdx.input.getY() - tooltipHeight - tooltipCursorSpace + tooltipTextSpace);
