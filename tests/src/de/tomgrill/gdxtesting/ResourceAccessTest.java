@@ -19,8 +19,14 @@ import static org.junit.Assert.*;
 @RunWith(GdxTestRunner.class)
 public class ResourceAccessTest {
 
+
+    @Test
+    public void oneEqualsOne() {
+        assertEquals(1, 1);
+    }
+
     @Test
     public void TestsHaveAssets(){
-        assertTrue(Gdx.files.internal("../core/assets/image/Roboticon111.png").exists());
+        assertTrue(Gdx.files.internal("../image/Roboticon111.png").exists());
     }
 }

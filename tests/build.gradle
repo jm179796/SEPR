@@ -12,7 +12,7 @@ sourceSets {
         java {
             srcDir 'src'
         }
-        resources { srcDir '../core/assets'}
+        resources { srcDir '../core/assets/'}
     }
     
     
