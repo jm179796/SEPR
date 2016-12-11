@@ -1,5 +1,3 @@
-package de.tomgrill.gdxtesting;
-
 import com.badlogic.gdx.Game;
 import org.junit.Test;
 import com.mygdx.game.*;
@@ -15,8 +13,8 @@ import static org.junit.Assert.*;
  * @version 1.0
  * @since 1.0
  */
-@RunWith(GdxTestRunner.class)
-public class RoboticonTest {
+
+public class RoboticonTest extends TesterFile {
 
     private Game game = new Main();
     private Player TestPlayer = new Player(0);

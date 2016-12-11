@@ -1,5 +1,3 @@
-package de.tomgrill.gdxtesting;
-
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.Before;
