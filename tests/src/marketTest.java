@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
  * @version 1.0
  * @since 1.0
  */
-public class marketTest {
+public class marketTest extends TesterFile{
     private Player TestPlayer = new Player(0);
     private Market TestMarket = new Market();
 
