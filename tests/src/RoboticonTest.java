@@ -1,12 +1,12 @@
 import com.badlogic.gdx.Game;
+import com.mygdx.game.Main;
+import com.mygdx.game.Player;
+import com.mygdx.game.Roboticon;
+import com.mygdx.game.Tile;
 import org.junit.Test;
-import com.mygdx.game.*;
-import org.junit.runner.RunWith;
-import java.util.Arrays;
 
-import static org.hamcrest.Matcher.*;
-import static org.junit.Assert.*;
-
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Kieran Hall KJH532
