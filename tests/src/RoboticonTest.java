@@ -13,7 +13,6 @@ import static org.junit.Assert.*;
  * @version 1.0
  * @since 1.0
  */
-
 public class RoboticonTest extends TesterFile {
 
     private Game game = new Main();
