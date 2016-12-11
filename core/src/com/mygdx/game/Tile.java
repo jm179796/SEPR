@@ -2,75 +2,59 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-import java.lang.*;
-
 public class Tile extends Button {
 
+    private final int tooltipWidth;
+    private final int tooltipHeight;
+    private final int tooltipCursorSpace;
+    private final int tooltipTextSpace;
+    private final Color tooltipFillColor;
+    private final Color tooltipLineColor;
+    private final TTFont tooltipFont;
     /**
      * Holds game-state
      */
   private Game game;
-
     /**
      * Uniquely identifies the tile
      */
     private int ID;
-
   /**
    * A modifier influencing how much energy is produced.
    */
   private int EnergyCount;
-  
   /**
    * A modifier influencing how much food is produced.
    */
   private Integer FoodCount;
-
   /**
    * A modifier influencing how much ore is produced.
    */
   private int OreCount;
-  
   /**
    * A modifier influencing how much ore is produced.
    */
   private Boolean Landmark;
-
   /**
    * The player that owns the tile, if it has one.
    */
   private Player Owner;
-
   /**
    * The roboticon that has been placed on the tile.
    */
   private Roboticon roboticonStored;
-  
   /**
    * Object holding executable method that can be assigned to the tile
    */
   private Runnable runnable;
-
   private Drawer drawer;
-
-  private final int tooltipWidth;
-  private final int tooltipHeight;
-  private final int tooltipCursorSpace;
-    private final int tooltipTextSpace;
-
-  private final Color tooltipFillColor;
-  private final Color tooltipLineColor;
-
-  private final TTFont tooltipFont;
-
   private boolean mouseOver;
 
   /**
@@ -98,7 +82,7 @@ public class Tile extends Button {
     tooltipFillColor = Color.GRAY;
     tooltipLineColor = Color.BLACK;
 
-    tooltipFont = new TTFont(new FileHandle("font/testfontbignoodle.ttf"), 24);
+      tooltipFont = new TTFont(Gdx.files.internal("font/testfontbignoodle.ttf"), 24);
 
     mouseOver = false;
 
@@ -134,8 +118,8 @@ public class Tile extends Button {
    * @param Player The player that is producing the resources.
    * @return Player The player object after it's resource values have  been modified.
    */
-  public Player Produce(Player Player){
-	Integer[] modifiers = this.roboticonStored.productionModifier();
+  private Player Produce(Player Player) {
+      Integer[] modifiers = this.roboticonStored.productionModifier();
     Integer OreProduce = modifiers[0] * this.OreCount;
     Player.varyResource("Ore", OreProduce);
     this.OreCount -= OreProduce;
@@ -180,7 +164,7 @@ public class Tile extends Button {
    * Adds a roboticon to the roboticon list.
    * @param Roboticon The roboticon to be added to the list.
    */
-  public void assignRoboticon( Roboticon Roboticon) {
+  private void assignRoboticon(Roboticon Roboticon) {
       roboticonStored = Roboticon;
   }
 
@@ -206,8 +190,8 @@ public class Tile extends Button {
         runnable.run();
     }
 
-    public void drawTooltip() {
-      if (mouseOver == true) {
+    private void drawTooltip() {
+        if (mouseOver) {
         drawer.borderedRectangle(tooltipFillColor, tooltipLineColor, Gdx.input.getX() - tooltipWidth - tooltipCursorSpace, Gdx.input.getY() - tooltipHeight - tooltipCursorSpace, tooltipWidth, tooltipHeight);
         drawer.text("Tile " + this.ID, tooltipFont, Gdx.input.getX() - tooltipWidth - tooltipCursorSpace + tooltipTextSpace, Gdx.input.getY() - tooltipHeight - tooltipCursorSpace + tooltipTextSpace);
       }
