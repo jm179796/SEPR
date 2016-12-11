@@ -27,6 +27,6 @@ public class ResourceAccessTest {
 
     @Test
     public void TestsHaveAssets(){
-        assertTrue(Gdx.files.internal("../image/Roboticon111.png").exists());
+        assertTrue(Gdx.files.internal("image/Roboticon111.png").exists());
     }
 }
