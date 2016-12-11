@@ -14,8 +14,6 @@ sourceSets {
         }
         resources { srcDir '../core/assets'}
     }
-    
-    
 }
 
 eclipse.project {
