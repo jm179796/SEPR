@@ -11,18 +11,18 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class Tile extends Button {
 
-    private final int tooltipWidth;
-    private final int tooltipHeight;
-    private final int tooltipCursorSpace;
-    private final int tooltipTextSpace;
-    private final Color tooltipFillColor;
-    private final Color tooltipLineColor;
-    private final TTFont tooltipFont;
-    /**
+  private final int tooltipWidth;
+  private final int tooltipHeight;
+  private final int tooltipCursorSpace;
+  private final int tooltipTextSpace;
+  private final Color tooltipFillColor;
+  private final Color tooltipLineColor;
+  private final TTFont tooltipFont;
+  /**
      * Holds game-state
      */
   private Game game;
-    /**
+  /**
      * Uniquely identifies the tile
      */
     private int ID;
@@ -56,7 +56,9 @@ public class Tile extends Button {
   private Runnable runnable;
   private Drawer drawer;
   private boolean mouseOver;
-
+  private boolean acquire = false;
+  private int xCor;
+  private int yCor;
   /**
    * The constructor for the object
    //* @param TileID The ID of the generated Tile.
@@ -65,7 +67,7 @@ public class Tile extends Button {
    * @param Landmark A boolean to signify if the tile is to be a landmark or not.
    * @param runnable An object encapsulating a method that can be executed when the tile is clicked on
    */
-  public Tile(Game game, int ID, int EnergyCount, int OreCount, int FoodCount, boolean Landmark, final Runnable runnable){
+  public Tile(Game game, int ID, int xCor, int yCor, int EnergyCount, int OreCount, int FoodCount, boolean Landmark, final Runnable runnable){
     super(new ButtonStyle());
 
     this.game = game;
@@ -82,10 +84,11 @@ public class Tile extends Button {
     tooltipFillColor = Color.GRAY;
     tooltipLineColor = Color.BLACK;
 
-      tooltipFont = new TTFont(Gdx.files.internal("font/testfontbignoodle.ttf"), 24);
+    tooltipFont = new TTFont(Gdx.files.internal("font/testfontbignoodle.ttf"), 24);
 
     mouseOver = false;
-
+    this.xCor = xCor;
+    this.yCor = yCor;
     this.EnergyCount = EnergyCount;
     this.FoodCount = FoodCount;
     this.OreCount = OreCount;
@@ -119,7 +122,7 @@ public class Tile extends Button {
    * @return Player The player object after it's resource values have  been modified.
    */
   public Player Produce(Player Player) {
-      Integer[] modifiers = this.roboticonStored.productionModifier();
+	Integer[] modifiers = this.roboticonStored.productionModifier();
     Integer OreProduce = modifiers[0] * this.OreCount;
     Player.varyResource("Ore", OreProduce);
     this.OreCount -= OreProduce;
@@ -164,7 +167,7 @@ public class Tile extends Button {
    * Adds a roboticon to the roboticon list.
    * @param Roboticon The roboticon to be added to the list.
    */
-  public void assignRoboticon(Roboticon Roboticon) {
+  public void assignRoboticon( Roboticon Roboticon) {
       roboticonStored = Roboticon;
   }
 
@@ -189,14 +192,28 @@ public class Tile extends Button {
   public void runFunction() {
         runnable.run();
     }
+  public void toggleAcquire(){
+    if(this.acquire){
+      this.acquire = false;
+
+    }
+    else{
+      this.acquire = true;
+    }
+  }
 
     public void drawTooltip() {
-        if (mouseOver) {
+      if (mouseOver) {
         drawer.borderedRectangle(tooltipFillColor, tooltipLineColor, Gdx.input.getX() - tooltipWidth - tooltipCursorSpace, Gdx.input.getY() - tooltipHeight - tooltipCursorSpace, tooltipWidth, tooltipHeight);
         drawer.text("Tile " + this.ID, tooltipFont, Gdx.input.getX() - tooltipWidth - tooltipCursorSpace + tooltipTextSpace, Gdx.input.getY() - tooltipHeight - tooltipCursorSpace + tooltipTextSpace);
       }
     }
-
+  public void confirmAcquire() {
+    if (acquire) {
+      drawer.filledRectangle(Color.BLACK, xCor, yCor, 128, 128);
+      drawer.text("Acquire this tile?", tooltipFont, xCor, yCor + 64);
+    }
+  }
     public int ID() {
         return this.ID;
     }
