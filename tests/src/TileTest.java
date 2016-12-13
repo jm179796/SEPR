@@ -1,11 +1,9 @@
 import com.badlogic.gdx.Game;
+import com.mygdx.game.Main;
+import com.mygdx.game.Tile;
 import org.junit.Test;
-import com.mygdx.game.*;
-import org.junit.runner.RunWith;
-import java.util.Arrays;
 
-import static org.hamcrest.Matcher.*;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 /**
  * @author Kieran Hall KJH532
  * @version 1.0
@@ -13,7 +11,7 @@ import static org.junit.Assert.*;
  */
 public class TileTest extends TesterFile {
     private Game game = new Main();
-    private Tile TestTile = new Tile(game, 0, 0, 0, 0, true, new Runnable() {
+    private Tile TestTile = new Tile(game, 0, 0, 0, 0, 0, 0, true, new Runnable() {
         @Override
         public void run() {
 

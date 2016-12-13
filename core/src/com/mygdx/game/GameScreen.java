@@ -54,7 +54,9 @@ public class GameScreen implements Screen{
     //Establish resource-counter labels
 
     private Drawer drawer;
+
     //Import standard drawing functions
+    private TileMethods TileMethods = new TileMethods();
 
     public GameScreen(Game game) {
         this.game = game;
@@ -123,10 +125,13 @@ public class GameScreen implements Screen{
         drawer.filledRectangle(Color.WHITE, 0, (int) (timer.getHeight() + foodCounter.getHeight() + energyCounter.getHeight() + oreCounter.getHeight() + 20), tableWidth, 1);
         //Draw lines in left-hand table
 
+
         for (Tile tile : tiles) {
             tile.drawTooltip();
+            tile.confirmAcquire();
         }
     }
+
 
     @Override
     public void resize(int width, int height) {
@@ -204,17 +209,19 @@ public class GameScreen implements Screen{
 
         tiles = new Tile[16];
         //Initialise tile-buttons
-
+        int GridX = Math.round((Gdx.graphics.getWidth() / 2) - (map.getWidth() / 2));
         tileGrid.setBounds((Gdx.graphics.getWidth() / 2) - (map.getWidth() / 2), 0, map.getWidth(), map.getHeight());
         for (int y = 0; y < 4; y++) {
             for (int x = 0; x < 4; x++) {
                 final int fx = x;
                 final int fy = y;
+                System.out.print(GridX);
+                System.out.print((Gdx.graphics.getWidth() / 2) - (map.getWidth() / 2));
 
-                tiles[(y * 4) + x] = new Tile(this.game, (y * 4) + x + 1, 0, 0, 0, false, new Runnable() {
+                tiles[(y * 4) + x] = new Tile(this.game, (y * 4) + x + 1, 256 + x * 128, y * 128, 0, 0, 0, false, new Runnable() {
                     @Override
                     public void run() {
-                        drawer.addTableRow(tableLeft, new Label("Tile " + ((fy * 4) + fx + 1) + " was clicked", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
+                        (tiles[(fy*4) + fx ]) = TileMethods.methodOne(tiles[(fy*4) + fx]);
                     }
                 });
 
