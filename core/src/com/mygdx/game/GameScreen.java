@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Align;
 
 public class GameScreen implements Screen{
 
@@ -123,6 +124,10 @@ public class GameScreen implements Screen{
         drawer.filledRectangle(Color.WHITE, 0, (int) (timer.getHeight() + foodCounter.getHeight() + energyCounter.getHeight() + oreCounter.getHeight() + 20), tableWidth, 1);
         //Draw lines in left-hand table
 
+        drawer.lineRectangle(Color.WHITE, ((int) (Gdx.graphics.getWidth() * 0.875)) - 81, 52, 66, 66);
+        drawer.lineRectangle(Color.WHITE, ((int) (Gdx.graphics.getWidth() * 0.875)) + 16, 52, 66, 66);
+        //Draw lines in right-hand table
+
         for (Tile tile : tiles) {
             tile.drawTooltip();
         }
@@ -167,18 +172,21 @@ public class GameScreen implements Screen{
         tableLeft.center().top();
         //Shift the table towards the top of the screen
 
-        tableLeft.add(timer).top();
+        drawer.addTableRow(tableLeft, timer, 2);
 
         gameFont.setSize(24);
         foodCounter = new Label(Players[currentPlayer].getFoodCount().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
         energyCounter = new Label(Players[currentPlayer].getEnergyCount().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
         oreCounter = new Label(Players[currentPlayer].getOreCount().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
 
-        drawer.addTableRow(tableLeft, new LabelledElement("Food", gameFont, Color.WHITE, foodCounter, 175), 10, 0, 0, 0);
-        drawer.addTableRow(tableLeft, new LabelledElement("Energy", gameFont, Color.WHITE, energyCounter, 175));
-        drawer.addTableRow(tableLeft, new LabelledElement("Ore", gameFont, Color.WHITE, oreCounter, 175));
+        drawer.addTableRow(tableLeft, new Label("COL", new Label.LabelStyle(gameFont.font(), Color.WHITE)), 64, 64, 0, 0, 0, 15);
+        Table resourceCounters = new Table();
+        drawer.addTableRow(resourceCounters, new LabelledElement("Food", gameFont, Color.WHITE, foodCounter, 125));
+        drawer.addTableRow(resourceCounters, new LabelledElement("Energy", gameFont, Color.WHITE, energyCounter, 125));
+        drawer.addTableRow(resourceCounters, new LabelledElement("Ore", gameFont, Color.WHITE, oreCounter, 125));
+        tableLeft.add(resourceCounters).size(140, 95);
 
-        drawer.addTableRow(tableLeft, new Label("Roboticon Shop Area", new Label.LabelStyle(gameFont.font(), Color.WHITE)), 20, 0, 0, 0);
+        drawer.addTableRow(tableLeft, new Label("Roboticon Shop Area", new Label.LabelStyle(gameFont.font(), Color.WHITE)), 10, 0, 0, 0, 2);
 
         stage.addActor(tableLeft);
         //Add left-hand table to the stage
@@ -191,8 +199,17 @@ public class GameScreen implements Screen{
         tableRight.setBounds((Gdx.graphics.getWidth() / 2) + (map.getWidth() / 2), 0, tableWidth, Gdx.graphics.getHeight());
         //Set boundaries of right-hand table
 
-        gameFont.setSize(24);
-        tableRight.add(new Label("This is the right-hand table", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
+        tableRight.center().top();
+        //Shift the table towards the top of the screen
+
+        gameFont.setSize(40);
+        drawer.addTableRow(tableRight, new Label("NO TILE SELECTED", new Label.LabelStyle(gameFont.font(), Color.WHITE)), 0, 0, 10, 0, 2);
+        drawer.addTableRow(tableRight, new Label("COL", new Label.LabelStyle(gameFont.font(), Color.WHITE)), 64, 64, 0, 0, 0, 0);
+        tableRight.add(new Label("ROB", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
+
+        gameFont.setSize(20);
+        drawer.addTableRow(tableRight, new Label("COLLEGE", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
+        tableRight.add(new Label("ROBOTICON", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
 
         stage.addActor(tableRight);
         //Add right-hand table to the stage
@@ -214,7 +231,8 @@ public class GameScreen implements Screen{
                 tiles[(y * 4) + x] = new Tile(this.game, (y * 4) + x + 1, 0, 0, 0, false, new Runnable() {
                     @Override
                     public void run() {
-                        drawer.addTableRow(tableLeft, new Label("Tile " + ((fy * 4) + fx + 1) + " was clicked", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
+                        //drawer.addTableRow(tableLeft, new Label("Tile " + ((fy * 4) + fx + 1) + " was clicked", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
+
                     }
                 });
 
