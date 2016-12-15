@@ -80,11 +80,11 @@ public class Drawer {
     }
     //Draws temporary debug lines around all of the actors on the stage
 
-    public void addTableRow(Table table, Actor actor, float width, float height, float padTop, float padLeft, float padBottom, float padRight, int colspan) {
+    public void addTableRow(Table table, Actor actor, float width, float height, float padTop, float padLeft, float padBottom, float padRight, int colSpan) {
         if (width == 0 && height == 0) {
-            table.row().colspan(colspan);
+            table.row().colspan(colSpan);
         } else {
-            table.row().size(width, height).colspan(colspan);
+            table.row().size(width, height).colspan(colSpan);
         }
 
         table.add(actor).pad(padTop, padLeft, padBottom, padRight);
@@ -94,24 +94,24 @@ public class Drawer {
         addTableRow(table, actor, width, height, padTop, padLeft, padBottom, padRight, 1);
     }
 
-    public void addTableRow(Table table, Actor actor, float padTop, float padLeft, float padBottom, float padRight, int colspan) {
-        addTableRow(table, actor, 0, 0, padTop, padLeft, padBottom, padRight, colspan);
+    public void addTableRow(Table table, Actor actor, float padTop, float padLeft, float padBottom, float padRight, int colSpan) {
+        addTableRow(table, actor, 0, 0, padTop, padLeft, padBottom, padRight, colSpan);
     }
 
     public void addTableRow(Table table, Actor actor, float padTop, float padLeft, float padBottom, float padRight) {
         addTableRow(table, actor, 0, 0, padTop, padLeft, padBottom, padRight, 1);
     }
 
-    public void addTableRow(Table table, Actor actor, float width, float height, int colspan) {
-        addTableRow(table, actor, width, height, 0, 0, 0, 0, colspan);
+    public void addTableRow(Table table, Actor actor, float width, float height, int colSpan) {
+        addTableRow(table, actor, width, height, 0, 0, 0, 0, colSpan);
     }
 
     public void addTableRow(Table table, Actor actor, float width, float height) {
         addTableRow(table, actor, width, height, 0, 0, 0, 0, 1);
     }
 
-    public void addTableRow(Table table, Actor actor, int colspan) {
-        addTableRow(table, actor, 0, 0, 0, 0, 0, 0, colspan);
+    public void addTableRow(Table table, Actor actor, int colSpan) {
+        addTableRow(table, actor, 0, 0, 0, 0, 0, 0, colSpan);
     }
 
     public void addTableRow(Table table, Actor actor) {

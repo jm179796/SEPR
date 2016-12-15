@@ -11,10 +11,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 
 public class GameScreen implements Screen{
 
@@ -47,9 +44,10 @@ public class GameScreen implements Screen{
     private Label foodCounter;
     private Label energyCounter;
     private Label oreCounter;
+    private Label roboticonCounter;
 
-    private Player[] Players = new Player[3];
-    private Market Market = new Market();
+    private Player[] players = new Player[3];
+    private Market market = new Market();
     private int phase = 1;
     private int currentPlayer = 1;
     //Establish resource-counter labels
@@ -57,15 +55,18 @@ public class GameScreen implements Screen{
     private Drawer drawer;
     //Import standard drawing functions
 
+    private TextButton endPhase;
+    private TextButton pause;
+    //Establish buttons to advance between phases and pause the game
+
     public GameScreen(Game game) {
         this.game = game;
         Player Player1 = new Player(1);
         Player Player2 = new Player(2);
-        Players[1] = Player1;
-        Players[2] = Player2;
+        players[1] = Player1;
+        players[2] = Player2;
         //Import current game-state
     }
-
 
     @Override
     public void show() {
@@ -99,7 +100,7 @@ public class GameScreen implements Screen{
         constructRightTable();
         //Construct and deploy side-hand tables
 
-        drawer.debug(stage);
+        //drawer.debug(stage);
         //Call this to draw temporary debug lines around all of the actors on the stage
 
         timer.start();
@@ -113,20 +114,11 @@ public class GameScreen implements Screen{
         //OpenGL nonsense
         //First instruction sets background colour
 
+        drawRectangles();
+
         stage.act(delta);
         stage.draw();
         //Draw the stage onto the screen
-
-        drawer.lineRectangle(Color.WHITE, (int) map.getX(), (int) map.getY(), (int) map.getWidth(), (int) map.getHeight());
-        //Draw border around the map
-
-        drawer.filledRectangle(Color.WHITE, 0, (int) (timer.getHeight()), tableWidth, 1);
-        drawer.filledRectangle(Color.WHITE, 0, (int) (timer.getHeight() + foodCounter.getHeight() + energyCounter.getHeight() + oreCounter.getHeight() + 20), tableWidth, 1);
-        //Draw lines in left-hand table
-
-        drawer.lineRectangle(Color.WHITE, ((int) (Gdx.graphics.getWidth() * 0.875)) - 81, 52, 66, 66);
-        drawer.lineRectangle(Color.WHITE, ((int) (Gdx.graphics.getWidth() * 0.875)) + 16, 52, 66, 66);
-        //Draw lines in right-hand table
 
         for (Tile tile : tiles) {
             tile.drawTooltip();
@@ -172,21 +164,39 @@ public class GameScreen implements Screen{
         tableLeft.center().top();
         //Shift the table towards the top of the screen
 
-        drawer.addTableRow(tableLeft, timer, 2);
+        drawer.addTableRow(tableLeft, timer, 0, 0, 0, 0, 2);
+
+        gameFont.setSize(36);
+        TextButton.TextButtonStyle leftTableButtonStyle = new TextButton.TextButtonStyle();
+        leftTableButtonStyle.font = gameFont.font();
+        leftTableButtonStyle.fontColor = Color.WHITE;
+        leftTableButtonStyle.pressedOffsetX = 1;
+        leftTableButtonStyle.pressedOffsetY = -1;
+        endPhase = new TextButton("End Phase", leftTableButtonStyle);
+        drawer.addTableRow(tableLeft, endPhase, 0, 0, 15, 0, 2);
+
+        gameFont.setSize(36);
+        drawer.addTableRow(tableLeft, new Label("CURRENT PLAYER", new Label.LabelStyle(gameFont.font(), Color.BLACK)), 0, 0, 10, 0, 2);
 
         gameFont.setSize(24);
-        foodCounter = new Label(Players[currentPlayer].getFoodCount().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
-        energyCounter = new Label(Players[currentPlayer].getEnergyCount().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
-        oreCounter = new Label(Players[currentPlayer].getOreCount().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
+        Table collegeInfo = new Table();
+        drawer.addTableRow(collegeInfo, new Label("COL", new Label.LabelStyle(gameFont.font(), Color.WHITE)), 64, 64);
+        drawer.addTableRow(collegeInfo, new Label("COLLEGE", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
+        drawer.addTableRow(tableLeft, collegeInfo, 5, 0, 0, 15);
 
-        drawer.addTableRow(tableLeft, new Label("COL", new Label.LabelStyle(gameFont.font(), Color.WHITE)), 64, 64, 0, 0, 0, 15);
         Table resourceCounters = new Table();
+        foodCounter = new Label(players[currentPlayer].getFoodCount().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
+        energyCounter = new Label(players[currentPlayer].getEnergyCount().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
+        oreCounter = new Label(players[currentPlayer].getOreCount().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
+        roboticonCounter = new Label("0", new Label.LabelStyle(gameFont.font(), Color.WHITE));
         drawer.addTableRow(resourceCounters, new LabelledElement("Food", gameFont, Color.WHITE, foodCounter, 125));
         drawer.addTableRow(resourceCounters, new LabelledElement("Energy", gameFont, Color.WHITE, energyCounter, 125));
         drawer.addTableRow(resourceCounters, new LabelledElement("Ore", gameFont, Color.WHITE, oreCounter, 125));
+        drawer.addTableRow(resourceCounters, new LabelledElement("Roboticons", gameFont, Color.WHITE, roboticonCounter, 125));
         tableLeft.add(resourceCounters).size(140, 95);
 
-        drawer.addTableRow(tableLeft, new Label("Roboticon Shop Area", new Label.LabelStyle(gameFont.font(), Color.WHITE)), 10, 0, 0, 0, 2);
+        pause = new TextButton("Pause Game", leftTableButtonStyle);
+        drawer.addTableRow(tableLeft, pause, 138, 0, 0, 0, 2);
 
         stage.addActor(tableLeft);
         //Add left-hand table to the stage
@@ -228,7 +238,7 @@ public class GameScreen implements Screen{
                 final int fx = x;
                 final int fy = y;
 
-                tiles[(y * 4) + x] = new Tile(this.game, (y * 4) + x + 1, 0, 0, 0, false, new Runnable() {
+                tiles[(y * 4) + x] = new Tile(this.game, 0, 0, 0, 0, false, new Runnable() {
                     @Override
                     public void run() {
                         //drawer.addTableRow(tableLeft, new Label("Tile " + ((fy * 4) + fx + 1) + " was clicked", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
@@ -242,6 +252,22 @@ public class GameScreen implements Screen{
         }
 
         stage.addActor(tileGrid);
+    }
+
+    public void drawRectangles() {
+        drawer.lineRectangle(Color.WHITE, (int) map.getX(), (int) map.getY(), (int) map.getWidth(), (int) map.getHeight());
+        //Draw border around the map
+
+        drawer.filledRectangle(Color.WHITE, 0, (int) timer.getHeight(), tableWidth, 1);
+        drawer.filledRectangle(Color.WHITE, 0, (int) (timer.getHeight() + endPhase.getHeight()), tableWidth, 1);
+        drawer.borderedRectangle(Color.GRAY, Color.WHITE, 19, (int) (timer.getHeight() + endPhase.getHeight()) + 15, 219, 40);
+        drawer.lineRectangle(Color.WHITE, ((int) (Gdx.graphics.getWidth() * 0.125)) - 110, 240, 66, 66);
+        drawer.filledRectangle(Color.WHITE, 0, Gdx.graphics.getHeight() - 46, tableWidth, 1);
+        //Draw lines and rectangles in left-hand table
+
+        drawer.lineRectangle(Color.WHITE, ((int) (Gdx.graphics.getWidth() * 0.875)) - 82, 52, 66, 66);
+        drawer.lineRectangle(Color.WHITE, ((int) (Gdx.graphics.getWidth() * 0.875)) + 15, 52, 66, 66);
+        //Draw lines in right-hand table
     }
 
     public Tile getTile(Table tileGrid, int x, int y) {
