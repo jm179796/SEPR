@@ -36,25 +36,10 @@ project(":tests") {
 
     sourceSets.test.java.srcDirs = ["src/"]
 
+
     dependencies {
 
-        /**
-         * If you do have some classes to test in os specific code you may want to uncomment
-         * some of these lines.
-         *
-         * BUT: I recommend to create separate test sub projects for each platform. Trust me :)
-         *
-         */
-
-//        compile project(":android")
-//        compile project(":html")
-//        compile project(":desktop")
-
-
-//        if(System.getProperty("os.name").toLowerCase().indexOf("mac") >= 0) {
-//          compile project(":ios")
-//        }
-
+        compile project(":desktop")
         compile project(":core")
 
         compile "junit:junit:4.+"
