@@ -117,27 +117,23 @@ public class Tile extends Button {
   }
 
   /**
-   * Calculates how many resources are produced based on the amount of roboticons present and adds them to the player.
+   * Calculates how many resources are produced based on the amount of roboticons present and adds them to the player's resource count.
    * @param Player The player that is producing the resources.
    * @return Player The player object after it's resource values have  been modified.
    */
   public Player Produce(Player Player) {
 	Integer[] modifiers = this.roboticonStored.productionModifier();
+
     Integer OreProduce = modifiers[0] * this.OreCount;
     Player.varyResource("Ore", OreProduce);
-    this.OreCount -= OreProduce;
+
     Integer EnergyProduce = modifiers[1] * this.EnergyCount;
     Player.varyResource("Energy", EnergyProduce);
-    this.EnergyCount -= EnergyProduce;
-    return Player;
-  }
 
-  /**
-   * Sets a certain resource count to the specified amount.
-   * @param Resource The resource that is to be changed
-   * @param quantity The amount that it is to be set to.
-   */
-  public void setResource(String Resource, int quantity) {
+    Integer FoodProduce = modifiers[2] * this.FoodCount;
+    Player.varyResource("Food", FoodProduce);
+
+    return Player;
   }
 
   /**
@@ -192,6 +188,7 @@ public class Tile extends Button {
   public void runFunction() {
         runnable.run();
     }
+
   public void toggleAcquire(){
     if(this.acquire){
       this.acquire = false;
@@ -201,6 +198,7 @@ public class Tile extends Button {
       this.acquire = true;
     }
   }
+
 
     public void drawTooltip() {
       if (mouseOver) {
