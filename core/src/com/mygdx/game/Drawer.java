@@ -6,11 +6,12 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g3d.particles.ParticleShader;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Align;
 
 /**
  * Created by Joseph on 30/11/2016.
@@ -84,7 +85,7 @@ public class Drawer {
         if (width == 0 && height == 0) {
             table.row().colspan(colSpan);
         } else {
-            table.row().size(width, height).colspan(colSpan);
+            table.row().colspan(colSpan).size(width, height);
         }
 
         table.add(actor).pad(padTop, padLeft, padBottom, padRight);

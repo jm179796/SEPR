@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.utils.Align;
 
 public class GameScreen implements Screen{
 
@@ -45,6 +46,9 @@ public class GameScreen implements Screen{
     private Label energyCounter;
     private Label oreCounter;
     private Label roboticonCounter;
+
+    private Label selectedTileLabel;
+    //Establish label object to describe tiles selected
 
     private Player[] players = new Player[3];
     private Market market = new Market();
@@ -100,7 +104,7 @@ public class GameScreen implements Screen{
         constructRightTable();
         //Construct and deploy side-hand tables
 
-        //drawer.debug(stage);
+        drawer.debug(stage);
         //Call this to draw temporary debug lines around all of the actors on the stage
 
         timer.start();
@@ -213,7 +217,9 @@ public class GameScreen implements Screen{
         //Shift the table towards the top of the screen
 
         gameFont.setSize(40);
-        drawer.addTableRow(tableRight, new Label("NO TILE SELECTED", new Label.LabelStyle(gameFont.font(), Color.WHITE)), 0, 0, 10, 0, 2);
+        selectedTileLabel = new Label("NO TILE SELECTED", new Label.LabelStyle(gameFont.font(), Color.WHITE));
+        selectedTileLabel.setAlignment(Align.center);
+        drawer.addTableRow(tableRight, selectedTileLabel, 240, 43, 0, 0, 10, 0, 2);
         drawer.addTableRow(tableRight, new Label("COL", new Label.LabelStyle(gameFont.font(), Color.WHITE)), 64, 64, 0, 0, 0, 0);
         tableRight.add(new Label("ROB", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
 
@@ -238,11 +244,11 @@ public class GameScreen implements Screen{
                 final int fx = x;
                 final int fy = y;
 
-                tiles[(y * 4) + x] = new Tile(this.game, 0, 0, 0, 0, false, new Runnable() {
+                tiles[(y * 4) + x] = new Tile(this.game, (y * 4) + x + 1, 0, 0, 0, false, new Runnable() {
                     @Override
                     public void run() {
                         //drawer.addTableRow(tableLeft, new Label("Tile " + ((fy * 4) + fx + 1) + " was clicked", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
-
+                        selectTile(getTile(tileGrid, fx, fy));
                     }
                 });
 
@@ -265,8 +271,8 @@ public class GameScreen implements Screen{
         drawer.filledRectangle(Color.WHITE, 0, Gdx.graphics.getHeight() - 46, tableWidth, 1);
         //Draw lines and rectangles in left-hand table
 
-        drawer.lineRectangle(Color.WHITE, ((int) (Gdx.graphics.getWidth() * 0.875)) - 82, 52, 66, 66);
-        drawer.lineRectangle(Color.WHITE, ((int) (Gdx.graphics.getWidth() * 0.875)) + 15, 52, 66, 66);
+        drawer.lineRectangle(Color.WHITE, ((int) (Gdx.graphics.getWidth() * 0.875)) - 94, 52, 66, 66);
+        drawer.lineRectangle(Color.WHITE, ((int) (Gdx.graphics.getWidth() * 0.875)) + 26, 52, 66, 66);
         //Draw lines in right-hand table
     }
 
@@ -279,4 +285,8 @@ public class GameScreen implements Screen{
         return (Tile) tileGrid.getChildren().get(i);
     }
     //Returns the tile-type object held in the provided TileGrid at the specified position
+
+    public void selectTile(Tile tile) {
+        selectedTileLabel.setText("Tile " + tile.ID());
+    }
 }
