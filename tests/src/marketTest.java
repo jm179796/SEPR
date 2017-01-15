@@ -1,12 +1,7 @@
-import org.junit.Rule;
+import com.mygdx.game.Market;
+import com.mygdx.game.Player;
 import org.junit.Test;
-import org.junit.Before;
-import com.mygdx.game.*;
-import org.junit.rules.ExpectedException;
 
-import java.util.Arrays;
-
-import static org.hamcrest.Matcher.*;
 import static org.junit.Assert.*;
 
 
@@ -281,19 +276,17 @@ public class marketTest extends TesterFile{
 
     }
 
-//    @Test
-//    public void gambleTest() {
-//        //TestPlayer.setMoney(100);
-//        //System.out.println(TestPlayer.getMoney());
-//       // TestMarket.gamble(50, TestPlayer);
-//        //System.out.println(TestPlayer.getMoney());
-//
-//        TestPlayer.setMoney(50);
-//        System.out.println(TestPlayer.getMoney());
-//
-//        TestMarket.gamble(50, TestPlayer);
-//        Integer TestMoney = 0;
-//        assertEquals(TestMoney, TestPlayer.getMoney());
-//
-//        //System.out.println(TestPlayer.getMoney());
+    @Test
+    public void gambleTest() {
+        TestPlayer.setMoney(49);
+
+        for (int j = 0; j < 100; j++) {
+            if (TestPlayer.getMoney() < 50) {
+                assertNull(TestMarket.gamble(100, TestPlayer));
+            } else if (TestPlayer.getMoney() >= 50) {
+                Boolean current = TestMarket.gamble(50, TestPlayer);
+                assertTrue(((current == Boolean.TRUE) || (current == Boolean.FALSE)));
+            }
+        }
+    }
 }
