@@ -134,22 +134,10 @@ public class marketTest extends TesterFile{
         setUpEnergy();
         try {
             TestMarket.sell("energy", 10, TestPlayer);
-            Integer TestEnergyCount = 0;
-            assertEquals(TestEnergyCount, TestPlayer.getEnergyCount());
-            Integer TestMoney = 110;
-            assertEquals(TestMoney, TestPlayer.getMoney());
-            Integer TestSellPrice = 8;
-            assertEquals(TestSellPrice, TestMarket.getEnergySellPrice());
-            Integer TestBuyPrice = 10;
-            assertEquals(TestBuyPrice, TestMarket.getEnergyBuyPrice());
-            Integer TestFoodStock = 20;
-            assertEquals(TestFoodStock, TestMarket.getEnergyStock());
         } catch (Exception e) {
-            e.printStackTrace();
+            fail("Expected to pass");
         }
-
     }
-
 
     /**
      * Tests sell method for energy resource, when energyStock is < then required energy.
@@ -163,20 +151,10 @@ public class marketTest extends TesterFile{
         setUpEnergy();
         try {
             TestMarket.sell("energy", 100, TestPlayer);
-            Integer TestEnergyCount = 0;
-            assertEquals(TestEnergyCount, TestPlayer.getEnergyCount());
-            Integer TestMoney = 110;
-            assertEquals(TestMoney, TestPlayer.getMoney());
-            Integer TestSellPrice = 8;
-            assertEquals(TestSellPrice, TestMarket.getEnergySellPrice());
-            Integer TestBuyPrice = 10;
-            assertEquals(TestBuyPrice, TestMarket.getEnergyBuyPrice());
-            Integer TestFoodStock = 20;
-            assertEquals(TestFoodStock, TestMarket.getEnergyStock());
+            fail("Expected an exception to be thrown");
         } catch (Exception e) {
-            e.printStackTrace();
+            assertEquals(e.getMessage(), "Insufficient resources");
         }
-
     }
 
     /**
@@ -191,20 +169,20 @@ public class marketTest extends TesterFile{
         setUpEnergy3();
         try {
             TestMarket.buy("energy", 100, TestPlayer);
-            Integer TestEnergyCount = 20;
-            assertEquals(TestEnergyCount, TestPlayer.getEnergyCount());
-            Integer TestMoney = 0;
-            assertEquals(TestMoney, TestPlayer.getMoney());
-            Integer TestSellPrice = 200;
-            assertEquals(TestSellPrice, TestMarket.getEnergySellPrice());
-            Integer TestBuyPrice = 0;
-            assertEquals(TestBuyPrice, TestMarket.getEnergyBuyPrice());
-            Integer TestFoodStock = 0;
-            assertEquals(TestFoodStock, TestMarket.getEnergyStock());
+            fail("Expected an exception to be thrown");
         } catch (Exception e) {
-            e.printStackTrace();
-
+            assertEquals(e.getMessage(), "Insufficient money");
         }
+        Integer TestEnergyCount = 10;
+        assertEquals(TestEnergyCount, TestPlayer.getEnergyCount());
+        Integer TestMoney = 100;
+        assertEquals(TestMoney, TestPlayer.getMoney());
+        Integer TestSellPrice = 10;
+        assertEquals(TestSellPrice, TestMarket.getEnergySellPrice());
+        Integer TestBuyPrice = 10;
+        assertEquals(TestBuyPrice, TestMarket.getEnergyBuyPrice());
+        Integer TestEnergyStock = 100;
+        assertEquals(TestEnergyStock, TestMarket.getEnergyStock());
     }
 
     /**
