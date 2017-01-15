@@ -29,9 +29,11 @@ public class TileTest extends TesterFile {
     public void ValidProduce() {
         TestTile.Produce(TestPlayer);
 
-        assertEquals(TestPlayer.getEnergyCount().longValue(), 1);
-        assertEquals(TestPlayer.getOreCount().longValue(), 2);
-        assertEquals(TestPlayer.getFoodCount().longValue(), 3);
+        Integer modifiers[] = TestRoboticon.productionModifier();
+
+        assertEquals(TestPlayer.getEnergyCount().longValue(), (modifiers[0]*1));
+        assertEquals(TestPlayer.getOreCount().longValue(), (modifiers[1]*2));
+        assertEquals(TestPlayer.getFoodCount().longValue(), (modifiers[2]*3));
     }
 
     @Test
