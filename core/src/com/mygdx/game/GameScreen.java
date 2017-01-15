@@ -10,8 +10,10 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 
 public class GameScreen implements Screen{
@@ -19,13 +21,22 @@ public class GameScreen implements Screen{
     private Game game;
     //Stores current game-state, enabling transitions between screens
 
+    private State state;
+    //Variable to dictate whether or not the game is paused
+
     private Stage stage;
     private Table tableLeft;
     private Table tableRight;
     //Establish stage and side-hand tables
 
+    private Stage pauseStage;
+    private Table pauseTable;
+    //Establish the stage and table which will appear when the game is paused
+
     private TTFont gameFont;
-    //Establish font
+    private TTFont menuFont;
+    private TTFont titleFont;
+    //Establish fonts
 
     private Image map;
     //Establish in-game map
@@ -63,6 +74,16 @@ public class GameScreen implements Screen{
     private TextButton pause;
     //Establish buttons to advance between phases and pause the game
 
+    private TextButton resume;
+    //Establish button to resume the game from the pause menu
+
+    private TextButton claim;
+    private TextButton deploy;
+    //Establish buttons to claim tiles and deploy roboticons on to them
+
+    TextButton.TextButtonStyle gameButtonStyle;
+    //Establish visual parameters for in-game buttons
+
     public GameScreen(Game game) {
         this.game = game;
         Player Player1 = new Player(1);
@@ -80,8 +101,15 @@ public class GameScreen implements Screen{
         Gdx.input.setInputProcessor(stage);
         //Prepare the local stage and set it up to accept inputs
 
-        gameFont = new TTFont(Gdx.files.internal("font/testfontbignoodle.ttf"));
+        gameFont = new TTFont(Gdx.files.internal("font/testfontbignoodle.ttf"), 36);
         //Set fonts for game interface
+
+        gameButtonStyle = new TextButton.TextButtonStyle();
+        gameButtonStyle.font = gameFont.font();
+        gameButtonStyle.fontColor = Color.WHITE;
+        gameButtonStyle.pressedOffsetX = 1;
+        gameButtonStyle.pressedOffsetY = -1;
+        //Set up visual parameters for buttons
 
         map = new Image(new Texture("image/TestMap.png"));
         map.setPosition((Gdx.graphics.getWidth() / 2) - (map.getWidth() / 2), (Gdx.graphics.getHeight() / 2) - (map.getHeight() / 2));
@@ -104,8 +132,13 @@ public class GameScreen implements Screen{
         constructRightTable();
         //Construct and deploy side-hand tables
 
+        constructPauseMenu();
+        //Construct pause-menu (and hide it for the moment)
+
         drawer.debug(stage);
         //Call this to draw temporary debug lines around all of the actors on the stage
+
+        state = State.RUN;
 
         timer.start();
         //Start in-game timer
@@ -118,14 +151,21 @@ public class GameScreen implements Screen{
         //OpenGL nonsense
         //First instruction sets background colour
 
-        drawRectangles();
+        if (state == State.RUN) {
+            drawRectangles();
 
-        stage.act(delta);
-        stage.draw();
-        //Draw the stage onto the screen
+            stage.act(delta);
+            stage.draw();
+            //Draw the stage onto the screen
 
-        for (Tile tile : tiles) {
-            tile.drawTooltip();
+            for (Tile tile : tiles) {
+                tile.drawTooltip();
+            }
+        } else if (state == State.PAUSE) {
+            drawer.filledRectangle(Color.WHITE, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+            pauseStage.act(delta);
+            pauseStage.draw();
         }
     }
 
@@ -170,13 +210,7 @@ public class GameScreen implements Screen{
 
         drawer.addTableRow(tableLeft, timer, 0, 0, 0, 0, 2);
 
-        gameFont.setSize(36);
-        TextButton.TextButtonStyle leftTableButtonStyle = new TextButton.TextButtonStyle();
-        leftTableButtonStyle.font = gameFont.font();
-        leftTableButtonStyle.fontColor = Color.WHITE;
-        leftTableButtonStyle.pressedOffsetX = 1;
-        leftTableButtonStyle.pressedOffsetY = -1;
-        endPhase = new TextButton("End Phase", leftTableButtonStyle);
+        endPhase = new TextButton("End Phase", gameButtonStyle);
         drawer.addTableRow(tableLeft, endPhase, 0, 0, 15, 0, 2);
 
         gameFont.setSize(36);
@@ -199,7 +233,17 @@ public class GameScreen implements Screen{
         drawer.addTableRow(resourceCounters, new LabelledElement("Roboticons", gameFont, Color.WHITE, roboticonCounter, 125));
         tableLeft.add(resourceCounters).size(140, 95);
 
-        pause = new TextButton("Pause Game", leftTableButtonStyle);
+        pause = new TextButton("Pause Game", gameButtonStyle);
+        pause.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                timer.stop();
+
+                Gdx.input.setInputProcessor(pauseStage);
+
+                state = State.PAUSE;
+            }
+        });
         drawer.addTableRow(tableLeft, pause, 138, 0, 0, 0, 2);
 
         stage.addActor(tableLeft);
@@ -224,8 +268,15 @@ public class GameScreen implements Screen{
         tableRight.add(new Label("ROB", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
 
         gameFont.setSize(20);
-        drawer.addTableRow(tableRight, new Label("COLLEGE", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
-        tableRight.add(new Label("ROBOTICON", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
+        drawer.addTableRow(tableRight, new Label("COLLEGE", new Label.LabelStyle(gameFont.font(), Color.WHITE)), 0, 0, 10, 0);
+        tableRight.add(new Label("ROBOTICON", new Label.LabelStyle(gameFont.font(), Color.WHITE))).padBottom(10);
+
+        gameFont.setSize(28);
+        gameButtonStyle.font = gameFont.font();
+        claim = new TextButton("Claim", gameButtonStyle);
+        deploy = new TextButton("Deploy", gameButtonStyle);
+        drawer.addTableRow(tableRight, claim);
+        tableRight.add(deploy);
 
         stage.addActor(tableRight);
         //Add right-hand table to the stage
@@ -260,6 +311,42 @@ public class GameScreen implements Screen{
         stage.addActor(tileGrid);
     }
 
+    public void constructPauseMenu() {
+        pauseStage = new Stage();
+        pauseTable = new Table();
+
+        titleFont = new TTFont(Gdx.files.internal("font/earthorbiterxtrabold.ttf"), 72);
+        menuFont = new TTFont(Gdx.files.internal("font/enterthegrid.ttf"), 36);
+
+        pauseTable.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
+        drawer.addTableRow(pauseTable, new Label("Sabbaticoup", new Label.LabelStyle(titleFont.font(), Color.BLACK)), 0, 0, 30, 0);
+
+        TextButton.TextButtonStyle menuButtonStyle = new TextButton.TextButtonStyle();
+        menuButtonStyle.font = menuFont.font();
+        menuButtonStyle.fontColor = Color.BLACK;
+        menuButtonStyle.pressedOffsetX = 1;
+        menuButtonStyle.pressedOffsetY = -1;
+
+        resume = new TextButton("Resume", menuButtonStyle);
+        resume.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                state = State.RUN;
+
+                Gdx.input.setInputProcessor(stage);
+
+                if (timer.minutes() > 0 || timer.seconds() > 0) {
+                    timer.start();
+                }
+            }
+        });
+
+        drawer.addTableRow(pauseTable, resume);
+
+        pauseStage.addActor(pauseTable);
+    }
+
     public void drawRectangles() {
         drawer.lineRectangle(Color.WHITE, (int) map.getX(), (int) map.getY(), (int) map.getWidth(), (int) map.getHeight());
         //Draw border around the map
@@ -288,5 +375,10 @@ public class GameScreen implements Screen{
 
     public void selectTile(Tile tile) {
         selectedTileLabel.setText("Tile " + tile.ID());
+    }
+
+    public enum State {
+        RUN,
+        PAUSE
     }
 }
