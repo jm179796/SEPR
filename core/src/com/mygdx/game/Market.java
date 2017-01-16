@@ -1,5 +1,13 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.utils.Align;
+
 import java.util.Random;
 
 /**
@@ -7,7 +15,13 @@ import java.util.Random;
  * @version 1.0
  * @since 1.0
  */
-public class Market {
+public class Market extends Table {
+    private Game game;
+
+    private Drawer drawer;
+
+    private TTFont tableFont;
+
     /**
      * Variable holding current Ore resource amount as an Integer, initialises at 0 as stated in the brief.
      */
@@ -31,37 +45,141 @@ public class Market {
     /**
      * Variable holding ore resource selling price.
      */
-    private Integer OreSellPrice;
+    private Integer OreSellPrice = 0;
 
     /**
      * Variable holding food resource selling price.
      */
-    private Integer FoodSellPrice;
+    private Integer FoodSellPrice = 0;
 
     /**
      * Variable holding energy resource selling price.
      */
-    private Integer EnergySellPrice;
+    private Integer EnergySellPrice = 0;
 
     /**
      * Variable holding ore resource buying price.
      */
-    private Integer OreBuyPrice;
+    private Integer OreBuyPrice = 0;
 
     /**
      * Variable holding food resource buying price.
      */
-    private Integer FoodBuyPrice;
+    private Integer FoodBuyPrice = 0;
 
     /**
      * Variable holding energy resource buying price.
      */
-    private Integer EnergyBuyPrice;
+    private Integer EnergyBuyPrice = 0;
 
     /**
      * Variable holding roboticon buying price.
      */
-    private Integer RoboticonBuyPrice;
+    private Integer RoboticonBuyPrice = 0;
+
+    private TextButton buyOre;
+    private TextButton buyFood;
+    private TextButton buyEnergy;
+    private TextButton buyRoboticon;
+
+    private TextButton sellOre;
+    private TextButton sellFood;
+    private TextButton sellEnergy;
+
+    private Label oreStockLabel;
+    private Label foodStockLabel;
+    private Label energyStockLabel;
+    private Label roboticonStockLabel;
+
+    public Market(Game game) {
+        super();
+
+        this.game = game;
+
+        drawer = new Drawer(this.game);
+
+        tableFont = new TTFont(Gdx.files.internal("font/testfontbignoodle.ttf"), 36);
+
+        constructInterface();
+    }
+
+    public void constructInterface() {
+        drawer.addTableRow(this, new Label("Market", new Label.LabelStyle(tableFont.font(), Color.WHITE)), 0, 0, 5, 0, 3);
+
+        tableFont.setSize(24);
+        TextButton.TextButtonStyle tableButtonStyle = new TextButton.TextButtonStyle();
+        tableButtonStyle.font = tableFont.font();
+        tableButtonStyle.fontColor = Color.WHITE;
+        tableButtonStyle.pressedOffsetX = 1;
+        tableButtonStyle.pressedOffsetY = -1;
+
+        buyOre = new TextButton(getOreBuyPrice().toString(), tableButtonStyle);
+        buyFood = new TextButton(getFoodBuyPrice().toString(), tableButtonStyle);
+        buyEnergy = new TextButton(getEnergyBuyPrice().toString(), tableButtonStyle);
+        buyRoboticon = new TextButton(getRoboticonBuyPrice().toString(), tableButtonStyle);
+
+        sellOre = new TextButton(getOreSellPrice().toString(), tableButtonStyle);
+        sellFood = new TextButton(getFoodSellPrice().toString(), tableButtonStyle);
+        sellEnergy = new TextButton(getEnergySellPrice().toString(), tableButtonStyle);
+
+        this.row();
+        this.add(new Label("Item", new Label.LabelStyle(tableFont.font(), Color.WHITE))).left().padRight(90);
+        this.add(new Label("Buy", new Label.LabelStyle(tableFont.font(), Color.WHITE))).left().padRight(30);
+        this.add(new Label("Sell", new Label.LabelStyle(tableFont.font(), Color.WHITE))).left().padRight(30);
+
+        this.row();
+        this.add(new Label("Ore", new Label.LabelStyle(tableFont.font(), Color.WHITE))).left();
+        this.add(buyOre).left();
+        this.add(sellOre).left();
+
+        this.row();
+        this.add(new Label("Food", new Label.LabelStyle(tableFont.font(), Color.WHITE))).left();
+        this.add(buyFood).left();
+        this.add(sellFood).left();
+
+        this.row();
+        this.add(new Label("Energy", new Label.LabelStyle(tableFont.font(), Color.WHITE))).left();
+        this.add(buyEnergy).left();
+        this.add(sellEnergy).left();
+
+        this.row();
+        this.add(new Label("Roboticons", new Label.LabelStyle(tableFont.font(), Color.WHITE))).left().padBottom(15);
+        this.add(buyRoboticon).left().padBottom(15);
+
+        oreStockLabel = new Label(getOreStock().toString(), new Label.LabelStyle(tableFont.font(), Color.WHITE));
+        foodStockLabel = new Label(getFoodStock().toString(), new Label.LabelStyle(tableFont.font(), Color.WHITE));
+        energyStockLabel = new Label(getEnergyStock().toString(), new Label.LabelStyle(tableFont.font(), Color.WHITE));
+        roboticonStockLabel = new Label(getRoboticonStock().toString(), new Label.LabelStyle(tableFont.font(), Color.WHITE));
+
+        this.row();
+        this.add(new Label("Item", new Label.LabelStyle(tableFont.font(), Color.WHITE))).left().padRight(90);
+        this.add(new Label("Stock", new Label.LabelStyle(tableFont.font(), Color.WHITE))).left();
+
+        this.row();
+        this.add(new Label("Ore", new Label.LabelStyle(tableFont.font(), Color.WHITE))).left();
+        this.add(oreStockLabel).left();
+
+        this.row();
+        this.add(new Label("Food", new Label.LabelStyle(tableFont.font(), Color.WHITE))).left();
+        this.add(foodStockLabel).left();
+
+        this.row();
+        this.add(new Label("Energy", new Label.LabelStyle(tableFont.font(), Color.WHITE))).left();
+        this.add(energyStockLabel).left();
+
+        this.row();
+        this.add(new Label("Roboticons", new Label.LabelStyle(tableFont.font(), Color.WHITE))).left();
+        this.add(roboticonStockLabel).left();
+    }
+
+    public Integer getRoboticonStock() {
+        return this.RoboticonStock;
+    }
+
+    public void setRoboticonStock (Integer NewRoboticonStock) {
+        this.RoboticonStock = NewRoboticonStock;
+        roboticonStockLabel.setText(getRoboticonStock().toString());
+    }
 
     /**
      * Getter for RoboticonBuyPrice
@@ -79,8 +197,8 @@ public class Market {
      */
     public void setRoboticonBuyPrice(Integer NewRoboticonBuyPrice){
         this.RoboticonBuyPrice = NewRoboticonBuyPrice;
+        buyRoboticon.setText(getRoboticonBuyPrice().toString());
     }
-
 
     /**
      * Getter  for OreStock
@@ -116,6 +234,7 @@ public class Market {
      */
     public void setOreSellPrice(Integer NewOreSellPrice) {
         this.OreSellPrice = NewOreSellPrice;
+        sellOre.setText(getOreSellPrice().toString());
     }
 
     /**
@@ -134,6 +253,7 @@ public class Market {
      */
     public void setOreBuyPrice(Integer NewOreBuyPrice) {
         this.OreBuyPrice = NewOreBuyPrice;
+        buyOre.setText(getOreBuyPrice().toString());
     }
 
     /**
@@ -170,6 +290,7 @@ public class Market {
      */
     public void setFoodSellPrice(Integer NewFoodSellPrice) {
         this.FoodSellPrice = NewFoodSellPrice;
+        sellFood.setText(getFoodSellPrice().toString());
     }
 
     /**
@@ -188,6 +309,7 @@ public class Market {
      */
     public void setFoodBuyPrice(Integer NewFoodBuyPrice) {
         this.FoodBuyPrice = NewFoodBuyPrice;
+        buyFood.setText(getFoodBuyPrice().toString());
     }
 
     /**
@@ -224,6 +346,7 @@ public class Market {
      */
     public void setEnergySellPrice(Integer NewEnergySellPrice) {
         this.EnergySellPrice = NewEnergySellPrice;
+        sellEnergy.setText(getEnergySellPrice().toString());
     }
 
     /**
@@ -242,6 +365,7 @@ public class Market {
      */
     public void setEnergyBuyPrice(Integer NewEnergyBuyPrice) {
         this.EnergyBuyPrice = NewEnergyBuyPrice;
+        buyEnergy.setText(getEnergyBuyPrice().toString());
     }
 
 
