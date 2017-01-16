@@ -4,6 +4,8 @@ import com.mygdx.game.Player;
 import com.mygdx.game.Roboticon;
 import com.mygdx.game.Tile;
 import org.junit.Test;
+import static org.junit.Assert.*;
+
 /**
  * @author Kieran Hall KJH532
  * @version 1.0
@@ -12,7 +14,7 @@ import org.junit.Test;
 public class TileTest extends TesterFile {
     private Game game = new Main();
     private Player TestPlayer = new Player(0);
-    private Tile TestTile = new Tile(game, 0, 0, 0, 0, true, new Runnable() {
+    private Tile TestTile = new Tile(game, 0, 5, 5, 5, true, new Runnable() {
         @Override
         public void run() {
 
@@ -23,16 +25,17 @@ public class TileTest extends TesterFile {
     /**
      * Test confirming that the Player's resources are updated with roboticon production modifiers after tile.produce has completed
      */
-/*    @Test
+    @Test
     public void ValidProduce() {
-        TestTile.Produce(TestPlayer);
+        Integer TestValues[] = {TestPlayer.getEnergyCount(), TestPlayer.getFoodCount(), TestPlayer.getOreCount()};
 
-        Integer modifiers[] = TestRoboticon.productionModifier();
+        TestPlayer = TestTile.Produce(TestPlayer);
 
-        assertEquals(TestPlayer.getEnergyCount().longValue(), (modifiers[0]*1));
-        assertEquals(TestPlayer.getOreCount().longValue(), (modifiers[1]*2));
-        assertEquals(TestPlayer.getFoodCount().longValue(), (modifiers[2]*3));
-    }*/
+        assertTrue(TestPlayer.getEnergyCount() > TestValues[0]);
+        assertTrue(TestPlayer.getFoodCount() > TestValues[1]);
+        assertTrue(TestPlayer.getOreCount() > TestValues[2]);
+
+    }
 
     @Test
     public void ValidToggleAcquire() {

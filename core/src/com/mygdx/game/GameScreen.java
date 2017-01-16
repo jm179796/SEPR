@@ -63,7 +63,6 @@ public class GameScreen implements Screen{
     //Establish label object to describe tiles selected
 
     private Player[] players = new Player[3];
-    private Market market = new Market();
     private int phase = 1;
     private int currentPlayer = 1;
     //Establish resource-counter labels
@@ -85,8 +84,11 @@ public class GameScreen implements Screen{
     private TextButton deploy;
     //Establish buttons to claim tiles and deploy roboticons on to them
 
-    TextButton.TextButtonStyle gameButtonStyle;
+    private TextButton.TextButtonStyle gameButtonStyle;
     //Establish visual parameters for in-game buttons
+
+    private Market market;
+    //Establish in-game market
 
     public GameScreen(Game game) {
         this.game = game;
@@ -139,7 +141,7 @@ public class GameScreen implements Screen{
         constructPauseMenu();
         //Construct pause-menu (and hide it for the moment)
 
-        drawer.debug(stage);
+        //drawer.debug(stage);
         //Call this to draw temporary debug lines around all of the actors on the stage
 
         state = State.RUN;
@@ -285,6 +287,8 @@ public class GameScreen implements Screen{
         gameButtonStyle.font = gameFont.font();
         claim = new TextButton("Claim", gameButtonStyle);
         deploy = new TextButton("Deploy", gameButtonStyle);
+
+
         claim.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -299,8 +303,12 @@ public class GameScreen implements Screen{
                 }
             }
         });
-        drawer.addTableRow(tableRight, claim);
-        tableRight.add(deploy);
+        drawer.addTableRow(tableRight, claim, 0, 0, 15, 0);
+        tableRight.add(deploy).padBottom(15);
+
+        market = new Market(game);
+        drawer.addTableRow(tableRight, market, 2);
+
 
         stage.addActor(tableRight);
         //Add right-hand table to the stage
@@ -373,7 +381,7 @@ public class GameScreen implements Screen{
     }
 
     public void drawRectangles() {
-        drawer.lineRectangle(Color.WHITE, (int) map.getX(), (int) map.getY(), (int) map.getWidth(), (int) map.getHeight());
+        drawer.lineRectangle(Color.WHITE, (int) map.getX(), (int) map.getY(), (int) map.getWidth() + 1, (int) map.getHeight());
         //Draw border around the map
 
         drawer.filledRectangle(Color.WHITE, 0, (int) timer.getHeight(), tableWidth, 1);
@@ -385,6 +393,7 @@ public class GameScreen implements Screen{
 
         drawer.lineRectangle(Color.WHITE, ((int) (Gdx.graphics.getWidth() * 0.875)) - 94, 52, 66, 66);
         drawer.lineRectangle(Color.WHITE, ((int) (Gdx.graphics.getWidth() * 0.875)) + 26, 52, 66, 66);
+        drawer.filledRectangle(Color.WHITE, Gdx.graphics.getWidth() - 256, 190, tableWidth, 1);
         //Draw lines in right-hand table
     }
 

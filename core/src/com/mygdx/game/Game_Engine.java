@@ -16,7 +16,7 @@ public class Game_Engine {
 
 		//assignCollege(Player1) NEEDS USER INPUT
 		//assignCollege(Player2) NEEDS USER INPUT
-		Market Market = new Market();
+		//Market Market = new Market();
 		List<List<Tile>> TileList = createTiles();
 		int currentPhase = 1;
 		boolean gameRunning = true;
