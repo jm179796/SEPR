@@ -31,7 +31,7 @@ public class Tile extends Button {
     /**
      * A modifier influencing how much ore is produced.
      */
-    private Integer OreCount;
+    private int OreCount;
     /**
      * A modifier influencing how much ore is produced.
      */
@@ -65,14 +65,13 @@ public class Tile extends Button {
 
     /**
      * The constructor for the object
-     * //* @param TileID The ID of the generated tile
-     *
+     //* @param TileID The ID of the generated tile
      * @param EnergyCount The multiplier for the production of energy
-     * @param OreCount    The multiplier for the production of ore
-     * @param landmark    A boolean to signify if the tile is to be a landmark or not
-     * @param runnable    An object encapsulating a method that can be executed when the tile is clicked on
+     * @param OreCount The multiplier for the production of ore
+     * @param landmark A boolean to signify if the tile is to be a landmark or not
+     * @param runnable An object encapsulating a method that can be executed when the tile is clicked on
      */
-    public Tile(Game game, int ID, int EnergyCount, int OreCount, int FoodCount, boolean landmark, final Runnable runnable) {
+    public Tile(Game game, int ID, int EnergyCount, int OreCount, int FoodCount, boolean landmark, final Runnable runnable){
         super(new ButtonStyle());
 
         this.game = game;
@@ -114,138 +113,120 @@ public class Tile extends Button {
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor actor) {
                 mouseOver = true;
+
+                Timer timer = new Timer();
+
+                timer.scheduleTask(new Timer.Task() {
+                    @Override
+                    public void run() {
+                        if (mouseOver == true) {
+                            tooltipActive = true;
+                        }
+                    }
+                }, (float) 0.5);
+
+                timer.start();
+            }
+
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor actor) {
+                mouseOver = false;
+
+                tooltipActive = false;
             }
         });
     }
 
     /**
-     * Calculates how many resources are produced based on the amount of roboticons present and adds them to the player's resource count.
-     *
+     * Calculates how many resources are produced based on the amount of roboticons present and adds them to the player.
      * @param Player The player that is producing the resources.
      * @return Player The player object after it's resource values have  been modified.
      */
-
     public Player Produce(Player Player) {
         Integer[] modifiers = this.roboticonStored.productionModifier();
-
         Integer OreProduce = modifiers[0] * this.OreCount;
         Player.varyResource("Ore", OreProduce);
-
+        this.OreCount -= OreProduce;
         Integer EnergyProduce = modifiers[1] * this.EnergyCount;
         Player.varyResource("Energy", EnergyProduce);
-
-        Integer FoodProduce = modifiers[2] * this.FoodCount;
-        Player.varyResource("Food", FoodProduce);
-
+        this.EnergyCount -= EnergyProduce;
         return Player;
     }
 
-    Timer timer = new Timer();
-    timer.scheduleTask(new Timer.Task(){
-        @Override
-        public void run(){
-        if (mouseOver == true) {
-            tooltipActive = true;
-        }
-    }
-    },(float)0.5);
-
-            timer.start()
-
-    @Override
-    public void exit(InputEvent event, float x, float y, int pointer, Actor actor) {
-        mouseOver = false;
-
-        tooltipActive = false;
+    /**
+     * Sets a certain resource count to the specified amount.
+     * @param Resource The resource that is to be changed
+     * @param quantity The amount that it is to be set to.
+     */
+    public void setResource(String Resource, int quantity) {
     }
 
-public void toggleAcquire(){
-        if(this.acquire){
-        this.acquire=false;
+    /**
+     * Changes the owner of the tile to the one specified
+     * @param Owner The new owner.
+     */
+    public void setOwner( Player Owner) {
+        this.Owner = Owner;
+    }
 
-/**
- * Sets a certain resource count to the specified amount.
- *
- * @param Resource The resource that is to be changed
- * @param quantity The amount that it is to be set to.
- */
-public void setResource(String Resource,int quantity){
-        }
+    /**
+     * Setter for the ore count of the tile.
+     * @param Count What the count is to be changed to.
+     */
+    public void changeOreCount(int Count){
+        this.OreCount = Count;
+    }
 
-/**
- * Changes the owner of the tile to the one specified
- * @param Owner The new owner.
- */
-public void setOwner(Player Owner){
-        this.Owner=Owner;
-        }
+    /**
+     * Setter for the ore count of the tile.
+     * @param Count What the count is to be changed to.
+     */
+    public void changeEnergyCount(int Count){
+        this.EnergyCount = Count;
+    }
+    /**
+     * Adds a roboticon to the roboticon list.
+     * @param Roboticon The roboticon to be added to the list.
+     */
+    public void assignRoboticon( Roboticon Roboticon) {
+        roboticonStored = Roboticon;
+    }
 
-/**
- * Setter for the ore count of the tile.
- * @param Count What the count is to be changed to.
- */
-public void changeOreCount(int Count){
-        this.OreCount=Count;
+    /**
+     * Removes the first instance of the roboticon from the list.
+     * @param Roboticon The roboticon to be removed.
+     */
+    public void unassignRoboticon( Roboticon Roboticon) {
+        roboticonStored = null;
+    }
 
-public void drawTooltip(){
-        if(mouseOver){
-        drawer.borderedRectangle(tooltipFillColor,tooltipLineColor,Gdx.input.getX()-tooltipWidth-tooltipCursorSpace,Gdx.input.getY()-tooltipHeight-tooltipCursorSpace,tooltipWidth,tooltipHeight);
-        drawer.text("Tile "+this.ID,tooltipFont,Gdx.input.getX()-tooltipWidth-tooltipCursorSpace+tooltipTextSpace,Gdx.input.getY()-tooltipHeight-tooltipCursorSpace+tooltipTextSpace);
-        }
-
-        }
-
-/**
- * Setter for the ore count of the tile.
- * @param Count What the count is to be changed to.
- */
-public void changeEnergyCount(int Count){
-        this.EnergyCount=Count;
-        }
-/**
- * Adds a roboticon to the roboticon list.
- * @param Roboticon The roboticon to be added to the list.
- */
-public void assignRoboticon(Roboticon robot){
-        this.roboticonStored=robot;
-        }
-
-/**
- * Removes the first instance of the roboticon from the list.
- * @param Roboticon The roboticon to be removed.
- */
-public void unassignRoboticon(Roboticon Roboticon){
-        roboticonStored=null;
-        }
-
-/**
- * Returns the tile's associated function
- */
-public Runnable getFunction(){
+    /**
+     * Returns the tile's associated function
+     */
+    public Runnable getFunction() {
         return runnable;
-        }
+    }
 
-/**
- * Runs the tile's associated function
- */
-public void runFunction(){
+    /**
+     * Runs the tile's associated function
+     */
+    public void runFunction() {
         runnable.run();
-        }
+    }
 
-public void drawTooltip(){
-        if(tooltipActive==true){
-        if(Gdx.input.getY()<tooltipHeight){
-        drawer.borderedRectangle(tooltipFillColor,tooltipLineColor,Gdx.input.getX()-tooltipWidth-tooltipCursorSpace,Gdx.input.getY()+tooltipCursorSpace,tooltipWidth,tooltipHeight);
-        drawer.text("Tile "+this.ID,tooltipFont,Gdx.input.getX()-tooltipWidth-tooltipCursorSpace+tooltipTextSpace,Gdx.input.getY()+tooltipCursorSpace+tooltipTextSpace);
-        }else{
-        drawer.borderedRectangle(tooltipFillColor,tooltipLineColor,Gdx.input.getX()-tooltipWidth-tooltipCursorSpace,Gdx.input.getY()-tooltipHeight-tooltipCursorSpace,tooltipWidth,tooltipHeight);
-        drawer.text("Tile "+this.ID,tooltipFont,Gdx.input.getX()-tooltipWidth-tooltipCursorSpace+tooltipTextSpace,Gdx.input.getY()-tooltipHeight-tooltipCursorSpace+tooltipTextSpace);
+    public void drawTooltip() {
+        if (tooltipActive == true) {
+            if (Gdx.input.getY() < tooltipHeight) {
+                drawer.borderedRectangle(tooltipFillColor, tooltipLineColor, Gdx.input.getX() - tooltipWidth - tooltipCursorSpace, Gdx.input.getY() + tooltipCursorSpace, tooltipWidth, tooltipHeight);
+                drawer.text("Tile " + this.ID, tooltipFont, Gdx.input.getX() - tooltipWidth - tooltipCursorSpace + tooltipTextSpace, Gdx.input.getY() + tooltipCursorSpace + tooltipTextSpace);
+            } else {
+                drawer.borderedRectangle(tooltipFillColor, tooltipLineColor, Gdx.input.getX() - tooltipWidth - tooltipCursorSpace, Gdx.input.getY() - tooltipHeight - tooltipCursorSpace, tooltipWidth, tooltipHeight);
+                drawer.text("Tile " + this.ID, tooltipFont, Gdx.input.getX() - tooltipWidth - tooltipCursorSpace + tooltipTextSpace, Gdx.input.getY() - tooltipHeight - tooltipCursorSpace + tooltipTextSpace);
+            }
         }
-        }
-        }
+    }
 
-public int ID(){
+    public int ID() {
         return this.ID;
-        }
-        }
-
+    }
+}
