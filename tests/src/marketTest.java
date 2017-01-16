@@ -1,12 +1,7 @@
-import org.junit.Rule;
+import com.mygdx.game.Market;
+import com.mygdx.game.Player;
 import org.junit.Test;
-import org.junit.Before;
-import com.mygdx.game.*;
-import org.junit.rules.ExpectedException;
 
-import java.util.Arrays;
-
-import static org.hamcrest.Matcher.*;
 import static org.junit.Assert.*;
 
 
@@ -139,22 +134,10 @@ public class marketTest extends TesterFile{
         setUpEnergy();
         try {
             TestMarket.sell("energy", 10, TestPlayer);
-            Integer TestEnergyCount = 0;
-            assertEquals(TestEnergyCount, TestPlayer.getEnergyCount());
-            Integer TestMoney = 110;
-            assertEquals(TestMoney, TestPlayer.getMoney());
-            Integer TestSellPrice = 8;
-            assertEquals(TestSellPrice, TestMarket.getEnergySellPrice());
-            Integer TestBuyPrice = 10;
-            assertEquals(TestBuyPrice, TestMarket.getEnergyBuyPrice());
-            Integer TestFoodStock = 20;
-            assertEquals(TestFoodStock, TestMarket.getEnergyStock());
         } catch (Exception e) {
-            e.printStackTrace();
+            fail("Expected to pass");
         }
-
     }
-
 
     /**
      * Tests sell method for energy resource, when energyStock is < then required energy.
@@ -168,20 +151,10 @@ public class marketTest extends TesterFile{
         setUpEnergy();
         try {
             TestMarket.sell("energy", 100, TestPlayer);
-            Integer TestEnergyCount = 0;
-            assertEquals(TestEnergyCount, TestPlayer.getEnergyCount());
-            Integer TestMoney = 110;
-            assertEquals(TestMoney, TestPlayer.getMoney());
-            Integer TestSellPrice = 8;
-            assertEquals(TestSellPrice, TestMarket.getEnergySellPrice());
-            Integer TestBuyPrice = 10;
-            assertEquals(TestBuyPrice, TestMarket.getEnergyBuyPrice());
-            Integer TestFoodStock = 20;
-            assertEquals(TestFoodStock, TestMarket.getEnergyStock());
+            fail("Expected an exception to be thrown");
         } catch (Exception e) {
-            e.printStackTrace();
+            assertEquals(e.getMessage(), "Insufficient resources");
         }
-
     }
 
     /**
@@ -196,20 +169,20 @@ public class marketTest extends TesterFile{
         setUpEnergy3();
         try {
             TestMarket.buy("energy", 100, TestPlayer);
-            Integer TestEnergyCount = 20;
-            assertEquals(TestEnergyCount, TestPlayer.getEnergyCount());
-            Integer TestMoney = 0;
-            assertEquals(TestMoney, TestPlayer.getMoney());
-            Integer TestSellPrice = 200;
-            assertEquals(TestSellPrice, TestMarket.getEnergySellPrice());
-            Integer TestBuyPrice = 0;
-            assertEquals(TestBuyPrice, TestMarket.getEnergyBuyPrice());
-            Integer TestFoodStock = 0;
-            assertEquals(TestFoodStock, TestMarket.getEnergyStock());
+            fail("Expected an exception to be thrown");
         } catch (Exception e) {
-            e.printStackTrace();
-
+            assertEquals(e.getMessage(), "Insufficient money");
         }
+        Integer TestEnergyCount = 10;
+        assertEquals(TestEnergyCount, TestPlayer.getEnergyCount());
+        Integer TestMoney = 100;
+        assertEquals(TestMoney, TestPlayer.getMoney());
+        Integer TestSellPrice = 10;
+        assertEquals(TestSellPrice, TestMarket.getEnergySellPrice());
+        Integer TestBuyPrice = 10;
+        assertEquals(TestBuyPrice, TestMarket.getEnergyBuyPrice());
+        Integer TestEnergyStock = 100;
+        assertEquals(TestEnergyStock, TestMarket.getEnergyStock());
     }
 
     /**
@@ -281,19 +254,17 @@ public class marketTest extends TesterFile{
 
     }
 
-//    @Test
-//    public void gambleTest() {
-//        //TestPlayer.setMoney(100);
-//        //System.out.println(TestPlayer.getMoney());
-//       // TestMarket.gamble(50, TestPlayer);
-//        //System.out.println(TestPlayer.getMoney());
-//
-//        TestPlayer.setMoney(50);
-//        System.out.println(TestPlayer.getMoney());
-//
-//        TestMarket.gamble(50, TestPlayer);
-//        Integer TestMoney = 0;
-//        assertEquals(TestMoney, TestPlayer.getMoney());
-//
-//        //System.out.println(TestPlayer.getMoney());
+    @Test
+    public void gambleTest() {
+        TestPlayer.setMoney(49);
+
+        for (int j = 0; j < 100; j++) {
+            if (TestPlayer.getMoney() < 50) {
+                assertNull(TestMarket.gamble(100, TestPlayer));
+            } else if (TestPlayer.getMoney() >= 50) {
+                Boolean current = TestMarket.gamble(50, TestPlayer);
+                assertTrue(((current == Boolean.TRUE) || (current == Boolean.FALSE)));
+            }
+        }
+    }
 }

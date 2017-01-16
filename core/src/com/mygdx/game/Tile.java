@@ -113,6 +113,25 @@ public class Tile extends Button {
           @Override
           public void enter(InputEvent event, float x, float y, int pointer, Actor actor) {
             mouseOver = true;
+  /**
+   * Calculates how many resources are produced based on the amount of roboticons present and adds them to the player's resource count.
+   * @param Player The player that is producing the resources.
+   * @return Player The player object after it's resource values have  been modified.
+   */
+  public Player Produce(Player Player) {
+	Integer[] modifiers = this.roboticonStored.productionModifier();
+
+    Integer OreProduce = modifiers[0] * this.OreCount;
+    Player.varyResource("Ore", OreProduce);
+
+    Integer EnergyProduce = modifiers[1] * this.EnergyCount;
+    Player.varyResource("Energy", EnergyProduce);
+
+    Integer FoodProduce = modifiers[2] * this.FoodCount;
+    Player.varyResource("Food", FoodProduce);
+
+    return Player;
+  }
 
             Timer timer = new Timer();
 
@@ -137,21 +156,9 @@ public class Tile extends Button {
       });
     }
 
-    /**
-     * Calculates how many resources are produced based on the amount of roboticons present and adds them to the player.
-     * @param Player The player that is producing the resources.
-     * @return Player The player object after it's resource values have  been modified.
-     */
-    public Player Produce(Player Player) {
-      Integer[] modifiers = this.roboticonStored.productionModifier();
-      Integer OreProduce = modifiers[0] * this.OreCount;
-      Player.varyResource("Ore", OreProduce);
-      this.OreCount -= OreProduce;
-      Integer EnergyProduce = modifiers[1] * this.EnergyCount;
-      Player.varyResource("Energy", EnergyProduce);
-      this.EnergyCount -= EnergyProduce;
-      return Player;
-    }
+  public void toggleAcquire(){
+    if(this.acquire){
+      this.acquire = false;
 
     /**
      * Sets a certain resource count to the specified amount.
@@ -175,6 +182,13 @@ public class Tile extends Button {
      */
     public void changeOreCount(int Count){
       this.OreCount = Count;
+
+    public void drawTooltip() {
+      if (mouseOver) {
+        drawer.borderedRectangle(tooltipFillColor, tooltipLineColor, Gdx.input.getX() - tooltipWidth - tooltipCursorSpace, Gdx.input.getY() - tooltipHeight - tooltipCursorSpace, tooltipWidth, tooltipHeight);
+        drawer.text("Tile " + this.ID, tooltipFont, Gdx.input.getX() - tooltipWidth - tooltipCursorSpace + tooltipTextSpace, Gdx.input.getY() - tooltipHeight - tooltipCursorSpace + tooltipTextSpace);
+      }
+
     }
 
     /**
