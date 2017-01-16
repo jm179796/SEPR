@@ -57,6 +57,7 @@ public class GameScreen implements Screen{
     private Label energyCounter;
     private Label oreCounter;
     private Label roboticonCounter;
+    private boolean tileAcquired;
 
     private Label selectedTileLabel;
     //Establish label object to describe tiles selected
@@ -69,6 +70,9 @@ public class GameScreen implements Screen{
 
     private Drawer drawer;
     //Import standard drawing functions
+
+    private Tile selectedTile;
+    //The tile clicked on by the player
 
     private TextButton endPhase;
     private TextButton pause;
@@ -124,7 +128,7 @@ public class GameScreen implements Screen{
         //The purpose of this variable is to facilitate the later implementation of window resizing
 
         gameFont.setSize(120);
-        timer = new GameTimer(120, gameFont, Color.WHITE);
+        timer = new GameTimer(9999, gameFont, Color.WHITE);
         //Set up game timer
         //"Runnable" parameter specifies code to be executed when the timer runs out
 
@@ -211,6 +215,12 @@ public class GameScreen implements Screen{
         drawer.addTableRow(tableLeft, timer, 0, 0, 0, 0, 2);
 
         endPhase = new TextButton("End Phase", gameButtonStyle);
+        endPhase.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                nextPhase();
+            }
+        });
         drawer.addTableRow(tableLeft, endPhase, 0, 0, 15, 0, 2);
 
         gameFont.setSize(36);
@@ -275,6 +285,20 @@ public class GameScreen implements Screen{
         gameButtonStyle.font = gameFont.font();
         claim = new TextButton("Claim", gameButtonStyle);
         deploy = new TextButton("Deploy", gameButtonStyle);
+        claim.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if (phase == 1) {
+                    if (selectedTile.isOwned() == false) {
+
+                        players[currentPlayer].assignTile(selectedTile);
+                        selectedTile.setOwner(players[currentPlayer]);
+                        tileAcquired = true;
+
+                    }
+                }
+            }
+        });
         drawer.addTableRow(tableRight, claim);
         tableRight.add(deploy);
 
@@ -300,6 +324,7 @@ public class GameScreen implements Screen{
                     public void run() {
                         //drawer.addTableRow(tableLeft, new Label("Tile " + ((fy * 4) + fx + 1) + " was clicked", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
                         selectTile(getTile(tileGrid, fx, fy));
+                        selectedTile = getTile(tileGrid, fx, fy);
                     }
                 });
 
@@ -380,5 +405,38 @@ public class GameScreen implements Screen{
     public enum State {
         RUN,
         PAUSE
+    }
+
+    public void nextPhase() {
+        if(phase == 1){
+            if(tileAcquired == true) {
+                tileAcquired = false;
+
+                if (currentPlayer == 1) {
+                    currentPlayer = 2;
+                } else {
+                    phase = 2;
+                    timer.setTime(2, 0);
+                    currentPlayer = 1;
+                }
+            }
+        }
+        if(phase == 2){
+            phase = 3;
+            timer.setTime(2,0);
+        }
+        if(phase == 3){
+            phase = 4;
+            timer.setTime(Integer.MAX_VALUE,0);
+        }
+        if(phase == 4){
+            phase = 5;
+            timer.setTime(Integer.MAX_VALUE,0);
+        }
+        if(phase == 5){
+            phase = 1;
+            timer.setTime(Integer.MAX_VALUE,0);
+        }
+
     }
 }
