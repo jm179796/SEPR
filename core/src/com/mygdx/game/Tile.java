@@ -187,11 +187,11 @@ public class Tile extends Button {
         this.EnergyCount = Count;
     }
     /**
-     * Adds a roboticon to the roboticon list.
-     * @param Roboticon The roboticon to be added to the list.
+     * Adds a Roboticon to the roboticon list.
+     * @param roboticon The roboticon to be added to the list.
      */
-    public void assignRoboticon( Roboticon Roboticon) {
-        roboticonStored = Roboticon;
+    public void assignRoboticon( Roboticon roboticon) {
+        this.roboticonStored = roboticon;
     }
 
     /**

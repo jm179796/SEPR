@@ -52,6 +52,8 @@ public class Roboticon {
         RoboticonID = ID;
         this.CurrentTile = Tile;
         this.Owner = Player;
+
+        this.CurrentTile.assignRoboticon(this);
     }
 
     public Integer[] getLevel() {
