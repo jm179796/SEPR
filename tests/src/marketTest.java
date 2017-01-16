@@ -1,3 +1,4 @@
+import com.badlogic.gdx.Game;
 import com.mygdx.game.Market;
 import com.mygdx.game.Player;
 import org.junit.Test;
@@ -12,7 +13,8 @@ import static org.junit.Assert.*;
  */
 public class marketTest extends TesterFile{
     private Player TestPlayer = new Player(0);
-    private Market TestMarket = new Market();
+    private Game testGame;
+    private Market TestMarket = new Market(testGame);
 
 
 
