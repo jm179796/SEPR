@@ -64,6 +64,25 @@ public class Market {
     private Integer RoboticonBuyPrice;
 
     /**
+     * Getter for RoboticonBuyPrice
+     *
+     * @return this.RoboticonBuyPrice is integer roboticon buy price value
+     */
+    public Integer getRoboticonBuyPrice(){
+        return this.RoboticonBuyPrice;
+    }
+
+    /**
+     * Setter for RoboticonBuyPrice
+     *
+     * @param NewRoboticonBuyPrice integer value that RoboticonBuyPrice is assigned to.
+     */
+    public void setRoboticonBuyPrice(Integer NewRoboticonBuyPrice){
+        this.RoboticonBuyPrice = NewRoboticonBuyPrice;
+    }
+
+
+    /**
      * Getter  for OreStock
      *
      * @return this.OresStock is  integer ore stock value of a Market.
@@ -464,6 +483,7 @@ public class Market {
                     Player.addRoboticon(NewRoboticon);
                     RoboticonStock -= 1;
                     Player.setMoney(Player.getMoney() - RoboticonBuyPrice);
+                    RoboticonBuyPrice += 20;
                 } else {
                     throw new Exception("Insufficient ore");
                 }
