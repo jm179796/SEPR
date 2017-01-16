@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 public class TileTest extends TesterFile {
     private Game game = new Main();
     private Player TestPlayer = new Player(0);
-    private Tile TestTile = new Tile(game, 0, 0, 0, 0, true, new Runnable() {
+    private Tile TestTile = new Tile(game, 0, 5, 5, 5, true, new Runnable() {
         @Override
         public void run() {
 
@@ -28,6 +28,7 @@ public class TileTest extends TesterFile {
     @Test
     public void ValidProduce() {
         Integer TestValues[] = {TestPlayer.getEnergyCount(), TestPlayer.getFoodCount(), TestPlayer.getOreCount()};
+
         TestPlayer = TestTile.Produce(TestPlayer);
 
         assertTrue(TestPlayer.getEnergyCount() > TestValues[0]);
