@@ -57,6 +57,10 @@ public class Player {
         this.PlayerID = PlayerID;
     }
 
+
+    public int getPlayerID(){
+        return PlayerID;
+    }
     /**
      * Getter for the tile list of the Player
      * @return TileList A list of the tile objects that the player owns.
