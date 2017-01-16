@@ -6,11 +6,12 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g3d.particles.ParticleShader;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Align;
 
 /**
  * Created by Joseph on 30/11/2016.
@@ -69,6 +70,8 @@ public class Drawer {
         font.font().draw(batch, text, x - (Gdx.graphics.getWidth() / 2), (Gdx.graphics.getHeight() / 2) - y);
 
         batch.end();
+
+        batch.dispose();
     }
 
     public void debug(Stage stage) {
@@ -78,12 +81,45 @@ public class Drawer {
     }
     //Draws temporary debug lines around all of the actors on the stage
 
-    public void addTableRow(Table table, Actor actor, float padTop, float padLeft, float padBottom, float padRight) {
-        table.row();
+    public void addTableRow(Table table, Actor actor, float width, float height, float padTop, float padLeft, float padBottom, float padRight, int colSpan) {
+        if (width == 0 && height == 0) {
+            table.row().colspan(colSpan);
+        } else {
+            table.row().colspan(colSpan).size(width, height);
+        }
+
         table.add(actor).pad(padTop, padLeft, padBottom, padRight);
     }
 
+    public void addTableRow(Table table, Actor actor, float width, float height, float padTop, float padLeft, float padBottom, float padRight) {
+        addTableRow(table, actor, width, height, padTop, padLeft, padBottom, padRight, 1);
+    }
+
+    public void addTableRow(Table table, Actor actor, float padTop, float padLeft, float padBottom, float padRight, int colSpan) {
+        addTableRow(table, actor, 0, 0, padTop, padLeft, padBottom, padRight, colSpan);
+    }
+
+    public void addTableRow(Table table, Actor actor, float padTop, float padLeft, float padBottom, float padRight) {
+        addTableRow(table, actor, 0, 0, padTop, padLeft, padBottom, padRight, 1);
+    }
+
+    public void addTableRow(Table table, Actor actor, float width, float height, int colSpan) {
+        addTableRow(table, actor, width, height, 0, 0, 0, 0, colSpan);
+    }
+
+    public void addTableRow(Table table, Actor actor, float width, float height) {
+        addTableRow(table, actor, width, height, 0, 0, 0, 0, 1);
+    }
+
+    public void addTableRow(Table table, Actor actor, int colSpan) {
+        addTableRow(table, actor, 0, 0, 0, 0, 0, 0, colSpan);
+    }
+
     public void addTableRow(Table table, Actor actor) {
-        addTableRow(table, actor, 0, 0, 0, 0);
+        addTableRow(table, actor, 0, 0, 0, 0, 0, 0, 1);
+    }
+
+    public void stretchCurrentCell(Table table) {
+        table.getCells().items[table.getRows()].fillX();
     }
 }
