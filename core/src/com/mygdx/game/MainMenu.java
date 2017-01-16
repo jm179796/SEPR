@@ -5,12 +5,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 /**
@@ -27,8 +26,6 @@ public class MainMenu implements Screen {
     //Establish menu environment and structure
 
     private TTFont menuFont;
-    private TTFont titleFont;
-    private TTFont tempFont;
     //Establish menu font
 
     public MainMenu(Game game) {
@@ -39,33 +36,19 @@ public class MainMenu implements Screen {
     private Drawer drawer;
     //Import standard drawing functions
 
-    private SpriteBatch batch;
-    private Sprite background;
-    //Declare background image sprite and render-batch in which to put it
-
     @Override
     public void show() {
         drawer = new Drawer(game);
-
-        batch = new SpriteBatch();
-        //Initialise sprite-batch
 
         stage = new Stage();
         table = new Table();
         //Initialise stage and button-table
 
-        titleFont = new TTFont(Gdx.files.internal("font/earthorbiterxtrabold.ttf"), 120, 2, Color.BLACK, false);
-        menuFont = new TTFont(Gdx.files.internal("font/enterthegrid.ttf"), 36, 2, Color.BLACK, false);
-        tempFont = new TTFont(Gdx.files.internal("font/earthorbiter.ttf"), 24, 2, Color.BLACK, false);
+        menuFont = new TTFont(Gdx.files.internal("font/testfontbignoodle.ttf"), 36);
         //Initialise menu font
 
         Gdx.input.setInputProcessor(stage);
         //Set the stage up to accept user inputs
-
-        background = new Sprite(new Texture("image/MenuBG.png"));
-        background.setSize(background.getWidth(), background.getHeight());
-        background.setCenter(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
-        //Create logo sprite and re-size/re-position it to fit into game window
 
         table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         //Fill the screen with the table
@@ -73,7 +56,7 @@ public class MainMenu implements Screen {
 
         TextButton.TextButtonStyle menuButtonStyle = new TextButton.TextButtonStyle();
         menuButtonStyle.font = menuFont.font();
-        menuButtonStyle.fontColor = Color.WHITE;
+        menuButtonStyle.fontColor = Color.BLACK;
         menuButtonStyle.pressedOffsetX = 1;
         menuButtonStyle.pressedOffsetY = -1;
         //Set up the format for the buttons on the menu
@@ -90,8 +73,8 @@ public class MainMenu implements Screen {
         //Initialise menu buttons using defined style
 
         //ADD TITLE BAR
-        drawer.addTableRow(table, new Label("Sabbaticoup", new Label.LabelStyle(titleFont.font(), Color.WHITE)), 0, 0, 0, 0);
-        drawer.addTableRow(table, new Label("(Title TBC)", new Label.LabelStyle(tempFont.font(), Color.WHITE)), 0, 0, 50, 0);
+        menuFont.setSize(72);
+        drawer.addTableRow(table, new Label("Duck-Related Game with a Half-Arsed Menu", new Label.LabelStyle(menuFont.font(), Color.BLACK)), 0, 0, 30, 0);
 
         //ADD BUTTONS
         for (int i = 0; i < buttons.length; i++) {
@@ -110,10 +93,6 @@ public class MainMenu implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         //OpenGL nonsense
         //First instruction sets background colour
-
-        batch.begin();
-        background.draw(batch);
-        batch.end();
 
         stage.act(delta);
         stage.draw();

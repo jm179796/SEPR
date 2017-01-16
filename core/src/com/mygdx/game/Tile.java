@@ -8,10 +8,16 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Timer;
 
 public class Tile extends Button {
 
+  private final int tooltipWidth;
+  private final int tooltipHeight;
+  private final int tooltipCursorSpace;
+  private final int tooltipTextSpace;
+  private final Color tooltipFillColor;
+  private final Color tooltipLineColor;
+  private final TTFont tooltipFont;
   /**
      * Holds game-state
      */
@@ -35,7 +41,7 @@ public class Tile extends Button {
   /**
    * A modifier influencing how much ore is produced.
    */
-  private boolean landmark;
+  private Boolean Landmark;
   /**
    * The player that owns the tile, if it has one.
    */
@@ -48,64 +54,67 @@ public class Tile extends Button {
    * Object holding executable method that can be assigned to the tile
    */
   private Runnable runnable;
-  
   private Drawer drawer;
-
-  private final int tooltipWidth;
-  private final int tooltipHeight;
-  private final int tooltipCursorSpace;
-  private final int tooltipTextSpace;
-
-  private final Color tooltipFillColor;
-  private final Color tooltipLineColor;
-
-  private final TTFont tooltipFont;
-
-  private boolean tooltipActive;
-
+  private boolean mouseOver;
+  private boolean acquire = false;
+  private int xCor;
+  private int yCor;
   /**
    * The constructor for the object
-   //* @param TileID The ID of the generated tile
-   * @param EnergyCount The multiplier for the production of energy
-   * @param OreCount The multiplier for the production of ore
-   * @param landmark A boolean to signify if the tile is to be a landmark or not
+   //* @param TileID The ID of the generated Tile.
+   * @param EnergyCount The multiplier for the production of energy.
+   * @param OreCount The multiplier for the production of ore.
+   * @param Landmark A boolean to signify if the tile is to be a landmark or not.
    * @param runnable An object encapsulating a method that can be executed when the tile is clicked on
    */
-  public Tile(Game game, int ID, int EnergyCount, int OreCount, int FoodCount, boolean landmark, final Runnable runnable){
-      super(new ButtonStyle());
+  public Tile(Game game, int ID, int xCor, int yCor, int EnergyCount, int OreCount, int FoodCount, boolean Landmark, final Runnable runnable){
+    super(new ButtonStyle());
 
-      this.game = game;
+    this.game = game;
 
-      this.drawer = new Drawer(this.game);
+    this.drawer = new Drawer(this.game);
 
       this.ID = ID;
 
-      tooltipWidth = 100;
-      tooltipHeight = 50;
-      tooltipCursorSpace = 3;
-        tooltipTextSpace = 3;
+    tooltipWidth = 100;
+    tooltipHeight = 50;
+    tooltipCursorSpace = 3;
+      tooltipTextSpace = 3;
 
-      tooltipFillColor = Color.GRAY;
-      tooltipLineColor = Color.BLACK;
+    tooltipFillColor = Color.GRAY;
+    tooltipLineColor = Color.BLACK;
 
-      tooltipFont = new TTFont(Gdx.files.internal("font/testfontbignoodle.ttf"), 24);
+    tooltipFont = new TTFont(Gdx.files.internal("font/testfontbignoodle.ttf"), 24);
 
-      tooltipActive = false;
+    mouseOver = false;
+    this.xCor = xCor;
+    this.yCor = yCor;
+    this.EnergyCount = EnergyCount;
+    this.FoodCount = FoodCount;
+    this.OreCount = OreCount;
+    this.Landmark = Landmark;
 
-      this.EnergyCount = EnergyCount;
-      this.FoodCount = FoodCount;
-      this.OreCount = OreCount;
+	this.runnable = runnable;
 
-      this.landmark = landmark;
+	addListener(new ChangeListener() {
+        @Override
+        public void changed(ChangeEvent event, Actor actor) {
+            runnable.run();
+        }
+    });
 
-      this.runnable = runnable;
+    addListener(new ClickListener() {
+        @Override
+        public void enter(InputEvent event, float x, float y, int pointer, Actor actor) {
+          mouseOver = true;
+        }
 
-      addListener(new ChangeListener() {
-          @Override
-          public void changed(ChangeEvent event, Actor actor) {
-              runnable.run();
-          }
-      });
+        @Override
+        public void exit(InputEvent event, float x, float y, int pointer, Actor actor) {
+          mouseOver = false;
+        }
+    });
+  }
 
   /**
    * Calculates how many resources are produced based on the amount of roboticons present and adds them to the player's resource count.
@@ -127,49 +136,68 @@ public class Tile extends Button {
     return Player;
   }
 
-      addListener(new ClickListener() {
-          Boolean mouseOver = false;
+  /**
+   * Changes the owner of the tile to the one specified
+   * @param Owner The new owner.
+   */
+  public void setOwner( Player Owner) {
+      this.Owner = Owner;
+  }
 
-          @Override
-          public void enter(InputEvent event, float x, float y, int pointer, Actor actor) {
-            mouseOver = true;
+  /**
+   * Setter for the ore count of the tile.
+   * @param Count What the count is to be changed to.
+   */
+  public void changeOreCount(int Count){
+    this.OreCount = Count;
+  }
 
+  /**
+   * Setter for the ore count of the tile.
+   * @param Count What the count is to be changed to.
+   */
+  public void changeEnergyCount(int Count){
+    this.EnergyCount = Count;
+  }
+  /**
+   * Adds a roboticon to the roboticon list.
+   * @param Roboticon The roboticon to be added to the list.
+   */
+  public void assignRoboticon( Roboticon Roboticon) {
+      roboticonStored = Roboticon;
+  }
 
-            Timer timer = new Timer();
-
-            timer.scheduleTask(new Timer.Task() {
-              @Override
-              public void run() {
-                if (mouseOver == true) {
-                  tooltipActive = true;
-                }
-              }
-            }, (float) 0.5);
-
-            timer.start();
-          }
-
-          @Override
-          public void exit(InputEvent event, float x, float y, int pointer, Actor actor) {
-            mouseOver = false;
-
-            tooltipActive = false;
-          }
-      });
+  /**
+   * Removes the first instance of the roboticon from the list.
+   * @param Roboticon The roboticon to be removed.
+   */
+  public void unassignRoboticon( Roboticon Roboticon) {
+      roboticonStored = null;
+  }
+  
+  /**
+   * Returns the tile's associated function
+   */
+  public Runnable getFunction() {
+        return runnable;
     }
 
+  /**
+   * Runs the tile's associated function
+   */
+  public void runFunction() {
+        runnable.run();
+    }
 
   public void toggleAcquire(){
     if(this.acquire){
       this.acquire = false;
 
-    /**
-     * Changes the owner of the tile to the one specified
-     * @param Owner The new owner.
-     */
-    public void setOwner( Player Owner) {
-        this.Owner = Owner;
     }
+    else{
+      this.acquire = true;
+    }
+  }
 
 
     public void drawTooltip() {
@@ -177,66 +205,14 @@ public class Tile extends Button {
         drawer.borderedRectangle(tooltipFillColor, tooltipLineColor, Gdx.input.getX() - tooltipWidth - tooltipCursorSpace, Gdx.input.getY() - tooltipHeight - tooltipCursorSpace, tooltipWidth, tooltipHeight);
         drawer.text("Tile " + this.ID, tooltipFont, Gdx.input.getX() - tooltipWidth - tooltipCursorSpace + tooltipTextSpace, Gdx.input.getY() - tooltipHeight - tooltipCursorSpace + tooltipTextSpace);
       }
-
-    /**
-     * Setter for the ore count of the tile.
-     * @param Count What the count is to be changed to.
-     */
-    public void changeOreCount(int Count){
-      this.OreCount = Count;
     }
-
-    /**
-     * Setter for the energy count of the tile.
-     * @param Count What the count is to be changed to.
-     */
-    public void changeEnergyCount(int Count){
-      this.EnergyCount = Count;
-    }
-    /**
-     * Adds a roboticon to the roboticon list.
-     * @param Roboticon The roboticon to be added to the list.
-     */
-    public void assignRoboticon( Roboticon Roboticon) {
-        roboticonStored = Roboticon;
-    }
-
-    /**
-     * Removes the first instance of the roboticon from the list.
-     * @param Roboticon The roboticon to be removed.
-     */
-    public void unassignRoboticon( Roboticon Roboticon) {
-        roboticonStored = null;
-    }
-
-    /**
-     * Returns the tile's associated function
-     */
-    public Runnable getFunction() {
-          return runnable;
-      }
-
-    /**
-     * Runs the tile's associated function
-     */
-    public void runFunction() {
-          runnable.run();
-      }
-
-      public void drawTooltip() {
-        if (tooltipActive == true) {
-          if (Gdx.input.getY() < tooltipHeight) {
-            drawer.borderedRectangle(tooltipFillColor, tooltipLineColor, Gdx.input.getX() - tooltipWidth - tooltipCursorSpace, Gdx.input.getY() + tooltipCursorSpace, tooltipWidth, tooltipHeight);
-            drawer.text("Tile " + this.ID, tooltipFont, Gdx.input.getX() - tooltipWidth - tooltipCursorSpace + tooltipTextSpace, Gdx.input.getY() + tooltipCursorSpace + tooltipTextSpace);
-          } else {
-            drawer.borderedRectangle(tooltipFillColor, tooltipLineColor, Gdx.input.getX() - tooltipWidth - tooltipCursorSpace, Gdx.input.getY() - tooltipHeight - tooltipCursorSpace, tooltipWidth, tooltipHeight);
-            drawer.text("Tile " + this.ID, tooltipFont, Gdx.input.getX() - tooltipWidth - tooltipCursorSpace + tooltipTextSpace, Gdx.input.getY() - tooltipHeight - tooltipCursorSpace + tooltipTextSpace);
-          }
-        }
-      }
-
-    public int ID() {
-      return this.ID;
+  public void confirmAcquire() {
+    if (acquire) {
+      drawer.filledRectangle(Color.BLACK, xCor, yCor, 128, 128);
+      drawer.text("Acquire this tile?", tooltipFont, xCor, yCor + 64);
     }
   }
-
+    public int ID() {
+        return this.ID;
+    }
+}
