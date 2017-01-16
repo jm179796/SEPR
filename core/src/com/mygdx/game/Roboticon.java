@@ -114,7 +114,7 @@ public class Roboticon {
      * @return Modifiers Array to return the modifier for resource production, stored [Ore, Energy, Food]
      */
     public Integer[] productionModifier() {
-        Integer Modifiers[] = {1, 1, 1};
+        Integer[] Modifiers = {1, 1, 1};
         Integer Max = 5;
         Integer Min = 1;
         Random rand = new Random();

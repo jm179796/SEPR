@@ -139,18 +139,20 @@ public class Tile extends Button {
 
     /**
      * Calculates how many resources are produced based on the amount of roboticons present and adds them to the player.
-     * @param Player The player that is producing the resources.
+     * @param player The player that is producing the resources.
      * @return Player The player object after it's resource values have  been modified.
      */
-    public Player Produce(Player Player) {
+    public Player Produce(Player player) {
         Integer[] modifiers = this.roboticonStored.productionModifier();
         Integer OreProduce = modifiers[0] * this.OreCount;
-        Player.varyResource("Ore", OreProduce);
-        this.OreCount -= OreProduce;
+        player.varyResource("Ore", OreProduce);
+
         Integer EnergyProduce = modifiers[1] * this.EnergyCount;
-        Player.varyResource("Energy", EnergyProduce);
-        this.EnergyCount -= EnergyProduce;
-        return Player;
+        player.varyResource("Energy", EnergyProduce);
+
+        Integer FoodProduce = modifiers[2] * this.FoodCount;
+        player.varyResource("Food", FoodProduce);
+        return player;
     }
 
     /**
