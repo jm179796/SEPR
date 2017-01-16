@@ -115,7 +115,7 @@ public class Tile extends Button {
             public void enter(InputEvent event, float x, float y, int pointer, Actor actor) {
                 mouseOver = true;
             }
-        }
+        });
     }
 
     /**
@@ -128,7 +128,7 @@ public class Tile extends Button {
     public Player Produce(Player Player) {
         Integer[] modifiers = this.roboticonStored.productionModifier();
 
-        Integer OreProduce = modifiers[0] * this.OreCount
+        Integer OreProduce = modifiers[0] * this.OreCount;
         Player.varyResource("Ore", OreProduce);
 
         Integer EnergyProduce = modifiers[1] * this.EnergyCount;
@@ -141,20 +141,16 @@ public class Tile extends Button {
     }
 
     Timer timer = new Timer();
-
-            timer.scheduleTask(new Timer.Task()
-
-    {
+    timer.scheduleTask(new Timer.Task(){
         @Override
-        public void run () {
+        public void run(){
         if (mouseOver == true) {
             tooltipActive = true;
         }
     }
     },(float)0.5);
 
-            timer.start();
-}
+            timer.start()
 
     @Override
     public void exit(InputEvent event, float x, float y, int pointer, Actor actor) {
@@ -162,8 +158,6 @@ public class Tile extends Button {
 
         tooltipActive = false;
     }
-});
-        }
 
 public void toggleAcquire(){
         if(this.acquire){
@@ -212,8 +206,8 @@ public void changeEnergyCount(int Count){
  * Adds a roboticon to the roboticon list.
  * @param Roboticon The roboticon to be added to the list.
  */
-public void assignRoboticon(Roboticon Roboticon){
-        roboticonStored=Roboticon;
+public void assignRoboticon(Roboticon robot){
+        this.roboticonStored=robot;
         }
 
 /**
