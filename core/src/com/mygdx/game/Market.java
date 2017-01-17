@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.utils.Align;
 
 import java.util.Random;
 
@@ -77,14 +76,14 @@ public class Market extends Table {
      */
     private Integer RoboticonBuyPrice = 0;
 
-    private TextButton buyOre;
-    private TextButton buyFood;
-    private TextButton buyEnergy;
-    private TextButton buyRoboticon;
+    public TextButton buyOre;
+    public TextButton buyFood;
+    public TextButton buyEnergy;
+    public TextButton buyRoboticon;
 
-    private TextButton sellOre;
-    private TextButton sellFood;
-    private TextButton sellEnergy;
+    public TextButton sellOre;
+    public TextButton sellFood;
+    public TextButton sellEnergy;
 
     private Label oreStockLabel;
     private Label foodStockLabel;
@@ -117,6 +116,8 @@ public class Market extends Table {
         buyFood = new TextButton(getFoodBuyPrice().toString(), tableButtonStyle);
         buyEnergy = new TextButton(getEnergyBuyPrice().toString(), tableButtonStyle);
         buyRoboticon = new TextButton(getRoboticonBuyPrice().toString(), tableButtonStyle);
+
+
 
         sellOre = new TextButton(getOreSellPrice().toString(), tableButtonStyle);
         sellFood = new TextButton(getFoodSellPrice().toString(), tableButtonStyle);

@@ -57,6 +57,7 @@ public class GameScreen implements Screen{
     private Label energyCounter;
     private Label oreCounter;
     private Label roboticonCounter;
+    private Label moneyCounter;
     private boolean tileAcquired;
 
     private Label selectedTileLabel;
@@ -239,6 +240,7 @@ public class GameScreen implements Screen{
         energyCounter = new Label(players[currentPlayer].getEnergyCount().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
         oreCounter = new Label(players[currentPlayer].getOreCount().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
         roboticonCounter = new Label("0", new Label.LabelStyle(gameFont.font(), Color.WHITE));
+        moneyCounter = new Label(players[currentPlayer].getMoney().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
         drawer.addTableRow(resourceCounters, new LabelledElement("Food", gameFont, Color.WHITE, foodCounter, 125));
         drawer.addTableRow(resourceCounters, new LabelledElement("Energy", gameFont, Color.WHITE, energyCounter, 125));
         drawer.addTableRow(resourceCounters, new LabelledElement("Ore", gameFont, Color.WHITE, oreCounter, 125));
@@ -307,6 +309,96 @@ public class GameScreen implements Screen{
         tableRight.add(deploy).padBottom(15);
 
         market = new Market(game);
+        market.buyOre.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if(phase == 2 ) {
+
+                    try {
+                        market.buy("ore", 1, players[currentPlayer]);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        });
+        market.buyFood.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if(phase == 2 ) {
+
+                    try {
+                        market.buy("food", 1, players[currentPlayer]);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        });
+        market.buyEnergy.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if(phase == 2 ) {
+
+                    try {
+                        market.buy("energy", 1, players[currentPlayer]);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        });
+
+        market.sellEnergy.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if(phase == 2 ) {
+
+                    try {
+                        market.sell("energy", 1, players[currentPlayer]);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        });
+
+        market.sellOre.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if(phase == 2 ) {
+
+                    try {
+                        market.sell("ore", 1, players[currentPlayer]);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        });
+
+        market.sellFood.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if(phase == 2 ) {
+
+                    try {
+                        market.sell("food", 1, players[currentPlayer]);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        });
+
+
+
         drawer.addTableRow(tableRight, market, 2);
 
 
@@ -431,8 +523,14 @@ public class GameScreen implements Screen{
             }
         }
         if(phase == 2){
-            phase = 3;
-            timer.setTime(2,0);
+            if(currentPlayer == 1){
+                currentPlayer = 2;
+            }
+            else{
+                phase = 3;
+                timer.setTime(2,0);
+            }
+
         }
         if(phase == 3){
             phase = 4;
