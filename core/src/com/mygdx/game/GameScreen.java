@@ -12,9 +12,14 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
+
+import java.util.List;
 
 public class GameScreen implements Screen{
 
@@ -451,7 +456,7 @@ public class GameScreen implements Screen{
             public void changed(ChangeEvent event, Actor actor) {
                 if (phase == 1) {
 
-                    if (selectedTile.isOwned() == false) {
+                    if (selectedTile.isOwned() == false){
 
                         players[currentPlayer].assignTile(selectedTile);
                         selectedTile.setOwner(players[currentPlayer]);
@@ -747,12 +752,27 @@ public class GameScreen implements Screen{
             timer.setTime(0,99999);
         }
         else if(phase == 4){
+            List<Tile> tileList = players[1].getTileList();
+            for (Tile Tile : tileList){
+                players[1] = Tile.Produce(players[1]);
+            }
+            List<Tile> tileList2 = players[2].getTileList();
+            for (Tile Tile : tileList2){
+                players[2] = Tile.Produce(players[2]);
+            }
+
             phase = 5;
             timer.setTime(0,99999);
         }
         else if(phase == 5){
-            phase = 1;
-            timer.setTime(0,99999);
+            if (currentPlayer == 1) {
+                currentPlayer = 2;
+            }
+            else{
+                phase = 1;
+                timer.setTime(0,99999);
+            }
+
         }
 
         phaseLabel.setText("PHASE " + phase);
