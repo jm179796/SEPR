@@ -48,25 +48,50 @@ public class Tile extends Button {
      * Object holding executable method that can be assigned to the tile
      */
     private Runnable runnable;
-
+    /**
+     * Object defining QOL drawing functions for rectangles and on-screen tables
+     * Used in this class to render tooltip regions
+     */
     private Drawer drawer;
-
+    /**
+     * Defines width of the tile's tooltip
+     */
     private final int tooltipWidth;
+    /**
+     * Defines height of the tile's tooltip
+     */
     private final int tooltipHeight;
+    /**
+     * Defines distance (in pixels) from cursor point to the lower-right (or upper-right) corner of the tile's tooltip
+     * (on both axes)
+     */
     private final int tooltipCursorSpace;
+    /**
+     * Defines internal padding within the tile's tooltip (in pixels)
+     */
     private final int tooltipTextSpace;
-
+    /**
+     * Defines the fill-colour for the tile's tooltip
+     */
     private final Color tooltipFillColor;
+    /**
+     * Defines the line-colour for the tile's tooltip
+     */
     private final Color tooltipLineColor;
-
+    /**
+     * Defines the font of the text inside the tile's tooltip
+     */
     private final TTFont tooltipFont;
-
+    /**
+     * Boolean variable that's true whenever the tile's tooltip is visible and false otherwise
+     */
     private boolean tooltipActive;
 
     /**
      * The constructor for the object
-     * //* @param TileID The ID of the generated tile
      *
+     * @param game Variable storing the game's state
+     * @param ID   The tile's distictive ID value
      * @param EnergyCount The multiplier for the production of energy
      * @param OreCount    The multiplier for the production of ore
      * @param landmark    A boolean to signify if the tile is to be a landmark or not
@@ -145,7 +170,7 @@ public class Tile extends Button {
 =======
      * @param player The player that is producing the resources.
 
-     * @return Player The player object after it's resource values have  been modified.
+     * @return Player The player object after it's resource values have been modified.
      */
     public Player Produce(Player player) {
         Integer[] modifiers = this.roboticonStored.productionModifier();
@@ -230,6 +255,10 @@ public class Tile extends Button {
         runnable.run();
     }
 
+    /**
+     * Draws the tile's tooltip on the game's stage
+     * This must be called during the construction of each frame in which the tooltip is to be shown
+     */
     public void drawTooltip() {
         if (tooltipActive == true) {
             if (Gdx.input.getY() < tooltipHeight) {
@@ -242,10 +271,20 @@ public class Tile extends Button {
         }
     }
 
+    /**
+     * Returns the tile's associated ID value
+     *
+     * @return Integer The tile's associated ID value
+     */
     public int ID() {
         return this.ID;
     }
 
+    /**
+     * Returns a boolean value that's true if/when the tile is owned by a player and false otherwise
+     *
+     * @return Boolean The tile's ownership state
+     */
     public boolean isOwned() {
         if(Owner.getPlayerID() != 0 ){
             return false;
