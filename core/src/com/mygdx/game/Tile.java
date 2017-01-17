@@ -248,10 +248,10 @@ public class Tile extends Button {
 
     public boolean isOwned() {
         if(Owner.getPlayerID() != 0 ){
-            return false;
+            return true;
         }
         else {
-            return true;
+            return false;
         }
     }
 }

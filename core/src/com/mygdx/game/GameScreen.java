@@ -227,7 +227,7 @@ public class GameScreen implements Screen{
         drawer.addTableRow(tableLeft, endPhase, 0, 0, 15, 0, 2);
 
         gameFont.setSize(36);
-        drawer.addTableRow(tableLeft, new Label("CURRENT PLAYER", new Label.LabelStyle(gameFont.font(), Color.BLACK)), 0, 0, 10, 0, 2);
+        drawer.addTableRow(tableLeft, new Label("CURRENT PLAYER = " + currentPlayer, new Label.LabelStyle(gameFont.font(), Color.BLACK)), 0, 0, 10, 0, 2);
 
         gameFont.setSize(24);
         Table collegeInfo = new Table();
@@ -245,6 +245,7 @@ public class GameScreen implements Screen{
         drawer.addTableRow(resourceCounters, new LabelledElement("Energy", gameFont, Color.WHITE, energyCounter, 125));
         drawer.addTableRow(resourceCounters, new LabelledElement("Ore", gameFont, Color.WHITE, oreCounter, 125));
         drawer.addTableRow(resourceCounters, new LabelledElement("Roboticons", gameFont, Color.WHITE, roboticonCounter, 125));
+        drawer.addTableRow(resourceCounters, new LabelledElement("Money", gameFont, Color.WHITE, moneyCounter, 125));
         tableLeft.add(resourceCounters).size(140, 95);
 
         pause = new TextButton("Pause Game", gameButtonStyle);
@@ -295,6 +296,7 @@ public class GameScreen implements Screen{
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if (phase == 1) {
+
                     if (selectedTile.isOwned() == false) {
 
                         players[currentPlayer].assignTile(selectedTile);
@@ -509,13 +511,16 @@ public class GameScreen implements Screen{
     }
 
     public void nextPhase() {
+
         if(phase == 1){
             if(tileAcquired == true) {
                 tileAcquired = false;
 
                 if (currentPlayer == 1) {
                     currentPlayer = 2;
+
                 } else {
+                    System.out.print("test");
                     phase = 2;
                     timer.setTime(2, 0);
                     currentPlayer = 1;
@@ -534,15 +539,15 @@ public class GameScreen implements Screen{
         }
         if(phase == 3){
             phase = 4;
-            timer.setTime(Integer.MAX_VALUE,0);
+            timer.setTime(0,99999);
         }
         if(phase == 4){
             phase = 5;
-            timer.setTime(Integer.MAX_VALUE,0);
+            timer.setTime(0,99999);
         }
         if(phase == 5){
             phase = 1;
-            timer.setTime(Integer.MAX_VALUE,0);
+            timer.setTime(0,99999);
         }
 
     }
