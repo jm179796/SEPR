@@ -173,15 +173,19 @@ public class Tile extends Button {
      * @return Player The player object after it's resource values have been modified.
      */
     public Player Produce(Player player) {
-        Integer[] modifiers = this.roboticonStored.productionModifier();
-        Integer OreProduce = modifiers[0] * this.OreCount;
-        player.varyResource("Ore", OreProduce);
+        if (roboticonStored != null) {
 
-        Integer EnergyProduce = modifiers[1] * this.EnergyCount;
-        player.varyResource("Energy", EnergyProduce);
 
-        Integer FoodProduce = modifiers[2] * this.FoodCount;
-        player.varyResource("Food", FoodProduce);
+            Integer[] modifiers = this.roboticonStored.productionModifier();
+            Integer OreProduce = modifiers[0] * this.OreCount;
+            player.varyResource("Ore", OreProduce);
+
+            Integer EnergyProduce = modifiers[1] * this.EnergyCount;
+            player.varyResource("Energy", EnergyProduce);
+
+            Integer FoodProduce = modifiers[2] * this.FoodCount;
+            player.varyResource("Food", FoodProduce);
+        }
         return player;
     }
 

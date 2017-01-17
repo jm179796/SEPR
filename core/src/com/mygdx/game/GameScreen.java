@@ -758,11 +758,17 @@ public class GameScreen implements Screen{
         else if(phase == 4){
             List<Tile> tileList = players[1].getTileList();
             for (Tile Tile : tileList){
-                players[1] = Tile.Produce(players[1]);
+                if (tileList.size() > 0){
+                    players[1] = Tile.Produce(players[1]);
+                }
+
             }
             List<Tile> tileList2 = players[2].getTileList();
             for (Tile Tile : tileList2){
-                players[2] = Tile.Produce(players[2]);
+                if(tileList2.size() > 0){
+                    players[2] = Tile.Produce(players[2]);
+                }
+
             }
 
             phase = 5;
