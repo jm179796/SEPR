@@ -357,7 +357,7 @@ public class GameScreen implements Screen{
 
         gameFont.setSize(36);
 
-        drawer.addTableRow(tableLeft, new Label("CURRENT PLAYER = " + currentPlayer, new Label.LabelStyle(gameFont.font(), Color.BLACK)), 0, 0, 10, 0, 2);
+        drawer.addTableRow(tableLeft, new Label("CURRENT PLAYER", new Label.LabelStyle(gameFont.font(), Color.BLACK)), 0, 0, 10, 0, 2);
         //Window-dressing
 
 
