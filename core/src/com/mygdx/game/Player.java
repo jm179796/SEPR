@@ -202,4 +202,7 @@ public class Player {
     public void calculateScore() {
     }
 
+    public College getCollege() {
+        return this.College;
+    }
 }

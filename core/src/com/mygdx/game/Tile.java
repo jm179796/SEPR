@@ -275,6 +275,35 @@ public class Tile extends Button {
         }
     }
 
+    public void drawBorder() {
+        if (isOwned()) {
+            String ownerCollege = Owner.getCollege().getName();
+
+
+            if (ownerCollege == "Derwent") {
+
+            } else if (ownerCollege == "Langwith") {
+
+            } else if (ownerCollege == "Vanburgh") {
+
+            } else if (ownerCollege == "James") {
+
+            } else if (ownerCollege == "Wentworth") {
+
+            } else if (ownerCollege == "Halifax") {
+
+            } else if (ownerCollege == "Alcuin") {
+
+            } else if (ownerCollege == "Goodricke") {
+
+            } else if (ownerCollege == "Constantine") {
+
+            }
+        }
+
+
+    }
+
     /**
      * Returns the tile's associated ID value
      *

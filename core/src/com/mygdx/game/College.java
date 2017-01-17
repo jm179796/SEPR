@@ -55,4 +55,7 @@ public class College {
       this.Owner = Player;
   }
 
+  public String getName() {
+    return this.Name;
+  }
 }
