@@ -44,32 +44,32 @@ public class Market extends Table {
     /**
      * Variable holding ore resource selling price.
      */
-    private Integer OreSellPrice = 0;
+    private Integer OreSellPrice = 14;
 
     /**
      * Variable holding food resource selling price.
      */
-    private Integer FoodSellPrice = 0;
+    private Integer FoodSellPrice = 14;
 
     /**
      * Variable holding energy resource selling price.
      */
-    private Integer EnergySellPrice = 0;
+    private Integer EnergySellPrice = 14;
 
     /**
      * Variable holding ore resource buying price.
      */
-    private Integer OreBuyPrice = 0;
+    private Integer OreBuyPrice = 15;
 
     /**
      * Variable holding food resource buying price.
      */
-    private Integer FoodBuyPrice = 0;
+    private Integer FoodBuyPrice = 15;
 
     /**
      * Variable holding energy resource buying price.
      */
-    private Integer EnergyBuyPrice = 0;
+    private Integer EnergyBuyPrice = 15;
 
     /**
      * Variable holding roboticon buying price.
@@ -98,7 +98,17 @@ public class Market extends Table {
         drawer = new Drawer(this.game);
 
         tableFont = new TTFont(Gdx.files.internal("font/testfontbignoodle.ttf"), 36);
-
+        try {
+            OreBuyPrice = calculateNewCost(OreStock, "buy");
+            FoodBuyPrice = calculateNewCost(FoodStock, "buy");
+            EnergyBuyPrice = calculateNewCost(EnergyStock, "buy");
+            OreSellPrice = calculateNewCost(OreStock, "sell");
+            FoodSellPrice = calculateNewCost(FoodStock, "sell");
+            EnergySellPrice = calculateNewCost(EnergyStock, "sell");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
         constructInterface();
     }
 
@@ -398,6 +408,8 @@ public class Market extends Table {
                     Player.setOreCount(playersOre);
                     OreBuyPrice = calculateNewCost(OreStock, "buy");
                     OreSellPrice = calculateNewCost(OreStock, "sell");
+                    oreStockLabel.setText(getOreStock().toString());
+                    buyOre.setText(getOreBuyPrice().toString());
                 } else {
                     throw new Exception("Insufficient money");
                 }
@@ -416,6 +428,8 @@ public class Market extends Table {
                     Player.setFoodCount(playersFood);
                     FoodBuyPrice = calculateNewCost(FoodStock, "buy");
                     FoodSellPrice = calculateNewCost(FoodStock, "sell");
+                    foodStockLabel.setText(getFoodStock().toString());
+                    buyFood.setText(getFoodBuyPrice().toString());
                 } else {
                     throw new Exception("Insufficient money");
                 }
@@ -435,6 +449,8 @@ public class Market extends Table {
                     Player.setEnergyCount(playersEnergy);
                     EnergyBuyPrice = calculateNewCost(EnergyStock, "buy");
                     EnergySellPrice = calculateNewCost(EnergyStock, "sell");
+                    energyStockLabel.setText(getEnergyStock().toString());
+                    buyEnergy.setText(getEnergyBuyPrice().toString());
                 } else {
                     throw new Exception("Insufficient money");
                 }
@@ -475,13 +491,15 @@ public class Market extends Table {
                 Player.setOreCount(playersOre);
                 OreBuyPrice = calculateNewCost(OreStock, "buy");
                 OreSellPrice = calculateNewCost(OreStock, "sell");
-
+                oreStockLabel.setText(getOreStock().toString());
+                sellOre.setText(getOreSellPrice().toString());
             } else {
                 throw new Exception("Insufficient resources");
             }
         } else if ("food".equals(Stock_Type)) {
             int playersFood = Player.getFoodCount();
             if (playersFood >= Quantity) {
+
                 FoodStock += Quantity;
                 playersMoney += Quantity * FoodSellPrice;
                 Player.setMoney(playersMoney);
@@ -489,7 +507,8 @@ public class Market extends Table {
                 Player.setFoodCount(playersFood);
                 FoodBuyPrice = calculateNewCost(FoodStock, "buy");
                 FoodSellPrice = calculateNewCost(FoodStock, "sell");
-
+                foodStockLabel.setText(getFoodStock().toString());
+                sellFood.setText(getFoodSellPrice().toString());
             } else {
                 throw new Exception("Insufficient resources");
             }
@@ -503,8 +522,8 @@ public class Market extends Table {
                 Player.setEnergyCount(playersEnergy);
                 EnergyBuyPrice = calculateNewCost(EnergyStock, "buy");
                 EnergySellPrice = calculateNewCost(EnergyStock, "sell");
-
-
+                energyStockLabel.setText(getEnergyStock().toString());
+                sellEnergy.setText(getEnergySellPrice().toString());
             } else {
                 throw new Exception("Insufficient resources");
             }

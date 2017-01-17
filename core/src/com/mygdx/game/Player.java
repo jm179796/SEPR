@@ -26,7 +26,7 @@ public class Player {
     /**
      * An integer storing the amount of money a player owns.
      */
-    private Integer Money = 0;
+    private Integer Money = 50;
 
     /**
      * A variable determining if the player is currently active. True means that they are active.

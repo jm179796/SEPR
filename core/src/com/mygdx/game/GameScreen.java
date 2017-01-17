@@ -463,10 +463,11 @@ public class GameScreen implements Screen{
         market.buyOre.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if(phase == 2 ) {
+                if(phase == 5 ) {
 
                     try {
                         players[currentPlayer] = market.buy("ore", 1, players[currentPlayer]);
+                        updateLabels();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -477,10 +478,11 @@ public class GameScreen implements Screen{
         market.buyFood.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if(phase == 2 ) {
+                if(phase == 5 ) {
 
                     try {
                         players[currentPlayer] = market.buy("food", 1, players[currentPlayer]);
+                        updateLabels();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -491,10 +493,11 @@ public class GameScreen implements Screen{
         market.buyEnergy.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if(phase == 2 ) {
+                if(phase == 5 ) {
 
                     try {
                         players[currentPlayer] = market.buy("energy", 1, players[currentPlayer]);
+                        updateLabels();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -506,10 +509,11 @@ public class GameScreen implements Screen{
         market.sellEnergy.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if(phase == 2 ) {
+                if(phase == 5 ) {
 
                     try {
                         players[currentPlayer] = market.sell("energy", 1, players[currentPlayer]);
+                        updateLabels();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -521,10 +525,11 @@ public class GameScreen implements Screen{
         market.sellOre.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if(phase == 2 ) {
+                if(phase == 5 ) {
 
                     try {
                         players[currentPlayer] = market.sell("ore", 1, players[currentPlayer]);
+                        updateLabels();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -536,10 +541,11 @@ public class GameScreen implements Screen{
         market.sellFood.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if(phase == 2 ) {
+                if(phase == 5 ) {
 
                     try {
                         players[currentPlayer] = market.sell("food", 1, players[currentPlayer]);
+                        updateLabels();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -742,5 +748,11 @@ public class GameScreen implements Screen{
             timer.setTime(0,99999);
         }
 
+    }
+    public void updateLabels(){
+        moneyCounter.setText(players[currentPlayer].getMoney().toString());
+        foodCounter.setText(players[currentPlayer].getFoodCount().toString());
+        oreCounter.setText(players[currentPlayer].getOreCount().toString());
+        energyCounter.setText(players[currentPlayer].getEnergyCount().toString());
     }
 }
