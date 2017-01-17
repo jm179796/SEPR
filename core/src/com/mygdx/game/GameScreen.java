@@ -315,7 +315,7 @@ public class GameScreen implements Screen{
                 if(phase == 2 ) {
 
                     try {
-                        market.buy("ore", 1, players[currentPlayer]);
+                        players[currentPlayer] = market.buy("ore", 1, players[currentPlayer]);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -329,7 +329,7 @@ public class GameScreen implements Screen{
                 if(phase == 2 ) {
 
                     try {
-                        market.buy("food", 1, players[currentPlayer]);
+                        players[currentPlayer] = market.buy("food", 1, players[currentPlayer]);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -343,7 +343,7 @@ public class GameScreen implements Screen{
                 if(phase == 2 ) {
 
                     try {
-                        market.buy("energy", 1, players[currentPlayer]);
+                        players[currentPlayer] = market.buy("energy", 1, players[currentPlayer]);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -358,7 +358,7 @@ public class GameScreen implements Screen{
                 if(phase == 2 ) {
 
                     try {
-                        market.sell("energy", 1, players[currentPlayer]);
+                        players[currentPlayer] = market.sell("energy", 1, players[currentPlayer]);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -373,7 +373,7 @@ public class GameScreen implements Screen{
                 if(phase == 2 ) {
 
                     try {
-                        market.sell("ore", 1, players[currentPlayer]);
+                        players[currentPlayer] = market.sell("ore", 1, players[currentPlayer]);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -388,7 +388,7 @@ public class GameScreen implements Screen{
                 if(phase == 2 ) {
 
                     try {
-                        market.sell("food", 1, players[currentPlayer]);
+                        players[currentPlayer] = market.sell("food", 1, players[currentPlayer]);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

@@ -384,7 +384,7 @@ public class Market extends Table {
      * @param Quantity   The amount of resources that Player wants to buy.
      * @param Player     A Player object.
      */
-    public void buy(String Stock_Type, Integer Quantity, Player Player) throws Exception {
+    public Player buy(String Stock_Type, Integer Quantity, Player Player) throws Exception {
         int playersMoney = Player.getMoney();
         if ("ore".equals(Stock_Type)) {
             if (Quantity <= OreStock) {
@@ -444,6 +444,7 @@ public class Market extends Table {
         } else {
             throw new Exception("Wrong Stock_Type passed");
         }
+        return Player;
 
     }
 
@@ -462,7 +463,7 @@ public class Market extends Table {
      * @param Quantity   The amount of resources that Player wants to buy.
      * @param Player     A Player object.
      */
-    public void sell(String Stock_Type, int Quantity, Player Player) throws Exception {
+    public Player sell(String Stock_Type, int Quantity, Player Player) throws Exception {
         int playersMoney = Player.getMoney();
         if ("ore".equals(Stock_Type)) {
             int playersOre = Player.getOreCount();
@@ -509,6 +510,7 @@ public class Market extends Table {
             }
 
         }
+        return Player;
 
     }
 
