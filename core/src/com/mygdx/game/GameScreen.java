@@ -213,6 +213,10 @@ public class GameScreen implements Screen{
         Player Player2 = new Player(2);
         players[1] = Player1;
         players[2] = Player2;
+        College Goodricke = new College("Goodricke", "The best college");
+        College Derwent = new College("Derwent", "It has asbestos");
+        players[1].assignCollege(Goodricke);
+        players[2].assignCollege(Derwent);
         //Import current game-state and establish player data
     }
 
