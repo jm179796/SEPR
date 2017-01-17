@@ -114,9 +114,11 @@ public class GameScreen implements Screen{
      */
     private Label roboticonCounter;
 
+    private Label moneyCounter;
     /**
      * Defines whether or not a tile has been acquired in the current phase of the game
      */
+
     private boolean tileAcquired;
 
     /**
@@ -352,8 +354,10 @@ public class GameScreen implements Screen{
         //Prepare and add the "End Phase" button to the table
 
         gameFont.setSize(36);
-        drawer.addTableRow(tableLeft, new Label("CURRENT PLAYER", new Label.LabelStyle(gameFont.font(), Color.BLACK)), 0, 0, 10, 0, 2);
+
+        drawer.addTableRow(tableLeft, new Label("CURRENT PLAYER = " + currentPlayer, new Label.LabelStyle(gameFont.font(), Color.BLACK)), 0, 0, 10, 0, 2);
         //Window-dressing
+
 
         gameFont.setSize(24);
         Table collegeInfo = new Table();
@@ -367,10 +371,12 @@ public class GameScreen implements Screen{
         energyCounter = new Label(players[currentPlayer].getEnergyCount().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
         oreCounter = new Label(players[currentPlayer].getOreCount().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
         roboticonCounter = new Label("0", new Label.LabelStyle(gameFont.font(), Color.WHITE));
+        moneyCounter = new Label(players[currentPlayer].getMoney().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
         drawer.addTableRow(resourceCounters, new LabelledElement("Food", gameFont, Color.WHITE, foodCounter, 125));
         drawer.addTableRow(resourceCounters, new LabelledElement("Energy", gameFont, Color.WHITE, energyCounter, 125));
         drawer.addTableRow(resourceCounters, new LabelledElement("Ore", gameFont, Color.WHITE, oreCounter, 125));
         drawer.addTableRow(resourceCounters, new LabelledElement("Roboticons", gameFont, Color.WHITE, roboticonCounter, 125));
+        drawer.addTableRow(resourceCounters, new LabelledElement("Money", gameFont, Color.WHITE, moneyCounter, 125));
         tableLeft.add(resourceCounters).size(140, 95);
         //Add resource-counters to the table
         //These will show the current resource stocks for the current player
@@ -435,6 +441,7 @@ public class GameScreen implements Screen{
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if (phase == 1) {
+
                     if (selectedTile.isOwned() == false) {
 
                         players[currentPlayer].assignTile(selectedTile);
@@ -451,6 +458,96 @@ public class GameScreen implements Screen{
         //Add tile claim/deploy buttons to table
 
         market = new Market(game);
+        market.buyOre.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if(phase == 2 ) {
+
+                    try {
+                        players[currentPlayer] = market.buy("ore", 1, players[currentPlayer]);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        });
+        market.buyFood.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if(phase == 2 ) {
+
+                    try {
+                        players[currentPlayer] = market.buy("food", 1, players[currentPlayer]);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        });
+        market.buyEnergy.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if(phase == 2 ) {
+
+                    try {
+                        players[currentPlayer] = market.buy("energy", 1, players[currentPlayer]);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        });
+
+        market.sellEnergy.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if(phase == 2 ) {
+
+                    try {
+                        players[currentPlayer] = market.sell("energy", 1, players[currentPlayer]);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        });
+
+        market.sellOre.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if(phase == 2 ) {
+
+                    try {
+                        players[currentPlayer] = market.sell("ore", 1, players[currentPlayer]);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        });
+
+        market.sellFood.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if(phase == 2 ) {
+
+                    try {
+                        players[currentPlayer] = market.sell("food", 1, players[currentPlayer]);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        });
+
+
+
         drawer.addTableRow(tableRight, market, 2);
         //Establish market and add market interface to right-hand table
 
@@ -604,13 +701,16 @@ public class GameScreen implements Screen{
      * Advances the game's progress upon call
      */
     public void nextPhase() {
+
         if(phase == 1){
             if(tileAcquired == true) {
                 tileAcquired = false;
 
                 if (currentPlayer == 1) {
                     currentPlayer = 2;
+
                 } else {
+                    System.out.print("test");
                     phase = 2;
                     timer.setTime(2, 0);
                     currentPlayer = 1;
@@ -618,20 +718,26 @@ public class GameScreen implements Screen{
             }
         }
         if(phase == 2){
-            phase = 3;
-            timer.setTime(2,0);
+            if(currentPlayer == 1){
+                currentPlayer = 2;
+            }
+            else{
+                phase = 3;
+                timer.setTime(2,0);
+            }
+
         }
         if(phase == 3){
             phase = 4;
-            timer.setTime(Integer.MAX_VALUE,0);
+            timer.setTime(0,99999);
         }
         if(phase == 4){
             phase = 5;
-            timer.setTime(Integer.MAX_VALUE,0);
+            timer.setTime(0,99999);
         }
         if(phase == 5){
             phase = 1;
-            timer.setTime(Integer.MAX_VALUE,0);
+            timer.setTime(0,99999);
         }
 
     }
