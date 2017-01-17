@@ -382,12 +382,12 @@ public class GameScreen implements Screen{
         oreCounter = new Label(players[currentPlayer].getOreCount().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
         roboticonCounter = new Label("0", new Label.LabelStyle(gameFont.font(), Color.WHITE));
         moneyCounter = new Label(players[currentPlayer].getMoney().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
-        drawer.addTableRow(resourceCounters, new LabelledElement("Food", gameFont, Color.WHITE, foodCounter, 100, 25));
-        drawer.addTableRow(resourceCounters, new LabelledElement("Energy", gameFont, Color.WHITE, energyCounter, 100, 25));
-        drawer.addTableRow(resourceCounters, new LabelledElement("Ore", gameFont, Color.WHITE, oreCounter, 100, 25));
-        drawer.addTableRow(resourceCounters, new LabelledElement("Roboticons", gameFont, Color.WHITE, roboticonCounter, 100, 25));
-        drawer.addTableRow(resourceCounters, new LabelledElement("Money", gameFont, Color.WHITE, moneyCounter, 100, 25));
-        tableLeft.add(resourceCounters).size(140, 120);
+        drawer.addTableRow(resourceCounters, new LabelledElement("Food", gameFont, Color.WHITE, foodCounter, 120, 40));
+        drawer.addTableRow(resourceCounters, new LabelledElement("Energy", gameFont, Color.WHITE, energyCounter, 120, 40));
+        drawer.addTableRow(resourceCounters, new LabelledElement("Ore", gameFont, Color.WHITE, oreCounter, 120, 40));
+        drawer.addTableRow(resourceCounters, new LabelledElement("Roboticons", gameFont, Color.WHITE, roboticonCounter, 120, 40));
+        drawer.addTableRow(resourceCounters, new LabelledElement("Money", gameFont, Color.WHITE, moneyCounter, 120, 40));
+        tableLeft.add(resourceCounters).size(160, 120);
         //Add resource-counters to the table
         //These will show the current resource stocks for the current player
 
@@ -405,7 +405,7 @@ public class GameScreen implements Screen{
                 //Mark that the game has been paused
             }
         });
-        drawer.addTableRow(tableLeft, pause, 138, 0, 0, 0, 2);
+        drawer.addTableRow(tableLeft, pause, 113, 0, 0, 0, 2);
         //Prepare and add the pause button to the table
 
         stage.addActor(tableLeft);
@@ -445,7 +445,6 @@ public class GameScreen implements Screen{
         claim = new TextButton("Claim", gameButtonStyle);
         deploy = new TextButton("Deploy", gameButtonStyle);
         //Prepare buttons to claim the currently-selected tile and to deploy a roboticon onto it
-
 
         claim.addListener(new ChangeListener() {
             @Override
@@ -756,6 +755,7 @@ public class GameScreen implements Screen{
             timer.setTime(0,99999);
         }
 
+        phaseLabel.setText("PHASE " + phase);
     }
     public void updateLabels(){
         moneyCounter.setText(players[currentPlayer].getMoney().toString());
