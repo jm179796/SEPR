@@ -86,6 +86,14 @@ public class Tile extends Button {
      * Boolean variable that's true whenever the tile's tooltip is visible and false otherwise
      */
     private boolean tooltipActive;
+    /**
+     * Holds the colour of the border to be drawn over the tile when it is claimed
+     */
+    private Color tileBorderColor;
+    /**
+     * Determines the thickness of the tile's border (in pixels)
+     */
+    private int tileBorderThickness;
 
     /**
      * The constructor for the object
@@ -117,6 +125,9 @@ public class Tile extends Button {
         tooltipFont = new TTFont(Gdx.files.internal("font/testfontbignoodle.ttf"), 24);
 
         tooltipActive = false;
+
+        tileBorderColor = Color.BLACK;
+        tileBorderThickness = 3;
 
         this.EnergyCount = EnergyCount;
         this.FoodCount = FoodCount;
@@ -205,6 +216,28 @@ public class Tile extends Button {
      */
     public void setOwner(Player Owner) {
         this.Owner = Owner;
+
+        String ownerCollege = Owner.getCollege().getName().toLowerCase();
+
+        if (ownerCollege == "derwent") {
+            tileBorderColor = Color.BLUE;
+        } else if (ownerCollege == "langwith") {
+            tileBorderColor = Color.CHARTREUSE;
+        } else if (ownerCollege == "vanburgh") {
+            tileBorderColor = Color.TEAL;
+        } else if (ownerCollege == "james") {
+            tileBorderColor = Color.CYAN;
+        } else if (ownerCollege == "wentworth") {
+            tileBorderColor = Color.MAROON;
+        } else if (ownerCollege == "halifax") {
+            tileBorderColor = Color.YELLOW;
+        } else if (ownerCollege == "alcuin") {
+            tileBorderColor = Color.RED;
+        } else if (ownerCollege == "goodricke") {
+            tileBorderColor = Color.GREEN;
+        } else if (ownerCollege == "constantine") {
+            tileBorderColor = Color.PINK;
+        }
     }
 
     /**
@@ -266,10 +299,10 @@ public class Tile extends Button {
     public void drawTooltip() {
         if (tooltipActive == true) {
             if (Gdx.input.getY() < tooltipHeight) {
-                drawer.borderedRectangle(tooltipFillColor, tooltipLineColor, Gdx.input.getX() - tooltipWidth - tooltipCursorSpace, Gdx.input.getY() + tooltipCursorSpace, tooltipWidth, tooltipHeight);
+                drawer.borderedRectangle(tooltipFillColor, tooltipLineColor, Gdx.input.getX() - tooltipWidth - tooltipCursorSpace, Gdx.input.getY() + tooltipCursorSpace, tooltipWidth, tooltipHeight, 1);
                 drawer.text("Tile " + this.ID, tooltipFont, Gdx.input.getX() - tooltipWidth - tooltipCursorSpace + tooltipTextSpace, Gdx.input.getY() + tooltipCursorSpace + tooltipTextSpace);
             } else {
-                drawer.borderedRectangle(tooltipFillColor, tooltipLineColor, Gdx.input.getX() - tooltipWidth - tooltipCursorSpace, Gdx.input.getY() - tooltipHeight - tooltipCursorSpace, tooltipWidth, tooltipHeight);
+                drawer.borderedRectangle(tooltipFillColor, tooltipLineColor, Gdx.input.getX() - tooltipWidth - tooltipCursorSpace, Gdx.input.getY() - tooltipHeight - tooltipCursorSpace, tooltipWidth, tooltipHeight, 1);
                 drawer.text("Tile " + this.ID, tooltipFont, Gdx.input.getX() - tooltipWidth - tooltipCursorSpace + tooltipTextSpace, Gdx.input.getY() - tooltipHeight - tooltipCursorSpace + tooltipTextSpace);
             }
         }
@@ -277,31 +310,8 @@ public class Tile extends Button {
 
     public void drawBorder() {
         if (isOwned()) {
-            String ownerCollege = Owner.getCollege().getName();
-
-
-            if (ownerCollege == "Derwent") {
-
-            } else if (ownerCollege == "Langwith") {
-
-            } else if (ownerCollege == "Vanburgh") {
-
-            } else if (ownerCollege == "James") {
-
-            } else if (ownerCollege == "Wentworth") {
-
-            } else if (ownerCollege == "Halifax") {
-
-            } else if (ownerCollege == "Alcuin") {
-
-            } else if (ownerCollege == "Goodricke") {
-
-            } else if (ownerCollege == "Constantine") {
-
-            }
+            drawer.lineRectangle(tileBorderColor, (128 * ((ID() - 1) % 4)) + 260, (128 * ((ID() - 1) / 4)) + 3, (int) (this.getWidth() - 5), (int) (this.getHeight() - 4), tileBorderThickness);
         }
-
-
     }
 
     /**

@@ -43,7 +43,7 @@ public class Drawer {
      * @param width Width of the new rectangle
      * @param height Height of the new rectangle
      */
-    public void rectangle(ShapeRenderer.ShapeType type, Color color, int x, int y, int width, int height) {
+    public void rectangle(ShapeRenderer.ShapeType type, Color color, int x, int y, int width, int height, int thickness) {
         ShapeRenderer renderer = new ShapeRenderer();
         //Establish shape-renderer
 
@@ -53,7 +53,9 @@ public class Drawer {
         renderer.setColor(color);
         //Set the colour of the rectangle to be rendered
 
-        renderer.rect(x, Gdx.graphics.getHeight() - y - height, width, height);
+        for (int i = 0; i < thickness; i++) {
+            renderer.rect(x + i, Gdx.graphics.getHeight() - y - height + i, width - (i * 2), height - (i * 2));
+        }
         //Render a rectangle with the specified parameters
 
         renderer.end();
@@ -73,7 +75,7 @@ public class Drawer {
      * @param height Height of the new rectangle
      */
     public void filledRectangle(Color color, int x, int y, int width, int height) {
-        rectangle(ShapeRenderer.ShapeType.Filled, color, x, y, width, height);
+        rectangle(ShapeRenderer.ShapeType.Filled, color, x, y, width, height, 1);
     }
 
     /**
@@ -85,8 +87,8 @@ public class Drawer {
      * @param width Width of the new rectangle
      * @param height Height of the new rectangle
      */
-    public void lineRectangle(Color color, int x, int y, int width, int height) {
-        rectangle(ShapeRenderer.ShapeType.Line, color, x, y, width, height);
+    public void lineRectangle(Color color, int x, int y, int width, int height, int thickness) {
+        rectangle(ShapeRenderer.ShapeType.Line, color, x, y, width, height, thickness);
     }
 
     /**
@@ -100,9 +102,9 @@ public class Drawer {
      * @param width Width of the new rectangle
      * @param height Height of the new rectangle
      */
-    public void borderedRectangle(Color fillColor, Color lineColor, int x, int y, int width, int height) {
-        rectangle(ShapeRenderer.ShapeType.Filled, fillColor, x, y, width, height);
-        rectangle(ShapeRenderer.ShapeType.Line, lineColor, x, y, width, height);
+    public void borderedRectangle(Color fillColor, Color lineColor, int x, int y, int width, int height, int thickness) {
+        rectangle(ShapeRenderer.ShapeType.Filled, fillColor, x, y, width, height, 1);
+        rectangle(ShapeRenderer.ShapeType.Line, lineColor, x, y, width, height, thickness);
     }
 
     /**

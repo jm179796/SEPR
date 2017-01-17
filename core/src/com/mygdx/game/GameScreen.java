@@ -266,7 +266,7 @@ public class GameScreen implements Screen{
         constructPauseMenu();
         //Construct pause-menu (and hide it for the moment)
 
-        drawer.debug(stage);
+        //drawer.debug(stage);
         //Call this to draw temporary debug lines around all of the actors on the stage
 
         state = State.RUN;
@@ -298,6 +298,7 @@ public class GameScreen implements Screen{
 
             for (Tile tile : tiles) {
                 tile.drawTooltip();
+                tile.drawBorder();
             }
             //If any of the tiles' tooltips are deemed "active", render them to the screen too
         } else if (state == State.PAUSE) {
@@ -463,7 +464,8 @@ public class GameScreen implements Screen{
                     if (selectedTile.isOwned() == false){
 
                         players[currentPlayer].assignTile(selectedTile);
-                        selectedTile.setOwner(players[currentPlayer]);
+                        //selectedTile.setOwner(players[currentPlayer]);
+                        getTile(tileGrid, selectedTile.ID() - 1).setOwner(players[currentPlayer]);
                         tileAcquired = true;
 
                     }
@@ -663,18 +665,18 @@ public class GameScreen implements Screen{
      * Draw auxiliary rectangles to provide window-dressing for the interface
      */
     public void drawRectangles() {
-        drawer.lineRectangle(Color.WHITE, (int) map.getX(), (int) map.getY(), (int) map.getWidth() + 1, (int) map.getHeight());
+        drawer.lineRectangle(Color.WHITE, (int) map.getX(), (int) map.getY(), (int) map.getWidth() + 1, (int) map.getHeight(), 1);
         //Draw border around the map
 
         drawer.filledRectangle(Color.WHITE, 0, (int) timer.getHeight(), tableWidth, 1);
         drawer.filledRectangle(Color.WHITE, 0, (int) (timer.getHeight() + endTurn.getHeight()), tableWidth, 1);
-        drawer.borderedRectangle(Color.GRAY, Color.WHITE, 19, (int) (timer.getHeight() + endTurn.getHeight()) + 15, 219, 40);
+        drawer.borderedRectangle(Color.GRAY, Color.WHITE, 19, (int) (timer.getHeight() + endTurn.getHeight()) + 15, 219, 40, 1);
         //drawer.lineRectangle(Color.WHITE, ((int) (Gdx.graphics.getWidth() * 0.125)) - 110, 240, 66, 66);
         drawer.filledRectangle(Color.WHITE, 0, Gdx.graphics.getHeight() - 46, tableWidth, 1);
         //Draw lines and rectangles in left-hand table
 
-        drawer.lineRectangle(Color.WHITE, ((int) (Gdx.graphics.getWidth() * 0.875)) - 94, 52, 66, 66);
-        drawer.lineRectangle(Color.WHITE, ((int) (Gdx.graphics.getWidth() * 0.875)) + 26, 52, 66, 66);
+        drawer.lineRectangle(Color.WHITE, ((int) (Gdx.graphics.getWidth() * 0.875)) - 94, 52, 66, 66, 1);
+        drawer.lineRectangle(Color.WHITE, ((int) (Gdx.graphics.getWidth() * 0.875)) + 26, 52, 66, 66, 1);
         drawer.filledRectangle(Color.WHITE, Gdx.graphics.getWidth() - 256, 190, tableWidth, 1);
         //Draw lines in right-hand table
     }
