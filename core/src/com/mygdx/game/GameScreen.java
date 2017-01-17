@@ -134,12 +134,12 @@ public class GameScreen implements Screen{
     /**
      * Holds the numeric representation of the game's current phase
      */
-    private int phase = 1;
+    private int phase;
 
     /**
      * Holds the ID of the currently-active player
      */
-    private int currentPlayer = 1;
+    private int currentPlayer;
 
     /**
      * Object defining QOL drawing functions for rectangles and on-screen tables
@@ -196,6 +196,8 @@ public class GameScreen implements Screen{
      * @param game Variable storing the game's state
      */
     public GameScreen(Game game) {
+        this.phase = 1;
+        this.currentPlayer = 1;
         this.game = game;
         Player Player1 = new Player(1);
         Player Player2 = new Player(2);
@@ -701,7 +703,8 @@ public class GameScreen implements Screen{
      * Advances the game's progress upon call
      */
     public void nextPhase() {
-
+        System.out.print("player" + currentPlayer);
+        System.out.print("phase" + phase);
         if(phase == 1){
             if(tileAcquired == true) {
                 tileAcquired = false;
@@ -710,14 +713,13 @@ public class GameScreen implements Screen{
                     currentPlayer = 2;
 
                 } else {
-                    System.out.print("test");
                     phase = 2;
                     timer.setTime(2, 0);
                     currentPlayer = 1;
                 }
             }
         }
-        if(phase == 2){
+        else if(phase == 2){
             if(currentPlayer == 1){
                 currentPlayer = 2;
             }
@@ -727,15 +729,15 @@ public class GameScreen implements Screen{
             }
 
         }
-        if(phase == 3){
+        else if(phase == 3){
             phase = 4;
             timer.setTime(0,99999);
         }
-        if(phase == 4){
+        else if(phase == 4){
             phase = 5;
             timer.setTime(0,99999);
         }
-        if(phase == 5){
+        else if(phase == 5){
             phase = 1;
             timer.setTime(0,99999);
         }
