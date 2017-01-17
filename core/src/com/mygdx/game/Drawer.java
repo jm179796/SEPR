@@ -17,14 +17,32 @@ import com.badlogic.gdx.utils.Align;
  * Created by Joseph on 30/11/2016.
  */
 public class Drawer {
+    /**
+     * Holds game-state
+     */
     private Game game;
-    //Stores current game-state
 
+    /**
+     * Class constructor
+     * Stores the game's state inside the drawer class
+     *
+     * @param game
+     */
     public Drawer (Game game) {
         this.game = game;
         //Import current game-state
     }
 
+    /**
+     * Draws a rectangle on the next frame to be rendered
+     *
+     * @param type Defines the type of rectangle to be drawn: it can be filled or line-only
+     * @param color Defines the colour of the rectangle to be drawn
+     * @param x X-coordinate of the new rectangle's top-left corner
+     * @param y Y-coordinate of the new rectangle's top-left corner
+     * @param width Width of the new rectangle
+     * @param height Height of the new rectangle
+     */
     public void rectangle(ShapeRenderer.ShapeType type, Color color, int x, int y, int width, int height) {
         ShapeRenderer renderer = new ShapeRenderer();
         //Establish shape-renderer
@@ -45,42 +63,104 @@ public class Drawer {
         //Get rid of the renderer now that it isn't useful anymore
     }
 
+    /**
+     * Draws a solid-coloured rectangle on the next frame to be rendered
+     *
+     * @param color Defines the colour of the rectangle to be drawn
+     * @param x X-coordinate of the new rectangle's top-left corner
+     * @param y Y-coordinate of the new rectangle's top-left corner
+     * @param width Width of the new rectangle
+     * @param height Height of the new rectangle
+     */
     public void filledRectangle(Color color, int x, int y, int width, int height) {
         rectangle(ShapeRenderer.ShapeType.Filled, color, x, y, width, height);
     }
 
+    /**
+     * Draws a line-only rectangle on the next frame to be rendered
+     *
+     * @param color Defines the colour of the rectangle to be drawn
+     * @param x X-coordinate of the new rectangle's top-left corner
+     * @param y Y-coordinate of the new rectangle's top-left corner
+     * @param width Width of the new rectangle
+     * @param height Height of the new rectangle
+     */
     public void lineRectangle(Color color, int x, int y, int width, int height) {
         rectangle(ShapeRenderer.ShapeType.Line, color, x, y, width, height);
     }
 
+    /**
+     * Draws a bordered, solid-coloured rectangle on the next frame to be rendered
+     * This basically draws a filled rectangle and a line-only rectangle of equal dimensions in the same place
+     *
+     * @param fillColor Defines the fill-colour of the rectangle to be drawn
+     * @param lineColor Defines the line-colour of the rectangle to be drawn
+     * @param x X-coordinate of the new rectangle's top-left corner
+     * @param y Y-coordinate of the new rectangle's top-left corner
+     * @param width Width of the new rectangle
+     * @param height Height of the new rectangle
+     */
     public void borderedRectangle(Color fillColor, Color lineColor, int x, int y, int width, int height) {
         rectangle(ShapeRenderer.ShapeType.Filled, fillColor, x, y, width, height);
         rectangle(ShapeRenderer.ShapeType.Line, lineColor, x, y, width, height);
     }
 
+    /**
+     * Prints text directly on to the next frame
+     *
+     * @param text The text to be printed
+     * @param font The font of the text to be printed
+     * @param x The X-coordinate of the text's location
+     * @param y The Y-coordinate of the text's location
+     */
     public void text(String text, TTFont font, int x, int y) {
         SpriteBatch batch = new SpriteBatch();
+        //Establish rendering batch
 
         Camera camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         batch.setProjectionMatrix(camera.combined);
+        //Set up a direct orthographic projection of the provided text
 
         batch.begin();
+        //Start the rendering batch
 
         font.font().draw(batch, text, x - (Gdx.graphics.getWidth() / 2), (Gdx.graphics.getHeight() / 2) - y);
+        //Print the provided text to the screen...
+        //...specifically by simulating the printing process through the orthographic projection of a 3D textual object
 
         batch.end();
+        //End the rendering batch
 
         batch.dispose();
+        //Dispose of the rendering batch now that it's run its course
     }
 
+    /**
+     * Draws debug lines around all actors on the specified stage
+     *
+     * @param stage The stage holding the actors around which to draw debug lines
+     */
     public void debug(Stage stage) {
         for (Actor a : stage.getActors()) {
             a.debug();
         }
     }
-    //Draws temporary debug lines around all of the actors on the stage
 
+    /**
+     * Automatically adds an actor on to a new row within a specified table
+     * Exists primarily to cut down on statement quantities
+     *
+     * @param table The table to be expanded
+     * @param actor The actor to add to the provided table
+     * @param width The width of the cell in which the provided actor is to be placed
+     * @param height The height of the cell in which the provided actor is to be placed
+     * @param padTop The top-most padding of the cell in which the provided actor is to be placed
+     * @param padLeft The left-most padding of the cell in which the provided actor is to be placed
+     * @param padBottom The bottom-most padding of the cell in which the provided actor is to be placed
+     * @param padRight The right-most padding of the cell in which the provided actor is to be placed
+     * @param colSpan The number of columns over which the new cell will span
+     */
     public void addTableRow(Table table, Actor actor, float width, float height, float padTop, float padLeft, float padBottom, float padRight, int colSpan) {
         if (width == 0 && height == 0) {
             table.row().colspan(colSpan);
@@ -91,34 +171,121 @@ public class Drawer {
         table.add(actor).pad(padTop, padLeft, padBottom, padRight);
     }
 
+    /**
+     * Automatically adds an actor on to a new row within a specified table
+     * Exists primarily to cut down on statement quantities
+     * Assumes that the new cell to be created has a width of 1 column
+     *
+     * @param table The table to be expanded
+     * @param actor The actor to add to the provided table
+     * @param width The width of the cell in which the provided actor is to be placed
+     * @param height The height of the cell in which the provided actor is to be placed
+     * @param padTop The top-most padding of the cell in which the provided actor is to be placed
+     * @param padLeft The left-most padding of the cell in which the provided actor is to be placed
+     * @param padBottom The bottom-most padding of the cell in which the provided actor is to be placed
+     * @param padRight The right-most padding of the cell in which the provided actor is to be placed
+     */
     public void addTableRow(Table table, Actor actor, float width, float height, float padTop, float padLeft, float padBottom, float padRight) {
         addTableRow(table, actor, width, height, padTop, padLeft, padBottom, padRight, 1);
     }
 
+    /**
+     * Automatically adds an actor on to a new row within a specified table
+     * Exists primarily to cut down on statement quantities
+     * Fits the dimensions of the new cell around the contents of the surrounding cells and the provided actor's size
+     *
+     * @param table The table to be expanded
+     * @param actor The actor to add to the provided table
+     * @param padTop The top-most padding of the cell in which the provided actor is to be placed
+     * @param padLeft The left-most padding of the cell in which the provided actor is to be placed
+     * @param padBottom The bottom-most padding of the cell in which the provided actor is to be placed
+     * @param padRight The right-most padding of the cell in which the provided actor is to be placed
+     * @param colSpan The number of columns over which the new cell will span
+     */
     public void addTableRow(Table table, Actor actor, float padTop, float padLeft, float padBottom, float padRight, int colSpan) {
         addTableRow(table, actor, 0, 0, padTop, padLeft, padBottom, padRight, colSpan);
     }
 
+    /**
+     * Automatically adds an actor on to a new row within a specified table
+     * Exists primarily to cut down on statement quantities
+     * Assumes that the new cell to be created has a width of 1 column
+     * Fits the dimensions of the new cell around the contents of the surrounding cells and the provided actor's size
+     *
+     * @param table The table to be expanded
+     * @param actor The actor to add to the provided table
+     * @param padTop The top-most padding of the cell in which the provided actor is to be placed
+     * @param padLeft The left-most padding of the cell in which the provided actor is to be placed
+     * @param padBottom The bottom-most padding of the cell in which the provided actor is to be placed
+     * @param padRight The right-most padding of the cell in which the provided actor is to be placed
+     */
     public void addTableRow(Table table, Actor actor, float padTop, float padLeft, float padBottom, float padRight) {
         addTableRow(table, actor, 0, 0, padTop, padLeft, padBottom, padRight, 1);
     }
 
+    /**
+     * Automatically adds an actor on to a new row within a specified table
+     * Exists primarily to cut down on statement quantities
+     * Does not pad the new cell
+     *
+     * @param table The table to be expanded
+     * @param actor The actor to add to the provided table
+     * @param width The width of the cell in which the provided actor is to be placed
+     * @param height The height of the cell in which the provided actor is to be placed
+     * @param colSpan The number of columns over which the new cell will span
+     */
     public void addTableRow(Table table, Actor actor, float width, float height, int colSpan) {
         addTableRow(table, actor, width, height, 0, 0, 0, 0, colSpan);
     }
 
+    /**
+     * Automatically adds an actor on to a new row within a specified table
+     * Exists primarily to cut down on statement quantities
+     * Assumes that the new cell to be created has a width of 1 column
+     * Does not pad the new cell
+     *
+     * @param table The table to be expanded
+     * @param actor The actor to add to the provided table
+     * @param width The width of the cell in which the provided actor is to be placed
+     * @param height The height of the cell in which the provided actor is to be placed
+     */
     public void addTableRow(Table table, Actor actor, float width, float height) {
         addTableRow(table, actor, width, height, 0, 0, 0, 0, 1);
     }
 
+    /**
+     * Automatically adds an actor on to a new row within a specified table
+     * Exists primarily to cut down on statement quantities
+     * Fits the dimensions of the new cell around the contents of the surrounding cells and the provided actor's size
+     * Does not pad the new cell
+     *
+     * @param table The table to be expanded
+     * @param actor The actor to add to the provided table
+     * @param colSpan The number of columns over which the new cell will span
+     */
     public void addTableRow(Table table, Actor actor, int colSpan) {
         addTableRow(table, actor, 0, 0, 0, 0, 0, 0, colSpan);
     }
 
+    /**
+     * Automatically adds an actor on to a new row within a specified table
+     * Exists primarily to cut down on statement quantities
+     * Assumes that the new cell to be created has a width of 1 column
+     * Fits the dimensions of the new cell around the contents of the surrounding cells and the provided actor's size
+     * Does not pad the new cell
+     *
+     * @param table The table to be expanded
+     * @param actor The actor to add to the provided table
+     */
     public void addTableRow(Table table, Actor actor) {
         addTableRow(table, actor, 0, 0, 0, 0, 0, 0, 1);
     }
 
+    /**
+     * Stretches the last row in the provided table to span across the maximum number of columns in that table
+     *
+     * @param table The table containing the cell to be stretched
+     */
     public void stretchCurrentCell(Table table) {
         table.getCells().items[table.getRows()].fillX();
     }
