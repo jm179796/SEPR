@@ -95,6 +95,11 @@ public class GameScreen implements Screen{
     private GameTimer timer;
 
     /**
+     * Label identifying the current phase number
+     */
+    private Label phaseLabel;
+
+    /**
      * Label counter providing a visual representation of the current player's food stocks
      */
     private Label foodCounter;
@@ -155,7 +160,7 @@ public class GameScreen implements Screen{
     /**
      * Button which allows players to prematurely end their turns
      */
-    private TextButton endPhase;
+    private TextButton endTurn;
 
     /**
      * Button which allows players to pause the game
@@ -252,7 +257,7 @@ public class GameScreen implements Screen{
         constructPauseMenu();
         //Construct pause-menu (and hide it for the moment)
 
-        //drawer.debug(stage);
+        drawer.debug(stage);
         //Call this to draw temporary debug lines around all of the actors on the stage
 
         state = State.RUN;
@@ -342,24 +347,27 @@ public class GameScreen implements Screen{
         tableLeft.center().top();
         //Shift the table towards the top of the screen
 
-        drawer.addTableRow(tableLeft, timer, 0, 0, 0, 0, 2);
+        tableLeft.add(timer).colspan(2);
         //Add the timer to the table
 
-        endPhase = new TextButton("End Phase", gameButtonStyle);
-        endPhase.addListener(new ChangeListener() {
+        gameFont.setSize(36);
+
+        Table phaseTable = new Table();
+        phaseLabel = new Label("PHASE 1", new Label.LabelStyle(gameFont.font(), Color.WHITE));
+        endTurn = new TextButton("END TURN", gameButtonStyle);
+        endTurn.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 nextPhase();
             }
         });
-        drawer.addTableRow(tableLeft, endPhase, 0, 0, 15, 0, 2);
+        phaseTable.add(phaseLabel).width(110);
+        phaseTable.add(endTurn);
+        drawer.addTableRow(tableLeft, phaseTable, 0, 0, 15, 0, 2);
         //Prepare and add the "End Phase" button to the table
-
-        gameFont.setSize(36);
 
         drawer.addTableRow(tableLeft, new Label("CURRENT PLAYER", new Label.LabelStyle(gameFont.font(), Color.BLACK)), 0, 0, 10, 0, 2);
         //Window-dressing
-
 
         gameFont.setSize(24);
         Table collegeInfo = new Table();
@@ -374,12 +382,12 @@ public class GameScreen implements Screen{
         oreCounter = new Label(players[currentPlayer].getOreCount().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
         roboticonCounter = new Label("0", new Label.LabelStyle(gameFont.font(), Color.WHITE));
         moneyCounter = new Label(players[currentPlayer].getMoney().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
-        drawer.addTableRow(resourceCounters, new LabelledElement("Food", gameFont, Color.WHITE, foodCounter, 125));
-        drawer.addTableRow(resourceCounters, new LabelledElement("Energy", gameFont, Color.WHITE, energyCounter, 125));
-        drawer.addTableRow(resourceCounters, new LabelledElement("Ore", gameFont, Color.WHITE, oreCounter, 125));
-        drawer.addTableRow(resourceCounters, new LabelledElement("Roboticons", gameFont, Color.WHITE, roboticonCounter, 125));
-        drawer.addTableRow(resourceCounters, new LabelledElement("Money", gameFont, Color.WHITE, moneyCounter, 125));
-        tableLeft.add(resourceCounters).size(140, 95);
+        drawer.addTableRow(resourceCounters, new LabelledElement("Food", gameFont, Color.WHITE, foodCounter, 100, 25));
+        drawer.addTableRow(resourceCounters, new LabelledElement("Energy", gameFont, Color.WHITE, energyCounter, 100, 25));
+        drawer.addTableRow(resourceCounters, new LabelledElement("Ore", gameFont, Color.WHITE, oreCounter, 100, 25));
+        drawer.addTableRow(resourceCounters, new LabelledElement("Roboticons", gameFont, Color.WHITE, roboticonCounter, 100, 25));
+        drawer.addTableRow(resourceCounters, new LabelledElement("Money", gameFont, Color.WHITE, moneyCounter, 100, 25));
+        tableLeft.add(resourceCounters).size(140, 120);
         //Add resource-counters to the table
         //These will show the current resource stocks for the current player
 
@@ -651,9 +659,9 @@ public class GameScreen implements Screen{
         //Draw border around the map
 
         drawer.filledRectangle(Color.WHITE, 0, (int) timer.getHeight(), tableWidth, 1);
-        drawer.filledRectangle(Color.WHITE, 0, (int) (timer.getHeight() + endPhase.getHeight()), tableWidth, 1);
-        drawer.borderedRectangle(Color.GRAY, Color.WHITE, 19, (int) (timer.getHeight() + endPhase.getHeight()) + 15, 219, 40);
-        drawer.lineRectangle(Color.WHITE, ((int) (Gdx.graphics.getWidth() * 0.125)) - 110, 240, 66, 66);
+        drawer.filledRectangle(Color.WHITE, 0, (int) (timer.getHeight() + endTurn.getHeight()), tableWidth, 1);
+        drawer.borderedRectangle(Color.GRAY, Color.WHITE, 19, (int) (timer.getHeight() + endTurn.getHeight()) + 15, 219, 40);
+        //drawer.lineRectangle(Color.WHITE, ((int) (Gdx.graphics.getWidth() * 0.125)) - 110, 240, 66, 66);
         drawer.filledRectangle(Color.WHITE, 0, Gdx.graphics.getHeight() - 46, tableWidth, 1);
         //Draw lines and rectangles in left-hand table
 
