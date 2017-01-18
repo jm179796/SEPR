@@ -29,7 +29,7 @@ public class RoboticonTest extends TesterFile {
      * Tests confirming that a valid Roboticon can be upgraded.
      */
     @Test
-    public void ValidUpgrade() {
+    public void Validupgrade() {
         Integer NewLevel[] = {2, 1, 1};
         TestRobot.upgrade("Ore");
         assertArrayEquals(NewLevel, TestRobot.getLevel());
@@ -45,8 +45,11 @@ public class RoboticonTest extends TesterFile {
      * Test confirming the possibleUpgrades method returns the possible upgrades available
      */
     @Test
-    public void ValidUpgradeReturn() {
-        Integer TestUpgrades[] = {2, 2, 2};
+    public void ValidpossibleUpgrades() {
+        Integer TestUpgrades[] = TestRobot.getLevel();
+        for (int i = 0; i < 3; i++){
+            TestUpgrades[i] += 1;
+        }
         assertArrayEquals(TestRobot.possibleUpgrades(), TestUpgrades);
     }
 
@@ -54,7 +57,7 @@ public class RoboticonTest extends TesterFile {
      * Test confirming productionModifier method works and provides values within a reasonable range
      */
     @Test
-    public void ValidProductionModifier() {
+    public void ValidproductionModifier() {
 
         Integer Modifiers[] = TestRobot.productionModifier();
 
