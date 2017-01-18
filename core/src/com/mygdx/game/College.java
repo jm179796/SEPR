@@ -63,7 +63,7 @@ public class College {
    * @param ID The ID of the college.
    * @param Description The description of the college.
    */
-  public College(int ID, String Description){
+  public College(int ID, String Description) throws ValueException{
     if (ID < 1 || ID > 9) {
       throw new ValueException("Invalid College ID Given (Must be between 1 and 9)");
     }
