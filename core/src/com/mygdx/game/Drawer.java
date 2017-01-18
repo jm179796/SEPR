@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.g3d.particles.ParticleShader;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 
@@ -290,5 +292,37 @@ public class Drawer {
      */
     public void stretchCurrentCell(Table table) {
         table.getCells().items[table.getRows()].fillX();
+    }
+
+    /**
+     * Simplifies enabling and disabling TextButtons
+     *
+     * @param button The button to be enabled/disabled
+     * @param enabled The button's new status
+     * @param buttonColor The new colour that the button should assume
+     */
+    public void switchTextButton(TextButton button, boolean enabled, Color buttonColor) {
+        button.getLabel().setColor(buttonColor);
+
+        if (enabled == true) {
+            button.setTouchable(Touchable.enabled);
+        } else {
+            button.setTouchable(Touchable.disabled);
+        }
+    }
+
+    /**
+     * Simplifies enabling and disabling TextButtons
+     * This alternative method doesn't change buttons' colours
+     *
+     * @param button The button to be enabled/disabled
+     * @param enabled The button's new status
+     */
+    public void switchTextButton(TextButton button, boolean enabled) {
+        if (enabled == true) {
+            button.setTouchable(Touchable.enabled);
+        } else {
+            button.setTouchable(Touchable.disabled);
+        }
     }
 }

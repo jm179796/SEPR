@@ -216,28 +216,6 @@ public class Tile extends Button {
      */
     public void setOwner(Player Owner) {
         this.Owner = Owner;
-
-        String ownerCollege = Owner.getCollege().getName().toLowerCase();
-
-        if (ownerCollege == "derwent") {
-            tileBorderColor = Color.BLUE;
-        } else if (ownerCollege == "langwith") {
-            tileBorderColor = Color.CHARTREUSE;
-        } else if (ownerCollege == "vanburgh") {
-            tileBorderColor = Color.TEAL;
-        } else if (ownerCollege == "james") {
-            tileBorderColor = Color.CYAN;
-        } else if (ownerCollege == "wentworth") {
-            tileBorderColor = Color.MAROON;
-        } else if (ownerCollege == "halifax") {
-            tileBorderColor = Color.YELLOW;
-        } else if (ownerCollege == "alcuin") {
-            tileBorderColor = Color.RED;
-        } else if (ownerCollege == "goodricke") {
-            tileBorderColor = Color.GREEN;
-        } else if (ownerCollege == "constantine") {
-            tileBorderColor = Color.PINK;
-        }
     }
 
     /**
@@ -335,5 +313,13 @@ public class Tile extends Button {
         else {
             return false;
         }
+    }
+
+    public void setTileBorderColor(Color color) {
+        tileBorderColor = color;
+    }
+
+    public Color tileBorderColor() {
+        return tileBorderColor;
     }
 }
