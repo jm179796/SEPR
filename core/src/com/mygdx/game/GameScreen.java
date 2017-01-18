@@ -21,8 +21,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 
-import java.util.List;
-
 public class GameScreen implements Screen{
 
     /**
@@ -31,14 +29,14 @@ public class GameScreen implements Screen{
     private Game game;
 
     /**
-     * Variable dictating whether the game is running or paused
+     * Engine class that handles all of the game's logical processing
      */
-    private State state;
+    private GameEngine engine;
 
     /**
      * Establishes an on-screen stage which can be populated with actors
      */
-    private Stage stage;
+    private Stage gameStage;
 
     /**
      * Establishes a secondary stage which will appear when the game is paused
@@ -59,17 +57,6 @@ public class GameScreen implements Screen{
      * Establishes the grid of tiles to be laid over the map
      */
     private Table tileGrid;
-
-    /**
-     * Array holding the tiles to be laid over the map
-     */
-    private Tile[] tiles;
-
-    /**
-     * Timer used to dictate the pace and flow of the game
-     * This has a visual interface which will be displayed in the top-left corner of the game-screen
-     */
-    private GameTimer timer;
 
     /**
      * Label identifying the current phase number
@@ -102,29 +89,9 @@ public class GameScreen implements Screen{
     private Label moneyCounter;
 
     /**
-     * Defines whether or not a tile has been acquired in the current phase of the game
-     */
-    private boolean tileAcquired;
-
-    /**
      * Label stating the ID of the currently-selected tile
      */
     private Label selectedTileLabel;
-
-    /**
-     * Array storing player-data for each participant
-     */
-    private Player[] players = new Player[3];
-
-    /**
-     * Holds the numeric representation of the game's current phase
-     */
-    private int phase;
-
-    /**
-     * Holds the ID of the currently-active player
-     */
-    private int currentPlayer;
 
     /**
      * Object defining QOL drawing functions for rectangles and on-screen tables
@@ -133,40 +100,29 @@ public class GameScreen implements Screen{
     private Drawer drawer;
 
     /**
-     * Holds the data pertaining to the currently-selected tile
-     */
-    private Tile selectedTile;
-
-    /**
      * Button that, when clicked, ends the current turn for the current player prematurely
      */
-    private TextButton endTurn;
+    private TextButton endTurnButton;
 
     /**
      * Button which can be clicked on to pause the game
      */
-    private TextButton pause;
+    private TextButton pauseButton;
 
     /**
      * Button which allows players to claim selected tiles
      */
-    private TextButton claim;
+    private TextButton claimTileButton;
 
     /**
      * Button which allows players to deploy owned roboticons onto selected tiles
      */
-    private TextButton deploy;
+    private TextButton deployRoboticonButton;
 
     /**
      * Establish visual parameters for in-game buttons
      */
     private TextButton.TextButtonStyle gameButtonStyle;
-
-    /**
-     * Holds all of the data and the functions of the game's market
-     * Also comes bundled with a visual interface which can be rendered on to the game's screen
-     */
-    private Market market;
 
     /**
      * Icon representing the currently-active player's chosen college
@@ -184,18 +140,11 @@ public class GameScreen implements Screen{
      * @param game Variable storing the game's state
      */
     public GameScreen(Game game) {
-        this.phase = 1;
-        this.currentPlayer = 1;
         this.game = game;
-        Player Player1 = new Player(1);
-        Player Player2 = new Player(2);
-        players[1] = Player1;
-        players[2] = Player2;
-        College Goodricke = new College(1, "The best college");
-        College Derwent = new College(2, "It has asbestos");
-        players[1].assignCollege(Goodricke);
-        players[2].assignCollege(Derwent);
-        //Import current game-state and establish player data
+        //Import current game-state
+
+        engine = new GameEngine(game, this);
+        //Start game engine up
     }
 
     /**
@@ -206,8 +155,8 @@ public class GameScreen implements Screen{
     public void show() {
         drawer = new Drawer(game);
 
-        stage = new Stage();
-        Gdx.input.setInputProcessor(stage);
+        gameStage = new Stage();
+        Gdx.input.setInputProcessor(gameStage);
         //Prepare the local stage and set it up to accept inputs
 
         gameFont = new TTFont(Gdx.files.internal("font/testfontbignoodle.ttf"), 36);
@@ -222,15 +171,10 @@ public class GameScreen implements Screen{
 
         map = new Image(new Texture("image/TestMap.png"));
         map.setPosition((Gdx.graphics.getWidth() / 2) - (map.getWidth() / 2), (Gdx.graphics.getHeight() / 2) - (map.getHeight() / 2));
-        stage.addActor(map);
+        gameStage.addActor(map);
         //Initialise and deploy map texture
 
         constructTileGrid();
-
-        gameFont.setSize(120);
-        timer = new GameTimer(9999, gameFont, Color.WHITE);
-        //Set up game timer
-        //"Runnable" parameter specifies code to be executed when the timer runs out
 
         constructButtons();
         //Set up the buttons to be placed down onto the interface
@@ -242,14 +186,8 @@ public class GameScreen implements Screen{
         constructPauseMenu();
         //Construct pause-menu (and hide it for the moment)
 
-        //drawer.debug(stage);
+        //drawer.debug(gameStage);
         //Call this to draw temporary debug lines around all of the actors on the stage
-
-        state = State.RUN;
-        //Mark that the game is currently running (and not paused)
-
-        timer.start();
-        //Start in-game timer
     }
 
     /**
@@ -265,19 +203,19 @@ public class GameScreen implements Screen{
         //OpenGL nonsense
         //First instruction sets background colour
 
-        if (state == State.RUN) {
+        if (engine.state() == GameEngine.State.RUN) {
             drawRectangles();
 
-            stage.act(delta);
-            stage.draw();
+            gameStage.act(delta);
+            gameStage.draw();
             //Draw the stage onto the screen
 
-            for (Tile tile : tiles) {
+            for (Tile tile : engine.tiles()) {
                 tile.drawTooltip();
                 tile.drawBorder();
             }
             //If any of the tiles' tooltips are deemed "active", render them to the screen too
-        } else if (state == State.PAUSE) {
+        } else if (engine.state() == GameEngine.State.PAUSE) {
             drawer.filledRectangle(Color.WHITE, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
             //If the game is paused, render a white background...
 
@@ -316,7 +254,7 @@ public class GameScreen implements Screen{
         gameFont.dispose();
         //Dispose of the core BitmapFont object within this TTFont object
 
-        stage.dispose();
+        gameStage.dispose();
         //Dispose of the stage
     }
 
@@ -327,100 +265,42 @@ public class GameScreen implements Screen{
         /**
          * Button that, when clicked, ends the current turn for the current player prematurely
          */
-        endTurn = new TextButton("END TURN", gameButtonStyle);
-        endTurn.addListener(new ChangeListener() {
+        endTurnButton = new TextButton("END TURN", gameButtonStyle);
+        endTurnButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                nextPhase();
+                engine.nextPhase();
             }
         });
-        drawer.switchTextButton(endTurn, false, Color.GRAY);
+        drawer.switchTextButton(endTurnButton, false, Color.GRAY);
         //Turn off the "END TURN" button right away to force players into selecting tiles
 
         /**
          * Button which can be clicked on to pause the game
          */
-        pause = new TextButton("Pause Game", gameButtonStyle);
-        pause.addListener(new ChangeListener() {
+        pauseButton = new TextButton("Pause Game", gameButtonStyle);
+        pauseButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                timer.stop();
-                //Stop the game's timer
-
-                Gdx.input.setInputProcessor(pauseStage);
-                //Prepare the pause menu to accept user inputs
-
-                state = State.PAUSE;
-                //Mark that the game has been paused
+                engine.pauseGame();
             }
         });
+
+        gameFont.setSize(30);
+        gameButtonStyle.font = gameFont.font();
 
         /**
          * Button which allows players to claim selected tiles
          */
-        claim = new TextButton("CLAIM", gameButtonStyle);
-        claim.addListener(new ChangeListener() {
+        claimTileButton = new TextButton("CLAIM", gameButtonStyle);
+        claimTileButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if (phase == 1) {
-                    if (selectedTile.isOwned() == false){
-                        players[currentPlayer].assignTile(selectedTile);
-                        //Assign selected tile to current player
-
-                        selectedTile.setOwner(players[currentPlayer]);
-                        //Set the owner of the currently selected tile to be the current player
-
-                        tileAcquired = true;
-                        //Mark that a tile has been acquired on this turn
-
-                        switch (players[currentPlayer].getCollege().getID()) {
-                            case (1):
-                                //DERWENT
-                                selectedTile.setTileBorderColor(Color.BLUE);
-                                break;
-                            case (2):
-                                //LANGWITH
-                                selectedTile.setTileBorderColor(Color.CHARTREUSE);
-                                break;
-                            case (3):
-                                //VANBURGH
-                                selectedTile.setTileBorderColor(Color.TEAL);
-                                break;
-                            case (4):
-                                //JAMES
-                                selectedTile.setTileBorderColor(Color.CYAN);
-                                break;
-                            case (5):
-                                //WENTWORTH
-                                selectedTile.setTileBorderColor(Color.MAROON);
-                                break;
-                            case (6):
-                                //HALIFAX
-                                selectedTile.setTileBorderColor(Color.YELLOW);
-                                break;
-                            case (7):
-                                //ALCUIN
-                                selectedTile.setTileBorderColor(Color.RED);
-                                break;
-                            case (8):
-                                //GOODRICKE
-                                selectedTile.setTileBorderColor(Color.GREEN);
-                                break;
-                            case (9):
-                                //CONSTANTINE
-                                selectedTile.setTileBorderColor(Color.PINK);
-                                break;
-                        }
-                        //Set the colour of the tile's new border based on the college of the player who claimed it
-
-                        nextPhase();
-                        //Advance the game
-                    }
-                }
+               engine.claimTile();
             }
         });
 
-        deploy = new TextButton("DEPLOY", gameButtonStyle);
+        deployRoboticonButton = new TextButton("DEPLOY", gameButtonStyle);
     }
 
     /**
@@ -439,15 +319,14 @@ public class GameScreen implements Screen{
         tableLeft.center().top();
         //Shift the table towards the top of the screen
 
-        tableLeft.add(timer).colspan(2);
+        tableLeft.add(engine.timer()).colspan(2);
         //Add the timer to the table
 
         gameFont.setSize(36);
-
         Table phaseTable = new Table();
         phaseLabel = new Label("PHASE 1", new Label.LabelStyle(gameFont.font(), Color.WHITE));
         phaseTable.add(phaseLabel).width(110);
-        phaseTable.add(endTurn);
+        phaseTable.add(endTurnButton);
         drawer.addTableRow(tableLeft, phaseTable, 0, 0, 15, 0, 2);
         //Prepare and add the "End Phase" button to the table
 
@@ -456,18 +335,18 @@ public class GameScreen implements Screen{
 
         gameFont.setSize(24);
         Table collegeInfo = new Table();
-        currentPlayerIcon = players[currentPlayer].getCollege().getLogo();
+        currentPlayerIcon = engine.currentPlayer().getCollege().getLogo();
         drawer.addTableRow(collegeInfo, currentPlayerIcon, 64, 64);
         drawer.addTableRow(collegeInfo, new Label("COLLEGE", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
         drawer.addTableRow(tableLeft, collegeInfo, 5, 0, 0, 15);
         //Prepare icon region to show the icon of the college which is currently active
 
         Table resourceCounters = new Table();
-        foodCounter = new Label(players[currentPlayer].getFoodCount().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
-        energyCounter = new Label(players[currentPlayer].getEnergyCount().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
-        oreCounter = new Label(players[currentPlayer].getOreCount().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
-        roboticonCounter = new Label(players[currentPlayer].getRoboticonCount().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
-        moneyCounter = new Label(players[currentPlayer].getMoney().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
+        foodCounter = new Label(engine.currentPlayer().getFoodCount().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
+        energyCounter = new Label(engine.currentPlayer().getEnergyCount().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
+        oreCounter = new Label(engine.currentPlayer().getOreCount().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
+        roboticonCounter = new Label(engine.currentPlayer().getRoboticonCount().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
+        moneyCounter = new Label(engine.currentPlayer().getMoney().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
         drawer.addTableRow(resourceCounters, new LabelledElement("Food", gameFont, Color.WHITE, foodCounter, 120, 40));
         drawer.addTableRow(resourceCounters, new LabelledElement("Energy", gameFont, Color.WHITE, energyCounter, 120, 40));
         drawer.addTableRow(resourceCounters, new LabelledElement("Ore", gameFont, Color.WHITE, oreCounter, 120, 40));
@@ -477,10 +356,10 @@ public class GameScreen implements Screen{
         //Add resource-counters to the table
         //These will show the current resource stocks for the current player
 
-        drawer.addTableRow(tableLeft, pause, 113, 0, 0, 0, 2);
+        drawer.addTableRow(tableLeft, pauseButton, 113, 0, 0, 0, 2);
         //Prepare and add the pause button to the bottom of the table
 
-        stage.addActor(tableLeft);
+        gameStage.addActor(tableLeft);
         //Add left-hand table to the stage
     }
 
@@ -516,120 +395,18 @@ public class GameScreen implements Screen{
         tableRight.add(new Label("ROBOTICON", new Label.LabelStyle(gameFont.font(), Color.WHITE))).padBottom(10);
         //Even more window-dressing
 
-        gameFont.setSize(28);
-        gameButtonStyle.font = gameFont.font();
-
-        //Prepare buttons to claim the currently-selected tile and to deploy a roboticon onto it
-
-        drawer.switchTextButton(claim, false, Color.GRAY);
-        drawer.switchTextButton(deploy, false, Color.GRAY);
+        drawer.switchTextButton(claimTileButton, false, Color.GRAY);
+        drawer.switchTextButton(deployRoboticonButton, false, Color.GRAY);
         //Disable the claim and deploy button until a tile is selected under the appropriate conditions
 
-        drawer.addTableRow(tableRight, claim, 0, 0, 15, 0);
-        tableRight.add(deploy).padBottom(15);
+        drawer.addTableRow(tableRight, claimTileButton, 0, 0, 15, 0);
+        tableRight.add(deployRoboticonButton).padBottom(15);
         //Add tile claim/deploy buttons to interface
 
-        market = new Market(game);
-        market.buyOre.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                if(phase == 5 ) {
-
-                    try {
-                        players[currentPlayer] = market.buy("ore", 1, players[currentPlayer]);
-                        oreCounter.setText(players[currentPlayer].getOreCount().toString());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-
-            }
-        });
-        market.buyFood.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                if(phase == 5 ) {
-
-                    try {
-                        players[currentPlayer] = market.buy("food", 1, players[currentPlayer]);
-                        foodCounter.setText(players[currentPlayer].getFoodCount().toString());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-
-            }
-        });
-        market.buyEnergy.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                if(phase == 5 ) {
-
-                    try {
-                        players[currentPlayer] = market.buy("energy", 1, players[currentPlayer]);
-                        energyCounter.setText(players[currentPlayer].getEnergyCount().toString());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-
-            }
-        });
-
-        market.sellEnergy.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                if(phase == 5 ) {
-
-                    try {
-                        players[currentPlayer] = market.sell("energy", 1, players[currentPlayer]);
-                        energyCounter.setText(players[currentPlayer].getEnergyCount().toString());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-
-            }
-        });
-
-        market.sellOre.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                if(phase == 5 ) {
-
-                    try {
-                        players[currentPlayer] = market.sell("ore", 1, players[currentPlayer]);
-                        oreCounter.setText(players[currentPlayer].getOreCount().toString());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-
-            }
-        });
-
-        market.sellFood.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                if(phase == 5 ) {
-
-                    try {
-                        players[currentPlayer] = market.sell("food", 1, players[currentPlayer]);
-                        foodCounter.setText(players[currentPlayer].getFoodCount().toString());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-
-            }
-        });
-
-
-
-        drawer.addTableRow(tableRight, market, 2);
+        drawer.addTableRow(tableRight, engine.market(), 2);
         //Establish market and add market interface to right-hand table
 
-        stage.addActor(tableRight);
+        gameStage.addActor(tableRight);
         //Add right-hand table to the stage
     }
 
@@ -640,30 +417,15 @@ public class GameScreen implements Screen{
         tileGrid = new Table();
         //Initialise tile-grid
 
-        tiles = new Tile[16];
-        //Initialise tile-buttons
-
         tileGrid.setBounds((Gdx.graphics.getWidth() / 2) - (map.getWidth() / 2), 0, map.getWidth(), map.getHeight());
         for (int y = 0; y < 4; y++) {
             for (int x = 0; x < 4; x++) {
-                final int fx = x;
-                final int fy = y;
-
-                tiles[(y * 4) + x] = new Tile(this.game, (y * 4) + x + 1, 0, 0, 0, false, new Runnable() {
-                    @Override
-                    public void run() {
-                        //drawer.addTableRow(tableLeft, new Label("Tile " + ((fy * 4) + fx + 1) + " was clicked", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
-                        selectTile(getTile(tileGrid, fx, fy));
-                        selectedTile = getTile(tileGrid, fx, fy);
-                    }
-                });
-
-                tileGrid.add(tiles[(y * 4) + x]).width(map.getWidth() / 4).height(map.getHeight() / 4);
+                tileGrid.add(engine.tiles()[(y * 4) + x]).width(map.getWidth() / 4).height(map.getHeight() / 4);
             }
             tileGrid.row();
         }
 
-        stage.addActor(tileGrid);
+        gameStage.addActor(tileGrid);
     }
 
     /**
@@ -702,13 +464,7 @@ public class GameScreen implements Screen{
         resume.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                state = State.RUN;
-
-                Gdx.input.setInputProcessor(stage);
-
-                if (timer.minutes() > 0 || timer.seconds() > 0) {
-                    timer.start();
-                }
+                engine.resumeGame();
             }
         });
         //Establish and prepare a button to resume the game from the pause menu
@@ -727,9 +483,9 @@ public class GameScreen implements Screen{
         drawer.lineRectangle(Color.WHITE, (int) map.getX(), (int) map.getY(), (int) map.getWidth() + 1, (int) map.getHeight(), 1);
         //Draw border around the map
 
-        drawer.filledRectangle(Color.WHITE, 0, (int) timer.getHeight(), 256, 1);
-        drawer.filledRectangle(Color.WHITE, 0, (int) (timer.getHeight() + endTurn.getHeight()), 256, 1);
-        drawer.borderedRectangle(Color.GRAY, Color.WHITE, 19, (int) (timer.getHeight() + endTurn.getHeight()) + 15, 219, 40, 1);
+        drawer.filledRectangle(Color.WHITE, 0, (int) engine.timer().getHeight(), 256, 1);
+        drawer.filledRectangle(Color.WHITE, 0, (int) (engine.timer().getHeight() + endTurnButton.getHeight()), 256, 1);
+        drawer.borderedRectangle(Color.GRAY, Color.WHITE, 19, (int) (engine.timer().getHeight() + endTurnButton.getHeight()) + 15, 219, 40, 1);
         //drawer.lineRectangle(Color.WHITE, ((int) (Gdx.graphics.getWidth() * 0.125)) - 110, 240, 66, 66);
         drawer.filledRectangle(Color.WHITE, 0, Gdx.graphics.getHeight() - 46, 256, 1);
         //Draw lines and rectangles in left-hand table
@@ -740,108 +496,64 @@ public class GameScreen implements Screen{
         //Draw lines in right-hand table
     }
 
-    /**
-     * Allows individual tiles to be accessed straight from the game-screen's tile-grid
-     *
-     * @param tileGrid The grid of tiles at the core of the game-screen
-     * @param x The x-coordinate of the tile to be accessed
-     * @param y The y-coordinte of the tile to be accessed
-     * @return Tile
-     */
-    public Tile getTile(Table tileGrid, int x, int y) {
-        return (Tile) tileGrid.getChildren().get((y * tileGrid.getColumns()) + x);
-    }
-    //Returns the tile-type object held in the provided TileGrid at the specified co-ordinates
-
-    /**
-     * Allows individual tiles to be accessed straight from the game-screen's tile-grid
-     *
-     * @param tileGrid The grid of tiles at the core of the game-screen
-     * @param i The index of the tile to be accessed
-     * @return Tile
-     */
-    public Tile getTile(Table tileGrid, int i) {
-        return (Tile) tileGrid.getChildren().get(i);
-    }
-    //Returns the tile-type object held in the provided TileGrid at the specified position
-
-    /**
-     * Encodes possible game-states
-     */
-    public enum State {
-        RUN,
-        PAUSE
+    public void setFoodCounterValue(int value) {
+        foodCounter.setText((String.valueOf(value)));
     }
 
-    /**
-     * Advances the game's progress upon call
-     */
-    public void nextPhase() {
-        System.out.print("Player " + currentPlayer + " | Phase " + phase);
-        if(phase == 1){
-            if(tileAcquired == true) {
-                tileAcquired = false;
+    public void setEnergyCounterValue(int value) {
+        energyCounter.setText((String.valueOf(value)));
+    }
 
-                if (currentPlayer == 1) {
-                    switchCurrentPlayer();
-                } else {
-                    phase = 2;
-                    timer.setTime(2, 0);
-                    switchCurrentPlayer();
+    public void setOreCounterValue(int value) {
+        oreCounter.setText((String.valueOf(value)));
+    }
 
-                    drawer.switchTextButton(endTurn, true, Color.WHITE);
-                }
-            }
+    public void setRoboticonCounterValue(int value) {
+        roboticonCounter.setText((String.valueOf(value)));
+    }
+
+    public void setMoneyCounterValue(int value) {
+        moneyCounter.setText((String.valueOf(value)));
+    }
+
+    public void updateSelectedTileLabel(int value) {
+        if (value < 1 || value > 16) {
+            selectedTileLabel.setText("NO TILE SELECTED");
+        } else {
+            selectedTileLabel.setText("TILE " + value);
         }
-        else if(phase == 2){
-            if(currentPlayer == 1){
-                switchCurrentPlayer();
-            }
-            else{
-                phase = 3;
-                timer.setTime(2,0);
-            }
-        }
-        else if(phase == 3){
-            phase = 4;
-            timer.setTime(0,99999);
-        }
-        else if(phase == 4){
-            List<Tile> tileList = players[1].getTileList();
-            for (Tile Tile : tileList){
-                if (tileList.size() > 0){
-                    players[1] = Tile.Produce(players[1]);
-                }
+    }
 
-            }
-            List<Tile> tileList2 = players[2].getTileList();
-            for (Tile Tile : tileList2){
-                if(tileList2.size() > 0){
-                    players[2] = Tile.Produce(players[2]);
-                }
+    public void updateSelectedTileLabel(Tile tile) {
+        selectedTileLabel.setText("TILE " + tile.ID());
+    }
 
-            }
+    public void updatePhaseLabel(int value) {
+        phaseLabel.setText("PHASE " + value);
+    }
 
-            phase = 5;
-            timer.setTime(0,99999);
-        }
-        else if(phase == 5){
-            if (currentPlayer == 1) {
-                switchCurrentPlayer();
-            }
-            else{
-                phase = 1;
-                timer.setTime(0,99999);
+    public TextButton claimTileButton() {
+        return claimTileButton;
+    }
 
-                drawer.switchTextButton(endTurn, false, Color.GRAY);
-                drawer.switchTextButton(claim, true, Color.WHITE);
-            }
+    public TextButton endTurnButton() {
+        return endTurnButton;
+    }
 
-        }
+    public Image currentPlayerIcon() {
+        return currentPlayerIcon;
+    }
 
-        phaseLabel.setText("PHASE " + phase);
+    public Image selectedTileOwnerIcon() {
+        return selectedTileOwnerIcon;
+    }
 
-        deselectTile();
+    public void openGameStage() {
+        Gdx.input.setInputProcessor(gameStage);
+    }
+
+    public void openPauseStage() {
+        Gdx.input.setInputProcessor(pauseStage);
     }
 
     /**
@@ -850,12 +562,12 @@ public class GameScreen implements Screen{
      * @param tile The tile being clicked on
      */
     public void selectTile(Tile tile) {
-        selectedTileLabel.setText("Tile " + tile.ID());
+        selectedTileLabel.setText("TILE " + tile.ID());
 
-        if (phase == 1 && !tile.isOwned()) {
-            drawer.switchTextButton(claim, true, Color.WHITE);
-        } else if (phase == 3 && players[currentPlayer].getRoboticonCount() > 0) {
-            drawer.switchTextButton(deploy, true, Color.WHITE);
+        if (engine.phase() == 1 && !tile.isOwned()) {
+            drawer.switchTextButton(claimTileButton, true, Color.WHITE);
+        } else if (engine.phase() == 3 && engine.currentPlayer().getRoboticonCount() > 0) {
+            drawer.switchTextButton(deployRoboticonButton, true, Color.WHITE);
         }
 
         if (tile.isOwned()) {
@@ -871,26 +583,11 @@ public class GameScreen implements Screen{
      * Run this to deselect the currently selected tile
      */
     public void deselectTile() {
-        drawer.switchTextButton(claim, false, Color.GRAY);
-        drawer.switchTextButton(deploy, false, Color.GRAY);
+        drawer.switchTextButton(claimTileButton, false, Color.GRAY);
+        drawer.switchTextButton(deployRoboticonButton, false, Color.GRAY);
 
-        selectedTileOwnerIcon.setVisible(false);
+        selectedTileOwnerIcon().setVisible(false);
 
-        selectedTileLabel.setText("NO TILE SELECTED");
-    }
-
-    /**
-     * Sets the current player to be that which isn't whenever this is called
-     */
-    public void switchCurrentPlayer() {
-        currentPlayer = 3 - currentPlayer;
-
-        currentPlayerIcon.setDrawable(new TextureRegionDrawable(new TextureRegion(players[currentPlayer].getCollege().getLogoTexture())));
-        currentPlayerIcon.setSize(64, 64);
-
-        moneyCounter.setText(players[currentPlayer].getMoney().toString());
-        foodCounter.setText(players[currentPlayer].getFoodCount().toString());
-        oreCounter.setText(players[currentPlayer].getOreCount().toString());
-        energyCounter.setText(players[currentPlayer].getEnergyCount().toString());
+        updateSelectedTileLabel(0);
     }
 }
