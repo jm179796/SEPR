@@ -127,10 +127,10 @@ public class GameScreen implements Screen{
     private Label roboticonCounter;
 
     private Label moneyCounter;
+
     /**
      * Defines whether or not a tile has been acquired in the current phase of the game
      */
-
     private boolean tileAcquired;
 
     /**
@@ -206,6 +206,11 @@ public class GameScreen implements Screen{
      * Icon representing the currently-active player's chosen college
      */
     private Image currentPlayerIcon;
+
+    /**
+     * Icon representing the player who owns the currently-selected tile
+     */
+    private Image selectedTileOwnerIcon;
 
     /**
      * The game-screen's initial constructor
@@ -451,7 +456,9 @@ public class GameScreen implements Screen{
         selectedTileLabel = new Label("NO TILE SELECTED", new Label.LabelStyle(gameFont.font(), Color.WHITE));
         selectedTileLabel.setAlignment(Align.center);
         drawer.addTableRow(tableRight, selectedTileLabel, 240, 43, 0, 0, 10, 0, 2);
-        drawer.addTableRow(tableRight, new Label("COL", new Label.LabelStyle(gameFont.font(), Color.WHITE)), 64, 64, 0, 0, 0, 0);
+        selectedTileOwnerIcon = new Image();
+        selectedTileOwnerIcon.setVisible(false);
+        drawer.addTableRow(tableRight, selectedTileOwnerIcon, 64, 64);
         tableRight.add(new Label("ROB", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
         //Add labels for currently selected tile
         //These will change to reflect the IDs, owners and statuses of each tile selected
@@ -852,6 +859,14 @@ public class GameScreen implements Screen{
         } else if (phase == 3 && players[currentPlayer].getRoboticonCount() > 0) {
             drawer.switchTextButton(deploy, true, Color.WHITE);
         }
+
+        if (tile.isOwned()) {
+            selectedTileOwnerIcon.setVisible(true);
+            selectedTileOwnerIcon.setDrawable(new TextureRegionDrawable(new TextureRegion(tile.getOwner().getCollege().getLogoTexture())));
+            selectedTileOwnerIcon.setSize(64, 64);
+        } else {
+            selectedTileOwnerIcon.setVisible(false);
+        }
     }
 
     /**
@@ -860,6 +875,8 @@ public class GameScreen implements Screen{
     public void deselectTile() {
         drawer.switchTextButton(claim, false, Color.GRAY);
         drawer.switchTextButton(deploy, false, Color.GRAY);
+
+        selectedTileOwnerIcon.setVisible(false);
 
         selectedTileLabel.setText("NO TILE SELECTED");
     }

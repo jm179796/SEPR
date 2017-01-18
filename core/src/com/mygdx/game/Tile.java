@@ -219,6 +219,15 @@ public class Tile extends Button {
     }
 
     /**
+     * Returns the class of the player who owns the tile
+     *
+     * @return Player The tile's owner
+     */
+    public Player getOwner() {
+        return this.Owner;
+    }
+
+    /**
      * Setter for the ore count of the tile.
      *
      * @param Count What the count is to be changed to.
