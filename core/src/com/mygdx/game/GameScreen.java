@@ -224,7 +224,6 @@ public class GameScreen implements Screen{
         College Derwent = new College(2, "It has asbestos");
         players[1].assignCollege(Goodricke);
         players[2].assignCollege(Derwent);
-        currentPlayerIcon = players[currentPlayer].getCollege().getLogo();
         //Import current game-state and establish player data
     }
 
@@ -393,6 +392,7 @@ public class GameScreen implements Screen{
         gameFont.setSize(24);
         Table collegeInfo = new Table();
         //drawer.addTableRow(collegeInfo, new Label("COL", new Label.LabelStyle(gameFont.font(), Color.WHITE)), 64, 64);
+        currentPlayerIcon = players[currentPlayer].getCollege().getLogo();
         drawer.addTableRow(collegeInfo, currentPlayerIcon, 64, 64);
         drawer.addTableRow(collegeInfo, new Label("COLLEGE", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
         drawer.addTableRow(tableLeft, collegeInfo, 5, 0, 0, 15);
@@ -778,11 +778,11 @@ public class GameScreen implements Screen{
                 tileAcquired = false;
 
                 if (currentPlayer == 1) {
-                    currentPlayer = 2;
+                    switchCurrentPlayer();
                 } else {
                     phase = 2;
                     timer.setTime(2, 0);
-                    currentPlayer = 1;
+                    switchCurrentPlayer();
 
                     drawer.switchTextButton(endTurn, true, Color.WHITE);
                 }
@@ -790,7 +790,7 @@ public class GameScreen implements Screen{
         }
         else if(phase == 2){
             if(currentPlayer == 1){
-                currentPlayer = 2;
+                switchCurrentPlayer();
             }
             else{
                 phase = 3;
@@ -822,7 +822,7 @@ public class GameScreen implements Screen{
         }
         else if(phase == 5){
             if (currentPlayer == 1) {
-                currentPlayer = 2;
+                switchCurrentPlayer();
             }
             else{
                 phase = 1;
@@ -864,10 +864,14 @@ public class GameScreen implements Screen{
         selectedTileLabel.setText("NO TILE SELECTED");
     }
 
+    /**
+     * Sets the current player to be that which isn't whenever this is called
+     */
     public void switchCurrentPlayer() {
         currentPlayer = 3 - currentPlayer;
 
         currentPlayerIcon.setDrawable(new TextureRegionDrawable(new TextureRegion(players[currentPlayer].getCollege().getLogoTexture())));
+        currentPlayerIcon.setSize(64, 64);
 
         moneyCounter.setText(players[currentPlayer].getMoney().toString());
         foodCounter.setText(players[currentPlayer].getFoodCount().toString());

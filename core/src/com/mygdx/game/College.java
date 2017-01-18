@@ -54,6 +54,11 @@ public class College {
   private Image logo;
 
   /**
+   * The texture encoding the symbol of the college
+   */
+  private Texture logoTexture;
+
+  /**
    * The constructor for the class.
    * @param ID The ID of the college.
    * @param Description The description of the college.
@@ -68,41 +73,43 @@ public class College {
     switch (this.ID) {
       case (1):
         this.Name = "Derwent";
-        this.logo = new Image(new Texture("image/Derwent.png"));
+        this.logoTexture = new Texture("image/Derwent.png");
         break;
       case (2):
         this.Name = "Langwith";
-        this.logo = new Image(new Texture("image/Langwith.png"));
+        this.logoTexture = new Texture("image/Langwith.png");
         break;
       case (3):
         this.Name = "Vanburgh";
-        this.logo = new Image(new Texture("image/Vanburgh.png"));
+        this.logoTexture = new Texture("image/Vanburgh.png");
         break;
       case (4):
         this.Name = "James";
-        this.logo = new Image(new Texture("image/James.png"));
+        this.logoTexture = new Texture("image/James.png");
         break;
       case (5):
         this.Name = "Wentworth";
-        this.logo = new Image(new Texture("image/Wentworth.png"));
+        this.logoTexture = new Texture("image/Wentworth.png");
         break;
       case (6):
         this.Name = "Halifax";
-        this.logo = new Image(new Texture("image/Halifax.png"));
+        this.logoTexture = new Texture("image/Halifax.png");
         break;
       case (7):
         this.Name = "Alcuin";
-        this.logo = new Image(new Texture("image/Alcuin.png"));
+        this.logoTexture = new Texture("image/Alcuin.png");
         break;
       case (8):
         this.Name = "Goodricke";
-        this.logo = new Image(new Texture("image/Goodricke.png"));
+        this.logoTexture = new Texture("image/Goodricke.png");
         break;
       case (9):
         this.Name = "Constantine";
-        this.logo = new Image(new Texture("image/Constantine.png"));
+        this.logoTexture = new Texture("image/Constantine.png");
         break;
     }
+
+    this.logo = new Image(logoTexture);
 
     this.Description = Description;
   }
@@ -136,38 +143,7 @@ public class College {
   }
 
   public Texture getLogoTexture() {
-    switch (this.ID) {
-      case (1):
-        return new Texture("image/Derwent.png");
-      break;
-      case (2):
-        return new Texture("image/Langwith.png");
-      break;
-      case (3):
-        return new Texture("image/Vanburgh.png");
-      break;
-      case (4):
-        return new Texture("image/James.png");
-      break;
-      case (5):
-        return new Texture("image/Wentworth.png");
-      break;
-      case (6):
-        return new Texture("image/Halifax.png");
-      break;
-      case (7):
-        return new Texture("image/Alcuin.png");
-      break;
-      case (8):
-        return new Texture("image/Goodricke.png");
-      break;
-      case (9):
-        return new Texture("image/Constantine.png");
-      break;
-      default:
-        return new Texture();
-        break;
-    }
+    return logoTexture;
 
   }
 }
