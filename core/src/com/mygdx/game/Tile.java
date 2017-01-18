@@ -177,10 +177,8 @@ public class Tile extends Button {
 
     /**
      * Calculates how many resources are produced based on the amount of roboticons present and adds them to the player.
-
-=======
+     *
      * @param player The player that is producing the resources.
-
      * @return Player The player object after it's resource values have been modified.
      */
     public Player Produce(Player player) {
@@ -246,8 +244,6 @@ public class Tile extends Button {
     }
 
     /**
-  
-=======
      * Adds a Roboticon to the roboticon list.
      * @param roboticon The roboticon to be added to the list.
      */
@@ -323,8 +319,6 @@ public class Tile extends Button {
             return false;
         }
     }
-
-
 
     public void setTileBorderColor(Color color) {
         tileBorderColor = color;

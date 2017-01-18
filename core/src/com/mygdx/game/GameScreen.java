@@ -20,6 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Scaling;
 
 public class GameScreen implements Screen{
 
@@ -194,7 +195,7 @@ public class GameScreen implements Screen{
         constructPauseMenu();
         //Construct pause-menu (and hide it for the moment)
 
-        //drawer.debug(gameStage);
+        drawer.debug(gameStage);
         //Call this to draw temporary debug lines around all of the actors on the stage
     }
 
@@ -401,8 +402,10 @@ public class GameScreen implements Screen{
 
         selectedTileOwnerIcon = new Image();
         selectedTileOwnerIcon.setVisible(false);
-        drawer.addTableRow(tableRight, selectedTileOwnerIcon, 64, 64);
-        tableRight.add(new Label("ROB", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
+        selectedTileOwnerIcon.setScaling(Scaling.fit);
+        tableRight.row();
+        tableRight.add(selectedTileOwnerIcon).size(120, 64);
+        tableRight.add(new Label("      ROB", new Label.LabelStyle(gameFont.font(), Color.WHITE))).size(120, 64);
         //Instantiate and deploy icons to represent tiles' owners and Roboticons
 
         gameFont.setSize(20);
@@ -505,7 +508,7 @@ public class GameScreen implements Screen{
         drawer.filledRectangle(Color.WHITE, 0, Gdx.graphics.getHeight() - 46, 256, 1);
         //Draw lines and rectangles in left-hand table
 
-        drawer.lineRectangle(Color.WHITE, ((int) (Gdx.graphics.getWidth() * 0.875)) - 94, 52, 66, 66, 1);
+        drawer.lineRectangle(Color.WHITE, ((int) (Gdx.graphics.getWidth() * 0.875)) - 93, 52, 66, 66, 1);
         drawer.lineRectangle(Color.WHITE, ((int) (Gdx.graphics.getWidth() * 0.875)) + 26, 52, 66, 66, 1);
         drawer.filledRectangle(Color.WHITE, Gdx.graphics.getWidth() - 256, 190, 256, 1);
         //Draw lines in right-hand table
@@ -583,18 +586,33 @@ public class GameScreen implements Screen{
     public void selectTile(Tile tile) {
         selectedTileLabel.setText("TILE " + tile.ID());
 
-        if (engine.phase() == 1 && !tile.isOwned()) {
-            drawer.switchTextButton(claimTileButton, true, Color.WHITE);
-        } else if (engine.phase() == 3 && engine.currentPlayer().getRoboticonCount() > 0) {
-            drawer.switchTextButton(deployRoboticonButton, true, Color.WHITE);
-        }
-
         if (tile.isOwned()) {
             selectedTileOwnerIcon.setVisible(true);
             selectedTileOwnerIcon.setDrawable(new TextureRegionDrawable(new TextureRegion(tile.getOwner().getCollege().getLogoTexture())));
             selectedTileOwnerIcon.setSize(64, 64);
+
+            if (engine.phase() == 3 && tile.getOwner() == engine.currentPlayer()) {
+                if (tile.hasRoboticon()) {
+                    deployRoboticonButton.setText("UPGRADE");
+                    drawer.switchTextButton(deployRoboticonButton, true, Color.WHITE);
+                } else if (engine.currentPlayer().getRoboticonCount() > 0) {
+                    drawer.switchTextButton(deployRoboticonButton, true, Color.WHITE);
+                } else {
+                    drawer.switchTextButton(deployRoboticonButton, false, Color.GRAY);
+                }
+            } else {
+                deployRoboticonButton.setText("DEPLOY");
+                drawer.switchTextButton(deployRoboticonButton, false, Color.GRAY);
+            }
         } else {
             selectedTileOwnerIcon.setVisible(false);
+
+            if (engine.phase() == 1) {
+                drawer.switchTextButton(claimTileButton, true, Color.WHITE);
+            }
+
+            deployRoboticonButton.setText("DEPLOY");
+            drawer.switchTextButton(deployRoboticonButton, false, Color.GRAY);
         }
     }
 
@@ -604,6 +622,8 @@ public class GameScreen implements Screen{
     public void deselectTile() {
         drawer.switchTextButton(claimTileButton, false, Color.GRAY);
         drawer.switchTextButton(deployRoboticonButton, false, Color.GRAY);
+
+        deployRoboticonButton.setText("DEPLOY");
 
         selectedTileOwnerIcon().setVisible(false);
 

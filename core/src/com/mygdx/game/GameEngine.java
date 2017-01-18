@@ -345,77 +345,74 @@ public class GameEngine {
     }
 
     public void claimTile() {
-        if (phase == 1) {
-            if (selectedTile.isOwned() == false){
-                players[currentPlayerID].assignTile(selectedTile);
-                //Assign selected tile to current player
+        if (phase == 1 && selectedTile.isOwned() == false) {
+            players[currentPlayerID].assignTile(selectedTile);
+            //Assign selected tile to current player
 
-                selectedTile.setOwner(players[currentPlayerID]);
-                //Set the owner of the currently selected tile to be the current player
+            selectedTile.setOwner(players[currentPlayerID]);
+            //Set the owner of the currently selected tile to be the current player
 
-                tileAcquired = true;
-                //Mark that a tile has been acquired on this turn
+            tileAcquired = true;
+            //Mark that a tile has been acquired on this turn
 
-                switch (players[currentPlayerID].getCollege().getID()) {
-                    case (1):
-                        //DERWENT
-                        selectedTile.setTileBorderColor(Color.BLUE);
-                        break;
-                    case (2):
-                        //LANGWITH
-                        selectedTile.setTileBorderColor(Color.CHARTREUSE);
-                        break;
-                    case (3):
-                        //VANBURGH
-                        selectedTile.setTileBorderColor(Color.TEAL);
-                        break;
-                    case (4):
-                        //JAMES
-                        selectedTile.setTileBorderColor(Color.CYAN);
-                        break;
-                    case (5):
-                        //WENTWORTH
-                        selectedTile.setTileBorderColor(Color.MAROON);
-                        break;
-                    case (6):
-                        //HALIFAX
-                        selectedTile.setTileBorderColor(Color.YELLOW);
-                        break;
-                    case (7):
-                        //ALCUIN
-                        selectedTile.setTileBorderColor(Color.RED);
-                        break;
-                    case (8):
-                        //GOODRICKE
-                        selectedTile.setTileBorderColor(Color.GREEN);
-                        break;
-                    case (9):
-                        //CONSTANTINE
-                        selectedTile.setTileBorderColor(Color.PINK);
-                        break;
-                }
-                //Set the colour of the tile's new border based on the college of the player who claimed it
-
-                nextPhase();
-                //Advance the game
+            switch (players[currentPlayerID].getCollege().getID()) {
+                case (1):
+                    //DERWENT
+                    selectedTile.setTileBorderColor(Color.BLUE);
+                    break;
+                case (2):
+                    //LANGWITH
+                    selectedTile.setTileBorderColor(Color.CHARTREUSE);
+                    break;
+                case (3):
+                    //VANBURGH
+                    selectedTile.setTileBorderColor(Color.TEAL);
+                    break;
+                case (4):
+                    //JAMES
+                    selectedTile.setTileBorderColor(Color.CYAN);
+                    break;
+                case (5):
+                    //WENTWORTH
+                    selectedTile.setTileBorderColor(Color.MAROON);
+                    break;
+                case (6):
+                    //HALIFAX
+                    selectedTile.setTileBorderColor(Color.YELLOW);
+                    break;
+                case (7):
+                    //ALCUIN
+                    selectedTile.setTileBorderColor(Color.RED);
+                    break;
+                case (8):
+                    //GOODRICKE
+                    selectedTile.setTileBorderColor(Color.GREEN);
+                    break;
+                case (9):
+                    //CONSTANTINE
+                    selectedTile.setTileBorderColor(Color.PINK);
+                    break;
             }
+            //Set the colour of the tile's new border based on the college of the player who claimed it
+
+            nextPhase();
+            //Advance the game
         }
     }
 
     public void deployRoboticon(){
-
         if (phase == 3) {
-            if (players[currentPlayerID].getRoboticonInventory() > 0) {
-
-                if (selectedTile.hasRoboticon() == false) {
+            if (selectedTile.hasRoboticon() == false) {
+                if (players[currentPlayerID].getRoboticonInventory() > 0) {
                     Roboticon Roboticon = new Roboticon(roboticonIDCounter, players[currentPlayerID], selectedTile);
                     players[currentPlayerID].addRoboticon(Roboticon);
                     selectedTile.assignRoboticon(Roboticon);
                     roboticonIDCounter += 1;
-
                 }
+            } else {
+                //PUT A CONDITION NEXT TO THE "ELSE" STATEMENT ABOVE TO CHECK FOR UPGRADE PRECONDITIONS
+                //UPGRADE CODE GOES HERE
             }
-
 
         }
 
