@@ -324,11 +324,22 @@ public class Tile extends Button {
         }
     }
 
+
+
     public void setTileBorderColor(Color color) {
         tileBorderColor = color;
     }
 
     public Color tileBorderColor() {
         return tileBorderColor;
+    }
+    public boolean hasRoboticon(){
+        if(this.roboticonStored != null){
+            return true;
+        }
+        else{
+            return false;
+        }
+
     }
 }

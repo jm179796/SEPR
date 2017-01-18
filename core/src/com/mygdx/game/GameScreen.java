@@ -125,6 +125,20 @@ public class GameScreen implements Screen{
     private TextButton.TextButtonStyle gameButtonStyle;
 
     /**
+<<<<<<< HEAD
+=======
+     * Holds all of the data and the functions of the game's market
+     * Also comes bundled with a visual interface which can be rendered on to the game's screen
+     */
+    private Market market;
+
+    private Integer roboticonIDCounter = 0;
+
+
+
+
+    /**
+>>>>>>> origin/Development
      * Icon representing the currently-active player's chosen college
      */
     private Image currentPlayerIcon;
