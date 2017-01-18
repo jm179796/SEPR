@@ -3,9 +3,12 @@ package com.mygdx.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Timer;
@@ -94,6 +97,14 @@ public class Tile extends Button {
      * Determines the thickness of the tile's border (in pixels)
      */
     private int tileBorderThickness;
+    /**
+     * Table holding the icons to be rendered in the tile's tooltip
+     */
+    private Table tooltipIcons;
+
+    private Image tileOwnerIcon;
+
+    private Image tileRoboticonIcon;
 
     /**
      * The constructor for the object
@@ -125,6 +136,12 @@ public class Tile extends Button {
         tooltipFont = new TTFont(Gdx.files.internal("font/testfontbignoodle.ttf"), 24);
 
         tooltipActive = false;
+
+        tooltipIcons = new Table();
+        tileOwnerIcon = new Image();
+        tileRoboticonIcon = new Image();
+        drawer.addTableRow(tooltipIcons, tileOwnerIcon, 64, 60);
+        tooltipIcons.add(tileRoboticonIcon).size(60, 60);
 
         tileBorderColor = Color.BLACK;
         tileBorderThickness = 3;
@@ -214,6 +231,8 @@ public class Tile extends Button {
      */
     public void setOwner(Player Owner) {
         this.Owner = Owner;
+
+        tileOwnerIcon = Owner.getCollege().getLogo();
     }
 
     /**
