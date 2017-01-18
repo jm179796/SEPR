@@ -297,4 +297,13 @@ public class Tile extends Button {
             return false;
         }
     }
+
+    public boolean hasRoboticon(){
+        if(this.roboticonStored != null){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 }

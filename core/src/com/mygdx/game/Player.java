@@ -48,6 +48,8 @@ public class Player {
      */
     private List<Roboticon> RoboticonList = new ArrayList<Roboticon>();
 
+    private Integer inventoryRoboticons = 0;
+
     /**
      * The constructor of the class
      *
@@ -201,5 +203,16 @@ public class Player {
      */
     public void calculateScore() {
     }
+    public void increaseRoboticonInventory(){
+        this.inventoryRoboticons += 1;
+    }
+    public void decreaseRoboticonInventory(){
+        this.inventoryRoboticons -= 1;
+    }
+    public Integer getRoboticonInventory(){
+        return this.inventoryRoboticons;
+    }
+
+
 
 }

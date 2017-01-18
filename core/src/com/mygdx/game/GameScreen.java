@@ -200,6 +200,11 @@ public class GameScreen implements Screen{
      */
     private Market market;
 
+    private Integer roboticonIDCounter = 0;
+
+
+
+
     /**
      * The game-screen's initial constructor
      *
@@ -213,6 +218,7 @@ public class GameScreen implements Screen{
         Player Player2 = new Player(2);
         players[1] = Player1;
         players[2] = Player2;
+
         College Goodricke = new College("Goodricke", "The best college");
         College Derwent = new College("Derwent", "It has asbestos");
         players[1].assignCollege(Goodricke);
@@ -389,7 +395,7 @@ public class GameScreen implements Screen{
         foodCounter = new Label(players[currentPlayer].getFoodCount().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
         energyCounter = new Label(players[currentPlayer].getEnergyCount().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
         oreCounter = new Label(players[currentPlayer].getOreCount().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
-        roboticonCounter = new Label("0", new Label.LabelStyle(gameFont.font(), Color.WHITE));
+        roboticonCounter = new Label(players[currentPlayer].getRoboticonInventory().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
         moneyCounter = new Label(players[currentPlayer].getMoney().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
         drawer.addTableRow(resourceCounters, new LabelledElement("Food", gameFont, Color.WHITE, foodCounter, 120, 40));
         drawer.addTableRow(resourceCounters, new LabelledElement("Energy", gameFont, Color.WHITE, energyCounter, 120, 40));
@@ -471,11 +477,48 @@ public class GameScreen implements Screen{
             }
         });
         //Functionality of tile-claim button
+
+        deploy.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if (phase == 3) {
+                    if (players[currentPlayer].getRoboticonInventory() > 0) {
+
+                        if (selectedTile.hasRoboticon() == false) {
+                            Roboticon Roboticon = new Roboticon(roboticonIDCounter, players[currentPlayer], selectedTile);
+                            players[currentPlayer].addRoboticon(Roboticon);
+                            selectedTile.assignRoboticon(Roboticon);
+
+                        }
+                    }
+                }
+            }
+        });
+
+
         drawer.addTableRow(tableRight, claim, 0, 0, 15, 0);
         tableRight.add(deploy).padBottom(15);
         //Add tile claim/deploy buttons to table
 
         market = new Market(game);
+
+        market.buyRoboticon.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if(phase == 2 ) {
+
+                    try {
+                        players[currentPlayer] = market.buyRoboticon(players[currentPlayer]);
+                        updateLabels();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        });
+
+
         market.buyOre.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -733,27 +776,39 @@ public class GameScreen implements Screen{
 
                 if (currentPlayer == 1) {
                     currentPlayer = 2;
-
+                    updateLabels();
                 } else {
                     phase = 2;
                     timer.setTime(2, 0);
                     currentPlayer = 1;
+                    updateLabels();
                 }
             }
         }
         else if(phase == 2){
             if(currentPlayer == 1){
                 currentPlayer = 2;
+                updateLabels();
             }
             else{
                 phase = 3;
                 timer.setTime(2,0);
+                currentPlayer = 1;
+                updateLabels();
             }
 
         }
         else if(phase == 3){
-            phase = 4;
-            timer.setTime(0,99999);
+            if(currentPlayer == 1){
+                currentPlayer = 2;
+                updateLabels();
+            }
+            else {
+                phase = 4;
+                timer.setTime(0, 99999);
+                currentPlayer = 1;
+                updateLabels();
+            }
         }
         else if(phase == 4){
             List<Tile> tileList = players[1].getTileList();
@@ -773,17 +828,22 @@ public class GameScreen implements Screen{
 
             phase = 5;
             timer.setTime(0,99999);
+            updateLabels();
         }
         else if(phase == 5){
             if (currentPlayer == 1) {
                 currentPlayer = 2;
+                updateLabels();
             }
             else{
                 phase = 1;
                 timer.setTime(0,99999);
+                currentPlayer = 1;
+                updateLabels();
             }
 
         }
+
 
         phaseLabel.setText("PHASE " + phase);
     }
@@ -792,5 +852,9 @@ public class GameScreen implements Screen{
         foodCounter.setText(players[currentPlayer].getFoodCount().toString());
         oreCounter.setText(players[currentPlayer].getOreCount().toString());
         energyCounter.setText(players[currentPlayer].getEnergyCount().toString());
+        roboticonCounter.setText(players[currentPlayer].getRoboticonInventory().toString());
     }
+
+
+
 }
