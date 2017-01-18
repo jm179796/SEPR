@@ -128,8 +128,6 @@ public class Market extends Table {
         buyEnergy = new TextButton(getEnergyBuyPrice().toString(), tableButtonStyle);
         buyRoboticon = new TextButton(getRoboticonBuyPrice().toString(), tableButtonStyle);
 
-
-
         sellOre = new TextButton(getOreSellPrice().toString(), tableButtonStyle);
         sellFood = new TextButton(getFoodSellPrice().toString(), tableButtonStyle);
         sellEnergy = new TextButton(getEnergySellPrice().toString(), tableButtonStyle);

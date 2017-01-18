@@ -56,6 +56,10 @@ public class Roboticon {
         this.CurrentTile.assignRoboticon(this);
     }
 
+    /**
+     * Function to get the current roboticon Level
+     * @return Integer array of the resource
+     */
     public Integer[] getLevel() {
         return this.Level;
     }
@@ -67,22 +71,23 @@ public class Roboticon {
      * </p>
      *
      * @param Resource String holding the characters 'Ore', 'Energy' or 'Food'
+     * @return boolean True if level increased, False if unable to increase level.
      */
-    public String upgrade(String Resource) {
-        if (Resource.equals("Ore")) {
+    public boolean upgrade(String Resource) {
+        if (Resource.equals("Ore") && this.Level[0] < MaxLevel) {
             this.Level[0] += 1;
-            return "Ore level increased";
+            return true;
 
-        } else if (Resource.equals("Energy")) {
+        } else if (Resource.equals("Energy") && this.Level[1] < MaxLevel) {
             this.Level[1] += 1;
-            return "Energy level increased";
+            return true;
 
-        } else if (Resource.equals("Food")) {
+        } else if (Resource.equals("Food") && this.Level[2] < MaxLevel) {
             this.Level[2] += 1;
-            return "Food level increased";
+            return true;
 
         } else
-            return "Incorrect parameter passed, must be Ore, Energy or Food";
+            return false;
 
 
     }

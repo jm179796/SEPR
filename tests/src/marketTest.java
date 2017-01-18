@@ -76,11 +76,6 @@ public class marketTest extends TesterFile{
     }
 
 
-    // @Test
-    // public void buyRoboticonTest(){
-    //     TestMarket.buyRoboticon(1, TestPlayer, );
-    // }
-
     /**
      * Tests sell method for ore resource.
      * <p>

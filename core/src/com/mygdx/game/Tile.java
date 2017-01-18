@@ -86,6 +86,14 @@ public class Tile extends Button {
      * Boolean variable that's true whenever the tile's tooltip is visible and false otherwise
      */
     private boolean tooltipActive;
+    /**
+     * Holds the colour of the border to be drawn over the tile when it is claimed
+     */
+    private Color tileBorderColor;
+    /**
+     * Determines the thickness of the tile's border (in pixels)
+     */
+    private int tileBorderThickness;
 
     /**
      * The constructor for the object
@@ -117,6 +125,9 @@ public class Tile extends Button {
         tooltipFont = new TTFont(Gdx.files.internal("font/testfontbignoodle.ttf"), 24);
 
         tooltipActive = false;
+
+        tileBorderColor = Color.BLACK;
+        tileBorderThickness = 3;
 
         this.EnergyCount = EnergyCount;
         this.FoodCount = FoodCount;
@@ -208,6 +219,15 @@ public class Tile extends Button {
     }
 
     /**
+     * Returns the class of the player who owns the tile
+     *
+     * @return Player The tile's owner
+     */
+    public Player getOwner() {
+        return this.Owner;
+    }
+
+    /**
      * Setter for the ore count of the tile.
      *
      * @param Count What the count is to be changed to.
@@ -266,12 +286,18 @@ public class Tile extends Button {
     public void drawTooltip() {
         if (tooltipActive == true) {
             if (Gdx.input.getY() < tooltipHeight) {
-                drawer.borderedRectangle(tooltipFillColor, tooltipLineColor, Gdx.input.getX() - tooltipWidth - tooltipCursorSpace, Gdx.input.getY() + tooltipCursorSpace, tooltipWidth, tooltipHeight);
+                drawer.borderedRectangle(tooltipFillColor, tooltipLineColor, Gdx.input.getX() - tooltipWidth - tooltipCursorSpace, Gdx.input.getY() + tooltipCursorSpace, tooltipWidth, tooltipHeight, 1);
                 drawer.text("Tile " + this.ID, tooltipFont, Gdx.input.getX() - tooltipWidth - tooltipCursorSpace + tooltipTextSpace, Gdx.input.getY() + tooltipCursorSpace + tooltipTextSpace);
             } else {
-                drawer.borderedRectangle(tooltipFillColor, tooltipLineColor, Gdx.input.getX() - tooltipWidth - tooltipCursorSpace, Gdx.input.getY() - tooltipHeight - tooltipCursorSpace, tooltipWidth, tooltipHeight);
+                drawer.borderedRectangle(tooltipFillColor, tooltipLineColor, Gdx.input.getX() - tooltipWidth - tooltipCursorSpace, Gdx.input.getY() - tooltipHeight - tooltipCursorSpace, tooltipWidth, tooltipHeight, 1);
                 drawer.text("Tile " + this.ID, tooltipFont, Gdx.input.getX() - tooltipWidth - tooltipCursorSpace + tooltipTextSpace, Gdx.input.getY() - tooltipHeight - tooltipCursorSpace + tooltipTextSpace);
             }
+        }
+    }
+
+    public void drawBorder() {
+        if (isOwned()) {
+            drawer.lineRectangle(tileBorderColor, (128 * ((ID() - 1) % 4)) + 260, (128 * ((ID() - 1) / 4)) + 3, (int) (this.getWidth() - 5), (int) (this.getHeight() - 4), tileBorderThickness);
         }
     }
 
@@ -298,6 +324,15 @@ public class Tile extends Button {
         }
     }
 
+
+
+    public void setTileBorderColor(Color color) {
+        tileBorderColor = color;
+    }
+
+    public Color tileBorderColor() {
+        return tileBorderColor;
+    }
     public boolean hasRoboticon(){
         if(this.roboticonStored != null){
             return true;
@@ -305,5 +340,6 @@ public class Tile extends Button {
         else{
             return false;
         }
+
     }
 }
