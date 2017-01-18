@@ -2,7 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.graphics.Texture;
-//import jdk.nashorn.internal.runtime.regexp.joni.exception.*;
+import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 
 import java.awt.*;
 
@@ -63,9 +63,9 @@ public class College {
    * @param ID The ID of the college.
    * @param Description The description of the college.
    */
-  public College(int ID, String Description) throws Exception{
+  public College(int ID, String Description) throws ValueException{
     if (ID < 1 || ID > 9) {
-      throw new Exception("Invalid College ID Given (Must be between 1 and 9)");
+      throw new ValueException("Invalid College ID Given (Must be between 1 and 9)");
     }
     //Throw an exception if an invalid college ID is given
 
