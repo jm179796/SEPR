@@ -137,6 +137,7 @@ public class GameEngine {
                 timer.setTime(2,0);
                 switchCurrentPlayer();
                 updateLabels();
+                drawer.switchTextButton(gameScreen.deployRoboticonButton(), true, Color.WHITE);
             }
         }
         else if(phase == 3){
@@ -149,6 +150,7 @@ public class GameEngine {
                 timer.setTime(0, 99999);
                 currentPlayerID = 1;
                 updateLabels();
+                drawer.switchTextButton(gameScreen.deployRoboticonButton(), false, Color.GRAY);
             }
         }
         else if(phase == 4){

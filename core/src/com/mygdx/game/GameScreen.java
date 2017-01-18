@@ -555,6 +555,10 @@ public class GameScreen implements Screen{
         return endTurnButton;
     }
 
+    public TextButton deployRoboticonButton(){
+        return deployRoboticonButton;
+    }
+
     public Image currentPlayerIcon() {
         return currentPlayerIcon;
     }
