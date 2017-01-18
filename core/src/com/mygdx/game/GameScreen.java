@@ -132,11 +132,7 @@ public class GameScreen implements Screen{
 
     private Integer roboticonIDCounter = 0;
 
-
-
-
     /**
->>>>>>> origin/Development
      * Icon representing the currently-active player's chosen college
      */
     private Image currentPlayerIcon;
