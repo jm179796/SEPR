@@ -2,7 +2,6 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -58,6 +57,8 @@ public class GameEngine {
      * Variable dictating whether the game is running or paused
      */
     private State state;
+
+    private Integer roboticonIDCounter = 0;
 
     public GameEngine(Game game, GameScreen gameScreen) {
         this.game = game;
@@ -116,11 +117,12 @@ public class GameEngine {
 
                 if (currentPlayerID == 1) {
                     switchCurrentPlayer();
+                    updateLabels();
                 } else {
                     phase = 2;
                     timer.setTime(2, 0);
                     switchCurrentPlayer();
-
+                    updateLabels();
                     drawer.switchTextButton(gameScreen.endTurnButton(), true, Color.WHITE);
                 }
             }
@@ -128,15 +130,26 @@ public class GameEngine {
         else if(phase == 2){
             if(currentPlayerID == 1){
                 switchCurrentPlayer();
+                updateLabels();
             }
             else{
                 phase = 3;
                 timer.setTime(2,0);
+                switchCurrentPlayer();
+                updateLabels();
             }
         }
         else if(phase == 3){
-            phase = 4;
-            timer.setTime(0,99999);
+            if(currentPlayerID == 1){
+                currentPlayerID = 2;
+                updateLabels();
+            }
+            else {
+                phase = 4;
+                timer.setTime(0, 99999);
+                currentPlayerID = 1;
+                updateLabels();
+            }
         }
         else if(phase == 4){
             List<Tile> tileList = players[1].getTileList();
@@ -184,14 +197,35 @@ public class GameEngine {
         gameScreen.currentPlayerIcon().setDrawable(new TextureRegionDrawable(new TextureRegion(players[currentPlayerID].getCollege().getLogoTexture())));
         gameScreen.currentPlayerIcon().setSize(64, 64);
 
+    }
+
+    public void updateLabels(){
         gameScreen.setFoodCounterValue(currentPlayer().getFoodCount());
         gameScreen.setEnergyCounterValue(currentPlayer().getEnergyCount());
         gameScreen.setOreCounterValue(currentPlayer().getOreCount());
         gameScreen.setMoneyCounterValue(currentPlayer().getMoney());
+        gameScreen.setRoboticonCounterValue(currentPlayer().getRoboticonInventory());
     }
 
     public void constructMarket() {
         market = new Market(game);
+
+        market.buyRoboticon.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if(phase == 2 ) {
+
+                    try {
+                        players[currentPlayerID] = market.buyRoboticon(players[currentPlayerID]);
+                        updateLabels();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        });
+
         market.buyOre.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
@@ -364,6 +398,25 @@ public class GameEngine {
                 //Advance the game
             }
         }
+    }
+
+    public void deployRoboticon(){
+
+        if (phase == 3) {
+            if (players[currentPlayerID].getRoboticonInventory() > 0) {
+
+                if (selectedTile.hasRoboticon() == false) {
+                    Roboticon Roboticon = new Roboticon(roboticonIDCounter, players[currentPlayerID], selectedTile);
+                    players[currentPlayerID].addRoboticon(Roboticon);
+                    selectedTile.assignRoboticon(Roboticon);
+                    roboticonIDCounter += 1;
+
+                }
+            }
+
+
+        }
+
     }
 
     /**

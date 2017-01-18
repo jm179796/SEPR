@@ -3,11 +3,9 @@ package com.mygdx.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 import java.util.Random;
 
@@ -627,6 +625,7 @@ public class Market extends Table {
                     Player.setMoney(Player.getMoney() - RoboticonBuyPrice);
                     RoboticonBuyPrice += 5;
                     Player.increaseRoboticonInventory();
+
                     roboticonStockLabel.setText(this.getRoboticonStock().toString());
                     buyRoboticon.setText(getRoboticonBuyPrice().toString());
                 } else {

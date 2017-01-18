@@ -309,6 +309,13 @@ public class GameScreen implements Screen{
         });
 
         deployRoboticonButton = new TextButton("DEPLOY", gameButtonStyle);
+        deployRoboticonButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+               engine.deployRoboticon();
+
+            }
+        });
     }
 
     /**
