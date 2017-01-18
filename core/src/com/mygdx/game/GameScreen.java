@@ -41,39 +41,14 @@ public class GameScreen implements Screen{
     private Stage stage;
 
     /**
-     * Establishes the metadata for the interface's left-hand table
-     */
-    private Table tableLeft;
-
-    /**
-     * Establishes the metadata for the interface's right-hand table
-     */
-    private Table tableRight;
-
-    /**
      * Establishes a secondary stage which will appear when the game is paused
      */
     private Stage pauseStage;
 
     /**
-     * Establishes the visual framework for the pause screen
-     */
-    private Table pauseTable;
-
-    /**
      * Font which will be adopted by the game-screen's main interface
      */
     private TTFont gameFont;
-
-    /**
-     * Font which will be adopted on the pause menu
-     */
-    private TTFont menuFont;
-
-    /**
-     * Font which will be adopted for the logo on the game's pause menu
-     */
-    private TTFont titleFont;
 
     /**
      * Holds the image of the in-game map
@@ -89,11 +64,6 @@ public class GameScreen implements Screen{
      * Array holding the tiles to be laid over the map
      */
     private Tile[] tiles;
-
-    /**
-     * Variable defining the widths (in pixels) of the interface's side-hand tables
-     */
-    private int tableWidth;
 
     /**
      * Timer used to dictate the pace and flow of the game
@@ -126,6 +96,9 @@ public class GameScreen implements Screen{
      */
     private Label roboticonCounter;
 
+    /**
+     * Label counter providing a visual representation of the current player's money
+     */
     private Label moneyCounter;
 
     /**
@@ -165,20 +138,14 @@ public class GameScreen implements Screen{
     private Tile selectedTile;
 
     /**
-     * Button which allows players to prematurely end their turns
+     * Button that, when clicked, ends the current turn for the current player prematurely
      */
     private TextButton endTurn;
 
     /**
-     * Button which allows players to pause the game
+     * Button which can be clicked on to pause the game
      */
     private TextButton pause;
-    //Establish buttons to advance between phases and pause the game
-
-    /**
-     * Button which allows players to resume the game from the pause menu
-     */
-    private TextButton resume;
 
     /**
      * Button which allows players to claim selected tiles
@@ -194,7 +161,6 @@ public class GameScreen implements Screen{
      * Establish visual parameters for in-game buttons
      */
     private TextButton.TextButtonStyle gameButtonStyle;
-    //Establish visual parameters for in-game buttons
 
     /**
      * Holds all of the data and the functions of the game's market
@@ -261,15 +227,13 @@ public class GameScreen implements Screen{
 
         constructTileGrid();
 
-        tableWidth = (int) ((Gdx.graphics.getWidth() - map.getWidth()) / 2);
-        //Set widths of side-hand tables
-        //This will always be 256 for as long as the size of the game's window is fixed
-        //The purpose of this variable is to facilitate the later implementation of window resizing
-
         gameFont.setSize(120);
         timer = new GameTimer(9999, gameFont, Color.WHITE);
         //Set up game timer
         //"Runnable" parameter specifies code to be executed when the timer runs out
+
+        constructButtons();
+        //Set up the buttons to be placed down onto the interface
 
         constructLeftTable();
         constructRightTable();
@@ -357,25 +321,12 @@ public class GameScreen implements Screen{
     }
 
     /**
-     * Set up the form and contents of the left-hand table so that they can be rendered later
+     * Set up the buttons to be placed onto the interface later
      */
-    public void constructLeftTable() {
-        tableLeft = new Table();
-        //Construct left-hand table
-
-        tableLeft.setBounds(0, 0, tableWidth, Gdx.graphics.getHeight());
-        //Set boundaries of left-hand table
-
-        tableLeft.center().top();
-        //Shift the table towards the top of the screen
-
-        tableLeft.add(timer).colspan(2);
-        //Add the timer to the table
-
-        gameFont.setSize(36);
-
-        Table phaseTable = new Table();
-        phaseLabel = new Label("PHASE 1", new Label.LabelStyle(gameFont.font(), Color.WHITE));
+    public void constructButtons() {
+        /**
+         * Button that, when clicked, ends the current turn for the current player prematurely
+         */
         endTurn = new TextButton("END TURN", gameButtonStyle);
         endTurn.addListener(new ChangeListener() {
             @Override
@@ -383,41 +334,12 @@ public class GameScreen implements Screen{
                 nextPhase();
             }
         });
-        phaseTable.add(phaseLabel).width(110);
-        phaseTable.add(endTurn);
-        drawer.addTableRow(tableLeft, phaseTable, 0, 0, 15, 0, 2);
-        //Prepare and add the "End Phase" button to the table
-
         drawer.switchTextButton(endTurn, false, Color.GRAY);
-        //Turn the "End Turn" button off until phase 2 is reached
+        //Turn off the "END TURN" button right away to force players into selecting tiles
 
-        drawer.addTableRow(tableLeft, new Label("CURRENT PLAYER", new Label.LabelStyle(gameFont.font(), Color.BLACK)), 0, 0, 10, 0, 2);
-        //Window-dressing
-
-        gameFont.setSize(24);
-        Table collegeInfo = new Table();
-        //drawer.addTableRow(collegeInfo, new Label("COL", new Label.LabelStyle(gameFont.font(), Color.WHITE)), 64, 64);
-        currentPlayerIcon = players[currentPlayer].getCollege().getLogo();
-        drawer.addTableRow(collegeInfo, currentPlayerIcon, 64, 64);
-        drawer.addTableRow(collegeInfo, new Label("COLLEGE", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
-        drawer.addTableRow(tableLeft, collegeInfo, 5, 0, 0, 15);
-        //More window-dressing
-
-        Table resourceCounters = new Table();
-        foodCounter = new Label(players[currentPlayer].getFoodCount().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
-        energyCounter = new Label(players[currentPlayer].getEnergyCount().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
-        oreCounter = new Label(players[currentPlayer].getOreCount().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
-        roboticonCounter = new Label("0", new Label.LabelStyle(gameFont.font(), Color.WHITE));
-        moneyCounter = new Label(players[currentPlayer].getMoney().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
-        drawer.addTableRow(resourceCounters, new LabelledElement("Food", gameFont, Color.WHITE, foodCounter, 120, 40));
-        drawer.addTableRow(resourceCounters, new LabelledElement("Energy", gameFont, Color.WHITE, energyCounter, 120, 40));
-        drawer.addTableRow(resourceCounters, new LabelledElement("Ore", gameFont, Color.WHITE, oreCounter, 120, 40));
-        drawer.addTableRow(resourceCounters, new LabelledElement("Roboticons", gameFont, Color.WHITE, roboticonCounter, 120, 40));
-        drawer.addTableRow(resourceCounters, new LabelledElement("Money", gameFont, Color.WHITE, moneyCounter, 120, 40));
-        tableLeft.add(resourceCounters).size(160, 120);
-        //Add resource-counters to the table
-        //These will show the current resource stocks for the current player
-
+        /**
+         * Button which can be clicked on to pause the game
+         */
         pause = new TextButton("Pause Game", gameButtonStyle);
         pause.addListener(new ChangeListener() {
             @Override
@@ -432,62 +354,24 @@ public class GameScreen implements Screen{
                 //Mark that the game has been paused
             }
         });
-        drawer.addTableRow(tableLeft, pause, 113, 0, 0, 0, 2);
-        //Prepare and add the pause button to the table
 
-        stage.addActor(tableLeft);
-        //Add left-hand table to the stage
-    }
-
-    /**
-     * Set up the form and contents of the right-hand table so that they can be rendered later
-     */
-    public void constructRightTable() {
-        tableRight = new Table();
-        //Construct right-hand table
-
-        tableRight.setBounds((Gdx.graphics.getWidth() / 2) + (map.getWidth() / 2), 0, tableWidth, Gdx.graphics.getHeight());
-        //Set boundaries of right-hand table
-
-        tableRight.center().top();
-        //Shift the table towards the top of the screen
-
-        gameFont.setSize(40);
-        selectedTileLabel = new Label("NO TILE SELECTED", new Label.LabelStyle(gameFont.font(), Color.WHITE));
-        selectedTileLabel.setAlignment(Align.center);
-        drawer.addTableRow(tableRight, selectedTileLabel, 240, 43, 0, 0, 10, 0, 2);
-        selectedTileOwnerIcon = new Image();
-        selectedTileOwnerIcon.setVisible(false);
-        drawer.addTableRow(tableRight, selectedTileOwnerIcon, 64, 64);
-        tableRight.add(new Label("ROB", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
-        //Add labels for currently selected tile
-        //These will change to reflect the IDs, owners and statuses of each tile selected
-        //IN THE FUTURE, THIS BLOCK WILL BE AMENDED TO SHOW THE ICONS OF TILES' OWNERS AND ASSIGNED ROBOTICONS
-
-        gameFont.setSize(20);
-        drawer.addTableRow(tableRight, new Label("COLLEGE", new Label.LabelStyle(gameFont.font(), Color.WHITE)), 0, 0, 10, 0);
-        tableRight.add(new Label("ROBOTICON", new Label.LabelStyle(gameFont.font(), Color.WHITE))).padBottom(10);
-        //Even more window-dressing
-
-        gameFont.setSize(28);
-        gameButtonStyle.font = gameFont.font();
+        /**
+         * Button which allows players to claim selected tiles
+         */
         claim = new TextButton("CLAIM", gameButtonStyle);
-        deploy = new TextButton("DEPLOY", gameButtonStyle);
-        //Prepare buttons to claim the currently-selected tile and to deploy a roboticon onto it
-
-        drawer.switchTextButton(claim, false, Color.GRAY);
-        drawer.switchTextButton(deploy, false, Color.GRAY);
-        //Disable the claim and deploy button until a tile is selected under the appropriate conditions
-
         claim.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if (phase == 1) {
                     if (selectedTile.isOwned() == false){
                         players[currentPlayer].assignTile(selectedTile);
+                        //Assign selected tile to current player
+
                         selectedTile.setOwner(players[currentPlayer]);
-                        //getTile(tileGrid, selectedTile.ID() - 1).setOwner(players[currentPlayer]);
+                        //Set the owner of the currently selected tile to be the current player
+
                         tileAcquired = true;
+                        //Mark that a tile has been acquired on this turn
 
                         switch (players[currentPlayer].getCollege().getID()) {
                             case (1):
@@ -527,16 +411,123 @@ public class GameScreen implements Screen{
                                 selectedTile.setTileBorderColor(Color.PINK);
                                 break;
                         }
+                        //Set the colour of the tile's new border based on the college of the player who claimed it
 
                         nextPhase();
+                        //Advance the game
                     }
                 }
             }
         });
-        //Functionality of tile-claim button
+
+        deploy = new TextButton("DEPLOY", gameButtonStyle);
+    }
+
+    /**
+     * Set up the form and contents of the left-hand table so that they can be rendered later
+     */
+    public void constructLeftTable() {
+        /**
+         * Establishes the metadata for the interface's left-hand table
+         */
+        Table tableLeft = new Table();
+        //Construct left-hand table
+
+        tableLeft.setBounds(0, 0, 256, Gdx.graphics.getHeight());
+        //Set boundaries of left-hand table
+
+        tableLeft.center().top();
+        //Shift the table towards the top of the screen
+
+        tableLeft.add(timer).colspan(2);
+        //Add the timer to the table
+
+        gameFont.setSize(36);
+
+        Table phaseTable = new Table();
+        phaseLabel = new Label("PHASE 1", new Label.LabelStyle(gameFont.font(), Color.WHITE));
+        phaseTable.add(phaseLabel).width(110);
+        phaseTable.add(endTurn);
+        drawer.addTableRow(tableLeft, phaseTable, 0, 0, 15, 0, 2);
+        //Prepare and add the "End Phase" button to the table
+
+        drawer.addTableRow(tableLeft, new Label("CURRENT PLAYER", new Label.LabelStyle(gameFont.font(), Color.BLACK)), 0, 0, 10, 0, 2);
+        //Window-dressing: adds "CURRENT PLAYER" label
+
+        gameFont.setSize(24);
+        Table collegeInfo = new Table();
+        currentPlayerIcon = players[currentPlayer].getCollege().getLogo();
+        drawer.addTableRow(collegeInfo, currentPlayerIcon, 64, 64);
+        drawer.addTableRow(collegeInfo, new Label("COLLEGE", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
+        drawer.addTableRow(tableLeft, collegeInfo, 5, 0, 0, 15);
+        //Prepare icon region to show the icon of the college which is currently active
+
+        Table resourceCounters = new Table();
+        foodCounter = new Label(players[currentPlayer].getFoodCount().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
+        energyCounter = new Label(players[currentPlayer].getEnergyCount().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
+        oreCounter = new Label(players[currentPlayer].getOreCount().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
+        roboticonCounter = new Label(players[currentPlayer].getRoboticonCount().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
+        moneyCounter = new Label(players[currentPlayer].getMoney().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
+        drawer.addTableRow(resourceCounters, new LabelledElement("Food", gameFont, Color.WHITE, foodCounter, 120, 40));
+        drawer.addTableRow(resourceCounters, new LabelledElement("Energy", gameFont, Color.WHITE, energyCounter, 120, 40));
+        drawer.addTableRow(resourceCounters, new LabelledElement("Ore", gameFont, Color.WHITE, oreCounter, 120, 40));
+        drawer.addTableRow(resourceCounters, new LabelledElement("Roboticons", gameFont, Color.WHITE, roboticonCounter, 120, 40));
+        drawer.addTableRow(resourceCounters, new LabelledElement("Money", gameFont, Color.WHITE, moneyCounter, 120, 40));
+        tableLeft.add(resourceCounters).size(160, 120);
+        //Add resource-counters to the table
+        //These will show the current resource stocks for the current player
+
+        drawer.addTableRow(tableLeft, pause, 113, 0, 0, 0, 2);
+        //Prepare and add the pause button to the bottom of the table
+
+        stage.addActor(tableLeft);
+        //Add left-hand table to the stage
+    }
+
+    /**
+     * Set up the form and contents of the right-hand table so that they can be rendered later
+     */
+    public void constructRightTable() {
+        /**
+         * Establishes the metadata for the interface's right-hand table
+         */
+        Table tableRight = new Table();
+
+        tableRight.setBounds((Gdx.graphics.getWidth() / 2) + (map.getWidth() / 2), 0, 256, Gdx.graphics.getHeight());
+        //Set boundaries of right-hand table
+
+        tableRight.center().top();
+        //Shift the table towards the top of the screen
+
+        gameFont.setSize(40);
+        selectedTileLabel = new Label("NO TILE SELECTED", new Label.LabelStyle(gameFont.font(), Color.WHITE));
+        selectedTileLabel.setAlignment(Align.center);
+        drawer.addTableRow(tableRight, selectedTileLabel, 240, 43, 0, 0, 10, 0, 2);
+        //Set up and deploy label to identify tiles when they're clicked on
+
+        selectedTileOwnerIcon = new Image();
+        selectedTileOwnerIcon.setVisible(false);
+        drawer.addTableRow(tableRight, selectedTileOwnerIcon, 64, 64);
+        tableRight.add(new Label("ROB", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
+        //Instantiate and deploy icons to represent tiles' owners and Roboticons
+
+        gameFont.setSize(20);
+        drawer.addTableRow(tableRight, new Label("COLLEGE", new Label.LabelStyle(gameFont.font(), Color.WHITE)), 0, 0, 10, 0);
+        tableRight.add(new Label("ROBOTICON", new Label.LabelStyle(gameFont.font(), Color.WHITE))).padBottom(10);
+        //Even more window-dressing
+
+        gameFont.setSize(28);
+        gameButtonStyle.font = gameFont.font();
+
+        //Prepare buttons to claim the currently-selected tile and to deploy a roboticon onto it
+
+        drawer.switchTextButton(claim, false, Color.GRAY);
+        drawer.switchTextButton(deploy, false, Color.GRAY);
+        //Disable the claim and deploy button until a tile is selected under the appropriate conditions
+
         drawer.addTableRow(tableRight, claim, 0, 0, 15, 0);
         tableRight.add(deploy).padBottom(15);
-        //Add tile claim/deploy buttons to table
+        //Add tile claim/deploy buttons to interface
 
         market = new Market(game);
         market.buyOre.addListener(new ChangeListener() {
@@ -679,12 +670,16 @@ public class GameScreen implements Screen{
      * Set up the pause menu to allow for the game to be successfully paused
      */
     public void constructPauseMenu() {
+
+        /**
+         * Establishes the visual framework for the pause screen
+         */
+        Table pauseTable = new Table();
         pauseStage = new Stage();
-        pauseTable = new Table();
         //Establish stage and interface for pause menu
 
-        titleFont = new TTFont(Gdx.files.internal("font/earthorbiterxtrabold.ttf"), 72);
-        menuFont = new TTFont(Gdx.files.internal("font/enterthegrid.ttf"), 36);
+        TTFont titleFont = new TTFont(Gdx.files.internal("font/earthorbiterxtrabold.ttf"), 72);
+        TTFont menuFont = new TTFont(Gdx.files.internal("font/enterthegrid.ttf"), 36);
         //Prepare fonts for the logo and the options on the pause menu
 
         pauseTable.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -700,7 +695,10 @@ public class GameScreen implements Screen{
         menuButtonStyle.pressedOffsetY = -1;
         //Establish the visual style of the pause menu's buttons
 
-        resume = new TextButton("Resume", menuButtonStyle);
+        /**
+         * Button which allows players to resume the game from the pause menu
+         */
+        TextButton resume = new TextButton("Resume", menuButtonStyle);
         resume.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -729,16 +727,16 @@ public class GameScreen implements Screen{
         drawer.lineRectangle(Color.WHITE, (int) map.getX(), (int) map.getY(), (int) map.getWidth() + 1, (int) map.getHeight(), 1);
         //Draw border around the map
 
-        drawer.filledRectangle(Color.WHITE, 0, (int) timer.getHeight(), tableWidth, 1);
-        drawer.filledRectangle(Color.WHITE, 0, (int) (timer.getHeight() + endTurn.getHeight()), tableWidth, 1);
+        drawer.filledRectangle(Color.WHITE, 0, (int) timer.getHeight(), 256, 1);
+        drawer.filledRectangle(Color.WHITE, 0, (int) (timer.getHeight() + endTurn.getHeight()), 256, 1);
         drawer.borderedRectangle(Color.GRAY, Color.WHITE, 19, (int) (timer.getHeight() + endTurn.getHeight()) + 15, 219, 40, 1);
         //drawer.lineRectangle(Color.WHITE, ((int) (Gdx.graphics.getWidth() * 0.125)) - 110, 240, 66, 66);
-        drawer.filledRectangle(Color.WHITE, 0, Gdx.graphics.getHeight() - 46, tableWidth, 1);
+        drawer.filledRectangle(Color.WHITE, 0, Gdx.graphics.getHeight() - 46, 256, 1);
         //Draw lines and rectangles in left-hand table
 
         drawer.lineRectangle(Color.WHITE, ((int) (Gdx.graphics.getWidth() * 0.875)) - 94, 52, 66, 66, 1);
         drawer.lineRectangle(Color.WHITE, ((int) (Gdx.graphics.getWidth() * 0.875)) + 26, 52, 66, 66, 1);
-        drawer.filledRectangle(Color.WHITE, Gdx.graphics.getWidth() - 256, 190, tableWidth, 1);
+        drawer.filledRectangle(Color.WHITE, Gdx.graphics.getWidth() - 256, 190, 256, 1);
         //Draw lines in right-hand table
     }
 

@@ -67,8 +67,10 @@ public class College {
     if (ID < 1 || ID > 9) {
       throw new ValueException("Invalid College ID Given (Must be between 1 and 9)");
     }
+    //Throw an exception if an invalid college ID is given
 
     this.ID = ID;
+    //Assign it to the college object otherwise
 
     switch (this.ID) {
       case (1):
@@ -108,10 +110,14 @@ public class College {
         this.logoTexture = new Texture("image/Constantine.png");
         break;
     }
+    //College ID determines name and logo
 
     this.logo = new Image(logoTexture);
+    //Map the college's associated logo texture to an image object
 
     this.Description = Description;
+    //Set the description of the college
+    //This will be displayed on the college-selection screen
   }
 
   /**
@@ -130,18 +136,38 @@ public class College {
       this.Owner = Player;
   }
 
+  /**
+   * Returns the college's assigned name
+   *
+   * @return String The college's name
+   */
   public String getName() {
     return this.Name;
   }
 
+  /**
+   * Returns the college's associated ID
+   *
+   * @return Integer The college's associated ID
+   */
   public int getID() {
     return this.ID;
   }
 
+  /**
+   * Returns an Image object with the texture of the college's logo mapped to it
+   *
+   * @return Image Icon representing the college
+   */
   public Image getLogo() {
     return this.logo;
   }
 
+  /**
+   * Returns the texture file encoding the college's logo
+   *
+   * @return
+   */
   public Texture getLogoTexture() {
     return logoTexture;
 

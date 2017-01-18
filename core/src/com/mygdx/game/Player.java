@@ -109,6 +109,15 @@ public class Player {
     }
 
     /**
+     * Returns the number of Roboticons owned by the player
+     *
+     * @return Integer Quantity of Roboticons owned by the player
+     */
+    public Integer getRoboticonCount() {
+        return this.RoboticonList.size();
+    }
+
+    /**
      * Setter for Foodcount
      * @param Newcount Integer value that the Foodcount is set to
      */
@@ -213,14 +222,5 @@ public class Player {
      */
     public List<Roboticon> getRoboticons() {
         return this.RoboticonList;
-    }
-
-    /**
-     * Returns the number of Roboticons owned by the player
-     *
-     * @return Integer Quantity of Roboticons owned by the player
-     */
-    public int getRoboticonCount() {
-        return this.RoboticonList.size();
     }
 }
