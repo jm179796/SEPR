@@ -589,7 +589,7 @@ public class GameScreen implements Screen{
 
                     try {
                         players[currentPlayer] = market.buy("ore", 1, players[currentPlayer]);
-                        oreCounter.setText(players[currentPlayer].getOreCount().toString());
+                        updateLabels();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -604,7 +604,7 @@ public class GameScreen implements Screen{
 
                     try {
                         players[currentPlayer] = market.buy("food", 1, players[currentPlayer]);
-                        foodCounter.setText(players[currentPlayer].getFoodCount().toString());
+                        updateLabels();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -619,7 +619,7 @@ public class GameScreen implements Screen{
 
                     try {
                         players[currentPlayer] = market.buy("energy", 1, players[currentPlayer]);
-                        energyCounter.setText(players[currentPlayer].getEnergyCount().toString());
+                        updateLabels();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -635,7 +635,7 @@ public class GameScreen implements Screen{
 
                     try {
                         players[currentPlayer] = market.sell("energy", 1, players[currentPlayer]);
-                        energyCounter.setText(players[currentPlayer].getEnergyCount().toString());
+                        updateLabels();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -651,7 +651,7 @@ public class GameScreen implements Screen{
 
                     try {
                         players[currentPlayer] = market.sell("ore", 1, players[currentPlayer]);
-                        oreCounter.setText(players[currentPlayer].getOreCount().toString());
+                        updateLabels();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -667,7 +667,7 @@ public class GameScreen implements Screen{
 
                     try {
                         players[currentPlayer] = market.sell("food", 1, players[currentPlayer]);
-                        foodCounter.setText(players[currentPlayer].getFoodCount().toString());
+                        updateLabels();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -851,19 +851,19 @@ public class GameScreen implements Screen{
             else{
                 phase = 3;
                 timer.setTime(2,0);
-                currentPlayer = 1;
+                switchCurrentPlayer();
                 updateLabels();
             }
         }
         else if(phase == 3){
             if(currentPlayer == 1){
-                currentPlayer = 2;
+                switchCurrentPlayer();
                 updateLabels();
             }
             else {
                 phase = 4;
                 timer.setTime(0, 99999);
-                currentPlayer = 1;
+                switchCurrentPlayer();
                 updateLabels();
             }
         }
@@ -898,7 +898,7 @@ public class GameScreen implements Screen{
                 phase = 1;
                 timer.setTime(0,99999);
 
-                currentPlayer = 1;
+                switchCurrentPlayer();
                 updateLabels();
                 drawer.switchTextButton(endTurn, false, Color.GRAY);
                 drawer.switchTextButton(claim, true, Color.WHITE);
@@ -957,6 +957,9 @@ public class GameScreen implements Screen{
         currentPlayerIcon.setDrawable(new TextureRegionDrawable(new TextureRegion(players[currentPlayer].getCollege().getLogoTexture())));
         currentPlayerIcon.setSize(64, 64);
 
+    }
+
+    public void updateLabels(){
         moneyCounter.setText(players[currentPlayer].getMoney().toString());
         foodCounter.setText(players[currentPlayer].getFoodCount().toString());
         oreCounter.setText(players[currentPlayer].getOreCount().toString());
