@@ -26,7 +26,7 @@ public class Market extends Table {
     /**
      * Variable holding current Ore resource amount as an Integer, initialises at 0 as stated in the brief.
      */
-    private Integer OreStock = 0;
+    private Integer OreStock = 16;
     
     /**
      * Variable holding current Food resource amount as an Integer, initialises at 16 as stated in the brief.
@@ -76,7 +76,7 @@ public class Market extends Table {
     /**
      * Variable holding roboticon buying price.
      */
-    private Integer RoboticonBuyPrice = 0;
+    private Integer RoboticonBuyPrice = 20;
 
     public TextButton buyOre;
     public TextButton buyFood;
@@ -107,6 +107,7 @@ public class Market extends Table {
             OreSellPrice = calculateNewCost(OreStock, "sell");
             FoodSellPrice = calculateNewCost(FoodStock, "sell");
             EnergySellPrice = calculateNewCost(EnergyStock, "sell");
+
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -616,20 +617,18 @@ public class Market extends Table {
      * number is decreased by one. Player's money are decreased by amount that was spent on purchase.
      * </p>
      *
-     * @param RoboticonID An integer uniquely defining the Roboticon, starting at 0.
      * @param Player      A Player object that owns the Roboticon.
-     * @param Tile        A Tile object the Roboticon is positioned on and belongs to it.
      */
-    public void buyRoboticon(int RoboticonID, Player Player, Tile Tile) throws Exception {
+    public Player buyRoboticon(Player Player) throws Exception {
         if (RoboticonStock > 0) {
             if (Player.getMoney() >= RoboticonBuyPrice) {
                 if (OreStock > 0) {
-                    Roboticon NewRoboticon = new Roboticon(RoboticonID, Player, Tile);
-                    Tile.assignRoboticon(NewRoboticon);
-                    Player.addRoboticon(NewRoboticon);
                     RoboticonStock -= 1;
                     Player.setMoney(Player.getMoney() - RoboticonBuyPrice);
-                    RoboticonBuyPrice += 20;
+                    RoboticonBuyPrice += 5;
+                    Player.increaseRoboticonInventory();
+                    roboticonStockLabel.setText(this.getRoboticonStock().toString());
+                    buyRoboticon.setText(getRoboticonBuyPrice().toString());
                 } else {
                     throw new Exception("Insufficient ore");
                 }
@@ -639,7 +638,7 @@ public class Market extends Table {
         } else {
             throw new Exception("No available Roboticons");
         }
-
+    return Player;
     }
 
 }
