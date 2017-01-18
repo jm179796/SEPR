@@ -10,6 +10,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -17,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 
 import java.util.List;
@@ -125,10 +127,10 @@ public class GameScreen implements Screen{
     private Label roboticonCounter;
 
     private Label moneyCounter;
+
     /**
      * Defines whether or not a tile has been acquired in the current phase of the game
      */
-
     private boolean tileAcquired;
 
     /**
@@ -201,6 +203,16 @@ public class GameScreen implements Screen{
     private Market market;
 
     /**
+     * Icon representing the currently-active player's chosen college
+     */
+    private Image currentPlayerIcon;
+
+    /**
+     * Icon representing the player who owns the currently-selected tile
+     */
+    private Image selectedTileOwnerIcon;
+
+    /**
      * The game-screen's initial constructor
      *
      * @param game Variable storing the game's state
@@ -213,8 +225,8 @@ public class GameScreen implements Screen{
         Player Player2 = new Player(2);
         players[1] = Player1;
         players[2] = Player2;
-        College Goodricke = new College("Goodricke", "The best college");
-        College Derwent = new College("Derwent", "It has asbestos");
+        College Goodricke = new College(1, "The best college");
+        College Derwent = new College(2, "It has asbestos");
         players[1].assignCollege(Goodricke);
         players[2].assignCollege(Derwent);
         //Import current game-state and establish player data
@@ -266,7 +278,7 @@ public class GameScreen implements Screen{
         constructPauseMenu();
         //Construct pause-menu (and hide it for the moment)
 
-        drawer.debug(stage);
+        //drawer.debug(stage);
         //Call this to draw temporary debug lines around all of the actors on the stage
 
         state = State.RUN;
@@ -298,6 +310,7 @@ public class GameScreen implements Screen{
 
             for (Tile tile : tiles) {
                 tile.drawTooltip();
+                tile.drawBorder();
             }
             //If any of the tiles' tooltips are deemed "active", render them to the screen too
         } else if (state == State.PAUSE) {
@@ -375,12 +388,17 @@ public class GameScreen implements Screen{
         drawer.addTableRow(tableLeft, phaseTable, 0, 0, 15, 0, 2);
         //Prepare and add the "End Phase" button to the table
 
+        drawer.switchTextButton(endTurn, false, Color.GRAY);
+        //Turn the "End Turn" button off until phase 2 is reached
+
         drawer.addTableRow(tableLeft, new Label("CURRENT PLAYER", new Label.LabelStyle(gameFont.font(), Color.BLACK)), 0, 0, 10, 0, 2);
         //Window-dressing
 
         gameFont.setSize(24);
         Table collegeInfo = new Table();
-        drawer.addTableRow(collegeInfo, new Label("COL", new Label.LabelStyle(gameFont.font(), Color.WHITE)), 64, 64);
+        //drawer.addTableRow(collegeInfo, new Label("COL", new Label.LabelStyle(gameFont.font(), Color.WHITE)), 64, 64);
+        currentPlayerIcon = players[currentPlayer].getCollege().getLogo();
+        drawer.addTableRow(collegeInfo, currentPlayerIcon, 64, 64);
         drawer.addTableRow(collegeInfo, new Label("COLLEGE", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
         drawer.addTableRow(tableLeft, collegeInfo, 5, 0, 0, 15);
         //More window-dressing
@@ -438,7 +456,9 @@ public class GameScreen implements Screen{
         selectedTileLabel = new Label("NO TILE SELECTED", new Label.LabelStyle(gameFont.font(), Color.WHITE));
         selectedTileLabel.setAlignment(Align.center);
         drawer.addTableRow(tableRight, selectedTileLabel, 240, 43, 0, 0, 10, 0, 2);
-        drawer.addTableRow(tableRight, new Label("COL", new Label.LabelStyle(gameFont.font(), Color.WHITE)), 64, 64, 0, 0, 0, 0);
+        selectedTileOwnerIcon = new Image();
+        selectedTileOwnerIcon.setVisible(false);
+        drawer.addTableRow(tableRight, selectedTileOwnerIcon, 64, 64);
         tableRight.add(new Label("ROB", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
         //Add labels for currently selected tile
         //These will change to reflect the IDs, owners and statuses of each tile selected
@@ -451,21 +471,64 @@ public class GameScreen implements Screen{
 
         gameFont.setSize(28);
         gameButtonStyle.font = gameFont.font();
-        claim = new TextButton("Claim", gameButtonStyle);
-        deploy = new TextButton("Deploy", gameButtonStyle);
+        claim = new TextButton("CLAIM", gameButtonStyle);
+        deploy = new TextButton("DEPLOY", gameButtonStyle);
         //Prepare buttons to claim the currently-selected tile and to deploy a roboticon onto it
+
+        drawer.switchTextButton(claim, false, Color.GRAY);
+        drawer.switchTextButton(deploy, false, Color.GRAY);
+        //Disable the claim and deploy button until a tile is selected under the appropriate conditions
 
         claim.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if (phase == 1) {
-
                     if (selectedTile.isOwned() == false){
-
                         players[currentPlayer].assignTile(selectedTile);
                         selectedTile.setOwner(players[currentPlayer]);
+                        //getTile(tileGrid, selectedTile.ID() - 1).setOwner(players[currentPlayer]);
                         tileAcquired = true;
 
+                        switch (players[currentPlayer].getCollege().getID()) {
+                            case (1):
+                                //DERWENT
+                                selectedTile.setTileBorderColor(Color.BLUE);
+                                break;
+                            case (2):
+                                //LANGWITH
+                                selectedTile.setTileBorderColor(Color.CHARTREUSE);
+                                break;
+                            case (3):
+                                //VANBURGH
+                                selectedTile.setTileBorderColor(Color.TEAL);
+                                break;
+                            case (4):
+                                //JAMES
+                                selectedTile.setTileBorderColor(Color.CYAN);
+                                break;
+                            case (5):
+                                //WENTWORTH
+                                selectedTile.setTileBorderColor(Color.MAROON);
+                                break;
+                            case (6):
+                                //HALIFAX
+                                selectedTile.setTileBorderColor(Color.YELLOW);
+                                break;
+                            case (7):
+                                //ALCUIN
+                                selectedTile.setTileBorderColor(Color.RED);
+                                break;
+                            case (8):
+                                //GOODRICKE
+                                selectedTile.setTileBorderColor(Color.GREEN);
+                                break;
+                            case (9):
+                                //CONSTANTINE
+                                selectedTile.setTileBorderColor(Color.PINK);
+                                break;
+                        }
+
+                        nextPhase();
                     }
                 }
             }
@@ -483,7 +546,7 @@ public class GameScreen implements Screen{
 
                     try {
                         players[currentPlayer] = market.buy("ore", 1, players[currentPlayer]);
-                        updateLabels();
+                        oreCounter.setText(players[currentPlayer].getOreCount().toString());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -498,7 +561,7 @@ public class GameScreen implements Screen{
 
                     try {
                         players[currentPlayer] = market.buy("food", 1, players[currentPlayer]);
-                        updateLabels();
+                        foodCounter.setText(players[currentPlayer].getFoodCount().toString());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -513,7 +576,7 @@ public class GameScreen implements Screen{
 
                     try {
                         players[currentPlayer] = market.buy("energy", 1, players[currentPlayer]);
-                        updateLabels();
+                        energyCounter.setText(players[currentPlayer].getEnergyCount().toString());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -529,7 +592,7 @@ public class GameScreen implements Screen{
 
                     try {
                         players[currentPlayer] = market.sell("energy", 1, players[currentPlayer]);
-                        updateLabels();
+                        energyCounter.setText(players[currentPlayer].getEnergyCount().toString());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -545,7 +608,7 @@ public class GameScreen implements Screen{
 
                     try {
                         players[currentPlayer] = market.sell("ore", 1, players[currentPlayer]);
-                        updateLabels();
+                        oreCounter.setText(players[currentPlayer].getOreCount().toString());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -561,7 +624,7 @@ public class GameScreen implements Screen{
 
                     try {
                         players[currentPlayer] = market.sell("food", 1, players[currentPlayer]);
-                        updateLabels();
+                        foodCounter.setText(players[currentPlayer].getFoodCount().toString());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -663,18 +726,18 @@ public class GameScreen implements Screen{
      * Draw auxiliary rectangles to provide window-dressing for the interface
      */
     public void drawRectangles() {
-        drawer.lineRectangle(Color.WHITE, (int) map.getX(), (int) map.getY(), (int) map.getWidth() + 1, (int) map.getHeight());
+        drawer.lineRectangle(Color.WHITE, (int) map.getX(), (int) map.getY(), (int) map.getWidth() + 1, (int) map.getHeight(), 1);
         //Draw border around the map
 
         drawer.filledRectangle(Color.WHITE, 0, (int) timer.getHeight(), tableWidth, 1);
         drawer.filledRectangle(Color.WHITE, 0, (int) (timer.getHeight() + endTurn.getHeight()), tableWidth, 1);
-        drawer.borderedRectangle(Color.GRAY, Color.WHITE, 19, (int) (timer.getHeight() + endTurn.getHeight()) + 15, 219, 40);
+        drawer.borderedRectangle(Color.GRAY, Color.WHITE, 19, (int) (timer.getHeight() + endTurn.getHeight()) + 15, 219, 40, 1);
         //drawer.lineRectangle(Color.WHITE, ((int) (Gdx.graphics.getWidth() * 0.125)) - 110, 240, 66, 66);
         drawer.filledRectangle(Color.WHITE, 0, Gdx.graphics.getHeight() - 46, tableWidth, 1);
         //Draw lines and rectangles in left-hand table
 
-        drawer.lineRectangle(Color.WHITE, ((int) (Gdx.graphics.getWidth() * 0.875)) - 94, 52, 66, 66);
-        drawer.lineRectangle(Color.WHITE, ((int) (Gdx.graphics.getWidth() * 0.875)) + 26, 52, 66, 66);
+        drawer.lineRectangle(Color.WHITE, ((int) (Gdx.graphics.getWidth() * 0.875)) - 94, 52, 66, 66, 1);
+        drawer.lineRectangle(Color.WHITE, ((int) (Gdx.graphics.getWidth() * 0.875)) + 26, 52, 66, 66, 1);
         drawer.filledRectangle(Color.WHITE, Gdx.graphics.getWidth() - 256, 190, tableWidth, 1);
         //Draw lines in right-hand table
     }
@@ -705,15 +768,6 @@ public class GameScreen implements Screen{
     //Returns the tile-type object held in the provided TileGrid at the specified position
 
     /**
-     * The code to be run whenever a particular tile is clicked on
-     *
-     * @param tile The tile being clicked on
-     */
-    public void selectTile(Tile tile) {
-        selectedTileLabel.setText("Tile " + tile.ID());
-    }
-
-    /**
      * Encodes possible game-states
      */
     public enum State {
@@ -725,31 +779,30 @@ public class GameScreen implements Screen{
      * Advances the game's progress upon call
      */
     public void nextPhase() {
-        System.out.print("player" + currentPlayer);
-        System.out.print("phase" + phase);
+        System.out.print("Player " + currentPlayer + " | Phase " + phase);
         if(phase == 1){
             if(tileAcquired == true) {
                 tileAcquired = false;
 
                 if (currentPlayer == 1) {
-                    currentPlayer = 2;
-
+                    switchCurrentPlayer();
                 } else {
                     phase = 2;
                     timer.setTime(2, 0);
-                    currentPlayer = 1;
+                    switchCurrentPlayer();
+
+                    drawer.switchTextButton(endTurn, true, Color.WHITE);
                 }
             }
         }
         else if(phase == 2){
             if(currentPlayer == 1){
-                currentPlayer = 2;
+                switchCurrentPlayer();
             }
             else{
                 phase = 3;
                 timer.setTime(2,0);
             }
-
         }
         else if(phase == 3){
             phase = 4;
@@ -776,18 +829,67 @@ public class GameScreen implements Screen{
         }
         else if(phase == 5){
             if (currentPlayer == 1) {
-                currentPlayer = 2;
+                switchCurrentPlayer();
             }
             else{
                 phase = 1;
                 timer.setTime(0,99999);
+
+                drawer.switchTextButton(endTurn, false, Color.GRAY);
+                drawer.switchTextButton(claim, true, Color.WHITE);
             }
 
         }
 
         phaseLabel.setText("PHASE " + phase);
+
+        deselectTile();
     }
-    public void updateLabels(){
+
+    /**
+     * The code to be run whenever a particular tile is clicked on
+     *
+     * @param tile The tile being clicked on
+     */
+    public void selectTile(Tile tile) {
+        selectedTileLabel.setText("Tile " + tile.ID());
+
+        if (phase == 1 && !tile.isOwned()) {
+            drawer.switchTextButton(claim, true, Color.WHITE);
+        } else if (phase == 3 && players[currentPlayer].getRoboticonCount() > 0) {
+            drawer.switchTextButton(deploy, true, Color.WHITE);
+        }
+
+        if (tile.isOwned()) {
+            selectedTileOwnerIcon.setVisible(true);
+            selectedTileOwnerIcon.setDrawable(new TextureRegionDrawable(new TextureRegion(tile.getOwner().getCollege().getLogoTexture())));
+            selectedTileOwnerIcon.setSize(64, 64);
+        } else {
+            selectedTileOwnerIcon.setVisible(false);
+        }
+    }
+
+    /**
+     * Run this to deselect the currently selected tile
+     */
+    public void deselectTile() {
+        drawer.switchTextButton(claim, false, Color.GRAY);
+        drawer.switchTextButton(deploy, false, Color.GRAY);
+
+        selectedTileOwnerIcon.setVisible(false);
+
+        selectedTileLabel.setText("NO TILE SELECTED");
+    }
+
+    /**
+     * Sets the current player to be that which isn't whenever this is called
+     */
+    public void switchCurrentPlayer() {
+        currentPlayer = 3 - currentPlayer;
+
+        currentPlayerIcon.setDrawable(new TextureRegionDrawable(new TextureRegion(players[currentPlayer].getCollege().getLogoTexture())));
+        currentPlayerIcon.setSize(64, 64);
+
         moneyCounter.setText(players[currentPlayer].getMoney().toString());
         foodCounter.setText(players[currentPlayer].getFoodCount().toString());
         oreCounter.setText(players[currentPlayer].getOreCount().toString());

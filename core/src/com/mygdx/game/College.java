@@ -1,10 +1,32 @@
 package com.mygdx.game;
+
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.graphics.Texture;
+import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
+
+import java.awt.*;
+
 public class College {
+
+  /**
+   * The numeric representation of the college
+   *
+   * DERWENT: 1
+   * LANGWITH: 2
+   * VANBURGH: 3
+   * JAMES: 4
+   * WENTWORTH: 5
+   * HALIFAX: 6
+   * ALCUIN: 7
+   * GOODRICKE: 8
+   * CONSTANTINE: 9
+   */
+  private int ID;
 
   /**
    * The name of the College.
    */
-  public String Name;
+  private String Name;
 
   /**
    * The custom name that a player can choose for the college.
@@ -26,17 +48,70 @@ public class College {
    */
   private String Description;
 
+  /**
+   * The symbol of the college
+   */
+  private Image logo;
 
+  /**
+   * The texture encoding the symbol of the college
+   */
+  private Texture logoTexture;
 
   /**
    * The constructor for the class.
-   * @param Name The name of the college.
+   * @param ID The ID of the college.
    * @param Description The description of the college.
    */
-  public College(String Name, String Description){
-    this.Name = Name;
-    this.Description = Description;
+  public College(int ID, String Description){
+    if (ID < 1 || ID > 9) {
+      throw new ValueException("Invalid College ID Given (Must be between 1 and 9)");
+    }
 
+    this.ID = ID;
+
+    switch (this.ID) {
+      case (1):
+        this.Name = "Derwent";
+        this.logoTexture = new Texture("image/Derwent.png");
+        break;
+      case (2):
+        this.Name = "Langwith";
+        this.logoTexture = new Texture("image/Langwith.png");
+        break;
+      case (3):
+        this.Name = "Vanburgh";
+        this.logoTexture = new Texture("image/Vanburgh.png");
+        break;
+      case (4):
+        this.Name = "James";
+        this.logoTexture = new Texture("image/James.png");
+        break;
+      case (5):
+        this.Name = "Wentworth";
+        this.logoTexture = new Texture("image/Wentworth.png");
+        break;
+      case (6):
+        this.Name = "Halifax";
+        this.logoTexture = new Texture("image/Halifax.png");
+        break;
+      case (7):
+        this.Name = "Alcuin";
+        this.logoTexture = new Texture("image/Alcuin.png");
+        break;
+      case (8):
+        this.Name = "Goodricke";
+        this.logoTexture = new Texture("image/Goodricke.png");
+        break;
+      case (9):
+        this.Name = "Constantine";
+        this.logoTexture = new Texture("image/Constantine.png");
+        break;
+    }
+
+    this.logo = new Image(logoTexture);
+
+    this.Description = Description;
   }
 
   /**
@@ -55,4 +130,20 @@ public class College {
       this.Owner = Player;
   }
 
+  public String getName() {
+    return this.Name;
+  }
+
+  public int getID() {
+    return this.ID;
+  }
+
+  public Image getLogo() {
+    return this.logo;
+  }
+
+  public Texture getLogoTexture() {
+    return logoTexture;
+
+  }
 }

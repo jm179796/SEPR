@@ -202,4 +202,25 @@ public class Player {
     public void calculateScore() {
     }
 
+    public College getCollege() {
+        return this.College;
+    }
+
+    /**
+     * Returns the array of Roboticons owned by the player
+     *
+     * @return List<Roboticon> List of Roboticons owned by the player
+     */
+    public List<Roboticon> getRoboticons() {
+        return this.RoboticonList;
+    }
+
+    /**
+     * Returns the number of Roboticons owned by the player
+     *
+     * @return Integer Quantity of Roboticons owned by the player
+     */
+    public int getRoboticonCount() {
+        return this.RoboticonList.size();
+    }
 }
