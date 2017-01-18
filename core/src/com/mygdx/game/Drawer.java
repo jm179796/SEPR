@@ -303,12 +303,14 @@ public class Drawer {
      */
     public void switchTextButton(TextButton button, boolean enabled, Color buttonColor) {
         button.getLabel().setColor(buttonColor);
+        //Assign a new colour to the specified label
 
         if (enabled == true) {
             button.setTouchable(Touchable.enabled);
         } else {
             button.setTouchable(Touchable.disabled);
         }
+        //Enable or disable the button as specified
     }
 
     /**
@@ -324,5 +326,6 @@ public class Drawer {
         } else {
             button.setTouchable(Touchable.disabled);
         }
+        //Enable or disable the button as specified
     }
 }
