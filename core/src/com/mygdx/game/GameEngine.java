@@ -197,6 +197,17 @@ public class GameEngine {
         gameScreen.updatePhaseLabel(phase);
 
         gameScreen.deselectTile();
+
+        if(checkGameEnd() == true){
+            Integer score1 = players[1].calculateScore();
+            Integer score2 = players[2].calculateScore();
+            if(score1 > score2){
+                System.out.print("Player 1 Wins!");
+            }
+            else{
+                System.out.print("Player 2 Wins!");
+            }
+        }
     }
 
     /**
@@ -466,5 +477,15 @@ public class GameEngine {
 
     public Market market() {
         return market;
+    }
+
+    public boolean checkGameEnd(){
+        boolean end = true;
+        for(Tile Tile : tiles){
+            if(Tile.getOwner().PlayerID == 0){
+                end = false;
+            }
+        }
+        return end;
     }
 }

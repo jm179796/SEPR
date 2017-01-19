@@ -217,7 +217,9 @@ public class Player {
     /**
      * Calculates the score of the player based on the resources that they own.
      */
-    public void calculateScore() {
+    public Integer calculateScore() {
+        Integer Score = this.EnergyCount + this.FoodCount + this.OreCount;
+        return Score;
     }
 
     public void increaseRoboticonInventory() {
