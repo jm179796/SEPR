@@ -457,9 +457,11 @@ public class Market extends Table {
                 throw new Exception("Insufficient resources");
             }
         } else {
+
             throw new Exception("Wrong Stock_Type passed");
         }
         return Player;
+
 
     }
 
@@ -488,12 +490,14 @@ public class Market extends Table {
                 Player.setMoney(playersMoney);
                 playersOre -= Quantity;
                 Player.setOreCount(playersOre);
+
                 OreBuyPrice = calculateNewCost(OreStock, "buy");
                 OreSellPrice = calculateNewCost(OreStock, "sell");
                 oreStockLabel.setText(getOreStock().toString());
                 sellOre.setText(getOreSellPrice().toString());
             } else {
                 throw new Exception("Insufficient resources");
+
             }
         } else if ("food".equals(Stock_Type)) {
             int playersFood = Player.getFoodCount();
@@ -564,6 +568,7 @@ public class Market extends Table {
         } else {
             return null; //throw an error or prevent them clicking it in the first place
         }
+
     }
 
 
