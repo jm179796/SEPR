@@ -52,10 +52,20 @@ public class Roboticon {
         RoboticonID = ID;
         this.CurrentTile = Tile;
         this.Owner = Player;
+
+        this.CurrentTile.assignRoboticon(this);
     }
 
+    /**
+     * Function to get the current roboticon Level
+     * @return Integer array of the resource
+     */
     public Integer[] getLevel() {
         return this.Level;
+    }
+
+    public Integer getRoboticonID(){
+        return RoboticonID;
     }
 
     /**
@@ -65,22 +75,23 @@ public class Roboticon {
      * </p>
      *
      * @param Resource String holding the characters 'Ore', 'Energy' or 'Food'
+     * @return boolean True if level increased, False if unable to increase level.
      */
-    public String upgrade(String Resource) {
-        if (Resource.equals("Ore")) {
+    public boolean upgrade(String Resource) {
+        if (Resource.equals("Ore") && this.Level[0] < MaxLevel) {
             this.Level[0] += 1;
-            return "Ore level increased";
+            return true;
 
-        } else if (Resource.equals("Energy")) {
+        } else if (Resource.equals("Energy") && this.Level[1] < MaxLevel) {
             this.Level[1] += 1;
-            return "Energy level increased";
+            return true;
 
-        } else if (Resource.equals("Food")) {
+        } else if (Resource.equals("Food") && this.Level[2] < MaxLevel) {
             this.Level[2] += 1;
-            return "Food level increased";
+            return true;
 
         } else
-            return "Incorrect parameter passed, must be Ore, Energy or Food";
+            return false;
 
 
     }
@@ -88,7 +99,7 @@ public class Roboticon {
     /**
      * A method to return an array of all possible upgrades available to the roboticon at its current state
      *
-     * @return Upgrades
+     * @return Upgrades Returns an Integer Array in the form [Ore, Energy, Food]
      */
     public Integer[] possibleUpgrades() {
         if (Level[0] <= MaxLevel) {
@@ -114,7 +125,7 @@ public class Roboticon {
      * @return Modifiers Array to return the modifier for resource production, stored [Ore, Energy, Food]
      */
     public Integer[] productionModifier() {
-        Integer Modifiers[] = {1, 1, 1};
+        Integer[] Modifiers = {1, 1, 1};
         Integer Max = 5;
         Integer Min = 1;
         Random rand = new Random();
