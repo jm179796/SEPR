@@ -81,7 +81,7 @@ public class GameEngine {
             final int fi = i;
             final GameScreen gs = gameScreen;
 
-            tiles[i] = new Tile(this.game, i + 1, 0, 0, 0, false, new Runnable() {
+            tiles[i] = new Tile(this.game, i + 1, 5, 5, 5, false, new Runnable() {
                 @Override
                 public void run() {
                     gs.selectTile(tiles[fi]);
@@ -137,27 +137,31 @@ public class GameEngine {
                 timer.setTime(2,0);
                 switchCurrentPlayer();
                 updateLabels();
-                drawer.switchTextButton(gameScreen.deployRoboticonButton(), true, Color.WHITE);
+
             }
         }
         else if(phase == 3){
             if(currentPlayerID == 1){
-                currentPlayerID = 2;
+                switchCurrentPlayer();
                 updateLabels();
             }
             else {
                 phase = 4;
                 timer.setTime(0, 99999);
-                currentPlayerID = 1;
+                switchCurrentPlayer();
                 updateLabels();
-                drawer.switchTextButton(gameScreen.deployRoboticonButton(), false, Color.GRAY);
+
             }
         }
         else if(phase == 4){
             List<Tile> tileList = players[1].getTileList();
             for (Tile Tile : tileList){
+
                 if (tileList.size() > 0){
+                    System.out.print("yes");
                     players[1] = Tile.Produce(players[1]);
+                    updateLabels();
+                    switchCurrentPlayer();
                 }
 
             }
@@ -165,6 +169,8 @@ public class GameEngine {
             for (Tile Tile : tileList2){
                 if(tileList2.size() > 0){
                     players[2] = Tile.Produce(players[2]);
+                    updateLabels();
+                    switchCurrentPlayer();
                 }
 
             }
@@ -175,6 +181,7 @@ public class GameEngine {
         else if(phase == 5){
             if (currentPlayerID == 1) {
                 switchCurrentPlayer();
+                updateLabels();
             }
             else{
                 phase = 1;
@@ -182,6 +189,8 @@ public class GameEngine {
 
                 drawer.switchTextButton(gameScreen.endTurnButton(), false, Color.GRAY);
                 drawer.switchTextButton(gameScreen.claimTileButton(), true, Color.WHITE);
+                switchCurrentPlayer();
+                updateLabels();
             }
         }
 
@@ -408,6 +417,8 @@ public class GameEngine {
                     players[currentPlayerID].addRoboticon(Roboticon);
                     selectedTile.assignRoboticon(Roboticon);
                     roboticonIDCounter += 1;
+                    players[currentPlayerID].decreaseRoboticonInventory();
+                    updateLabels();
                 }
             } else {
                 //PUT A CONDITION NEXT TO THE "ELSE" STATEMENT ABOVE TO CHECK FOR UPGRADE PRECONDITIONS

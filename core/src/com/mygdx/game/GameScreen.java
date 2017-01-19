@@ -595,7 +595,7 @@ public class GameScreen implements Screen{
                 if (tile.hasRoboticon()) {
                     deployRoboticonButton.setText("UPGRADE");
                     drawer.switchTextButton(deployRoboticonButton, true, Color.WHITE);
-                } else if (engine.currentPlayer().getRoboticonCount() > 0) {
+                } else if (engine.currentPlayer().getRoboticonInventory() > 0) {
                     drawer.switchTextButton(deployRoboticonButton, true, Color.WHITE);
                 } else {
                     drawer.switchTextButton(deployRoboticonButton, false, Color.GRAY);
