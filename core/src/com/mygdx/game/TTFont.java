@@ -11,19 +11,19 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 public class TTFont {
 
     /**
-     *
+     * A core BitMapFont object that the class encapsulates
+     * The class simply serves to take .TTF files and convert them into Bitmap fonts, which can then be rendered in-game
+     * This is the object that can be returned to any other class that desires a BitmapFont
      */
     private BitmapFont BMFont;
-    //This class builds off of the BitmapFont class
-    //I would simply extend the class, but that doesn't seem to work
 
     /**
-     *
+     * The internal generator that exists to convert TrueType fonts into Bitmap fonts
      */
     private FreeTypeFontGenerator TTFGenerator;
 
     /**
-     *
+     * The visual parameters that the aforementioned font-generator will acknowledge when generating fonts
      */
     private FreeTypeFontGenerator.FreeTypeFontParameter TTFStyle;
     //Set up a font-generator and a style configuration for it to work from
@@ -32,21 +32,23 @@ public class TTFont {
 
 
     /**
-     * Constructor
-     * @param fontFile
-     * @param size
-     * @param color
-     * @param borderWidth
-     * @param borderColor
-     * @param borderStraight
-     * @param shadowOffsetX
-     * @param shadowOffsetY
-     * @param shadowColor
+     * Constructor that automatically creates a BitmapFont object from a given .TTF file during the construction of
+     * the TTFont object itself
+     *
+     * @param fontFile An address to the font-file to be imported and converted
+     * @param size The size of the resulting BitmapFont
+     * @param color The colour of the border encoded by the resulting BitmapFont (if one is configured to exist)
+     * @param borderWidth The width of the border encoded by the resulting BitmapFont: a value of 0 disables the border
+     * @param borderColor The colour of the border encoded by the resulting BitmapFont (if one is configured to exist)
+     * @param borderStraight Determines whether the border encoded by the resulting BitmapFont is straight or rounded
+     * @param shadowOffsetX Determines the X-offset of the shadows beneath all characters in the resulting BitmapFont
+     * @param shadowOffsetY Determines the Y-offset of the shadows beneath all characters in the resulting BitmapFont
+     * @param shadowColor Determines the colour of the shadows beneath all characters in the resulting BitmapFont
      */
     public TTFont(FileHandle fontFile, int size, Color color, float borderWidth, Color borderColor, boolean borderStraight, int shadowOffsetX, int shadowOffsetY, Color shadowColor) {
         TTFGenerator = new FreeTypeFontGenerator(fontFile);
         TTFStyle = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        //Initialise font-generator and font-style objects
+        //Initialise font-generator and font-style parameters with the provided font-file
 
         TTFStyle.size = size;
         TTFStyle.color = color;
@@ -59,17 +61,17 @@ public class TTFont {
         //Set font attributes
 
         BMFont = TTFGenerator.generateFont(TTFStyle);
-        //Generate font
+        //Generate font with the attributes defined above
     }
 
     /**
      * Constructor
-     * @param fontFile
-     * @param size
-     * @param color
-     * @param shadowOffsetX
-     * @param shadowOffsetY
-     * @param shadowColor
+     * @param fontFile An address to the font-file to be imported and converted
+     * @param size The size of the resulting BitmapFont
+     * @param color The colour of the border encoded by the resulting BitmapFont (if one is configured to exist)
+     * @param shadowOffsetX Determines the X-offset of the shadows beneath all characters in the resulting BitmapFont
+     * @param shadowOffsetY Determines the Y-offset of the shadows beneath all characters in the resulting BitmapFont
+     * @param shadowColor Determines the colour of the shadows beneath all characters in the resulting BitmapFont
      */
     public TTFont(FileHandle fontFile, int size, Color color, int shadowOffsetX, int shadowOffsetY, Color shadowColor) {
         this(fontFile, size, color, 0, Color.BLACK, false, shadowOffsetX, shadowOffsetY, shadowColor);
@@ -77,11 +79,11 @@ public class TTFont {
 
     /**
      * Constructor
-     * @param fontFile
-     * @param size
-     * @param shadowOffsetX
-     * @param shadowOffsetY
-     * @param shadowColor
+     * @param fontFile An address to the font-file to be imported and converted
+     * @param size The size of the resulting BitmapFont
+     * @param shadowOffsetX Determines the X-offset of the shadows beneath all characters in the resulting BitmapFont
+     * @param shadowOffsetY Determines the Y-offset of the shadows beneath all characters in the resulting BitmapFont
+     * @param shadowColor Determines the colour of the shadows beneath all characters in the resulting BitmapFont
      */
     public TTFont(FileHandle fontFile, int size, int shadowOffsetX, int shadowOffsetY, Color shadowColor) {
         this(fontFile, size, Color.WHITE, 0, Color.BLACK, false, shadowOffsetX, shadowOffsetY, shadowColor);
@@ -89,12 +91,12 @@ public class TTFont {
 
     /**
      * Constructor
-     * @param fontFile
-     * @param size
-     * @param color
-     * @param borderWidth
-     * @param borderColor
-     * @param borderStraight
+     * @param fontFile An address to the font-file to be imported and converted
+     * @param size The size of the resulting BitmapFont
+     * @param color The colour of the border encoded by the resulting BitmapFont (if one is configured to exist)
+     * @param borderWidth The width of the border encoded by the resulting BitmapFont: a value of 0 disables the border
+     * @param borderColor The colour of the border encoded by the resulting BitmapFont (if one is configured to exist)
+     * @param borderStraight Determines whether the border encoded by the resulting BitmapFont is straight or rounded
      */
     public TTFont(FileHandle fontFile, int size, Color color, float borderWidth, Color borderColor, boolean borderStraight) {
         this(fontFile, size, color, borderWidth, borderColor, borderStraight, 0, 0, new Color(0, 0, 0, 0.75f));
@@ -102,11 +104,11 @@ public class TTFont {
 
     /**
      * Constructor
-     * @param fontFile
-     * @param size
-     * @param borderWidth
-     * @param borderColor
-     * @param borderStraight
+     * @param fontFile An address to the font-file to be imported and converted
+     * @param size The size of the resulting BitmapFont
+     * @param borderWidth The width of the border encoded by the resulting BitmapFont: a value of 0 disables the border
+     * @param borderColor The colour of the border encoded by the resulting BitmapFont (if one is configured to exist)
+     * @param borderStraight Determines whether the border encoded by the resulting BitmapFont is straight or rounded
      */
     public TTFont(FileHandle fontFile, int size, float borderWidth, Color borderColor, boolean borderStraight) {
         this(fontFile, size, Color.WHITE, borderWidth, borderColor, borderStraight, 0, 0, new Color(0, 0, 0, 0.75f));
@@ -114,9 +116,9 @@ public class TTFont {
 
     /**
      * Constructor
-     * @param fontFile
-     * @param size
-     * @param color
+     * @param fontFile An address to the font-file to be imported and converted
+     * @param size The size of the resulting BitmapFont
+     * @param color The colour of the border encoded by the resulting BitmapFont (if one is configured to exist)
      */
     public TTFont(FileHandle fontFile, int size, Color color) {
         this(fontFile, size, color, 0, Color.BLACK, false, 0, 0, new Color(0, 0, 0, 0.75f));
@@ -124,8 +126,8 @@ public class TTFont {
 
     /**
      * Constructor
-     * @param fontFile
-     * @param size
+     * @param fontFile An address to the font-file to be imported and converted
+     * @param size The size of the resulting BitmapFont
      */
     public TTFont(FileHandle fontFile, int size) {
         this(fontFile, size, Color.WHITE, 0, Color.BLACK, false, 0, 0, new Color(0, 0, 0, 0.75f));
@@ -133,8 +135,8 @@ public class TTFont {
 
     /**
      * Constructor
-     * @param fontFile
-     * @param color
+     * @param fontFile An address to the font-file to be imported and converted
+     * @param color The colour of the border encoded by the resulting BitmapFont (if one is configured to exist)
      */
     public TTFont(FileHandle fontFile, Color color) {
         this(fontFile, 16, color, 0, Color.BLACK, false, 0, 0, new Color(0, 0, 0, 0.75f));
@@ -142,53 +144,66 @@ public class TTFont {
 
     /**
      * Constructor
-     * @param fontFile
+     * @param fontFile An address to the font-file to be imported and converted
      */
     public TTFont(FileHandle fontFile) {
         this(fontFile, 16, Color.WHITE, 0, Color.BLACK, false, 0, 0, new Color(0, 0, 0, 0.75f));
     }
 
     /**
+     * Changes the object to encode a new font from a provided file
+     *
      * @Setter
-     * @param fontFile
+     * @param fontFile An address to the new font-file to be imported and converted
      */
     public void setFont(FileHandle fontFile) {
         TTFGenerator = new FreeTypeFontGenerator(fontFile);
+        //Reconfigures the internal BitmapFont generator to access a new font-file
 
         BMFont = TTFGenerator.generateFont(TTFStyle);
+        //Re-generate the internal BitmapFont using the new font-file
     }
 
     /**
+     * Returns the core BitmapFont generated by the object's font-generator
+     *
      * @Getter
-     * @return
+     * @return BitmapFont The object's generated BitmapFont
      */
-
     public BitmapFont font() {
         return BMFont;
     }
 
     /**
+     * Changes the (consistent) size of the internal BitmapFont's encoded characters
+     *
      * @Setter
-     * @param size
+     * @param size The new size of the internal BitmapFont's characters
      */
     public void setSize(int size) {
         TTFStyle.size = size;
 
         BMFont = TTFGenerator.generateFont(TTFStyle);
+        //Re-generate the internal BitmapFont to produce characters of the new determined size
     }
 
     /**
+     * Returns the (consistent) size of the internal BitmapFont's characters
+     *
      *  @Getter
-     * @return
+     * @return Integer The size of the font's characters
      */
     public int size() {
         return TTFStyle.size;
     }
 
     /**
+     * Changes the properties of the borders around the internal BitmapFont's characters
+     * This overloaded method produces rounded borders around the resultant BitmapFont's characters
+     *
      * @Setter
-     * @param borderWidth
-     * @param borderColor
+     * @param borderWidth The new (consistent) width of the borders around the internal BitmapFont's characters
+     * @param borderColor The new (consistent) colour of the borders around the internal BitmapFont's characters
      */
     public void setBorder(float borderWidth, Color borderColor) {
         TTFStyle.borderWidth = borderWidth;
@@ -196,13 +211,15 @@ public class TTFont {
         TTFStyle.borderStraight = false;
 
         BMFont = TTFGenerator.generateFont(TTFStyle);
+        //Re-generate the internal BitmapFont to produce characters with borders of the new determined properties
     }
 
     /**
+     * Changes the properties of the borders around the internal BitmapFont's characters
      *
-     * @param borderWidth
-     * @param borderColor
-     * @param borderStraight
+     * @param borderWidth The new (consistent) width of the borders around the internal BitmapFont's characters
+     * @param borderColor The new (consistent) colour of the borders around the internal BitmapFont's characters
+     * @param borderStraight Determines whether the new borders around the font's characters are straight or rounded
      */
     public void setBorder(float borderWidth, Color borderColor, boolean borderStraight) {
         TTFStyle.borderWidth = borderWidth;
@@ -210,38 +227,43 @@ public class TTFont {
         TTFStyle.borderStraight = borderStraight;
 
         BMFont = TTFGenerator.generateFont(TTFStyle);
+        //Re-generate the internal BitmapFont to produce characters with borders of the new determined properties
     }
 
     /**
+     * Returns the (consistent) width of the borders around the internal BitmapFont's characters
      *
-     * @return
+     * @return Float The width of the font's borders
      */
     public float borderWidth() {
         return TTFStyle.borderWidth;
     }
 
     /**
+     * Returns the (consistent) colour of the borders around the internal BitmapFont's characters
      *
-     * @return
+     * @return Color The colour of the font's borders
      */
     public Color borderColor() {
         return TTFStyle.borderColor;
     }
 
     /**
-     *
+     * Removes the borders around the internal BitmapFont's characters
      */
     public void removeBorder() {
         TTFStyle.borderWidth = 0;
 
         BMFont = TTFGenerator.generateFont(TTFStyle);
+        //Re-generate the internal BitmapFont to remove all of the borders around the font's characters
     }
 
     /**
+     * Changes the properties of the shadows beneath the internal BitmapFont's characters
      *
-     * @param shadowOffsetX
-     * @param shadowOffsetY
-     * @param shadowColor
+     * @param shadowOffsetX The (consistent) X-offset of the shadows beneath all characters in the new BitmapFont
+     * @param shadowOffsetY The (consistent) Y-offset of the shadows beneath all characters in the new BitmapFont
+     * @param shadowColor The (consistent) colour of the shadows beneath all characters in the new BitmapFont
      */
     public void setShadow(int shadowOffsetX, int shadowOffsetY, Color shadowColor) {
         TTFStyle.shadowOffsetX = shadowOffsetX;
@@ -252,15 +274,16 @@ public class TTFont {
     }
 
     /**
+     * Returns the (consistent) colour of the shadows beneath the internal BitmapFont's characters
      *
-     * @return
+     * @return Color The colour of the font's shadows
      */
     public Color shadowColor() {
         return TTFStyle.shadowColor;
     }
 
     /**
-     *
+     * Removes the shadows beneath the internal BitmapFont's characters
      */
     public void removeShadow() {
         TTFStyle.shadowOffsetX = 0;
@@ -268,8 +291,12 @@ public class TTFont {
         TTFStyle.shadowColor = new Color(0, 0, 0, 0.75f);
 
         BMFont = TTFGenerator.generateFont(TTFStyle);
+        //Re-generate the internal BitmapFont to remove all of the shadows beneath the font's characters
     }
 
+    /**
+     * Clears the object's internal font from memory
+     */
     public void dispose() {
         BMFont.dispose();
     }
