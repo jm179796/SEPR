@@ -16,25 +16,42 @@ import com.badlogic.gdx.utils.Timer;
 
 public class SplashScreen implements Screen {
 
+    /**
+     * Stores current game-state, enabling transitions between screens
+     */
     private Game game;
-    //Stores current game-state, enabling transitions between screens
 
+    /**
+     * Batch that manages the rendering pipeline for all of the images to be displayed on the screen
+     */
     private SpriteBatch batch;
+
+    /**
+     * The object which will encode the team's logo
+     */
     private Sprite logo;
-    //Declare logo sprite and render-batch in which to put it
 
+    /**
+     * Timer which will temporarily stall the splash screen before it gives way to the main menu
+     */
     private Timer timer;
-    //Declare the timer which will be used to stall the splash screen
 
+    /**
+     * Variable storing the number of seconds over which the splash screen will hang
+     */
     private int delay;
-    //Establish the delay over which the splash-screen will remain active
 
+    /**
+     * Enables keyboard inputs to be registered and bound to functions
+     * Used in this context to permit skipping the splash screen by hitting the keyboard or clicking the mouse
+     */
     private InputProcessor inputProcessor = new InputProcessor() {
         @Override
         public boolean keyDown(int keycode) {
             timer.stop();
             game.setScreen(new MainMenu(game));
             return false;
+            //Skip past the splash screen if the game receives any keyboard input
         }
 
         @Override
@@ -52,6 +69,7 @@ public class SplashScreen implements Screen {
             timer.stop();
             game.setScreen(new MainMenu(game));
             return false;
+            //Skip past the splash screen if the game receives any mouse input
         }
 
         @Override
@@ -74,17 +92,20 @@ public class SplashScreen implements Screen {
             return false;
         }
     };
-    //Required to detect inputs
 
+    /**
+     * The constructor for the class.
+     *
+     * @param game Variable storing the game's state
+     */
     public SplashScreen(Game game) {
         this.game = game;
     }
-    //Import current game-state
 
     @Override
     public void show() {
         batch = new SpriteBatch();
-        //Initialise sprite-batch
+        //Initialise sprite rendering pipeline
 
         logo = new Sprite(new Texture("image/logo.png"));
         logo.setSize(logo.getWidth() / (float) 2.3, logo.getHeight() / (float) 2.3);
@@ -101,7 +122,8 @@ public class SplashScreen implements Screen {
                 game.setScreen(new MainMenu(game));
             }
         }, delay);
-        //Establish and configure delay timer
+        //Open the game's main menu when the timer reaches its first interval
+        //This interval is set by the value of the "delay" variable
 
         Gdx.input.setInputProcessor(inputProcessor);
         //Set the splash-screen to detect inputs
@@ -151,4 +173,5 @@ public class SplashScreen implements Screen {
     public void dispose() {
         batch.dispose();
     }
+    //Dispose of the splash-screen's data once the main menu opens up
 }
