@@ -24,7 +24,7 @@ public class Market extends Table {
     /**
      * Variable holding current Ore resource amount as an Integer, initialises at 0 as stated in the brief.
      */
-    private Integer OreStock = 16;
+    private Integer OreStock = 0;
     
     /**
      * Variable holding current Food resource amount as an Integer, initialises at 16 as stated in the brief.

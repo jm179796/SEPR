@@ -12,14 +12,14 @@ public class Player {
      * An integer storing the amount of ore the player owns.
      */
     private Integer OreCount = 0;
-    
+
     /**
      * An integer storing the amount of food a player owns.
      */
     private Integer FoodCount = 0;
 
     /**
-     *An integer storing the amount of energy a player owns.
+     * An integer storing the amount of energy a player owns.
      */
     private Integer EnergyCount = 0;
 
@@ -60,53 +60,61 @@ public class Player {
     }
 
 
-    public int getPlayerID(){
+    public int getPlayerID() {
         return PlayerID;
     }
+
     /**
      * Getter for the tile list of the Player
+     *
      * @return TileList A list of the tile objects that the player owns.
      */
-    public List<Tile> getTileList(){
+    public List<Tile> getTileList() {
         return this.TileList;
     }
+
     /**
      * Getter for the money attribute of the player
+     *
      * @return Money Integer value of the current money of the player
      */
-    public Integer getMoney(){
+    public Integer getMoney() {
         return this.Money;
     }
 
     /**
      * Setter for the money attribute
+     *
      * @param NewMoney Integer value corresponding to the new money value desired
      */
-    public void setMoney(Integer NewMoney){
+    public void setMoney(Integer NewMoney) {
         this.Money = NewMoney;
     }
 
     /**
      * Getter for OreCount
+     *
      * @return this.OreCount the orecount of the player as an integer
      */
-    public Integer getOreCount(){
+    public Integer getOreCount() {
         return this.OreCount;
     }
 
     /**
      * Getter for EnergyCount
+     *
      * @return this.EnergyCount the Energycount of the player as an integer
      */
-    public Integer getEnergyCount(){
+    public Integer getEnergyCount() {
         return this.EnergyCount;
     }
 
     /**
      * Getter for FoodCount
+     *
      * @return this.FoodCount the Foodcount of the player as an integer
      */
-    public Integer getFoodCount(){
+    public Integer getFoodCount() {
         return this.FoodCount;
     }
 
@@ -121,27 +129,31 @@ public class Player {
 
     /**
      * Setter for Foodcount
+     *
      * @param Newcount Integer value that the Foodcount is set to
      */
-    public void setFoodCount(Integer Newcount){
+    public void setFoodCount(Integer Newcount) {
         this.FoodCount = Newcount;
     }
 
     /**
      * Setter for Orecount
+     *
      * @param Newcount Integer value that the Orecount is set to
      */
-    public void setOreCount(Integer Newcount){
+    public void setOreCount(Integer Newcount) {
         this.OreCount = Newcount;
     }
 
     /**
      * Setter for Energycount
+     *
      * @param Newcount Integer value that the Energycount is set to
      */
-    public void setEnergyCount(Integer Newcount){
+    public void setEnergyCount(Integer Newcount) {
         this.EnergyCount = Newcount;
     }
+
     /**
      * Toggles the 'active' attribute of the player from True to False or False to True.
      */
@@ -185,24 +197,19 @@ public class Player {
      * Increases/decreases the specified resource of the player by the specified amount
      *
      * @param resource The resource that is to be modified.
-     * @param amount The amount that the player's resource is to change by. Negative value for a decrease, positive for an increase.
+     * @param amount   The amount that the player's resource is to change by. Negative value for a decrease, positive for an increase.
      */
 
-    public void varyResource(String resource, int amount){
-        if(resource == "Ore"){
+    public void varyResource(String resource, int amount) {
+        if (resource == "Ore") {
             this.OreCount += amount;
-        }
-        else if(resource == "Energy"){
+        } else if (resource == "Energy") {
             this.EnergyCount += amount;
-        }
-        else if(resource == "Food"){
+        } else if (resource == "Food") {
             this.FoodCount += amount;
-        }
-
-        else if(resource =="Money"){
+        } else if (resource == "Money") {
             this.Money += amount;
-        }
-        else{
+        } else {
             //exception for unknown value entered
         }
     }
@@ -212,16 +219,18 @@ public class Player {
      */
     public void calculateScore() {
     }
-    public void increaseRoboticonInventory(){
+
+    public void increaseRoboticonInventory() {
         this.inventoryRoboticons += 1;
     }
-    public void decreaseRoboticonInventory(){
+
+    public void decreaseRoboticonInventory() {
         this.inventoryRoboticons -= 1;
     }
-    public Integer getRoboticonInventory(){
+
+    public Integer getRoboticonInventory() {
         return this.inventoryRoboticons;
     }
-
 
 
     public College getCollege() {
@@ -236,4 +245,7 @@ public class Player {
     public List<Roboticon> getRoboticons() {
         return this.RoboticonList;
     }
+
+
+
 }

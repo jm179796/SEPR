@@ -420,9 +420,8 @@ public class GameEngine {
                     players[currentPlayerID].decreaseRoboticonInventory();
                     updateLabels();
                 }
-            } else {
-                //PUT A CONDITION NEXT TO THE "ELSE" STATEMENT ABOVE TO CHECK FOR UPGRADE PRECONDITIONS
-                //UPGRADE CODE GOES HERE
+            } else if(phase == 2 && selectedTile.hasRoboticon()) {
+                //selectedTile.getRoboticonStored().upgrade();
             }
 
         }

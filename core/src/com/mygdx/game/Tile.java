@@ -356,5 +356,9 @@ public class Tile extends Button {
 
     }
 
+    public Roboticon getRoboticonStored(){
+        return this.roboticonStored;
+    }
+
 
 }

@@ -64,6 +64,10 @@ public class Roboticon {
         return this.Level;
     }
 
+    public Integer getRoboticonID(){
+        return RoboticonID;
+    }
+
     /**
      * Method to upgrade a single level of the roboticon.
      * <p>
