@@ -11,6 +11,7 @@ hs_err_pid*
 .idea/runConfigurations/**
 !.idea/runConfigurations/Tests.xml
 !.idea/runConfigurations/Desktop.xml
+!.idea/runConfigurations/GradleRunDesktop.xml
 *.xml
 
 ## Gradle
