@@ -48,6 +48,9 @@ public class Player {
      */
     private List<Roboticon> RoboticonList = new ArrayList<Roboticon>();
 
+    /**
+     * The number of Roboticons that the player owns
+     */
     private Integer inventoryRoboticons = 0;
 
     /**
@@ -216,25 +219,43 @@ public class Player {
 
     /**
      * Calculates the score of the player based on the resources that they own.
+     *
+     * @return Integer The player's current score
      */
     public Integer calculateScore() {
         Integer Score = this.EnergyCount + this.FoodCount + this.OreCount;
         return Score;
     }
 
+    /**
+     * Increments the number of Roboticons owned by the player
+     */
     public void increaseRoboticonInventory() {
         this.inventoryRoboticons += 1;
     }
 
+    /**
+     * Decrements the number of Roboticons owned by the player
+     */
     public void decreaseRoboticonInventory() {
         this.inventoryRoboticons -= 1;
     }
 
+    /**
+     * Returns the number of Roboticons owned by the player
+     *
+     * @Getter
+     * @return Integer The number of Roboticons owned by the player
+     */
     public Integer getRoboticonInventory() {
         return this.inventoryRoboticons;
     }
 
-
+    /**
+     * Returns the college assigned to the player
+     *
+     * @return College The player's associated college
+     */
     public College getCollege() {
         return this.College;
     }
@@ -247,7 +268,4 @@ public class Player {
     public List<Roboticon> getRoboticons() {
         return this.RoboticonList;
     }
-
-
-
 }

@@ -15,10 +15,20 @@ import java.util.Random;
  * @since 1.0
  */
 public class Market extends Table {
+    /**
+     * Holds game-state
+     */
     private Game game;
 
+    /**
+     * Object defining QOL drawing functions for rectangles and on-screen tables
+     * Used in this class to simplify row creation in tables
+     */
     private Drawer drawer;
 
+    /**
+     * Defines the font of the text comprising the market's interface
+     */
     private TTFont tableFont;
 
     /**
