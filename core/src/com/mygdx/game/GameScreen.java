@@ -26,7 +26,7 @@ import com.badlogic.gdx.utils.Scaling;
 public class GameScreen implements Screen{
 
     /**
-     * Stores current game-state, enabling transitions between screens
+     * Stores current game-state, enabling transitions between screens and external QOL drawing functions
      */
     private Game game;
 
@@ -36,7 +36,7 @@ public class GameScreen implements Screen{
     private GameEngine engine;
 
     /**
-     * Establishes an on-screen stage which can be populated with actors
+     * On-screen stage which can be populated with actors
      */
     private Stage gameStage;
 
@@ -147,11 +147,11 @@ public class GameScreen implements Screen{
     /**
      * The game-screen's initial constructor
      *
-     * @param game Variable storing the game's state
+     * @param game Variable storing the game's state for rendering purposes
      */
     public GameScreen(Game game) {
         this.game = game;
-        //Import current game-state
+        //Import current game-state to access the game's renderer
 
         engine = new GameEngine(game, this);
         //Start game engine up
@@ -159,11 +159,16 @@ public class GameScreen implements Screen{
 
     /**
      * Executes when the game-screen is loaded up, typically from the point of another screen
-     * Serves as an extension of the screen's constructor that primarily constructs visual elements
+     * Serves as an extension of the screen's constructor that primarily builds visual elements
+     *
+     * Currently instantiates Drawer object, the main stage, the font used to render on-screen text and the image of
+     * the game's map before constructing the three primary tables that make up the in-game interface (along with the
+     * auxiliary pause menu)
      */
     @Override
     public void show() {
         drawer = new Drawer(game);
+        //Import QOL drawing functions
 
         gameStage = new Stage();
         Gdx.input.setInputProcessor(gameStage);
@@ -201,7 +206,7 @@ public class GameScreen implements Screen{
     }
 
     /**
-     * Renders all visual elements (set up in the [show()] subroutine and all of its subsiduaries) to the game's window
+     * Renders all visual elements (set up in the [show()] subroutine and all of its subsiduaries) to the window
      * This is called to prepare each and every frame that the game deploys
      *
      * @param delta

@@ -15,14 +15,34 @@ import java.util.List;
  * @version READ ASSESSMENT 2
  */
 public class GameEngine {
+    /**
+     * Stores current game-state, enabling transitions between screens and external QOL drawing functions
+     */
     private Game game;
 
+    /**
+     * The game's engine only ever runs while the main in-game interface is showing, so it was designed to manipulate
+     * elements (both visual and logical in nature) on that screen
+     * It therefore requires access to the public methods in the GameScreen class, so instantiation in this class
+     * is a necessity
+     */
     private GameScreen gameScreen;
 
+    /**
+     * Stores data pertaining to the game's active players
+     * For more information, check the "Player" class
+     */
     private Player[] players;
 
+    /**
+     * Holds the numeric ID of the player who's currently active in the game
+     */
     private int currentPlayerID;
 
+    /**
+     * Holds the number of the phase that the game is currently in
+     * Varies between 1 and 5
+     */
     private int phase;
 
     /**
@@ -36,6 +56,9 @@ public class GameEngine {
      */
     private GameTimer timer;
 
+    /**
+     * Object providing QOL drawing functions to simplify visual construction and rendering tasks
+     */
     private Drawer drawer;
 
     /**
@@ -46,6 +69,7 @@ public class GameEngine {
 
     /**
      * Array holding the tiles to be laid over the map
+     * Note that the tiles' visuals are encoded by the image declared and stored in the GameScreen class (and not here)
      */
     private Tile[] tiles;
 
@@ -55,17 +79,26 @@ public class GameEngine {
     private Tile selectedTile;
 
     /**
-     * Variable dictating whether the game is running or paused
+     * Variable dictating whether the game is running or paused at any given moment
      */
     private State state;
 
+    /**
+     * ???
+     * Allan please add details
+     */
     private Integer roboticonIDCounter = 0;
 
     public GameEngine(Game game, GameScreen gameScreen) {
         this.game = game;
+        //Import current game-state to access the game's renderer
+
         this.gameScreen = gameScreen;
+        //Bind the engine to the main in-game interface
+        //Required to alter the visuals and logic of the interface directly through this engine
 
         drawer = new Drawer(this.game);
+        //Import QOL drawing function
 
         players = new Player[3];
         currentPlayerID = 1;

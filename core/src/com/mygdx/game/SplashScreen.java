@@ -139,8 +139,8 @@ public class SplashScreen implements Screen {
     }
 
     /**
-     * Method that executes prior to the display of each and every frame in the game
-     * Draw visual objects over multiple frames by making their draw calls in here
+     * Renders all visual elements (set up in the [show()] subroutine and all of its subsiduaries) to the window
+     * This is called to prepare each and every frame that the screen deploys
      *
      * @param delta
      */
@@ -183,6 +183,10 @@ public class SplashScreen implements Screen {
 
     }
 
+    /**
+     * Disposes of all visual data used to construct previous frames
+     * This is called after each frame is rendered, and remains necessary to prevent memory leaks
+     */
     @Override
     public void dispose() {
         batch.dispose();

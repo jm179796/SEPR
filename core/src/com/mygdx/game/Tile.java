@@ -20,7 +20,7 @@ import com.badlogic.gdx.utils.Timer;
 public class Tile extends Button {
 
     /**
-     * Holds game-state
+     * Holds game-state for the purpose of accessing the game's renderer
      */
     private Game game;
     /**
