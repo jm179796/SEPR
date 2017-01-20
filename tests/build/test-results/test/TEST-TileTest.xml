@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="TileTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2017-01-18T20:32:03" hostname="nas10-240-60-77.york.ac.uk" time="0.026">
-  <properties/>
-  <testcase name="ValidProduce" classname="TileTest" time="0.0"/>
-  <testcase name="ValidConfirmAcquire" classname="TileTest" time="0.001"/>
-  <testcase name="ValidToggleAcquire" classname="TileTest" time="0.0"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
