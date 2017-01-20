@@ -289,7 +289,7 @@ public class GameEngine {
 
                     try {
                         players[currentPlayerID] = market.buy("ore", 1, players[currentPlayerID]);
-                        gameScreen.setOreCounterValue(currentPlayer().getOreCount());
+                        updateLabels();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -304,7 +304,7 @@ public class GameEngine {
 
                     try {
                         players[currentPlayerID] = market.buy("food", 1, players[currentPlayerID]);
-                        gameScreen.setFoodCounterValue(currentPlayer().getFoodCount());
+                        updateLabels();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -319,7 +319,7 @@ public class GameEngine {
 
                     try {
                         players[currentPlayerID] = market.buy("energy", 1, players[currentPlayerID]);
-                        gameScreen.setEnergyCounterValue(currentPlayer().getEnergyCount());
+                        updateLabels();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -335,7 +335,7 @@ public class GameEngine {
 
                     try {
                         players[currentPlayerID] = market.sell("energy", 1, players[currentPlayerID]);
-                        gameScreen.setEnergyCounterValue(currentPlayer().getEnergyCount());
+                        updateLabels();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -351,7 +351,7 @@ public class GameEngine {
 
                     try {
                         players[currentPlayerID] = market.sell("ore", 1, players[currentPlayerID]);
-                        gameScreen.setOreCounterValue(currentPlayer().getOreCount());
+                        updateLabels();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -367,7 +367,7 @@ public class GameEngine {
 
                     try {
                         players[currentPlayerID] = market.sell("food", 1, players[currentPlayerID]);
-                        gameScreen.setFoodCounterValue(currentPlayer().getFoodCount());
+                        updateLabels();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
