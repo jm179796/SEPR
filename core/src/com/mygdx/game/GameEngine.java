@@ -232,7 +232,7 @@ public class GameEngine {
     public void constructMarket() {
         market = new Market(game);
 
-        market.buyRoboticon.addListener(new ChangeListener() {
+        market.assignBuyRoboticonButton(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 if(phase == 2 ) {
@@ -248,7 +248,7 @@ public class GameEngine {
             }
         });
 
-        market.buyOre.addListener(new ChangeListener() {
+        market.assignBuyOreButton(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 if (phase == 5) {
@@ -263,7 +263,7 @@ public class GameEngine {
 
             }
         });
-        market.buyFood.addListener(new ChangeListener() {
+        market.assignBuyFoodButton(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 if (phase == 5) {
@@ -278,7 +278,7 @@ public class GameEngine {
 
             }
         });
-        market.buyEnergy.addListener(new ChangeListener() {
+        market.assignBuyEnergyButton(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 if (phase == 5) {
@@ -294,7 +294,7 @@ public class GameEngine {
             }
         });
 
-        market.sellEnergy.addListener(new ChangeListener() {
+        market.assignSellEnergyButton(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 if (phase == 5) {
@@ -310,7 +310,7 @@ public class GameEngine {
             }
         });
 
-        market.sellOre.addListener(new ChangeListener() {
+        market.assignSellOreButton(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 if (phase == 5) {
@@ -326,7 +326,7 @@ public class GameEngine {
             }
         });
 
-        market.sellFood.addListener(new ChangeListener() {
+        market.assignSellFoodButton(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                 if (phase == 5) {

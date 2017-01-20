@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 import java.util.Random;
 
@@ -86,14 +87,14 @@ public class Market extends Table {
      */
     private Integer RoboticonBuyPrice = 20;
 
-    public TextButton buyOre;
-    public TextButton buyFood;
-    public TextButton buyEnergy;
-    public TextButton buyRoboticon;
+    private TextButton buyOre;
+    private TextButton buyFood;
+    private TextButton buyEnergy;
+    private TextButton buyRoboticon;
 
-    public TextButton sellOre;
-    public TextButton sellFood;
-    public TextButton sellEnergy;
+    private TextButton sellOre;
+    private TextButton sellFood;
+    private TextButton sellEnergy;
 
     private Label oreStockLabel;
     private Label foodStockLabel;
@@ -655,6 +656,33 @@ public class Market extends Table {
     return Player;
     }
 
+    public void assignBuyOreButton(ChangeListener changeListener) {
+        buyOre.addListener(changeListener);
+    }
+
+    public void assignSellOreButton(ChangeListener changeListener) {
+        sellOre.addListener(changeListener);
+    }
+
+    public void assignBuyEnergyButton(ChangeListener changeListener) {
+        buyEnergy.addListener(changeListener);
+    }
+
+    public void assignSellEnergyButton(ChangeListener changeListener) {
+        sellEnergy.addListener(changeListener);
+    }
+
+    public void assignBuyFoodButton(ChangeListener changeListener) {
+        buyFood.addListener(changeListener);
+    }
+
+    public void assignSellFoodButton(ChangeListener changeListener) {
+        sellFood.addListener(changeListener);
+    }
+
+    public void assignBuyRoboticonButton(ChangeListener changeListener) {
+        buyRoboticon.addListener(changeListener);
+    }
 }
 
 

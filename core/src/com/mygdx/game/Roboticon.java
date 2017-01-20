@@ -92,8 +92,6 @@ public class Roboticon {
 
         } else
             return false;
-
-
     }
 
     /**
