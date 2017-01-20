@@ -3,9 +3,8 @@ package com.mygdx.game;
 import java.util.*;
 
 /**
- * @author Kieran Hall KJH532
- * @version 1.0
- * @since 1.0
+ * @author Duck-Related Team Name in BIG MASSIVE LETTERS
+ * @version READ ASSESSMENT 2
  */
 public class Roboticon {
     /**

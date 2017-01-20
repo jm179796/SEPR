@@ -12,6 +12,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Timer;
 
+/**
+ * @author Duck-Related Team Name in BIG MASSIVE LETTERS
+ * @version READ ASSESSMENT 2
+ */
+
 public class Tile extends Button {
 
     /**
@@ -98,7 +103,10 @@ public class Tile extends Button {
     private int tileBorderThickness;
 
     /**
-     * Construct's the tile's visual interface and logical underpinnings
+     * Construct's the tile's visual interface and logical underpinnings. Sets the sizes of the tile's associated
+     * tooltip and border before setting its resource yields and implementing Listeners to detect when the tile is
+     * clicked on (for individual tile selection) and hovered over (to determine when the tile's tooltip should be
+     * drawn).
      *
      * @param game Variable storing the game's state
      * @param ID   The tile's distictive ID value
@@ -309,6 +317,10 @@ public class Tile extends Button {
 
     /**
      * Draws the tile's tooltip on the game's stage
+     * Specifically draws the tooltip region in the space to the top- or bottom-left of the cursor's position
+     * (depending on how high up the cursor is in the game's window) before drawing textual and visual contents inside
+     * that region
+     *
      * This must be called during the construction of each frame in which the tooltip is to be shown
      */
     public void drawTooltip() {

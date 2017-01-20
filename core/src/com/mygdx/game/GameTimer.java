@@ -4,7 +4,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.Timer;
 
 /**
- * Created by Joseph on 29/11/2016.
+ * @author Duck-Related Team Name in BIG MASSIVE LETTERS
+ * @version READ ASSESSMENT 2
  */
 public class GameTimer extends com.badlogic.gdx.scenes.scene2d.ui.Label {
 

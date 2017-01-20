@@ -1,7 +1,8 @@
 package com.mygdx.game;
 
 /**
- * Created by Joseph on 21/11/2016.
+ * @author Duck-Related Team Name in BIG MASSIVE LETTERS
+ * @version READ ASSESSMENT 2
  */
 
 import com.badlogic.gdx.Game;
@@ -94,7 +95,8 @@ public class SplashScreen implements Screen {
     };
 
     /**
-     * The constructor for the class.
+     * The constructor for the splash screen. Imports the game's state to facilitate screen-switching and access to
+     * QOL rendering functions.
      *
      * @param game Variable storing the game's state
      */
@@ -102,6 +104,12 @@ public class SplashScreen implements Screen {
         this.game = game;
     }
 
+    /**
+     * Acts as a secondary constructor for the screen. Works by setting up a rendering pipeline in which to draw the
+     * team's logo and a timer in which to time the period over which the screen should "hang". Also sets the splash
+     * screen to recognise user input, so that the user can skip the screen simply by sending mouse/keyboard input to
+     * the game's window.
+     */
     @Override
     public void show() {
         batch = new SpriteBatch();
@@ -130,6 +138,12 @@ public class SplashScreen implements Screen {
         //If a keystroke or a mouse-click is detected, open the menu straight away
     }
 
+    /**
+     * Method that executes prior to the display of each and every frame in the game
+     * Draw visual objects over multiple frames by making their draw calls in here
+     *
+     * @param delta
+     */
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(1, 1, 1, 1);

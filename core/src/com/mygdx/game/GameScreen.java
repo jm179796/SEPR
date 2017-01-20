@@ -1,7 +1,8 @@
 package com.mygdx.game;
 
 /**
- * Created by Nico on 23/11/2016.
+ * @author Duck-Related Team Name in BIG MASSIVE LETTERS
+ * @version READ ASSESSMENT 2
  */
 
 import com.badlogic.gdx.Game;

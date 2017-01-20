@@ -11,7 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import java.util.List;
 
 /**
- * Created by Joseph on 18/01/2017.
+ * @author Duck-Related Team Name in BIG MASSIVE LETTERS
+ * @version READ ASSESSMENT 2
  */
 public class GameEngine {
     private Game game;

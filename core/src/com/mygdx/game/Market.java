@@ -11,9 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import java.util.Random;
 
 /**
- * @author Martynas MM1544
- * @version 1.0
- * @since 1.0
+ * @author Duck-Related Team Name in BIG MASSIVE LETTERS
+ * @version READ ASSESSMENT 2
  */
 public class Market extends Table {
     /**
@@ -87,28 +86,80 @@ public class Market extends Table {
      */
     private Integer RoboticonBuyPrice = 20;
 
+    /**
+     * Button in the market's interface that buys ore
+     */
     private TextButton buyOre;
+
+    /**
+     * Button in the market's interface that buys food
+     */
     private TextButton buyFood;
+
+    /**
+     * Button in the market's interface that buys energy
+     */
     private TextButton buyEnergy;
+
+    /**
+     * Button in the market's interface that buys Roboticons
+     */
     private TextButton buyRoboticon;
 
+    /**
+     * Button in the market's interface that sells the current player's ore stocks to the market
+     */
     private TextButton sellOre;
+
+    /**
+     * Button in the market's interface that sells the current player's food stocks to the market
+     */
     private TextButton sellFood;
+
+    /**
+     * Button in the market's interface that sells the current player's energy stocks to the market
+     */
     private TextButton sellEnergy;
 
+    /**
+     * Visualises the amount of ore stocks currently held by the market
+     */
     private Label oreStockLabel;
+
+    /**
+     * Visualises the amount of food stocks currently held by the market
+     */
     private Label foodStockLabel;
+
+    /**
+     * Visualises the amount of energy stocks currently held by the market
+     */
     private Label energyStockLabel;
+
+    /**
+     * Visualises the amount of Roboticon stocks currently held by the market
+     */
     private Label roboticonStockLabel;
 
+    /**
+     * Constructs the market by calculating buying/selling costs and arranging the associated visual interface
+     *
+     * @param game The game's state, which is used in this context to operate the game's renderer via the Drawer class
+     */
     public Market(Game game) {
         super();
+        //Run the constructor for the Table object that forms this market's visual interface
 
         this.game = game;
+        //Import the game's current state
 
         drawer = new Drawer(this.game);
+        //QOL class that uses the game's state to directly access and control the game's renderer
+        //Used by this class to construct the market's visual interface
 
         tableFont = new TTFont(Gdx.files.internal("font/testfontbignoodle.ttf"), 36);
+        //Establish the font in which the market interface's text is to be pronted
+
         try {
             OreBuyPrice = calculateNewCost(OreStock, "buy");
             FoodBuyPrice = calculateNewCost(FoodStock, "buy");
@@ -116,16 +167,21 @@ public class Market extends Table {
             OreSellPrice = calculateNewCost(OreStock, "sell");
             FoodSellPrice = calculateNewCost(FoodStock, "sell");
             EnergySellPrice = calculateNewCost(EnergyStock, "sell");
-
+            //Calculate the market's buying/selling prices
         }
         catch (Exception e) {
             e.printStackTrace();
         }
         constructInterface();
+        //Build the market's visual interface
     }
 
+    /**
+     * Builds the market's visual interface by populating it with labels and buttons
+     */
     public void constructInterface() {
         drawer.addTableRow(this, new Label("Market", new Label.LabelStyle(tableFont.font(), Color.WHITE)), 0, 0, 5, 0, 3);
+        //Add a heading to the market interface
 
         tableFont.setSize(24);
         TextButton.TextButtonStyle tableButtonStyle = new TextButton.TextButtonStyle();
@@ -133,6 +189,7 @@ public class Market extends Table {
         tableButtonStyle.fontColor = Color.WHITE;
         tableButtonStyle.pressedOffsetX = 1;
         tableButtonStyle.pressedOffsetY = -1;
+        //Set the visual parameters for the rest of the market's labels and buttons
 
         buyOre = new TextButton(getOreBuyPrice().toString(), tableButtonStyle);
         buyFood = new TextButton(getFoodBuyPrice().toString(), tableButtonStyle);
@@ -142,61 +199,90 @@ public class Market extends Table {
         sellOre = new TextButton(getOreSellPrice().toString(), tableButtonStyle);
         sellFood = new TextButton(getFoodSellPrice().toString(), tableButtonStyle);
         sellEnergy = new TextButton(getEnergySellPrice().toString(), tableButtonStyle);
+        //Establish buttons which simultaneously enable buying/selling resources and show current market prices
 
         this.row();
         this.add(new Label("Item", new Label.LabelStyle(tableFont.font(), Color.WHITE))).left().padRight(90);
         this.add(new Label("Buy", new Label.LabelStyle(tableFont.font(), Color.WHITE))).left().padRight(30);
         this.add(new Label("Sell", new Label.LabelStyle(tableFont.font(), Color.WHITE))).left().padRight(30);
+        //Visual guff
 
         this.row();
         this.add(new Label("Ore", new Label.LabelStyle(tableFont.font(), Color.WHITE))).left();
         this.add(buyOre).left();
         this.add(sellOre).left();
+        //Add buttons for buying and selling ore to the market's visual framework
+        //Note that the strings encoded by these TextButtons represent the market's current buying/selling prices for ore
 
         this.row();
         this.add(new Label("Food", new Label.LabelStyle(tableFont.font(), Color.WHITE))).left();
         this.add(buyFood).left();
         this.add(sellFood).left();
+        //Add buttons for buying and selling food to the market's visual framework
+        //Note that the strings encoded by these TextButtons represent the market's current buying/selling prices for food
 
         this.row();
         this.add(new Label("Energy", new Label.LabelStyle(tableFont.font(), Color.WHITE))).left();
         this.add(buyEnergy).left();
         this.add(sellEnergy).left();
+        //Add buttons for buying and selling energy to the market's visual framework
+        //Note that the strings encoded by these TextButtons represent the market's current buying/selling prices for energy
 
         this.row();
         this.add(new Label("Roboticons", new Label.LabelStyle(tableFont.font(), Color.WHITE))).left().padBottom(15);
         this.add(buyRoboticon).left().padBottom(15);
+        //Add button for buying Roboticons to the market's visual framework
+        //Note that the string encoded by this TextButton represents the market's current buying price for Roboticons
 
         oreStockLabel = new Label(getOreStock().toString(), new Label.LabelStyle(tableFont.font(), Color.WHITE));
         foodStockLabel = new Label(getFoodStock().toString(), new Label.LabelStyle(tableFont.font(), Color.WHITE));
         energyStockLabel = new Label(getEnergyStock().toString(), new Label.LabelStyle(tableFont.font(), Color.WHITE));
         roboticonStockLabel = new Label(getRoboticonStock().toString(), new Label.LabelStyle(tableFont.font(), Color.WHITE));
+        //Prepare new labels to encode resources' stock levels within the market
+        //These will NOT be interactive, unlike the buttons declared earlier on
 
         this.row();
         this.add(new Label("Item", new Label.LabelStyle(tableFont.font(), Color.WHITE))).left().padRight(90);
         this.add(new Label("Stock", new Label.LabelStyle(tableFont.font(), Color.WHITE))).left();
+        //More visual guff!
 
         this.row();
         this.add(new Label("Ore", new Label.LabelStyle(tableFont.font(), Color.WHITE))).left();
         this.add(oreStockLabel).left();
+        //Add label to encode current ore stocks to the market's visual framework
 
         this.row();
         this.add(new Label("Food", new Label.LabelStyle(tableFont.font(), Color.WHITE))).left();
         this.add(foodStockLabel).left();
+        //Add label to encode current food stocks to the market's visual framework
 
         this.row();
         this.add(new Label("Energy", new Label.LabelStyle(tableFont.font(), Color.WHITE))).left();
         this.add(energyStockLabel).left();
+        //Add label to encode current energy stocks to the market's visual framework
 
         this.row();
         this.add(new Label("Roboticons", new Label.LabelStyle(tableFont.font(), Color.WHITE))).left();
         this.add(roboticonStockLabel).left();
+        //Add label to encode current Roboticon stocks to the market's visual framework
     }
 
+    /**
+     * Returns the number of Roboticons currently held in the market
+     *
+     * @Getter
+     * @return Integer The number of Roboticons currently held in the market
+     */
     public Integer getRoboticonStock() {
         return this.RoboticonStock;
     }
 
+    /**
+     * Sets the market's Roboticon stock level
+     * Also updates the appropriate stock label to reflect the new quantity given
+     *
+     * @param NewRoboticonStock The new number of Roboticons to be held in the market
+     */
     public void setRoboticonStock (Integer NewRoboticonStock) {
         this.RoboticonStock = NewRoboticonStock;
         roboticonStockLabel.setText(getRoboticonStock().toString());
@@ -405,14 +491,12 @@ public class Market extends Table {
      * @param Player     A Player object.
      */
     public Player buy(String Stock_Type, Integer Quantity, Player Player) throws Exception {
-        int playersMoney = Player.getMoney();
         if ("ore".equals(Stock_Type)) {
             if (Quantity <= OreStock) {
                 int OrePrice = OreBuyPrice * Quantity;
-                if (playersMoney >= OrePrice) {
+                if (Player.getMoney() >= OrePrice) {
                     OreStock -= Quantity;
-                    playersMoney -= OrePrice;
-                    Player.setMoney(playersMoney);
+                    Player.setMoney(Player.getMoney() - OrePrice);
                     int playersOre = Player.getOreCount();
                     playersOre += Quantity;
                     Player.setOreCount(playersOre);
@@ -429,10 +513,9 @@ public class Market extends Table {
         } else if ("food".equals(Stock_Type)) {
             if (Quantity <= FoodStock) {
                 int FoodPrice = FoodBuyPrice * Quantity;
-                if (playersMoney >= FoodPrice) {
+                if (Player.getMoney() >= FoodPrice) {
                     FoodStock -= Quantity;
-                    playersMoney -= FoodPrice;
-                    Player.setMoney(playersMoney);
+                    Player.setMoney(Player.getMoney() - FoodPrice);
                     int playersFood = Player.getFoodCount();
                     playersFood += Quantity;
                     Player.setFoodCount(playersFood);
@@ -450,10 +533,9 @@ public class Market extends Table {
         } else if ("energy".equals(Stock_Type)) {
             if (Quantity <= EnergyStock) {
                 int EnergyPrice = EnergyBuyPrice * Quantity;
-                if (playersMoney >= EnergyPrice) {
+                if (Player.getMoney() >= EnergyPrice) {
                     EnergyStock -= Quantity;
-                    playersMoney -= EnergyPrice;
-                    Player.setMoney(playersMoney);
+                    Player.setMoney(Player.getMoney() - EnergyPrice);
                     int playersEnergy = Player.getEnergyCount();
                     playersEnergy += Quantity;
                     Player.setEnergyCount(playersEnergy);
@@ -656,10 +738,26 @@ public class Market extends Table {
     return Player;
     }
 
+    /**
+     * Maps a method (encapsulated within the provided ChangeListener object) to the market's button for buying ore
+     * This is called by the GameEngine class to link the button to the attributes of the players who click on it
+     *
+     * @param changeListener Object encapsulating the method to be assigned to the button
+     *                       In this context, such a method should perform a transaction for ore using the current
+     *                       player's resources
+     */
     public void assignBuyOreButton(ChangeListener changeListener) {
         buyOre.addListener(changeListener);
     }
 
+    /**
+     * Maps a method (encapsulated within the provided ChangeListener object) to the market's button for selling ore
+     * This is called by the GameEngine class to link the button to the attributes of the players who click on it
+     *
+     * @param changeListener Object encapsulating the method to be assigned to the button
+     *                       In this context, such a method should perform a sale of ore drawing from the current
+     *                       player's stocks
+     */
     public void assignSellOreButton(ChangeListener changeListener) {
         sellOre.addListener(changeListener);
     }
@@ -668,6 +766,14 @@ public class Market extends Table {
         buyEnergy.addListener(changeListener);
     }
 
+    /**
+     * Maps a method (encapsulated within the provided ChangeListener object) to the market's button for selling energy
+     * This is called by the GameEngine class to link the button to the attributes of the players who click on it
+     *
+     * @param changeListener Object encapsulating the method to be assigned to the button
+     *                       In this context, such a method should perform a sale of ore drawing from the current
+     *                       player's stocks
+     */
     public void assignSellEnergyButton(ChangeListener changeListener) {
         sellEnergy.addListener(changeListener);
     }

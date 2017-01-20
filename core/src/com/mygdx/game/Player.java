@@ -2,6 +2,10 @@ package com.mygdx.game;
 
 import java.util.*;
 
+/**
+ * @author Duck-Related Team Name in BIG MASSIVE LETTERS
+ * @version READ ASSESSMENT 2
+ */
 public class Player {
     /**
      * Unique numerical identifier of the player.
