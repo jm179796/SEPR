@@ -1,5 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Tests" type="JUnit" factoryName="JUnit">
+    <output_file path="$USER_HOME$/Desktop/test/tests.html" is_save="true" />
     <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
     <module name="" />
     <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
