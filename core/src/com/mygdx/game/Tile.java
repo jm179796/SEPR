@@ -6,8 +6,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Timer;
@@ -109,7 +107,7 @@ public class Tile extends Button {
      * drawn).
      *
      * @param game Variable storing the game's state
-     * @param ID   The tile's distictive ID value
+     * @param ID   The tile's distictive getID value
      * @param EnergyCount The multiplier for the production of energy
      * @param OreCount    The multiplier for the production of ore
      * @param landmark    A boolean to signify if the tile is to be a landmark or not
@@ -126,7 +124,7 @@ public class Tile extends Button {
         //Use the game's state to establish a new Drawer class that can directly interface with (and modify) it
 
         this.ID = ID;
-        //Import and save the tile's assigned ID
+        //Import and save the tile's assigned getID
 
         tooltipWidth = 100;
         tooltipHeight = 50;
@@ -346,16 +344,16 @@ public class Tile extends Button {
      */
     public void drawBorder() {
         if (isOwned()) {
-            drawer.lineRectangle(tileBorderColor, (128 * ((ID() - 1) % 4)) + 260, (128 * ((ID() - 1) / 4)) + 3, (int) (this.getWidth() - 5), (int) (this.getHeight() - 4), tileBorderThickness);
+            drawer.lineRectangle(tileBorderColor, (128 * ((getID() - 1) % 4)) + 260, (128 * ((getID() - 1) / 4)) + 3, (int) (this.getWidth() - 5), (int) (this.getHeight() - 4), tileBorderThickness);
         }
     }
 
     /**
-     * Returns the tile's associated ID value
+     * Returns the tile's associated getID value
      *
-     * @return Integer The tile's associated ID value
+     * @return Integer The tile's associated getID value
      */
-    public int ID() {
+    public int getID() {
         return this.ID;
     }
 
@@ -386,7 +384,6 @@ public class Tile extends Button {
     /**
      * Returns the colour of the tile's border
      *
-     * @Getter
      * @return Color The current colour of the tile's border
      */
     public Color tileBorderColor() {

@@ -38,12 +38,26 @@ public class TileTest extends TesterFile {
     }
 
     @Test
-    public void ValidToggleAcquire() {
+    public void testAssignRoboticon(){
+        TestTile.assignRoboticon(TestRoboticon);
+        assertTrue(TestTile.hasRoboticon());
+    }
+    @Test
+    public void testUnassignRoboticon(){
+        TestTile.assignRoboticon(TestRoboticon);
+        TestTile.unassignRoboticon(TestRoboticon);
+        assertFalse(TestTile.hasRoboticon());
+    }
+    @Test
+    public void testID(){
 
     }
-
     @Test
-    public void ValidConfirmAcquire() {
+    public void testisOwned(){
+
+    }
+    @Test
+    public void testhasRoboticon(){
 
     }
 

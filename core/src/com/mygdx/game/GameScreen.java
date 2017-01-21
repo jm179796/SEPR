@@ -91,7 +91,7 @@ public class GameScreen implements Screen{
     private Label moneyCounter;
 
     /**
-     * Label stating the ID of the currently-selected tile
+     * Label stating the getID of the currently-selected tile
      */
     private Label selectedTileLabel;
 
@@ -549,7 +549,7 @@ public class GameScreen implements Screen{
     }
 
     public void updateSelectedTileLabel(Tile tile) {
-        selectedTileLabel.setText("TILE " + tile.ID());
+        selectedTileLabel.setText("TILE " + tile.getID());
     }
 
     public void updatePhaseLabel(int value) {
@@ -590,7 +590,7 @@ public class GameScreen implements Screen{
      * @param tile The tile being clicked on
      */
     public void selectTile(Tile tile) {
-        selectedTileLabel.setText("TILE " + tile.ID());
+        selectedTileLabel.setText("TILE " + tile.getID());
 
         if (tile.isOwned()) {
             selectedTileOwnerIcon.setVisible(true);

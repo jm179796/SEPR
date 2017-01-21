@@ -35,7 +35,7 @@ public class GameEngine {
     private Player[] players;
 
     /**
-     * Holds the numeric ID of the player who's currently active in the game
+     * Holds the numeric getID of the player who's currently active in the game
      */
     private int currentPlayerID;
 
@@ -277,7 +277,7 @@ public class GameEngine {
         currentPlayerID = 3 - currentPlayerID;
         //3 - 1 = 2
         //3 - 2 = 1
-        //This naturally switches the ID of the currently-active player from 1 to 2 and vice-versa
+        //This naturally switches the getID of the currently-active player from 1 to 2 and vice-versa
 
         gameScreen.currentPlayerIcon().setDrawable(new TextureRegionDrawable(new TextureRegion(players[currentPlayerID].getCollege().getLogoTexture())));
         gameScreen.currentPlayerIcon().setSize(64, 64);
