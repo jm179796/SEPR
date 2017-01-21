@@ -13,4 +13,12 @@ import static org.junit.Assert.*;
  */
 public class IntegrationTests extends TesterFile {
 
+    /**
+     * Test that simulates an entire game to completion and tests that the correct winner is chosen
+     */
+    @Test
+    public void testWinConditionCheck() {
+
+    }
+
 }
