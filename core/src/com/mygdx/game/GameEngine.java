@@ -89,6 +89,17 @@ public class GameEngine {
      */
     private Integer roboticonIDCounter = 0;
 
+    /**
+     * Constructs the game's engine. Imports the game's state (for direct renderer access) and the data held by the
+     * GameScreen which this engine directly controls; then goes on to set up player-data for the game's players,
+     * tile-data for the on-screen map and the in-game market for in-play manipulation. In the cases of the latter
+     * two tasks, the engine directly interacts with the GameScreen object imported to it (as a parameter of this
+     * constructor) so that it can draw the visual interfaces for the game's market and tiles directly to the game's
+     * primary interface.
+     *
+     * @param game Variable storing the game's state
+     * @param gameScreen The object encoding the in-game interface which is to be controlled by this engine
+     */
     public GameEngine(Game game, GameScreen gameScreen) {
         this.game = game;
         //Import current game-state to access the game's renderer
@@ -102,14 +113,18 @@ public class GameEngine {
 
         players = new Player[3];
         currentPlayerID = 1;
+        //Set up objects to hold player-data
+        //Start the game such that player 1 makes the first move
 
         phase = 1;
+        //Start the game in the first phase (of 5, which recur until all tiles are claimed)
 
         timer = new GameTimer(9999, new TTFont(Gdx.files.internal("font/testfontbignoodle.ttf"), 120), Color.WHITE);
         //Set up game timer
 
         tiles = new Tile[16];
-        //Initialise tiles
+        //Initialise data for all 16 tiles on the screen
+        //This instantiation does NOT automatically place the tiles on the game's main interface
 
         for (int i = 0; i < 16; i++) {
             final int fi = i;
@@ -123,10 +138,14 @@ public class GameEngine {
                 }
             });
         }
+        //Configure all 16 tiles with independent yields and landmark data
+        //Also assign listeners to them so that they can detect mouse clicks
 
-        constructMarket();
+        market = new Market(game, this);
+        //Instantiates the game's market and hands it direct renderer access
 
         state = State.RUN;
+        //Mark the game's current play-state as "running" (IE: not paused)
 
         Player Player1 = new Player(1);
         Player Player2 = new Player(2);
@@ -136,12 +155,25 @@ public class GameEngine {
         College Derwent = new College(2, "It has asbestos");
         players[1].assignCollege(Goodricke);
         players[2].assignCollege(Derwent);
+        //Temporary assignment of player-data for testing purposes
 
         timer.start();
+        //Start the game's timer as soon as the engine loads
+        //This works because the engine loads as soon as the game's primary interface loads
     }
 
     /**
      * Advances the game's progress upon call
+     * Acts as a state machine of sorts, moving the game from one phase to another depending on what phase it is
+     * currently at when this method if called. If player 1 is the current player in any particular phase, then the
+     * phase number remains and control is handed off to the other player: otherwise, control returns to player 1 and
+     * the game advances to the next state, implementing any state-specific features as it goes.
+     *
+     * PHASE 1: Acquisition of Tiles
+     * PHASE 2: Acquisition of Roboticons
+     * PHASE 3: Placement of Roboticons
+     * PHASE 4: Production of Resources by Roboticons
+     * PHASE 5: Market Trading
      */
     public void nextPhase() {
         System.out.print("Player " + currentPlayerID + " | Phase " + phase);
@@ -151,12 +183,10 @@ public class GameEngine {
 
                 if (currentPlayerID == 1) {
                     switchCurrentPlayer();
-                    updateLabels();
                 } else {
                     phase = 2;
                     timer.setTime(2, 0);
                     switchCurrentPlayer();
-                    updateLabels();
                     drawer.switchTextButton(gameScreen.endTurnButton(), true, Color.WHITE);
                 }
             }
@@ -164,26 +194,21 @@ public class GameEngine {
         else if(phase == 2){
             if(currentPlayerID == 1){
                 switchCurrentPlayer();
-                updateLabels();
             }
             else{
                 phase = 3;
                 timer.setTime(2,0);
                 switchCurrentPlayer();
-                updateLabels();
-
             }
         }
         else if(phase == 3){
             if(currentPlayerID == 1){
                 switchCurrentPlayer();
-                updateLabels();
             }
             else {
                 phase = 4;
                 timer.setTime(0, 99999);
                 switchCurrentPlayer();
-                updateLabels();
 
             }
         }
@@ -194,7 +219,6 @@ public class GameEngine {
                 if (tileList.size() > 0){
                     System.out.print("yes");
                     players[1] = Tile.Produce(players[1]);
-                    updateLabels();
                     switchCurrentPlayer();
                 }
 
@@ -203,7 +227,6 @@ public class GameEngine {
             for (Tile Tile : tileList2){
                 if(tileList2.size() > 0){
                     players[2] = Tile.Produce(players[2]);
-                    updateLabels();
                     switchCurrentPlayer();
                 }
 
@@ -215,7 +238,6 @@ public class GameEngine {
         else if(phase == 5){
             if (currentPlayerID == 1) {
                 switchCurrentPlayer();
-                updateLabels();
             }
             else{
                 phase = 1;
@@ -224,13 +246,14 @@ public class GameEngine {
                 drawer.switchTextButton(gameScreen.endTurnButton(), false, Color.GRAY);
                 drawer.switchTextButton(gameScreen.claimTileButton(), true, Color.WHITE);
                 switchCurrentPlayer();
-                updateLabels();
             }
         }
 
         gameScreen.updatePhaseLabel(phase);
+        //Whenever a phase transition is made, indicate that on-screen by updating the phase label
 
         gameScreen.deselectTile();
+        //Automatically de-select the currently-selected tile after a phase/player switch
 
         if(checkGameEnd() == true){
             Integer score1 = players[1].calculateScore();
@@ -242,139 +265,39 @@ public class GameEngine {
                 System.out.print("Player 2 Wins!");
             }
         }
+        //Temporary code for determining the game's winner once all tiles have been acquired
+        //Each player should own 8 tiles when this block is executed
     }
 
     /**
-     * Sets the current player to be that which isn't whenever this is called
+     * Sets the current player to be that which isn't active whenever this is called
+     * Updates the in-game interface to reflect the statistics and the identity of the player now controlling it
      */
-    public void switchCurrentPlayer() {
+    private void switchCurrentPlayer() {
         currentPlayerID = 3 - currentPlayerID;
+        //3 - 1 = 2
+        //3 - 2 = 1
+        //This naturally switches the ID of the currently-active player from 1 to 2 and vice-versa
 
         gameScreen.currentPlayerIcon().setDrawable(new TextureRegionDrawable(new TextureRegion(players[currentPlayerID].getCollege().getLogoTexture())));
         gameScreen.currentPlayerIcon().setSize(64, 64);
+        //Find and draw the icon representing the "new" player's associated college
+
+        updateLabels();
+        //Display the "new" player's inventory on-screen
 
     }
 
+    /**
+     * Updates the on-screen counters for food, energy, ore, money and Roboticons
+     * This is typically called when the active player switches or when a market transaction is made
+     */
     public void updateLabels(){
         gameScreen.setFoodCounterValue(currentPlayer().getFoodCount());
         gameScreen.setEnergyCounterValue(currentPlayer().getEnergyCount());
         gameScreen.setOreCounterValue(currentPlayer().getOreCount());
         gameScreen.setMoneyCounterValue(currentPlayer().getMoney());
         gameScreen.setRoboticonCounterValue(currentPlayer().getRoboticonInventory());
-    }
-
-    public void constructMarket() {
-        market = new Market(game);
-
-        market.assignBuyRoboticonButton(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                if(phase == 2 ) {
-
-                    try {
-                        players[currentPlayerID] = market.buyRoboticon(players[currentPlayerID]);
-                        updateLabels();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-
-            }
-        });
-
-        market.assignBuyOreButton(new ChangeListener() {
-            @Override
-            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                if (phase == 5) {
-
-                    try {
-                        players[currentPlayerID] = market.buy("ore", 1, players[currentPlayerID]);
-                        updateLabels();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-
-            }
-        });
-        market.assignBuyFoodButton(new ChangeListener() {
-            @Override
-            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                if (phase == 5) {
-
-                    try {
-                        players[currentPlayerID] = market.buy("food", 1, players[currentPlayerID]);
-                        updateLabels();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-
-            }
-        });
-        market.assignBuyEnergyButton(new ChangeListener() {
-            @Override
-            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                if (phase == 5) {
-
-                    try {
-                        players[currentPlayerID] = market.buy("energy", 1, players[currentPlayerID]);
-                        updateLabels();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-
-            }
-        });
-
-        market.assignSellEnergyButton(new ChangeListener() {
-            @Override
-            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                if (phase == 5) {
-
-                    try {
-                        players[currentPlayerID] = market.sell("energy", 1, players[currentPlayerID]);
-                        updateLabels();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-
-            }
-        });
-
-        market.assignSellOreButton(new ChangeListener() {
-            @Override
-            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                if (phase == 5) {
-
-                    try {
-                        players[currentPlayerID] = market.sell("ore", 1, players[currentPlayerID]);
-                        updateLabels();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-
-            }
-        });
-
-        market.assignSellFoodButton(new ChangeListener() {
-            @Override
-            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                if (phase == 5) {
-
-                    try {
-                        players[currentPlayerID] = market.sell("food", 1, players[currentPlayerID]);
-                        updateLabels();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-
-            }
-        });
     }
 
     public void pauseGame() {
@@ -521,5 +444,9 @@ public class GameEngine {
             }
         }
         return end;
+    }
+
+    public void updateCurrentPlayer(Player currentPlayer) {
+        players[currentPlayerID] = currentPlayer;
     }
 }

@@ -3,6 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -19,6 +20,11 @@ public class Market extends Table {
      * Holds game-state
      */
     private Game game;
+
+    /**
+     * Engine class that handles all of the game's logical processing
+     */
+    private GameEngine engine;
 
     /**
      * Object defining QOL drawing functions for rectangles and on-screen tables
@@ -145,13 +151,18 @@ public class Market extends Table {
      * Constructs the market by calculating buying/selling costs and arranging the associated visual interface
      *
      * @param game The game's state, which is used in this context to operate the game's renderer via the Drawer class
+     * @param engine The game's engine, which directly controls the availability and prices of market resources
      */
-    public Market(Game game) {
+    public Market(Game game, GameEngine engine) {
         super();
         //Run the constructor for the Table object that forms this market's visual interface
 
         this.game = game;
         //Import the game's current state
+
+        this.engine = engine;
+        //Link the market to the game's engine
+        //This is required to access phase information, as certain market sectors open and close based on it
 
         drawer = new Drawer(this.game);
         //QOL class that uses the game's state to directly access and control the game's renderer
@@ -174,6 +185,9 @@ public class Market extends Table {
         }
         constructInterface();
         //Build the market's visual interface
+
+        constructButtons();
+        //Assign functions to the purchase/sale buttons in the market's interface
     }
 
     /**
@@ -265,6 +279,124 @@ public class Market extends Table {
         this.add(new Label("Roboticons", new Label.LabelStyle(tableFont.font(), Color.WHITE))).left();
         this.add(roboticonStockLabel).left();
         //Add label to encode current Roboticon stocks to the market's visual framework
+    }
+
+    public void constructButtons() {
+        buyRoboticon.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if(engine.phase() == 2) {
+
+                    try {
+                        engine.updateCurrentPlayer(buyRoboticon(engine.currentPlayer()));
+                        engine.updateLabels();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        });
+        //Set the button for purchasing Roboticons to do just that (but only when the game is in phase 2)
+
+        buyOre.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                if (engine.phase() == 5) {
+
+                    try {
+                        engine.updateCurrentPlayer(buy("ore", 1, engine.currentPlayer()));
+                        engine.updateLabels();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        //Set the button for purchasing ore to do just that (but only when the game is in phase 5)
+
+        buyFood.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                if (engine.phase() == 5) {
+
+                    try {
+                        engine.updateCurrentPlayer(buy("food", 1, engine.currentPlayer()));
+                        engine.updateLabels();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        //Set the button for purchasing food to do just that (but only when the game is in phase 5)
+
+        buyEnergy.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                if (engine.phase() == 5) {
+
+                    try {
+                        engine.updateCurrentPlayer(buy("energy", 1, engine.currentPlayer()));
+                        engine.updateLabels();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        //Set the button for purchasing energy to do just that (but only when the game is in phase 5)
+
+        sellEnergy.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                if (engine.phase() == 5) {
+
+                    try {
+                        engine.updateCurrentPlayer(sell("energy", 1, engine.currentPlayer()));
+                        engine.updateLabels();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        });
+        //Set the button for selling energy to do just that (but only when the game is in phase 5)
+
+        sellOre.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                if (engine.phase() == 5) {
+
+                    try {
+                        engine.updateCurrentPlayer(sell("ore", 1, engine.currentPlayer()));
+                        engine.updateLabels();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        });
+        //Set the button for selling ore to do just that (but only when the game is in phase 5)
+
+        sellFood.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent event, Actor actor) {
+                if (engine.phase() == 5) {
+
+                    try {
+                        engine.updateCurrentPlayer(sell("food", 1, engine.currentPlayer()));
+                        engine.updateLabels();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        });
+        //Set the button for selling food to do just that (but only when the game is in phase 5)
     }
 
     /**
@@ -736,58 +868,6 @@ public class Market extends Table {
             throw new Exception("No available Roboticons");
         }
     return Player;
-    }
-
-    /**
-     * Maps a method (encapsulated within the provided ChangeListener object) to the market's button for buying ore
-     * This is called by the GameEngine class to link the button to the attributes of the players who click on it
-     *
-     * @param changeListener Object encapsulating the method to be assigned to the button
-     *                       In this context, such a method should perform a transaction for ore using the current
-     *                       player's resources
-     */
-    public void assignBuyOreButton(ChangeListener changeListener) {
-        buyOre.addListener(changeListener);
-    }
-
-    /**
-     * Maps a method (encapsulated within the provided ChangeListener object) to the market's button for selling ore
-     * This is called by the GameEngine class to link the button to the attributes of the players who click on it
-     *
-     * @param changeListener Object encapsulating the method to be assigned to the button
-     *                       In this context, such a method should perform a sale of ore drawing from the current
-     *                       player's stocks
-     */
-    public void assignSellOreButton(ChangeListener changeListener) {
-        sellOre.addListener(changeListener);
-    }
-
-    public void assignBuyEnergyButton(ChangeListener changeListener) {
-        buyEnergy.addListener(changeListener);
-    }
-
-    /**
-     * Maps a method (encapsulated within the provided ChangeListener object) to the market's button for selling energy
-     * This is called by the GameEngine class to link the button to the attributes of the players who click on it
-     *
-     * @param changeListener Object encapsulating the method to be assigned to the button
-     *                       In this context, such a method should perform a sale of ore drawing from the current
-     *                       player's stocks
-     */
-    public void assignSellEnergyButton(ChangeListener changeListener) {
-        sellEnergy.addListener(changeListener);
-    }
-
-    public void assignBuyFoodButton(ChangeListener changeListener) {
-        buyFood.addListener(changeListener);
-    }
-
-    public void assignSellFoodButton(ChangeListener changeListener) {
-        sellFood.addListener(changeListener);
-    }
-
-    public void assignBuyRoboticonButton(ChangeListener changeListener) {
-        buyRoboticon.addListener(changeListener);
     }
 }
 
