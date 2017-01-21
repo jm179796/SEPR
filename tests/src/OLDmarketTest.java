@@ -87,17 +87,7 @@ public class OLDmarketTest extends TesterFile{
     @Test
     public void sellOreTest() throws Exception {
         setUpOre();
-        TestMarket.sell("ore", 10, TestPlayer);
-        Integer TestOreCount = 0;
-        assertEquals(TestOreCount, TestPlayer.getOreCount());
-        Integer TestMoney = 110;
-        assertEquals(TestMoney, TestPlayer.getMoney());
-        Integer TestSellPrice = 8;
-        assertEquals(TestSellPrice, TestMarket.getOreSellPrice());
-        Integer TestBuyPrice = 10;
-        assertEquals(TestBuyPrice, TestMarket.getOreBuyPrice());
-        Integer TestOreStock = 20;
-        assertEquals(TestOreStock, TestMarket.getOreStock());
+
     }
 
     /**
@@ -109,17 +99,7 @@ public class OLDmarketTest extends TesterFile{
     @Test
     public void sellFoodTest() throws Exception {
         setUpFood();
-        TestMarket.sell("food", 10, TestPlayer);
-        Integer TestFoodCount = 0;
-        assertEquals(TestFoodCount, TestPlayer.getFoodCount());
-        Integer TestMoney = 110;
-        assertEquals(TestMoney, TestPlayer.getMoney());
-        Integer TestSellPrice = 8;
-        assertEquals(TestSellPrice, TestMarket.getFoodSellPrice());
-        Integer TestBuyPrice = 10;
-        assertEquals(TestBuyPrice, TestMarket.getFoodBuyPrice());
-        Integer TestFoodStock = 20;
-        assertEquals(TestFoodStock, TestMarket.getFoodStock());
+
     }
 
     /**

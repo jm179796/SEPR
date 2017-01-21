@@ -18,7 +18,7 @@ public class MarketTest extends TesterFile{
     /**
      * Tests Valid buy conditions for all resources.
      * <p>
-     *     Market resources are set to 10,a dn the prices are set to be valid for this test.
+     *     Market resources are set to 10, and the prices are set to be valid for this test.
      *     Initial values of OreCount, OreSellPrice, OreBuyPrice are set to 10 and Money is set to 100.
      *     Initial values of FoodCount, FoodSellPrice, FoodBuyPrice are set to 10 and Money is set to 100.
      *     Initial values of FoodCount, FoodSellPrice, FoodBuyPrice are set to 10 and Money is set to 100.
@@ -35,7 +35,11 @@ public class MarketTest extends TesterFile{
         TestMarket.setEnergyBuyPrice(10);
         TestMarket.setEnergyStock(10);
 
-        TestMarket.buy("energy", 10, TestPlayer);
+        try {
+            TestMarket.buy("energy", 10, TestPlayer);
+        } catch (Exception e) {
+            fail("Expected to pass");
+        }
 
         Integer TestEnergyCount = 20;
         assertEquals(TestEnergyCount, TestPlayer.getEnergyCount());
@@ -55,7 +59,11 @@ public class MarketTest extends TesterFile{
         TestMarket.setOreBuyPrice(10);
         TestMarket.setOreStock(10);
 
-        TestMarket.buy("ore", 10, TestPlayer);
+        try {
+            TestMarket.buy("ore", 10, TestPlayer);
+        } catch (Exception e) {
+            fail("Expected to pass");
+        }
 
         Integer TestOreCount = 20;
         assertEquals(TestOreCount, TestPlayer.getOreCount());
@@ -75,7 +83,11 @@ public class MarketTest extends TesterFile{
         TestMarket.setFoodBuyPrice(10);
         TestMarket.setFoodStock(10);
 
-        TestMarket.buy("food", 10, TestPlayer);
+        try {
+            TestMarket.buy("food", 10, TestPlayer);
+        } catch (Exception e) {
+            fail("Expected to pass");
+        }
 
         Integer TestFoodCount = 20;
         assertEquals(TestFoodCount, TestPlayer.getFoodCount());
@@ -89,8 +101,20 @@ public class MarketTest extends TesterFile{
         assertEquals(TestFoodStock, TestMarket.getFoodStock());
     }
 
+    /**
+     * Tests Invalid buy conditions for all resources.
+     * <p>
+     *     Market resources are set to 10, and the prices are set to be valid for this test.
+     *     Initial values of OreCount, OreSellPrice, OreBuyPrice are set to 10 and Money is set to 100.
+     *     Initial values of FoodCount, FoodSellPrice, FoodBuyPrice are set to 10 and Money is set to 100.
+     *     Initial values of FoodCount, FoodSellPrice, FoodBuyPrice are set to 10 and Money is set to 100.
+     *
+     *     However the player attempts to buy 100 of the resource, triggering the exception
+     * </p>
+     * @throws Exception Thrown when an invalid transaction is attempted.
+     */
     @Test
-    public void testBuyExceptions(){
+    public void testBuyExceptions() throws Exception {
 
         //Energy
         TestPlayer.setEnergyCount(10);
@@ -169,12 +193,88 @@ public class MarketTest extends TesterFile{
     }
 
     @Test
-    public void testSell(){
+    public void testSell() throws Exception{
+        //ore
+        TestPlayer.setOreCount(10);
+        TestPlayer.setMoney(10);
+        TestMarket.setOreSellPrice(10);
+        TestMarket.setOreBuyPrice(10);
+        TestMarket.setOreStock(10);
 
+        try {
+            TestMarket.sell("ore", 10, TestPlayer);
+        } catch (Exception e) {
+            fail("Expected to pass");
+        }
+
+        //food
+        TestPlayer.setFoodCount(10);
+        TestPlayer.setMoney(10);
+        TestMarket.setFoodSellPrice(10);
+        TestMarket.setFoodBuyPrice(10);
+        TestMarket.setFoodStock(10);
+
+        try {
+            TestMarket.sell("food", 10, TestPlayer);
+        } catch (Exception e) {
+            fail("Expected to pass");
+        }
+
+        //energy
+        TestPlayer.setEnergyCount(10);
+        TestPlayer.setMoney(10);
+        TestMarket.setEnergySellPrice(10);
+        TestMarket.setEnergyBuyPrice(10);
+        TestMarket.setEnergyStock(10);
+        try {
+            TestMarket.sell("energy", 10, TestPlayer);
+        } catch (Exception e) {
+            fail("Expected to pass");
+        }
     }
 
     @Test
     public void testSellExceptions(){
+        //ore
+        TestPlayer.setOreCount(10);
+        TestPlayer.setMoney(10);
+        TestMarket.setOreSellPrice(10);
+        TestMarket.setOreBuyPrice(10);
+        TestMarket.setOreStock(10);
+
+        try {
+            TestMarket.sell("ore", 100, TestPlayer);
+            fail("Expected an exception to be thrown");
+        } catch (Exception e) {
+            assertEquals(e.getMessage(), "Insufficient resources");
+        }
+
+        //food
+        TestPlayer.setFoodCount(10);
+        TestPlayer.setMoney(10);
+        TestMarket.setFoodSellPrice(10);
+        TestMarket.setFoodBuyPrice(10);
+        TestMarket.setFoodStock(10);
+
+        try {
+            TestMarket.sell("food", 100, TestPlayer);
+            fail("Expected an exception to be thrown");
+        } catch (Exception e) {
+            assertEquals(e.getMessage(), "Insufficient resources");
+        }
+
+        //energy
+        TestPlayer.setEnergyCount(10);
+        TestPlayer.setMoney(10);
+        TestMarket.setEnergySellPrice(10);
+        TestMarket.setEnergyBuyPrice(10);
+        TestMarket.setEnergyStock(10);
+        try {
+            TestMarket.sell("energy", 100, TestPlayer);
+            fail("Expected an exception to be thrown");
+        } catch (Exception e) {
+            assertEquals(e.getMessage(), "Insufficient resources");
+        }
 
     }
 
