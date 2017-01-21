@@ -207,6 +207,9 @@ public class Market extends Table {
         tableButtonStyle.pressedOffsetY = -1;
         //Set the visual parameters for the rest of the market's labels and buttons
 
+        /**
+         * Button that attempts to buy a Roboticon for the current player when clicked on
+         */
         buyRoboticon = new TextButton(getRoboticonBuyPrice().toString(), tableButtonStyle);
         buyRoboticon.addListener(new ChangeListener() {
             @Override
@@ -225,6 +228,9 @@ public class Market extends Table {
         });
         //Set the button for purchasing Roboticons to do just that (but only when the game is in phase 2)
 
+        /**
+         * Button that attempts to buy a unit of ore for the current player when clicked on
+         */
         buyOre = new TextButton(getOreBuyPrice().toString(), tableButtonStyle);
         buyOre.addListener(new ChangeListener() {
             @Override
@@ -242,6 +248,9 @@ public class Market extends Table {
         });
         //Set the button for purchasing ore to do just that (but only when the game is in phase 5)
 
+        /**
+         * Button that attempts to buy a unit of food for the current player when clicked on
+         */
         buyFood = new TextButton(getFoodBuyPrice().toString(), tableButtonStyle);
         buyFood.addListener(new ChangeListener() {
             @Override
@@ -259,6 +268,9 @@ public class Market extends Table {
         });
         //Set the button for purchasing food to do just that (but only when the game is in phase 5)
 
+        /**
+         * Button that attempts to buy a unit of energy for the current player when clicked on
+         */
         buyEnergy = new TextButton(getEnergyBuyPrice().toString(), tableButtonStyle);
         buyEnergy.addListener(new ChangeListener() {
             @Override
@@ -276,6 +288,10 @@ public class Market extends Table {
         });
         //Set the button for purchasing energy to do just that (but only when the game is in phase 5)
 
+        /**
+         * Button that attempts to take a unit of energy from the player's inventory and sell it back to the market
+         * when clicked on
+         */
         sellEnergy = new TextButton(getEnergySellPrice().toString(), tableButtonStyle);
         sellEnergy.addListener(new ChangeListener() {
             @Override
@@ -294,6 +310,10 @@ public class Market extends Table {
         });
         //Set the button for selling energy to do just that (but only when the game is in phase 5)
 
+        /**
+         * Button that attempts to take a unit of ore from the player's inventory and sell it back to the market
+         * when clicked on
+         */
         sellOre = new TextButton(getOreSellPrice().toString(), tableButtonStyle);
         sellOre.addListener(new ChangeListener() {
             @Override
@@ -312,6 +332,10 @@ public class Market extends Table {
         });
         //Set the button for selling ore to do just that (but only when the game is in phase 5)
 
+        /**
+         * Button that attempts to take a unit of food from the player's inventory and sell it back to the market
+         * when clicked on
+         */
         sellFood = new TextButton(getFoodSellPrice().toString(), tableButtonStyle);
         sellFood.addListener(new ChangeListener() {
             @Override
