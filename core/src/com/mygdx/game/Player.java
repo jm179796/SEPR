@@ -60,7 +60,7 @@ public class Player {
     /**
      * The constructor of the class
      *
-     * @param PlayerID The id of the player that is being created.
+     * @param PlayerID The id of the player that is being created. Should be an integer > 0.
      */
     public Player(Integer PlayerID) {
         this.PlayerID = PlayerID;
