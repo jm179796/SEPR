@@ -192,6 +192,16 @@ public class MarketTest extends TesterFile{
         assertEquals(TestFoodStock, TestMarket.getFoodStock());
     }
 
+    /**
+     * Tests Valid sell conditions for all resources.
+     * <p>
+     *     Market resources are set to 10, and the prices are set to be valid for this test.
+     *     Initial values of OreCount, OreSellPrice, OreBuyPrice are set to 10 and Money is set to 10.
+     *     Initial values of FoodCount, FoodSellPrice, FoodBuyPrice are set to 10 and Money is set to 10.
+     *     Initial values of FoodCount, FoodSellPrice, FoodBuyPrice are set to 10 and Money is set to 10.
+     * </p>
+     * @throws Exception Thrown when an invalid transaction is attempted.
+     */
     @Test
     public void testSell() throws Exception{
         //ore
@@ -233,6 +243,18 @@ public class MarketTest extends TesterFile{
         }
     }
 
+    /**
+     * Tests Invalid sell conditions for all resources.
+     * <p>
+     *     Market resources are set to 10, and the prices are set to be valid for this test.
+     *     Initial values of OreCount, OreSellPrice, OreBuyPrice are set to 10 and Money is set to 10.
+     *     Initial values of FoodCount, FoodSellPrice, FoodBuyPrice are set to 10 and Money is set to 10.
+     *     Initial values of FoodCount, FoodSellPrice, FoodBuyPrice are set to 10 and Money is set to 10.
+     *
+     *     However the player attempts to sell 100 of the resource, triggering the exception
+     * </p>
+     * @throws Exception Thrown when an invalid transaction is attempted.
+     */
     @Test
     public void testSellExceptions(){
         //ore
