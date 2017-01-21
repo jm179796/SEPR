@@ -320,7 +320,31 @@ public class MarketTest extends TesterFile{
     }
 
     @Test
-    public void testBuyRoboticon(){
+    public void testBuyRoboticon() throws Exception{
+        TestMarket.setRoboticonBuyPrice(10);
+        TestMarket.setRoboticonStock(1);
+        TestPlayer.setMoney(1);
 
+        try{
+            TestMarket.buyRoboticon(TestPlayer);
+            fail("Expected an exception to be thrown");
+        } catch (Exception e) {
+            assertEquals(e.getMessage(), "Insufficient money");
+        }
+
+        TestPlayer.setMoney(10);
+
+        try{
+            TestMarket.buyRoboticon(TestPlayer);
+        } catch (Exception e) {
+            fail("Expected to pass");
+        }
+
+        try{
+            TestMarket.buyRoboticon(TestPlayer);
+            fail("Expected an exception to be thrown");
+        } catch (Exception e) {
+            assertEquals(e.getMessage(), "No available Roboticons");
+        }
     }
 }
