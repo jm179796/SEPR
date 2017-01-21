@@ -16,6 +16,10 @@ public class TesterFile{
     private static Application application;
 
     // Before running any tests, initialize the application with the headless backend
+
+    /**
+     * This class initialises libgdx so all tests run correctly
+     */
     @BeforeClass
     public static void init() {
         // Note that we don't need to implement any of the listener's methods
