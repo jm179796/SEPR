@@ -217,7 +217,7 @@ public class Market extends Table {
                 if(engine.phase() == 2) {
 
                     try {
-                        engine.updateCurrentPlayer(buyRoboticon(engine.currentPlayer()));
+                        buyRoboticon(engine.currentPlayer());
                         engine.updateLabels();
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -870,34 +870,29 @@ public class Market extends Table {
     /**
      * A method that allows to buy a Roboticon.
      * <p>
-     * Ferst method checks whether there are any available roboticons left. Then it is checked whether player has enough
+     * First method checks whether there are any available roboticons left. Then it is checked whether player has enough
      * money to buy Roboticon. Roboticon object is created and assigned to Tile and to Player objects. Robotikon stock
      * number is decreased by one. Player's money are decreased by amount that was spent on purchase.
      * </p>
      *
-     * @param Player      A Player object that owns the Roboticon.
+     * @param player      A Player object that owns the Roboticon.
      */
-    public Player buyRoboticon(Player Player) throws Exception {
+    public void buyRoboticon(Player player) throws Exception {
         if (RoboticonStock > 0) {
-            if (Player.getMoney() >= RoboticonBuyPrice) {
-                if (OreStock > 0) {
-                    RoboticonStock -= 1;
-                    Player.setMoney(Player.getMoney() - RoboticonBuyPrice);
-                    RoboticonBuyPrice += 5;
-                    Player.increaseRoboticonInventory();
+            if (player.getMoney() >= RoboticonBuyPrice) {
+                RoboticonStock -= 1;
+                player.setMoney(player.getMoney() - RoboticonBuyPrice);
+                RoboticonBuyPrice += 5;
+                player.increaseRoboticonInventory();
 
-                    roboticonStockLabel.setText(this.getRoboticonStock().toString());
-                    buyRoboticon.setText(getRoboticonBuyPrice().toString());
-                } else {
-                    throw new Exception("Insufficient ore");
-                }
+                roboticonStockLabel.setText(this.getRoboticonStock().toString());
+                buyRoboticon.setText(getRoboticonBuyPrice().toString());
             } else {
                 throw new Exception("Insufficient money");
             }
         } else {
             throw new Exception("No available Roboticons");
         }
-    return Player;
     }
 }
 

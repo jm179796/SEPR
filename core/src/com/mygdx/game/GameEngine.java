@@ -117,8 +117,14 @@ public class GameEngine {
         phase = 1;
         //Start the game in the first phase (of 5, which recur until all tiles are claimed)
 
-        timer = new GameTimer(9999, new TTFont(Gdx.files.internal("font/testfontbignoodle.ttf"), 120), Color.WHITE);
+        timer = new GameTimer(0, new TTFont(Gdx.files.internal("font/testfontbignoodle.ttf"), 120), Color.WHITE, new Runnable() {
+            @Override
+            public void run() {
+                nextPhase();
+            }
+        });
         //Set up game timer
+        //Game timer automatically ends the current turn when it reaches 0
 
         tiles = new Tile[16];
         //Initialise data for all 16 tiles on the screen
@@ -154,10 +160,6 @@ public class GameEngine {
         players[1].assignCollege(Goodricke);
         players[2].assignCollege(Derwent);
         //Temporary assignment of player-data for testing purposes
-
-        timer.start();
-        //Start the game's timer as soon as the engine loads
-        //This works because the engine loads as soon as the game's primary interface loads
     }
 
     /**
@@ -174,7 +176,10 @@ public class GameEngine {
      * PHASE 5: Market Trading
      */
     public void nextPhase() {
-        System.out.print("Player " + currentPlayerID + " | Phase " + phase);
+        System.out.print("Player " + currentPlayerID + " | Phase " + phase + "\n");
+
+        timer.stop();
+
         if(phase == 1){
             if(tileAcquired == true) {
                 tileAcquired = false;
@@ -183,7 +188,12 @@ public class GameEngine {
                     switchCurrentPlayer();
                 } else {
                     phase = 2;
-                    timer.setTime(2, 0);
+                    gameScreen.updatePhaseLabel("BUY ROBOTICONS");
+
+                    timer.setTime(0, 30);
+                    timer.start();
+                    //Reset the timer to 30 seconds and start it if the game is proceeding into phase 2
+
                     switchCurrentPlayer();
                     drawer.switchTextButton(gameScreen.endTurnButton(), true, Color.WHITE);
                     //Once the game moves out of phase 1, re-enable the "end turn" button
@@ -192,22 +202,35 @@ public class GameEngine {
             }
         }
         else if(phase == 2){
+            timer.setTime(0, 30);
+            timer.start();
+            //Reset the timer to 30 seconds, regardless of whether the game is staying in phase 2 or proceeding into phase 3
+
             if(currentPlayerID == 1){
                 switchCurrentPlayer();
             }
             else{
                 phase = 3;
-                timer.setTime(2,0);
+                gameScreen.updatePhaseLabel("PLACE ROBOTICONS");
+
                 switchCurrentPlayer();
             }
         }
         else if(phase == 3){
             if(currentPlayerID == 1){
+                timer.setTime(0, 30);
+                timer.start();
+                //Reset the timer to 30 seconds for the other player
+
                 switchCurrentPlayer();
             }
             else {
                 phase = 4;
-                timer.setTime(0, 99999);
+                gameScreen.updatePhaseLabel("PRODUCTION");
+                
+                timer.setTime(0, 0);
+                //Stop the timer if the game is entering phase 4
+
                 switchCurrentPlayer();
 
             }
@@ -233,24 +256,21 @@ public class GameEngine {
             }
 
             phase = 5;
-            timer.setTime(0,99999);
+            gameScreen.updatePhaseLabel("MARKET OPEN");
         }
         else if(phase == 5){
             if (currentPlayerID == 1) {
                 switchCurrentPlayer();
             }
-            else{
+            else if (checkGameEnd() == false) {
                 phase = 1;
-                timer.setTime(0,99999);
+                gameScreen.updatePhaseLabel("ACQUISITION");
 
                 drawer.switchTextButton(gameScreen.endTurnButton(), false, Color.GRAY);
                 //Disable the "end turn" button during phase 1 to force players into claiming tiles
                 switchCurrentPlayer();
             }
         }
-
-        gameScreen.updatePhaseLabel(phase);
-        //Whenever a phase transition is made, indicate that on-screen by updating the phase label
 
         gameScreen.deselectTile();
         //Automatically de-select the currently-selected tile after a phase/player switch

@@ -45,11 +45,7 @@ public class GameTimer extends com.badlogic.gdx.scenes.scene2d.ui.Label {
         super("", new LabelStyle(font.font(), color));
         //Set up timer label with the provided TTFont
 
-        if ((minutes == 0 && seconds == 0) || minutes < 0 || seconds < 0) {
-            throw new RuntimeException("Invalid Internal Time");
-        } else {
-            setTime(minutes, seconds);
-        }
+        setTime(minutes, seconds);
         //Set and render the provided amount of time
 
         this.terminalMethod = end;

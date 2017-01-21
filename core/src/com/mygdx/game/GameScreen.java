@@ -193,7 +193,7 @@ public class GameScreen implements Screen{
         constructPauseMenu();
         //Construct pause-menu (and hide it for the moment)
 
-        drawer.debug(gameStage);
+        //drawer.debug(gameStage);
         //Call this to draw temporary debug lines around all of the actors on the stage
     }
 
@@ -344,14 +344,18 @@ public class GameScreen implements Screen{
         tableLeft.add(engine.timer()).colspan(2);
         //Add the timer to the table
 
-        gameFont.setSize(36);
+        gameFont.setSize(22);
         Table phaseTable = new Table();
-        phaseLabel = new Label("PHASE 1", new Label.LabelStyle(gameFont.font(), Color.WHITE));
-        phaseTable.add(phaseLabel).width(110);
+        phaseLabel = new Label("PHASE 1\nACQUISITION", new Label.LabelStyle(gameFont.font(), Color.WHITE));
+        phaseLabel.setAlignment(Align.center);
+        phaseTable.add(phaseLabel).width(105);
+        phaseTable.add().width(25);
         phaseTable.add(endTurnButton);
+        phaseTable.debug();
         drawer.addTableRow(tableLeft, phaseTable, 0, 0, 15, 0, 2);
         //Prepare and add the "End Phase" button to the table
 
+        gameFont.setSize(36);
         drawer.addTableRow(tableLeft, new Label("CURRENT PLAYER", new Label.LabelStyle(gameFont.font(), Color.BLACK)), 0, 0, 10, 0, 2);
         //Window-dressing: adds "CURRENT PLAYER" label
 
@@ -378,7 +382,7 @@ public class GameScreen implements Screen{
         //Add resource-counters to the table
         //These will show the current resource stocks for the current player
 
-        drawer.addTableRow(tableLeft, pauseButton, 113, 0, 0, 0, 2);
+        drawer.addTableRow(tableLeft, pauseButton, 105, 0, 0, 0, 2);
         //Prepare and add the pause button to the bottom of the table
 
         gameStage.addActor(tableLeft);
@@ -518,8 +522,8 @@ public class GameScreen implements Screen{
         //Draw border around the map
 
         drawer.filledRectangle(Color.WHITE, 0, (int) engine.timer().getHeight(), 256, 1);
-        drawer.filledRectangle(Color.WHITE, 0, (int) (engine.timer().getHeight() + endTurnButton.getHeight()), 256, 1);
-        drawer.borderedRectangle(Color.GRAY, Color.WHITE, 19, (int) (engine.timer().getHeight() + endTurnButton.getHeight()) + 15, 219, 40, 1);
+        drawer.filledRectangle(Color.WHITE, 0, (int) (engine.timer().getHeight() + phaseLabel.getHeight()), 256, 1);
+        drawer.borderedRectangle(Color.GRAY, Color.WHITE, 19, (int) (engine.timer().getHeight() + phaseLabel.getHeight()) + 15, 219, 40, 1);
         //drawer.lineRectangle(Color.WHITE, ((int) (Gdx.graphics.getWidth() * 0.125)) - 110, 240, 66, 66);
         drawer.filledRectangle(Color.WHITE, 0, Gdx.graphics.getHeight() - 46, 256, 1);
         //Draw lines and rectangles in left-hand table
@@ -599,12 +603,13 @@ public class GameScreen implements Screen{
     }
 
     /**
-     * Updates the label on the left-hand side of the in-game interface to visualise the game's current phase
+     * Updates the label on the left-hand side of the in-game interface to visualise and describe the game's current
+     * phase
      *
-     * @param value The phase number to be displayed by the in-game phase label
+     * @param description The phase description to be displayed by the same label
      */
-    public void updatePhaseLabel(int value) {
-        phaseLabel.setText("PHASE " + value);
+    public void updatePhaseLabel(String description) {
+        phaseLabel.setText("PHASE " + engine.phase() + "\n" + description);
     }
 
     /**
