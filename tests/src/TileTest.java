@@ -27,7 +27,7 @@ public class TileTest extends TesterFile {
      * Test confirming that the Player's resources are updated with roboticon production modifiers after tile.produce has completed
      */
     @Test
-    public void ValidProduce() {
+    public void testProduce() {
         Integer TestValues[] = {TestPlayer.getEnergyCount(), TestPlayer.getFoodCount(), TestPlayer.getOreCount()};
 
         TestPlayer = TestTile.Produce(TestPlayer);

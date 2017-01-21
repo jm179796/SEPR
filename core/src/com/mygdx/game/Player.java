@@ -165,11 +165,7 @@ public class Player {
      * Toggles the 'active' attribute of the player from True to False or False to True.
      */
     public void toggleActive() {
-        if (this.Active == true) {
-            this.Active = false;
-        } else {
-            this.Active = true;
-        }
+        this.Active = !this.Active;
     }
 
     /**
@@ -208,17 +204,16 @@ public class Player {
      */
 
     public void varyResource(String resource, int amount) {
-        if (resource == "Ore") {
+        if (resource.equals("Ore")) {
             this.OreCount += amount;
-        } else if (resource == "Energy") {
+        } else if (resource.equals("Energy")) {
             this.EnergyCount += amount;
-        } else if (resource == "Food") {
+        } else if (resource.equals("Food")) {
             this.FoodCount += amount;
-        } else if (resource == "Money") {
+        } else if (resource.equals("Money")) {
             this.Money += amount;
-        } else {
-            //exception for unknown value entered
         }
+
     }
 
     /**
@@ -227,8 +222,8 @@ public class Player {
      * @return Integer The player's current score
      */
     public Integer calculateScore() {
-        Integer Score = this.EnergyCount + this.FoodCount + this.OreCount;
-        return Score;
+        return this.EnergyCount + this.FoodCount + this.OreCount;
+
     }
 
     /**
@@ -246,9 +241,16 @@ public class Player {
     }
 
     /**
+     * Getter for Inventory Roboticon Count
+     * @return Integer value for roboticons in inventory.
+     */
+    public Integer getInventoryRoboticons(){
+        return this.inventoryRoboticons;
+    }
+
+    /**
      * Returns the number of Roboticons owned by the player
      *
-     * @Getter
      * @return Integer The number of Roboticons owned by the player
      */
     public Integer getRoboticonInventory() {

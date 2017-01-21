@@ -22,7 +22,7 @@ public class PlayerTest extends TesterFile {
         }
     });
     private Roboticon TestRoboticon = new Roboticon(0, TestPlayer, TestTile);
-    private College TestCollege = new College (1, "I am a test college.");
+    private College TestCollege = new College (1, "I am a test.");
 
     @Test
     public void testAssignCollege(){
@@ -47,10 +47,54 @@ public class PlayerTest extends TesterFile {
     }
 
     @Test
-    public void ValidVaryResource() {
+    public void testVaryResource() {
+        Integer ore = TestPlayer.getOreCount();
+        Integer food = TestPlayer.getFoodCount();
+        Integer energy = TestPlayer.getEnergyCount();
+        Integer money = TestPlayer.getMoney();
+        for (Integer i = 1; i < 200; i++){
+            ore += i;
+            food += i;
+            energy += i;
+            money += i;
+            TestPlayer.varyResource("Ore", i);
+            TestPlayer.varyResource("Food", i);
+            TestPlayer.varyResource("Energy", i);
+            TestPlayer.varyResource("Money", i);
+            assertEquals(ore,TestPlayer.getOreCount());
+            assertEquals(food,TestPlayer.getFoodCount());
+            assertEquals(energy,TestPlayer.getEnergyCount());
+            assertEquals(money,TestPlayer.getMoney());
+        }
+
 
     }
 
+    @Test
+    public void testcalculateScore(){
+        Integer ore = TestPlayer.getOreCount();
+        Integer food = TestPlayer.getFoodCount();
+        Integer energy = TestPlayer.getEnergyCount();
+        Integer score = ore + food + energy;
+        assertEquals(score, TestPlayer.calculateScore());
+        //assertEquals((TestPlayer.getOreCount() + TestPlayer.getFoodCount() + TestPlayer.getEnergyCount()), TestPlayer.calculateScore());
+    }
+
+    @Test
+    public void testIncreaseRoboticonInventory(){
+        Integer count = TestPlayer.getInventoryRoboticons();
+        count += 1;
+        TestPlayer.increaseRoboticonInventory();
+        assertEquals(count,TestPlayer.getInventoryRoboticons());
+    }
+
+    @Test
+    public void testDecreaseRoboticonInventory(){
+        Integer count = TestPlayer.getInventoryRoboticons();
+        count -= 1;
+        TestPlayer.decreaseRoboticonInventory();
+        assertEquals(count,TestPlayer.getInventoryRoboticons());
+    }
 
 
 
