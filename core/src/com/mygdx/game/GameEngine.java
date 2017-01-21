@@ -300,6 +300,10 @@ public class GameEngine {
         gameScreen.setRoboticonCounterValue(currentPlayer().getRoboticonInventory());
     }
 
+    /**
+     * Pauses the game and opens the pause-menu (which is just a sub-stage in the GameScreen class)
+     * Specifically pauses the game's timer and marks the engine's internal play-state to [State.PAUSE]
+     */
     public void pauseGame() {
         timer.stop();
         //Stop the game's timer
@@ -311,16 +315,35 @@ public class GameEngine {
         //Mark that the game has been paused
     }
 
+    /**
+     * Resumes the game and re-opens the primary in-game inteface
+     * Specifically increments the in-game timer by 1 second, restarts it and marks the engine's internal play-state
+     * to [State.PAUSE]
+     * Note that the timer is incremented by 1 second to circumvent a bug that causes it to lose 1 second whenever
+     * it's restarted
+     */
     public void resumeGame() {
         state = State.RUN;
+        //Mark that the game is now running again
 
         gameScreen.openGameStage();
+        //Show the main in-game interface again and prepare it to accept inputs
 
         if (timer.minutes() > 0 || timer.seconds() > 0) {
+            timer.increment();
             timer.start();
         }
+        //Restart the game's timer from where it left off
+        //The timer needs to be incremented by 1 second before being restarted because, for a reason that I can't
+        //quite identify, restarting the timer automatically takes a second off of it straight away
     }
 
+    /**
+     * Claims the last tile to have been selected on the main GameScreen for the active player
+     * This grants them the ability to plant a Roboticon on it and yield resources from it for themselves
+     * Specifically registers the selected tile under the object holding the active player's data, re-colours its
+     * border for owner identification purposes and moves the game on to the next player/phase
+     */
     public void claimTile() {
         if (phase == 1 && selectedTile.isOwned() == false) {
             players[currentPlayerID].assignTile(selectedTile);
@@ -377,6 +400,10 @@ public class GameEngine {
         }
     }
 
+    /**
+     * Deploys a Roboticon on the last tile to have been selected
+     * Draws a Roboticon from the active player's Roboticon count and assigns it to the tile in question
+     */
     public void deployRoboticon(){
         if (phase == 3) {
             if (selectedTile.hasRoboticon() == false) {

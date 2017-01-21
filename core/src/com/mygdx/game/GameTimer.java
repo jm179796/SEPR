@@ -150,6 +150,21 @@ public class GameTimer extends com.badlogic.gdx.scenes.scene2d.ui.Label {
     }
 
     /**
+     * Increments the internal timer by 1 second upon being called
+     * This is required to circumvent a bug that causes the timer to lose a second whenever it's started from a state
+     * where it has previously been stopped
+     */
+    public void increment() {
+        if (seconds == 59) {
+            setTime(minutes + 1, 0);
+            //Roll over on to the next minute if the seconds' counter is at 59 and it's due to be incremented
+        } else {
+            setTime(minutes, seconds + 1);
+            //Increment the seconds' counter
+        }
+    }
+
+    /**
      * Returns the number of minutes currently clocked on the timer
      *
      * @return Integer The number of minutes left on the clock
