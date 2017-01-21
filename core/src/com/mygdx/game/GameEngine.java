@@ -227,12 +227,11 @@ public class GameEngine {
             else {
                 phase = 4;
                 gameScreen.updatePhaseLabel("PRODUCTION");
-                
+
                 timer.setTime(0, 0);
                 //Stop the timer if the game is entering phase 4
 
                 switchCurrentPlayer();
-
             }
         }
         else if(phase == 4){
@@ -271,9 +270,6 @@ public class GameEngine {
                 switchCurrentPlayer();
             }
         }
-
-        gameScreen.deselectTile();
-        //Automatically de-select the currently-selected tile after a phase/player switch
 
         if(checkGameEnd() == true){
             Integer score1 = players[1].calculateScore();
@@ -440,7 +436,6 @@ public class GameEngine {
             }
 
         }
-
     }
 
     /**

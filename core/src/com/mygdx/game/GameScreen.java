@@ -304,7 +304,10 @@ public class GameScreen implements Screen{
         claimTileButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-               engine.claimTile();
+                engine.claimTile();
+
+                selectTile(engine.selectedTile());
+                //Refresh tile information and tile management UI
             }
         });
 
@@ -316,6 +319,9 @@ public class GameScreen implements Screen{
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                engine.deployRoboticon();
+
+               selectTile(engine.selectedTile());
+               //Refresh tile information and tile management UI
 
             }
         });
@@ -351,7 +357,6 @@ public class GameScreen implements Screen{
         phaseTable.add(phaseLabel).width(105);
         phaseTable.add().width(25);
         phaseTable.add(endTurnButton);
-        phaseTable.debug();
         drawer.addTableRow(tableLeft, phaseTable, 0, 0, 15, 0, 2);
         //Prepare and add the "End Phase" button to the table
 
@@ -436,6 +441,8 @@ public class GameScreen implements Screen{
 
         drawer.addTableRow(tableRight, engine.market(), 2);
         //Establish market and add market interface to right-hand table
+
+        tableRight.debug();
 
         gameStage.addActor(tableRight);
         //Add right-hand table to the stage
@@ -672,22 +679,38 @@ public class GameScreen implements Screen{
         selectedTileLabel.setText("TILE " + tile.getID());
 
         if (tile.isOwned()) {
-            selectedTileOwnerIcon.setVisible(true);
-            selectedTileOwnerIcon.setDrawable(new TextureRegionDrawable(new TextureRegion(tile.getOwner().getCollege().getLogoTexture())));
-            selectedTileOwnerIcon.setSize(64, 64);
+            if (tile != engine.selectedTile()) {
+                selectedTileOwnerIcon.setVisible(true);
+                selectedTileOwnerIcon.setDrawable(new TextureRegionDrawable(new TextureRegion(tile.getOwner().getCollege().getLogoTexture())));
+                selectedTileOwnerIcon.setSize(64, 64);
+            }
+            //Update tile description in the UI...
+            //...if it hasn't been drawn there already
+            //This conditional block is here to prevent icon alignments from going out of whack
 
-            if (engine.phase() == 3 && tile.getOwner() == engine.currentPlayer()) {
-                if (tile.hasRoboticon()) {
-                    deployRoboticonButton.setText("UPGRADE");
-                    drawer.switchTextButton(deployRoboticonButton, true, Color.WHITE);
-                } else if (engine.currentPlayer().getRoboticonInventory() > 0) {
+            drawer.switchTextButton(claimTileButton, false, Color.GRAY);
+            //Disable the button for claiming the tile if it's already been claimed
+
+            if (tile.hasRoboticon()) {
+                deployRoboticonButton.setText("UPGRADE");
+
+                if (engine.phase() == 3 && tile.getOwner() == engine.currentPlayer()) {
                     drawer.switchTextButton(deployRoboticonButton, true, Color.WHITE);
                 } else {
                     drawer.switchTextButton(deployRoboticonButton, false, Color.GRAY);
                 }
+                //If the tile already has a Roboticon, offer an upgrade button if the Roboticon upgrade conditions are met
+                //This will only happen if the game is in phase 3
             } else {
                 deployRoboticonButton.setText("DEPLOY");
-                drawer.switchTextButton(deployRoboticonButton, false, Color.GRAY);
+
+                if (engine.phase() == 3 && tile.getOwner() == engine.currentPlayer() && engine.currentPlayer().getRoboticonInventory() > 0) {
+                    drawer.switchTextButton(deployRoboticonButton, true, Color.WHITE);
+                } else {
+                    drawer.switchTextButton(deployRoboticonButton, false, Color.GRAY);
+                }
+                //If the tile doesn't have a Robotion, offer a deployment button if the current player owns at least 1 Roboticon
+                //This will only happen if the game is in phase 3
             }
         } else {
             selectedTileOwnerIcon.setVisible(false);
@@ -699,6 +722,7 @@ public class GameScreen implements Screen{
             deployRoboticonButton.setText("DEPLOY");
             drawer.switchTextButton(deployRoboticonButton, false, Color.GRAY);
         }
+        //If the tile isn't yet owned by anyone, allow the current player to claim it if the game is in phase 1
     }
 
     /**
