@@ -188,6 +188,8 @@ public class GameEngine {
                     timer.setTime(2, 0);
                     switchCurrentPlayer();
                     drawer.switchTextButton(gameScreen.endTurnButton(), true, Color.WHITE);
+                    //Once the game moves out of phase 1, re-enable the "end turn" button
+                    //This button is disabled during phase 1 to force players into claiming tiles
                 }
             }
         }
@@ -244,7 +246,7 @@ public class GameEngine {
                 timer.setTime(0,99999);
 
                 drawer.switchTextButton(gameScreen.endTurnButton(), false, Color.GRAY);
-                drawer.switchTextButton(gameScreen.claimTileButton(), true, Color.WHITE);
+                //Disable the "end turn" button during phase 1 to force players into claiming tiles
                 switchCurrentPlayer();
             }
         }
@@ -424,45 +426,98 @@ public class GameEngine {
     }
 
     /**
-     * Encodes possible game-states
+     * Encodes possible play-states
+     * These are not to be confused with the game-state (which is directly linked to the renderer)
      */
     public enum State {
         RUN,
         PAUSE
     }
 
+    /**
+     * Return's the game's current play-state, which can either be [State.RUN] or [State.PAUSE]
+     * This is not to be confused with the game-state (which is directly linked to the renderer)
+     *
+     * @return State The game's current play-state
+     */
     public State state() {
         return state;
     }
 
+    /**
+     * Return's the game's phase as a number between (or possibly one of) 1 and 5
+     *
+     * @return Integer The game's current phase
+     */
     public int phase() {
         return phase;
     }
 
+    /**
+     * Returns all of the data pertaining to the array of players managed by the game's engine
+     * Unless the game's architecture changes radically, this should only ever return two Player objects
+     *
+     * @return Player[] An array of all Player objects (encapsulating player-data) managed by the engine
+     */
     public Player[] players() { return players; }
 
+    /**
+     * Returns the data pertaining to the player who is active at the time when this is called
+     *
+     * @return Player The current user's Player object, encoding all of their data
+     */
     public Player currentPlayer() { return players[currentPlayerID]; }
 
+    /**
+     * Returns the ID of the player who is active at the time when this is called
+     *
+     * @return Integer The current player's ID
+     */
     public int currentPlayerID() {
         return currentPlayerID;
     }
 
+    /**
+     * Returns the GameTimer declared and managed by the engine
+     *
+     * @return GameTimer The game's internal timer
+     */
     public GameTimer timer() {
         return timer;
     }
 
+    /**
+     * Collectively returns every Tile managed by the engine in array
+     *
+     * @return Tile[] An array of all Tile objects (encapsulating tile-data) managed by the engine
+     */
     public Tile[] tiles() {
         return tiles;
     }
 
+    /**
+     * Returns the data pertaining to the last Tile that was selected by a player
+     *
+     * @return Tile The last Tile to have been selected
+     */
     public Tile selectedTile() {
         return selectedTile;
     }
 
+    /**
+     * Returns all of the data pertaining to the game's market, which is declared and managed by the engine
+     *
+     * @return Market The game's market
+     */
     public Market market() {
         return market;
     }
 
+    /**
+     * Returns a value that's true if all tiles have been claimed, and false otherwise
+     *
+     * @return Boolean Determines if the game has ended or not
+     */
     public boolean checkGameEnd(){
         boolean end = true;
         for(Tile Tile : tiles){
@@ -473,6 +528,12 @@ public class GameEngine {
         return end;
     }
 
+    /**
+     * Updates the data pertaining to the game's current player
+     * This is used by the Market class to process item transactions
+     *
+     * @param currentPlayer The new Player object to represent the active player with
+     */
     public void updateCurrentPlayer(Player currentPlayer) {
         players[currentPlayerID] = currentPlayer;
     }

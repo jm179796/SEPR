@@ -31,6 +31,9 @@ public class GameTimer extends com.badlogic.gdx.scenes.scene2d.ui.Label {
 
     /**
      * Sets up the timer for later use
+     * Works by instantiating the timer as label, changing that label's appearance to reflect the provided time and
+     * setting up the label's internal Timer object to run the provided terminal method when the "minutes" and "seconds"
+     * variables both reach 0 (after being changed enough times following each Timer interval)
      *
      * @param minutes The number of minutes to which the timer should initially be clocked
      * @param seconds The number of seconds to which the timer should initially be clocked
@@ -66,7 +69,7 @@ public class GameTimer extends com.badlogic.gdx.scenes.scene2d.ui.Label {
 
     /**
      * Sets up the timer for later use
-     * Forgoes setting a terminal method
+     * Overloaded constructor that forgoes setting a terminal method
      *
      * @param minutes The number of minutes to which the timer should initially be clocked
      * @param seconds The number of seconds to which the timer should initially be clocked
@@ -85,7 +88,8 @@ public class GameTimer extends com.badlogic.gdx.scenes.scene2d.ui.Label {
 
     /**
      * Sets up the timer for later use
-     * Clocks the timer to a set number of seconds rather than set numbers of minutes and seconds together
+     * Overloaded constructor that sets the timer based on a total number of seconds (rather than a combination
+     * of minutes and seconds)
      *
      * @param seconds The number of seconds to which the timer should initially be clocked
      * @param font The font of the timer's visual interface
@@ -99,7 +103,8 @@ public class GameTimer extends com.badlogic.gdx.scenes.scene2d.ui.Label {
 
     /**
      * Sets up the timer for later use
-     * Forgoes setting a terminal method
+     * Overloaded constructor that sets the timer based on a total number of seconds (rather than a combination
+     * of minutes and seconds) and forgoes setting a terminal method
      * Clocks the timer to a set number of seconds rather than set numbers of minutes and seconds together
      *
      * @param seconds The number of seconds to which the timer should initially be clocked
@@ -118,6 +123,8 @@ public class GameTimer extends com.badlogic.gdx.scenes.scene2d.ui.Label {
 
     /**
      * Clocks the timer to the provided time
+     * Specifically changes the internal minutes/seconds variables as necessary and updates the core label's
+     * appearance to visualise the new timer provided
      *
      * @param minutes The number of minutes to which the timer should be clocked
      * @param seconds The number of seconds to which the timer should be clocked
