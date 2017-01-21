@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
  * @version 1.0
  * @since 1.0
  */
-public class marketTest extends TesterFile{
+public class OLDmarketTest extends TesterFile{
     private Player TestPlayer = new Player(0);
     private Game testGame;
     private GameEngine testGameEngine;
@@ -183,87 +183,5 @@ public class marketTest extends TesterFile{
         Integer TestEnergyStock = 100;
         assertEquals(TestEnergyStock, TestMarket.getEnergyStock());
     }
-
-    /**
-     * Tests buy method for ore resource.
-     * <p>
-     * Initial values of OreCount, OreSellPrice, OreBuyPrice are set to 10 and Money are set to 100.
-     * </p>
-     */
-    @Test
-    public void buyOreTest() throws Exception {
-        setUpOre2();
-        TestMarket.buy("ore", 10, TestPlayer);
-        Integer TestOreCount = 20;
-        assertEquals(TestOreCount, TestPlayer.getOreCount());
-        Integer TestMoney = 0;
-        assertEquals(TestMoney, TestPlayer.getMoney());
-        Integer TestSellPrice = 200;
-        assertEquals(TestSellPrice, TestMarket.getOreSellPrice());
-        Integer TestBuyPrice = 0;
-        assertEquals(TestBuyPrice, TestMarket.getOreBuyPrice());
-        Integer TestOreStock = 0;
-        assertEquals(TestOreStock, TestMarket.getOreStock());
-
-    }
-
-    /**
-     * Tests buy method for food resource.
-     * <p>
-     * Initial values of FoodCount, FoodSellPrice, FoodBuyPrice are set to 10 and Money are set to 100.
-     * </p>
-     */
-    @Test
-    public void buyFoodTest() throws Exception {
-        setUpFood2();
-        TestMarket.buy("food", 10, TestPlayer);
-        Integer TestFoodCount = 20;
-        assertEquals(TestFoodCount, TestPlayer.getFoodCount());
-        Integer TestMoney = 0;
-        assertEquals(TestMoney, TestPlayer.getMoney());
-        Integer TestSellPrice = 200;
-        assertEquals(TestSellPrice, TestMarket.getFoodSellPrice());
-        Integer TestBuyPrice = 0;
-        assertEquals(TestBuyPrice, TestMarket.getFoodBuyPrice());
-        Integer TestFoodStock = 0;
-        assertEquals(TestFoodStock, TestMarket.getFoodStock());
-
-    }
-
-    /**
-     * Tests buy method for energy resource.
-     * <p>
-     * Initial values of EnergyCount, EnergySellPrice, EnergyBuyPrice are set to 10 and Money are set to 100.
-     * </p>
-     */
-    @Test
-    public void buyEnergyTest() throws Exception {
-        setUpEnergy2();
-        TestMarket.buy("energy", 10, TestPlayer);
-        Integer TestEnergyCount = 20;
-        assertEquals(TestEnergyCount, TestPlayer.getEnergyCount());
-        Integer TestMoney = 0;
-        assertEquals(TestMoney, TestPlayer.getMoney());
-        Integer TestSellPrice = 200;
-        assertEquals(TestSellPrice, TestMarket.getEnergySellPrice());
-        Integer TestBuyPrice = 0;
-        assertEquals(TestBuyPrice, TestMarket.getEnergyBuyPrice());
-        Integer TestFoodStock = 0;
-        assertEquals(TestFoodStock, TestMarket.getEnergyStock());
-
-    }
-
-    @Test
-    public void gambleTest() {
-        TestPlayer.setMoney(49);
-
-        for (int j = 0; j < 100; j++) {
-            if (TestPlayer.getMoney() < 50) {
-                assertNull(TestMarket.gamble(100, TestPlayer));
-            } else if (TestPlayer.getMoney() >= 50) {
-                Boolean current = TestMarket.gamble(50, TestPlayer);
-                assertTrue(((current == Boolean.TRUE) || (current == Boolean.FALSE)));
-            }
-        }
-    }
 }
+
