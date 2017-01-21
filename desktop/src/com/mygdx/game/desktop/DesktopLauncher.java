@@ -5,6 +5,11 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.mygdx.game.Main;
 
 public class DesktopLauncher {
+
+	/**
+	 * Creates a new window with the specified title, size and behaviour parameters before assigning a fresh
+	 * game-state to it, which is managed by the Main() class and all classes recursively spawned by it
+	 */
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 
