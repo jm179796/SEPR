@@ -122,6 +122,26 @@ public class GameScreen implements Screen{
     private TextButton deployRoboticonButton;
 
     /**
+     * Button allowing players to upgrade roboticons' food-production capabilities
+     */
+    private TextButton foodUpgradeButton;
+
+    /**
+     * Button allowing players to upgrade roboticons' ore-production capabilities
+     */
+    private TextButton oreUpgradeButton;
+
+    /**
+     * Button allowing players to upgrade roboticons' energy-production capabilities
+     */
+    private TextButton energyUpgradeButton;
+
+    /**
+     * Button allowing players to escape from the upgrade overlay if they decide against upgrading roboticons
+     */
+    private TextButton closeUpgradeOverlayButton;
+
+    /**
      * Establish visual parameters for in-game buttons
      */
     private TextButton.TextButtonStyle gameButtonStyle;
@@ -140,6 +160,16 @@ public class GameScreen implements Screen{
      * Icon representing the roboticon occupying the currently-selected tile
      */
     private Image selectedTileRoboticonIcon;
+
+    /**
+     * Customised stage that shows up to offer roboticon upgrade choices
+     */
+    private Overlay upgradeOverlay;
+
+    /**
+     * Determines whether the aforementioned roboticon upgrade overlay is to be drawn to the screen
+     */
+    private boolean upgradeOverlayVisible;
 
     /**
      * The game-screen's initial constructor
@@ -174,13 +204,6 @@ public class GameScreen implements Screen{
         gameFont = new TTFont(Gdx.files.internal("font/testfontbignoodle.ttf"), 36);
         //Set fonts for game interface
 
-        gameButtonStyle = new TextButton.TextButtonStyle();
-        gameButtonStyle.font = gameFont.font();
-        gameButtonStyle.fontColor = Color.WHITE;
-        gameButtonStyle.pressedOffsetX = 1;
-        gameButtonStyle.pressedOffsetY = -1;
-        //Set up visual parameters for buttons
-
         map = new Image(new Texture("image/TestMap.png"));
         map.setPosition((Gdx.graphics.getWidth() / 2) - (map.getWidth() / 2), (Gdx.graphics.getHeight() / 2) - (map.getHeight() / 2));
         gameStage.addActor(map);
@@ -197,6 +220,9 @@ public class GameScreen implements Screen{
 
         constructPauseMenu();
         //Construct pause-menu (and hide it for the moment)
+
+        constructUpgradeOverlay();
+        //Construct roboticon upgrade overlay (and, again, hide it for the moment)
 
         //drawer.debug(gameStage);
         //Call this to draw temporary debug lines around all of the actors on the stage
@@ -222,11 +248,21 @@ public class GameScreen implements Screen{
             gameStage.draw();
             //Draw the stage onto the screen
 
-            for (Tile tile : engine.tiles()) {
-                tile.drawTooltip();
-                tile.drawBorder();
+            if (upgradeOverlayVisible == true) {
+                upgradeOverlay.act(delta);
+                upgradeOverlay.draw();
             }
-            //If any of the tiles' tooltips are deemed "active", render them to the screen too
+            //Draw the roboticon upgrade overlay to the screen if the "upgrade" button has been selected
+
+            for (Tile tile : engine.tiles()) {
+                if (upgradeOverlayVisible == false) {
+                    tile.drawTooltip();
+                    //If any of the tiles' tooltips are deemed "active", render them to the screen too
+                }
+
+                tile.drawBorder();
+                //Draw each tile's border too
+            }
         } else if (engine.state() == GameEngine.State.PAUSE) {
             drawer.filledRectangle(Color.WHITE, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
             //If the game is paused, render a white background...
@@ -275,6 +311,13 @@ public class GameScreen implements Screen{
      * on-click functions together
      */
     public void constructButtons() {
+        gameButtonStyle = new TextButton.TextButtonStyle();
+        gameButtonStyle.font = gameFont.font();
+        gameButtonStyle.fontColor = Color.WHITE;
+        gameButtonStyle.pressedOffsetX = 1;
+        gameButtonStyle.pressedOffsetY = -1;
+        //Set up visual parameters for buttons
+
         /**
          * Button that, when clicked, ends the current turn for the current player prematurely
          */
@@ -326,11 +369,75 @@ public class GameScreen implements Screen{
         deployRoboticonButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-               engine.deployRoboticon();
+                if (!engine.selectedTile().hasRoboticon()) {
+                    engine.deployRoboticon();
 
-               selectTile(engine.selectedTile());
-               //Refresh tile information and tile management UI
+                    selectTile(engine.selectedTile());
+                    //Refresh tile information and tile management UI
+                } else {
+                    //CHECK UPGRADE PRICES
+                    //NEED TO DISABLE CERTAIN BUTTONS IF THE CURRENT PLAYER CAN'T AFFORD UPGRADES
 
+                    upgradeOverlayVisible = true;
+                    //Set the renderer to show the upgrade overlay if this button is clicked after a tile with a
+                    //roboticon was clicked on
+
+                    Gdx.input.setInputProcessor(upgradeOverlay);
+                    //Direct user inputs towards the roboticon upgrade overlay
+                }
+            }
+        });
+
+        gameFont.setSize(24);
+        gameButtonStyle.font = gameFont.font();
+
+        /**
+         * Button allowing players to upgrade roboticons' food-production capabilities
+         */
+        foodUpgradeButton = new TextButton("PRICE", gameButtonStyle);
+        foodUpgradeButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                engine.selectedTile().getRoboticonStored().upgrade("Food");
+
+                closeUpgradeOverlay();
+            }
+        });
+
+        /*** Button allowing players to upgrade roboticons' ore-production capabilities
+         *
+         **/
+        oreUpgradeButton = new TextButton("PRICE", gameButtonStyle);
+        oreUpgradeButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                engine.selectedTile().getRoboticonStored().upgrade("Ore");
+
+                closeUpgradeOverlay();
+            }
+        });
+
+        /**
+         * Button allowing players to upgrade roboticons' energy-production capabilities
+         */
+        energyUpgradeButton = new TextButton("PRICE", gameButtonStyle);
+        energyUpgradeButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                engine.selectedTile().getRoboticonStored().upgrade("Energy");
+
+                closeUpgradeOverlay();
+            }
+        });
+
+        /**
+         * Button allowing players to escape from the upgrade overlay if they decide against upgrading roboticons
+         */
+        closeUpgradeOverlayButton = new TextButton("CLOSE", gameButtonStyle);
+        closeUpgradeOverlayButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                closeUpgradeOverlay();
             }
         });
     }
@@ -543,6 +650,35 @@ public class GameScreen implements Screen{
     }
 
     /**
+     * Set up an overlay which shows up when the current player opts to upgrade their roboticon
+     * This will allow them to upgrade its food, energy or ore production stats
+     */
+    public void constructUpgradeOverlay() {
+        upgradeOverlay = new Overlay(this.game, Color.GRAY, Color.WHITE, 250, 200, 3);
+        //Establish the upgrade overlay
+
+        upgradeOverlayVisible = false;
+        //Stop the GameScreen's renderer from rendering the overlay right away
+
+        gameFont.setSize(36);
+        upgradeOverlay.table().add(new Label("UPGRADE ROBOTICON", new Label.LabelStyle(gameFont.font(), Color.WHITE))).padBottom(20);
+        //Visual guff
+
+        gameFont.setSize(24);
+        upgradeOverlay.table().row();
+        upgradeOverlay.table().add(new LabelledElement("ORE", gameFont, Color.WHITE, oreUpgradeButton, 175, 0)).left();
+        upgradeOverlay.table().row();
+        upgradeOverlay.table().add(new LabelledElement("FOOD", gameFont, Color.WHITE, foodUpgradeButton, 175, 0)).left();
+        upgradeOverlay.table().row();
+        upgradeOverlay.table().add(new LabelledElement("ENERGY", gameFont, Color.WHITE, energyUpgradeButton, 175, 0)).left().padBottom(20);
+        //Add buttons for upgrading roboticons to the overlay
+        //Like in the market, each button's label is the monetary price of the upgrade that it performs
+
+        drawer.addTableRow(upgradeOverlay.table(), closeUpgradeOverlayButton);
+        //Add a final button for closing the overlay
+    }
+
+    /**
      * Draw auxiliary rectangles to provide window-dressing for the interface
      */
     public void drawRectangles() {
@@ -743,7 +879,7 @@ public class GameScreen implements Screen{
      * Specifically resets the labels and icons that identify the selected tile and disables the buttons for
      * manipulating said tile (as no tile can be deemed as being "selected" after this is run)
      */
-    public void deselectTile() {
+    private void deselectTile() {
         drawer.switchTextButton(claimTileButton, false, Color.GRAY);
         drawer.switchTextButton(deployRoboticonButton, false, Color.GRAY);
 
@@ -753,5 +889,16 @@ public class GameScreen implements Screen{
         selectedTileRoboticonIcon.setVisible(false);
 
         updateSelectedTileLabel(0);
+    }
+
+    /**
+     * Closes the upgrade overlay and restores the functionality of the game's main stage
+     */
+    public void closeUpgradeOverlay() {
+        upgradeOverlayVisible = false;
+        //Hide the upgrade overlay again
+
+        Gdx.input.setInputProcessor(gameStage);
+        //Direct user inputs back towards the main stage
     }
 }
