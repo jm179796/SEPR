@@ -82,8 +82,8 @@ public class GameEngine {
     private State state;
 
     /**
-     * ???
-     * Allan please add details
+     * An integer signifying the ID of the next roboticon to be created
+     *
      */
     private Integer roboticonIDCounter = 0;
 
@@ -156,9 +156,11 @@ public class GameEngine {
         players[1] = Player1;
         players[2] = Player2;
         College Goodricke = new College(1, "The best college");
-        College Derwent = new College(2, "It has asbestos");
+        College Derwent = new College(2, "Play at your own risk");
         players[1].assignCollege(Goodricke);
         players[2].assignCollege(Derwent);
+        Goodricke.assignPlayer(players[1]);
+        Derwent.assignPlayer(players[2]);
         //Temporary assignment of player-data for testing purposes
     }
 
