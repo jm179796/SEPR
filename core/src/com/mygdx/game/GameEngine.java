@@ -82,8 +82,8 @@ public class GameEngine {
     private State state;
 
     /**
-     * ???
-     * Allan please add details
+     * An integer signifying the ID of the next roboticon to be created
+     *
      */
     private Integer roboticonIDCounter = 0;
 
@@ -156,9 +156,11 @@ public class GameEngine {
         players[1] = Player1;
         players[2] = Player2;
         College Goodricke = new College(1, "The best college");
-        College Derwent = new College(2, "It has asbestos");
+        College Derwent = new College(2, "Play at your own risk");
         players[1].assignCollege(Goodricke);
         players[2].assignCollege(Derwent);
+        Goodricke.assignPlayer(players[1]);
+        Derwent.assignPlayer(players[2]);
         //Temporary assignment of player-data for testing purposes
     }
 
@@ -198,6 +200,9 @@ public class GameEngine {
                     drawer.switchTextButton(gameScreen.endTurnButton(), true, Color.WHITE);
                     //Once the game moves out of phase 1, re-enable the "end turn" button
                     //This button is disabled during phase 1 to force players into claiming tiles
+
+                    market.refreshButtonAvailability();
+                    //Update the market's interface to allow for roboticons to be purchased
                 }
             }
         }
@@ -208,10 +213,16 @@ public class GameEngine {
 
             if(currentPlayerID == 1){
                 switchCurrentPlayer();
+
+                market.refreshButtonAvailability();
+                //Update the market interface for the other player
             }
             else{
                 phase = 3;
                 gameScreen.updatePhaseLabel("PLACE ROBOTICONS");
+
+                market.refreshButtonAvailability();
+                //Disable the market's interface
 
                 switchCurrentPlayer();
             }
@@ -256,14 +267,23 @@ public class GameEngine {
 
             phase = 5;
             gameScreen.updatePhaseLabel("MARKET OPEN");
+
+            market.refreshButtonAvailability();
+            //Open the market again
         }
         else if(phase == 5){
             if (currentPlayerID == 1) {
                 switchCurrentPlayer();
+
+                market.refreshButtonAvailability();
+                //Update the market's interface for the other player
             }
             else if (checkGameEnd() == false) {
                 phase = 1;
                 gameScreen.updatePhaseLabel("ACQUISITION");
+
+                market.refreshButtonAvailability();
+                //Close the market again
 
                 drawer.switchTextButton(gameScreen.endTurnButton(), false, Color.GRAY);
                 //Disable the "end turn" button during phase 1 to force players into claiming tiles
@@ -283,6 +303,9 @@ public class GameEngine {
         }
         //Temporary code for determining the game's winner once all tiles have been acquired
         //Each player should own 8 tiles when this block is executed
+
+        gameScreen.closeUpgradeOverlay();
+        //If the upgrade overlay is open, close it when the next phase begins
     }
 
     /**
@@ -299,7 +322,7 @@ public class GameEngine {
         gameScreen.currentPlayerIcon().setSize(64, 64);
         //Find and draw the icon representing the "new" player's associated college
 
-        updateLabels();
+        updateInventoryLabels();
         //Display the "new" player's inventory on-screen
 
     }
@@ -308,7 +331,7 @@ public class GameEngine {
      * Updates the on-screen counters for food, energy, ore, money and Roboticons
      * This is typically called when the active player switches or when a market transaction is made
      */
-    public void updateLabels(){
+    public void updateInventoryLabels(){
         gameScreen.setFoodCounterValue(currentPlayer().getFoodCount());
         gameScreen.setEnergyCounterValue(currentPlayer().getEnergyCount());
         gameScreen.setOreCounterValue(currentPlayer().getOreCount());
@@ -429,7 +452,7 @@ public class GameEngine {
                     selectedTile.assignRoboticon(Roboticon);
                     roboticonIDCounter += 1;
                     players[currentPlayerID].decreaseRoboticonInventory();
-                    updateLabels();
+                    updateInventoryLabels();
                 }
             } else if(phase == 2 && selectedTile.hasRoboticon()) {
                 //selectedTile.getRoboticonStored().upgrade();

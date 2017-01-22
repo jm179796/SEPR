@@ -1,5 +1,8 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+
 import java.util.*;
 
 /**
@@ -41,6 +44,16 @@ public class Roboticon {
     private Integer Upgrades[] = {0, 0, 0};
 
     /**
+     * The image object providing the roboticon's visual representation
+     */
+    private Image icon;
+
+    /**
+     * The texture encoding the roboticon's visual representation
+     */
+    private Texture iconTexture;
+
+    /**
      * Constructor of the class
      *
      * @param ID     An integer uniquely defining the roboticon, starting at 0
@@ -51,6 +64,9 @@ public class Roboticon {
         RoboticonID = ID;
         this.CurrentTile = Tile;
         this.Owner = Player;
+
+        this.iconTexture = new Texture("image/Roboticon111.png");
+        this.icon = new Image(iconTexture);
 
         this.CurrentTile.assignRoboticon(this);
     }
@@ -135,5 +151,23 @@ public class Roboticon {
         return Modifiers;
 
 
+    }
+
+    /**
+     * Returns an Image object with the texture of the roboticon's icon mapped to it
+     *
+     * @return Image Icon representing the roboticon
+     */
+    public Image getIcon() {
+        return this.icon;
+    }
+
+    /**
+     * Returns the texture file encoding the roboticon's icon
+     *
+     * @return Texture The texture encoding the roboticon's icon
+     */
+    public Texture getIconTexture() {
+        return iconTexture;
     }
 }

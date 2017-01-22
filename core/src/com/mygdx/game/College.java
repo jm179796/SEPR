@@ -164,7 +164,7 @@ public class College {
   /**
    * Returns the texture file encoding the college's logo
    *
-   * @return
+   * @return Texture The texture encoding the college's logo
    */
   public Texture getLogoTexture() {
     return logoTexture;
