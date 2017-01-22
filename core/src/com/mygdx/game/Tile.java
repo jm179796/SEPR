@@ -126,15 +126,15 @@ public class Tile extends Button {
         this.ID = ID;
         //Import and save the tile's assigned getID
 
-        tooltipWidth = 100;
-        tooltipHeight = 50;
+        tooltipWidth = 76;
+        tooltipHeight = 31;
         tooltipCursorSpace = 3;
         tooltipTextSpace = 3;
 
         tooltipFillColor = Color.GRAY;
         tooltipLineColor = Color.BLACK;
 
-        tooltipFont = new TTFont(Gdx.files.internal("font/testfontbignoodle.ttf"), 24);
+        tooltipFont = new TTFont(Gdx.files.internal("font/testfontbignoodle.ttf"), 36);
         //Visual parameters of the tile's tooltip
 
         tooltipActive = false;

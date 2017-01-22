@@ -137,6 +137,11 @@ public class GameScreen implements Screen{
     private Image selectedTileOwnerIcon;
 
     /**
+     * Icon representing the roboticon occupying the currently-selected tile
+     */
+    private Image selectedTileRoboticonIcon;
+
+    /**
      * The game-screen's initial constructor
      *
      * @param game Variable storing the game's state for rendering purposes
@@ -278,6 +283,9 @@ public class GameScreen implements Screen{
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 engine.nextPhase();
+
+                deselectTile();
+                //Refresh tile information and tile management UI
             }
         });
         drawer.switchTextButton(endTurnButton, false, Color.GRAY);
@@ -369,21 +377,26 @@ public class GameScreen implements Screen{
         currentPlayerIcon = engine.currentPlayer().getCollege().getLogo();
         drawer.addTableRow(collegeInfo, currentPlayerIcon, 64, 64);
         drawer.addTableRow(collegeInfo, new Label("COLLEGE", new Label.LabelStyle(gameFont.font(), Color.WHITE)));
-        drawer.addTableRow(tableLeft, collegeInfo, 5, 0, 0, 15);
+        drawer.addTableRow(tableLeft, collegeInfo, 5, 0, 0, 0);
         //Prepare icon region to show the icon of the college which is currently active
 
         Table resourceCounters = new Table();
         foodCounter = new Label(engine.currentPlayer().getFoodCount().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
+        foodCounter.setAlignment(Align.right);
         energyCounter = new Label(engine.currentPlayer().getEnergyCount().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
+        energyCounter.setAlignment(Align.right);
         oreCounter = new Label(engine.currentPlayer().getOreCount().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
+        oreCounter.setAlignment(Align.right);
         roboticonCounter = new Label(engine.currentPlayer().getRoboticonCount().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
+        roboticonCounter.setAlignment(Align.right);
         moneyCounter = new Label(engine.currentPlayer().getMoney().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
-        drawer.addTableRow(resourceCounters, new LabelledElement("Food", gameFont, Color.WHITE, foodCounter, 120, 40));
-        drawer.addTableRow(resourceCounters, new LabelledElement("Energy", gameFont, Color.WHITE, energyCounter, 120, 40));
-        drawer.addTableRow(resourceCounters, new LabelledElement("Ore", gameFont, Color.WHITE, oreCounter, 120, 40));
-        drawer.addTableRow(resourceCounters, new LabelledElement("Roboticons", gameFont, Color.WHITE, roboticonCounter, 120, 40));
-        drawer.addTableRow(resourceCounters, new LabelledElement("Money", gameFont, Color.WHITE, moneyCounter, 120, 40));
-        tableLeft.add(resourceCounters).size(160, 120);
+        moneyCounter.setAlignment(Align.right);
+        drawer.addTableRow(resourceCounters, new LabelledElement("Food", gameFont, Color.WHITE, foodCounter, 100, 40));
+        drawer.addTableRow(resourceCounters, new LabelledElement("Energy", gameFont, Color.WHITE, energyCounter, 100, 40));
+        drawer.addTableRow(resourceCounters, new LabelledElement("Ore", gameFont, Color.WHITE, oreCounter, 100, 40));
+        drawer.addTableRow(resourceCounters, new LabelledElement("Roboticons", gameFont, Color.WHITE, roboticonCounter, 100, 40));
+        drawer.addTableRow(resourceCounters, new LabelledElement("Money", gameFont, Color.WHITE, moneyCounter, 100, 40));
+        tableLeft.add(resourceCounters).size(150, 120).align(Align.right);
         //Add resource-counters to the table
         //These will show the current resource stocks for the current player
 
@@ -397,7 +410,7 @@ public class GameScreen implements Screen{
     /**
      * Set up the form and contents of the right-hand table so that they can be rendered later
      * Specifically defines the right-hand panel's spatial framework (in the form of a table) before populating it with
-     * the selected tile's name-label and college/Roboticon icons, along with buttons to claim and deploy/upgrade
+     * the selected tile's name-label and college/roboticon icons, along with buttons to claim and deploy/upgrade
      * Roboticons on the selected tile and the whole interface for the game's market
      */
     public void constructRightTable() {
@@ -422,14 +435,23 @@ public class GameScreen implements Screen{
         selectedTileOwnerIcon.setVisible(false);
         selectedTileOwnerIcon.setScaling(Scaling.fit);
         selectedTileOwnerIcon.setAlign(Align.center);
+        selectedTileRoboticonIcon = new Image();
+        selectedTileRoboticonIcon.setVisible(false);
+        selectedTileRoboticonIcon.setScaling(Scaling.fit);
+        selectedTileRoboticonIcon.setAlign(Align.center);
         tableRight.row();
         tableRight.add(selectedTileOwnerIcon).size(64, 64).center();
-        tableRight.add(new Label("ROB", new Label.LabelStyle(gameFont.font(), Color.WHITE))).size(64, 64);
+        tableRight.add(selectedTileRoboticonIcon).size(64, 64).center();
         //Instantiate and deploy icons to represent tiles' owners and Roboticons
 
         gameFont.setSize(20);
-        drawer.addTableRow(tableRight, new Label("COLLEGE", new Label.LabelStyle(gameFont.font(), Color.WHITE)), 0, 0, 10, 0);
-        tableRight.add(new Label("ROBOTICON", new Label.LabelStyle(gameFont.font(), Color.WHITE))).padBottom(10);
+        Label collegeFootLabel = new Label("COLLEGE", new Label.LabelStyle(gameFont.font(), Color.WHITE));
+        Label roboticonFootLabel = new Label("ROBOTICON", new Label.LabelStyle(gameFont.font(), Color.WHITE));
+        collegeFootLabel.setAlignment(Align.center);
+        roboticonFootLabel.setAlignment(Align.center);
+        tableRight.row();
+        tableRight.add(collegeFootLabel).padBottom(10).width(120);
+        tableRight.add(roboticonFootLabel).padBottom(10).width(120);
         //Even more window-dressing
 
         drawer.switchTextButton(claimTileButton, false, Color.GRAY);
@@ -535,7 +557,7 @@ public class GameScreen implements Screen{
         //Draw lines and rectangles in left-hand table
 
         drawer.lineRectangle(Color.WHITE, ((int) (Gdx.graphics.getWidth() * 0.875)) - 93, 52, 66, 66, 1);
-        drawer.lineRectangle(Color.WHITE, ((int) (Gdx.graphics.getWidth() * 0.875)) + 26, 52, 66, 66, 1);
+        drawer.lineRectangle(Color.WHITE, ((int) (Gdx.graphics.getWidth() * 0.875)) + 27, 52, 66, 66, 1);
         drawer.filledRectangle(Color.WHITE, Gdx.graphics.getWidth() - 256, 190, 256, 1);
         //Draw lines in right-hand table
     }
@@ -641,18 +663,6 @@ public class GameScreen implements Screen{
     }
 
     /**
-     * Returns the icon object used to visualise the logo of the college associated with the player who owns the
-     * currently-selected tile
-     * The GameEngine class uses this method to update said logo when a new tile is selected
-     *
-     * @Getter
-     * @return Image The image object visualising the college associated with the player who owns the selected tile
-     */
-    public Image selectedTileOwnerIcon() {
-        return selectedTileOwnerIcon;
-    }
-
-    /**
      * Prepares the renderer to render the main stage again (after pausing) by setting it up to accept inputs again
      */
     public void openGameStage() {
@@ -681,7 +691,7 @@ public class GameScreen implements Screen{
             selectedTileOwnerIcon.setVisible(true);
             selectedTileOwnerIcon.setDrawable(new TextureRegionDrawable(new TextureRegion(tile.getOwner().getCollege().getLogoTexture())));
             selectedTileOwnerIcon.setSize(64, 64);
-            //Update tile description in the UI...
+            //Update tile owner college icon
 
             drawer.switchTextButton(claimTileButton, false, Color.GRAY);
             //Disable the button for claiming the tile if it's already been claimed
@@ -689,15 +699,22 @@ public class GameScreen implements Screen{
             if (tile.hasRoboticon()) {
                 deployRoboticonButton.setText("UPGRADE");
 
+                selectedTileRoboticonIcon.setVisible(true);
+                selectedTileRoboticonIcon.setDrawable(new TextureRegionDrawable(new TextureRegion(tile.getRoboticonStored().getIconTexture())));
+                selectedTileOwnerIcon.setSize(64, 64);
+
                 if (engine.phase() == 3 && tile.getOwner() == engine.currentPlayer()) {
                     drawer.switchTextButton(deployRoboticonButton, true, Color.WHITE);
                 } else {
                     drawer.switchTextButton(deployRoboticonButton, false, Color.GRAY);
                 }
                 //If the tile already has a Roboticon, offer an upgrade button if the Roboticon upgrade conditions are met
+                //Also show an icon representing the Roboticon inhabiting the tile
                 //This will only happen if the game is in phase 3
             } else {
                 deployRoboticonButton.setText("DEPLOY");
+
+                selectedTileRoboticonIcon.setVisible(false);
 
                 if (engine.phase() == 3 && tile.getOwner() == engine.currentPlayer() && engine.currentPlayer().getRoboticonInventory() > 0) {
                     drawer.switchTextButton(deployRoboticonButton, true, Color.WHITE);
@@ -709,6 +726,7 @@ public class GameScreen implements Screen{
             }
         } else {
             selectedTileOwnerIcon.setVisible(false);
+            selectedTileRoboticonIcon.setVisible(false);
 
             if (engine.phase() == 1) {
                 drawer.switchTextButton(claimTileButton, true, Color.WHITE);
@@ -731,7 +749,8 @@ public class GameScreen implements Screen{
 
         deployRoboticonButton.setText("DEPLOY");
 
-        selectedTileOwnerIcon().setVisible(false);
+        selectedTileOwnerIcon.setVisible(false);
+        selectedTileRoboticonIcon.setVisible(false);
 
         updateSelectedTileLabel(0);
     }
