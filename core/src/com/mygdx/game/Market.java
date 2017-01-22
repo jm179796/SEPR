@@ -171,7 +171,7 @@ public class Market extends Table {
         //QOL class that uses the game's state to directly access and control the game's renderer
         //Used by this class to construct the market's visual interface
 
-        tableFont = new TTFont(Gdx.files.internal("font/testfontbignoodle.ttf"), 36);
+        tableFont = new TTFont(Gdx.files.internal("font/testfontbignoodle.ttf"), 24);
         //Establish the font in which the market interface's text is to be pronted
 
         try {
@@ -199,7 +199,6 @@ public class Market extends Table {
      * Obviously, these buttons enable players to buy and sell resources during certain game-phases
      */
     public void constructButtons() {
-        tableFont.setSize(24);
         TextButton.TextButtonStyle tableButtonStyle = new TextButton.TextButtonStyle();
         tableButtonStyle.font = tableFont.font();
         tableButtonStyle.fontColor = Color.WHITE;
@@ -360,8 +359,11 @@ public class Market extends Table {
      * Once this method has finished executing, the market can be drawn to a stage like any other actor
      */
     public void constructInterface() {
+        tableFont.setSize(36);
         drawer.addTableRow(this, new Label("Market", new Label.LabelStyle(tableFont.font(), Color.WHITE)), 0, 0, 5, 0, 3);
         //Add a heading to the market interface
+
+        tableFont.setSize(24);
 
         this.row();
         this.add(new Label("Item", new Label.LabelStyle(tableFont.font(), Color.WHITE))).left().padRight(90);

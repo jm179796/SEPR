@@ -442,8 +442,6 @@ public class GameScreen implements Screen{
         drawer.addTableRow(tableRight, engine.market(), 2);
         //Establish market and add market interface to right-hand table
 
-        tableRight.debug();
-
         gameStage.addActor(tableRight);
         //Add right-hand table to the stage
     }
