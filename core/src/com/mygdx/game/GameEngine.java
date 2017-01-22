@@ -285,6 +285,9 @@ public class GameEngine {
         }
         //Temporary code for determining the game's winner once all tiles have been acquired
         //Each player should own 8 tiles when this block is executed
+
+        gameScreen.closeUpgradeOverlay();
+        //If the upgrade overlay is open, close it when the next phase begins
     }
 
     /**
