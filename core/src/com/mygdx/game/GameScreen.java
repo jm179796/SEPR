@@ -247,13 +247,7 @@ public class GameScreen implements Screen{
             gameStage.act(delta);
             gameStage.draw();
             //Draw the stage onto the screen
-
-            if (upgradeOverlayVisible == true) {
-                upgradeOverlay.act(delta);
-                upgradeOverlay.draw();
-            }
-            //Draw the roboticon upgrade overlay to the screen if the "upgrade" button has been selected
-
+            
             for (Tile tile : engine.tiles()) {
                 if (upgradeOverlayVisible == false) {
                     tile.drawTooltip();
@@ -263,6 +257,12 @@ public class GameScreen implements Screen{
                 tile.drawBorder();
                 //Draw each tile's border too
             }
+
+            if (upgradeOverlayVisible == true) {
+                upgradeOverlay.act(delta);
+                upgradeOverlay.draw();
+            }
+            //Draw the roboticon upgrade overlay to the screen if the "upgrade" button has been selected
         } else if (engine.state() == GameEngine.State.PAUSE) {
             drawer.filledRectangle(Color.WHITE, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
             //If the game is paused, render a white background...
