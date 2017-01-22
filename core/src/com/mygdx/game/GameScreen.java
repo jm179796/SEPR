@@ -421,9 +421,10 @@ public class GameScreen implements Screen{
         selectedTileOwnerIcon = new Image();
         selectedTileOwnerIcon.setVisible(false);
         selectedTileOwnerIcon.setScaling(Scaling.fit);
+        selectedTileOwnerIcon.setAlign(Align.center);
         tableRight.row();
-        tableRight.add(selectedTileOwnerIcon).size(120, 64);
-        tableRight.add(new Label("      ROB", new Label.LabelStyle(gameFont.font(), Color.WHITE))).size(120, 64);
+        tableRight.add(selectedTileOwnerIcon).size(64, 64).center();
+        tableRight.add(new Label("ROB", new Label.LabelStyle(gameFont.font(), Color.WHITE))).size(64, 64);
         //Instantiate and deploy icons to represent tiles' owners and Roboticons
 
         gameFont.setSize(20);
@@ -677,14 +678,10 @@ public class GameScreen implements Screen{
         selectedTileLabel.setText("TILE " + tile.getID());
 
         if (tile.isOwned()) {
-            if (tile != engine.selectedTile()) {
-                selectedTileOwnerIcon.setVisible(true);
-                selectedTileOwnerIcon.setDrawable(new TextureRegionDrawable(new TextureRegion(tile.getOwner().getCollege().getLogoTexture())));
-                selectedTileOwnerIcon.setSize(64, 64);
-            }
+            selectedTileOwnerIcon.setVisible(true);
+            selectedTileOwnerIcon.setDrawable(new TextureRegionDrawable(new TextureRegion(tile.getOwner().getCollege().getLogoTexture())));
+            selectedTileOwnerIcon.setSize(64, 64);
             //Update tile description in the UI...
-            //...if it hasn't been drawn there already
-            //This conditional block is here to prevent icon alignments from going out of whack
 
             drawer.switchTextButton(claimTileButton, false, Color.GRAY);
             //Disable the button for claiming the tile if it's already been claimed
