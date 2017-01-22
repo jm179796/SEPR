@@ -256,7 +256,7 @@ public class MarketTest extends TesterFile{
      * @throws Exception Thrown when an invalid transaction is attempted.
      */
     @Test
-    public void testSellExceptions(){
+    public void testSellExceptions() throws Exception{
         //ore
         TestPlayer.setOreCount(10);
         TestPlayer.setMoney(10);
@@ -317,6 +317,57 @@ public class MarketTest extends TesterFile{
     @Test
     public void testcalculatenewcost(){
 
+
+        TestPlayer.setEnergyCount(10);
+        TestPlayer.setMoney(1000 );
+        TestMarket.setEnergySellPrice(2);
+        TestMarket.setEnergyBuyPrice(2);
+        TestMarket.setEnergyStock(100);
+        Integer initialbuyprice = TestMarket.getEnergyBuyPrice();
+        Integer initialsellprice = TestMarket.getEnergySellPrice();
+
+        try {
+            TestMarket.buy("energy", 10, TestPlayer);
+        } catch (Exception e) {
+            fail("Expected to pass");
+        }
+
+        assertTrue(initialbuyprice < TestMarket.getEnergyBuyPrice());
+        assertTrue(initialsellprice > TestMarket.getEnergySellPrice());
+
+        TestPlayer.setOreCount(10);
+        TestPlayer.setMoney(1000 );
+        TestMarket.setOreSellPrice(2);
+        TestMarket.setOreBuyPrice(2);
+        TestMarket.setOreStock(100);
+        initialbuyprice = TestMarket.getOreBuyPrice();
+        initialsellprice = TestMarket.getOreSellPrice();
+
+        try {
+            TestMarket.buy("ore", 10, TestPlayer);
+        } catch (Exception e) {
+            fail("Expected to pass");
+        }
+
+        assertTrue(initialbuyprice < TestMarket.getOreBuyPrice());
+        assertTrue(initialsellprice > TestMarket.getOreSellPrice());
+
+        TestPlayer.setFoodCount(10);
+        TestPlayer.setMoney(1000 );
+        TestMarket.setFoodSellPrice(2);
+        TestMarket.setFoodBuyPrice(2);
+        TestMarket.setFoodStock(100);
+        initialbuyprice = TestMarket.getFoodBuyPrice();
+        initialsellprice = TestMarket.getFoodSellPrice();
+
+        try {
+            TestMarket.buy("food", 10, TestPlayer);
+        } catch (Exception e) {
+            fail("Expected to pass");
+        }
+
+        assertTrue(initialbuyprice < TestMarket.getFoodBuyPrice());
+        assertTrue(initialsellprice > TestMarket.getFoodSellPrice());
     }
 
     @Test
