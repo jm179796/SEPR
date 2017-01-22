@@ -1,7 +1,8 @@
 package com.mygdx.game;
 
 /**
- * Created by Nico on 23/11/2016.
+ * @author Duck-Related Team Name in BIG MASSIVE LETTERS
+ * @version READ ASSESSMENT 2
  */
 
 import com.badlogic.gdx.Game;
@@ -25,7 +26,7 @@ import com.badlogic.gdx.utils.Scaling;
 public class GameScreen implements Screen{
 
     /**
-     * Stores current game-state, enabling transitions between screens
+     * Stores current game-state, enabling transitions between screens and external QOL drawing functions
      */
     private Game game;
 
@@ -35,7 +36,7 @@ public class GameScreen implements Screen{
     private GameEngine engine;
 
     /**
-     * Establishes an on-screen stage which can be populated with actors
+     * On-screen stage which can be populated with actors
      */
     private Stage gameStage;
 
@@ -90,7 +91,7 @@ public class GameScreen implements Screen{
     private Label moneyCounter;
 
     /**
-     * Label stating the ID of the currently-selected tile
+     * Label stating the getID of the currently-selected tile
      */
     private Label selectedTileLabel;
 
@@ -126,14 +127,6 @@ public class GameScreen implements Screen{
     private TextButton.TextButtonStyle gameButtonStyle;
 
     /**
-     * Holds all of the data and the functions of the game's market
-     * Also comes bundled with a visual interface which can be rendered on to the game's screen
-     */
-    private Market market;
-
-    private Integer roboticonIDCounter = 0;
-
-    /**
      * Icon representing the currently-active player's chosen college
      */
     private Image currentPlayerIcon;
@@ -146,11 +139,11 @@ public class GameScreen implements Screen{
     /**
      * The game-screen's initial constructor
      *
-     * @param game Variable storing the game's state
+     * @param game Variable storing the game's state for rendering purposes
      */
     public GameScreen(Game game) {
         this.game = game;
-        //Import current game-state
+        //Import current game-state to access the game's renderer
 
         engine = new GameEngine(game, this);
         //Start game engine up
@@ -158,11 +151,16 @@ public class GameScreen implements Screen{
 
     /**
      * Executes when the game-screen is loaded up, typically from the point of another screen
-     * Serves as an extension of the screen's constructor that primarily constructs visual elements
+     * Serves as an extension of the screen's constructor that primarily builds visual elements
+     *
+     * Currently instantiates Drawer object, the main stage, the font used to render on-screen text and the image of
+     * the game's map before constructing the three primary tables that make up the in-game interface (along with the
+     * auxiliary pause menu)
      */
     @Override
     public void show() {
         drawer = new Drawer(game);
+        //Import QOL drawing functions
 
         gameStage = new Stage();
         Gdx.input.setInputProcessor(gameStage);
@@ -195,12 +193,12 @@ public class GameScreen implements Screen{
         constructPauseMenu();
         //Construct pause-menu (and hide it for the moment)
 
-        drawer.debug(gameStage);
+        //drawer.debug(gameStage);
         //Call this to draw temporary debug lines around all of the actors on the stage
     }
 
     /**
-     * Renders all visual elements (set up in the [show()] subroutine and all of its subsiduaries) to the game's window
+     * Renders all visual elements (set up in the [show()] subroutine and all of its subsiduaries) to the window
      * This is called to prepare each and every frame that the game deploys
      *
      * @param delta
@@ -268,7 +266,8 @@ public class GameScreen implements Screen{
     }
 
     /**
-     * Set up the buttons to be placed onto the interface later
+     * Sets up the buttons to be placed onto the interface later by defining their visual representations and their
+     * on-click functions together
      */
     public void constructButtons() {
         /**
@@ -305,15 +304,24 @@ public class GameScreen implements Screen{
         claimTileButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-               engine.claimTile();
+                engine.claimTile();
+
+                selectTile(engine.selectedTile());
+                //Refresh tile information and tile management UI
             }
         });
 
+        /**
+         * Button which allows players to deploy Roboticons onto selected tiles
+         */
         deployRoboticonButton = new TextButton("DEPLOY", gameButtonStyle);
         deployRoboticonButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                engine.deployRoboticon();
+
+               selectTile(engine.selectedTile());
+               //Refresh tile information and tile management UI
 
             }
         });
@@ -321,6 +329,10 @@ public class GameScreen implements Screen{
 
     /**
      * Set up the form and contents of the left-hand table so that they can be rendered later
+     * Specifically defines the left-hand panel's spatial framework (in the form of a table) before populating it with
+     * the game's timer, a phase label, a button for ending turns, the logo of the current player's associated college
+     * and counters visualising the numbers of ore, energy, food and Roboticon stocks (and the money) that the
+     * current player holds
      */
     public void constructLeftTable() {
         /**
@@ -338,14 +350,17 @@ public class GameScreen implements Screen{
         tableLeft.add(engine.timer()).colspan(2);
         //Add the timer to the table
 
-        gameFont.setSize(36);
+        gameFont.setSize(22);
         Table phaseTable = new Table();
-        phaseLabel = new Label("PHASE 1", new Label.LabelStyle(gameFont.font(), Color.WHITE));
-        phaseTable.add(phaseLabel).width(110);
+        phaseLabel = new Label("PHASE 1\nACQUISITION", new Label.LabelStyle(gameFont.font(), Color.WHITE));
+        phaseLabel.setAlignment(Align.center);
+        phaseTable.add(phaseLabel).width(105);
+        phaseTable.add().width(25);
         phaseTable.add(endTurnButton);
         drawer.addTableRow(tableLeft, phaseTable, 0, 0, 15, 0, 2);
         //Prepare and add the "End Phase" button to the table
 
+        gameFont.setSize(36);
         drawer.addTableRow(tableLeft, new Label("CURRENT PLAYER", new Label.LabelStyle(gameFont.font(), Color.BLACK)), 0, 0, 10, 0, 2);
         //Window-dressing: adds "CURRENT PLAYER" label
 
@@ -372,7 +387,7 @@ public class GameScreen implements Screen{
         //Add resource-counters to the table
         //These will show the current resource stocks for the current player
 
-        drawer.addTableRow(tableLeft, pauseButton, 113, 0, 0, 0, 2);
+        drawer.addTableRow(tableLeft, pauseButton, 105, 0, 0, 0, 2);
         //Prepare and add the pause button to the bottom of the table
 
         gameStage.addActor(tableLeft);
@@ -381,6 +396,9 @@ public class GameScreen implements Screen{
 
     /**
      * Set up the form and contents of the right-hand table so that they can be rendered later
+     * Specifically defines the right-hand panel's spatial framework (in the form of a table) before populating it with
+     * the selected tile's name-label and college/Roboticon icons, along with buttons to claim and deploy/upgrade
+     * Roboticons on the selected tile and the whole interface for the game's market
      */
     public void constructRightTable() {
         /**
@@ -424,12 +442,16 @@ public class GameScreen implements Screen{
         drawer.addTableRow(tableRight, engine.market(), 2);
         //Establish market and add market interface to right-hand table
 
+        tableRight.debug();
+
         gameStage.addActor(tableRight);
         //Add right-hand table to the stage
     }
 
     /**
      * Set up the game-screen's central tile-grid so that it can be interacted with
+     * The tiles on this grid take the form of invisible buttons that are directly laid over the map image at the
+     * centre of this screen
      */
     public void constructTileGrid(){
         tileGrid = new Table();
@@ -453,6 +475,11 @@ public class GameScreen implements Screen{
 
         /**
          * Establishes the visual framework for the pause screen
+         * Specifically instantiates a new stage and spatial framework table for the pause menu before populating it
+         * with the game's logo and a "Resume" button to unpause the game with
+         * This screen's [render()] function is initially configured to avoid rendering this stage, so it won't
+         * appear when the GameScreen loads: it will instead appear when the Pause button on the main stage is used
+         * to shift the game's engine into a "Paused" state
          */
         Table pauseTable = new Table();
         pauseStage = new Stage();
@@ -502,8 +529,8 @@ public class GameScreen implements Screen{
         //Draw border around the map
 
         drawer.filledRectangle(Color.WHITE, 0, (int) engine.timer().getHeight(), 256, 1);
-        drawer.filledRectangle(Color.WHITE, 0, (int) (engine.timer().getHeight() + endTurnButton.getHeight()), 256, 1);
-        drawer.borderedRectangle(Color.GRAY, Color.WHITE, 19, (int) (engine.timer().getHeight() + endTurnButton.getHeight()) + 15, 219, 40, 1);
+        drawer.filledRectangle(Color.WHITE, 0, (int) (engine.timer().getHeight() + phaseLabel.getHeight()), 256, 1);
+        drawer.borderedRectangle(Color.GRAY, Color.WHITE, 19, (int) (engine.timer().getHeight() + phaseLabel.getHeight()) + 15, 219, 40, 1);
         //drawer.lineRectangle(Color.WHITE, ((int) (Gdx.graphics.getWidth() * 0.125)) - 110, 240, 66, 66);
         drawer.filledRectangle(Color.WHITE, 0, Gdx.graphics.getHeight() - 46, 256, 1);
         //Draw lines and rectangles in left-hand table
@@ -514,26 +541,56 @@ public class GameScreen implements Screen{
         //Draw lines in right-hand table
     }
 
+    /**
+     * Sets the value represented by the food-counter rendered within the main in-game interface
+     *
+     * @param value The new value to be visualised by the in-game food counter
+     */
     public void setFoodCounterValue(int value) {
-        foodCounter.setText((String.valueOf(value)));
+        foodCounter.setText(String.valueOf(value));
     }
 
+    /**
+     * Sets the value represented by the energy-counter rendered within the main in-game interface
+     *
+     * @param value The new value to be visualised by the in-game energy counter
+     */
     public void setEnergyCounterValue(int value) {
-        energyCounter.setText((String.valueOf(value)));
+        energyCounter.setText(String.valueOf(value));
     }
 
+    /**
+     * Sets the value represented by the ore-counter rendered within the main in-game interface
+     *
+     * @param value The new value to be visualised by the in-game ore counter
+     */
     public void setOreCounterValue(int value) {
-        oreCounter.setText((String.valueOf(value)));
+        oreCounter.setText(String.valueOf(value));
     }
 
+    /**
+     * Sets the value represented by the Roboticon-counter rendered within the main in-game interface
+     *
+     * @param value The new value to be visualised by the in-game Roboticon counter
+     */
     public void setRoboticonCounterValue(int value) {
-        roboticonCounter.setText((String.valueOf(value)));
+        roboticonCounter.setText(String.valueOf(value));
     }
 
+    /**
+     * Sets the value represented by the money-counter rendered within the main in-game interface
+     *
+     * @param value The new value to be visualised by the in-game money counter
+     */
     public void setMoneyCounterValue(int value) {
-        moneyCounter.setText((String.valueOf(value)));
+        moneyCounter.setText(String.valueOf(value));
     }
 
+    /**
+     * Updates the label on the right-hand side of the in-game interface to visualise the identity of the selected tile
+     *
+     * @param value The ID value of the tile to be described on the interface
+     */
     public void updateSelectedTileLabel(int value) {
         if (value < 1 || value > 16) {
             selectedTileLabel.setText("NO TILE SELECTED");
@@ -542,67 +599,118 @@ public class GameScreen implements Screen{
         }
     }
 
+    /**
+     * Updates the label on the right-hand side of the in-game interface to visualise the identity of the selected tile
+     * Alternative method that takes an ID value from a provided tile rather than an ID value directly
+     *
+     * @param tile The tile to be described on the interface
+     */
     public void updateSelectedTileLabel(Tile tile) {
-        selectedTileLabel.setText("TILE " + tile.ID());
+        selectedTileLabel.setText("TILE " + tile.getID());
     }
 
-    public void updatePhaseLabel(int value) {
-        phaseLabel.setText("PHASE " + value);
+    /**
+     * Updates the label on the left-hand side of the in-game interface to visualise and describe the game's current
+     * phase
+     *
+     * @param description The phase description to be displayed by the same label
+     */
+    public void updatePhaseLabel(String description) {
+        phaseLabel.setText("PHASE " + engine.phase() + "\n" + description);
     }
 
-    public TextButton claimTileButton() {
-        return claimTileButton;
-    }
-
+    /**
+     * Returns the button used to allow for players to prematurely end their turns
+     * This method is required to allow for the GameEngine class to turn the button off during phase 1
+     *
+     * @Getter
+     * @return TextButton The in-game "End Turn" button
+     */
     public TextButton endTurnButton() {
         return endTurnButton;
     }
 
-    public TextButton deployRoboticonButton(){
-        return deployRoboticonButton;
-    }
-
+    /**
+     * Returns the icon object used to visualise the logo of the current player's associated college
+     * The GameEngine class uses this method to update said logo when it changes the active player
+     *
+     * @Getter
+     * @return Image The image object visualising the current player's associated college
+     */
     public Image currentPlayerIcon() {
         return currentPlayerIcon;
     }
 
+    /**
+     * Returns the icon object used to visualise the logo of the college associated with the player who owns the
+     * currently-selected tile
+     * The GameEngine class uses this method to update said logo when a new tile is selected
+     *
+     * @Getter
+     * @return Image The image object visualising the college associated with the player who owns the selected tile
+     */
     public Image selectedTileOwnerIcon() {
         return selectedTileOwnerIcon;
     }
 
+    /**
+     * Prepares the renderer to render the main stage again (after pausing) by setting it up to accept inputs again
+     */
     public void openGameStage() {
         Gdx.input.setInputProcessor(gameStage);
     }
 
+    /**
+     * Prepares the renderer to render the pause-screen stage again by setting it up to accept inputs again
+     */
     public void openPauseStage() {
         Gdx.input.setInputProcessor(pauseStage);
     }
 
     /**
      * The code to be run whenever a particular tile is clicked on
+     * Specifically updates the label identifying the selected tile, the college icon linked to the player who owns
+     * it, the icon representing the Roboticon planted on it and the available options for the tile in the main
+     * in-game interface
      *
      * @param tile The tile being clicked on
      */
     public void selectTile(Tile tile) {
-        selectedTileLabel.setText("TILE " + tile.ID());
+        selectedTileLabel.setText("TILE " + tile.getID());
 
         if (tile.isOwned()) {
-            selectedTileOwnerIcon.setVisible(true);
-            selectedTileOwnerIcon.setDrawable(new TextureRegionDrawable(new TextureRegion(tile.getOwner().getCollege().getLogoTexture())));
-            selectedTileOwnerIcon.setSize(64, 64);
+            if (tile != engine.selectedTile()) {
+                selectedTileOwnerIcon.setVisible(true);
+                selectedTileOwnerIcon.setDrawable(new TextureRegionDrawable(new TextureRegion(tile.getOwner().getCollege().getLogoTexture())));
+                selectedTileOwnerIcon.setSize(64, 64);
+            }
+            //Update tile description in the UI...
+            //...if it hasn't been drawn there already
+            //This conditional block is here to prevent icon alignments from going out of whack
 
-            if (engine.phase() == 3 && tile.getOwner() == engine.currentPlayer()) {
-                if (tile.hasRoboticon()) {
-                    deployRoboticonButton.setText("UPGRADE");
-                    drawer.switchTextButton(deployRoboticonButton, true, Color.WHITE);
-                } else if (engine.currentPlayer().getRoboticonInventory() > 0) {
+            drawer.switchTextButton(claimTileButton, false, Color.GRAY);
+            //Disable the button for claiming the tile if it's already been claimed
+
+            if (tile.hasRoboticon()) {
+                deployRoboticonButton.setText("UPGRADE");
+
+                if (engine.phase() == 3 && tile.getOwner() == engine.currentPlayer()) {
                     drawer.switchTextButton(deployRoboticonButton, true, Color.WHITE);
                 } else {
                     drawer.switchTextButton(deployRoboticonButton, false, Color.GRAY);
                 }
+                //If the tile already has a Roboticon, offer an upgrade button if the Roboticon upgrade conditions are met
+                //This will only happen if the game is in phase 3
             } else {
                 deployRoboticonButton.setText("DEPLOY");
-                drawer.switchTextButton(deployRoboticonButton, false, Color.GRAY);
+
+                if (engine.phase() == 3 && tile.getOwner() == engine.currentPlayer() && engine.currentPlayer().getRoboticonInventory() > 0) {
+                    drawer.switchTextButton(deployRoboticonButton, true, Color.WHITE);
+                } else {
+                    drawer.switchTextButton(deployRoboticonButton, false, Color.GRAY);
+                }
+                //If the tile doesn't have a Robotion, offer a deployment button if the current player owns at least 1 Roboticon
+                //This will only happen if the game is in phase 3
             }
         } else {
             selectedTileOwnerIcon.setVisible(false);
@@ -614,10 +722,13 @@ public class GameScreen implements Screen{
             deployRoboticonButton.setText("DEPLOY");
             drawer.switchTextButton(deployRoboticonButton, false, Color.GRAY);
         }
+        //If the tile isn't yet owned by anyone, allow the current player to claim it if the game is in phase 1
     }
 
     /**
      * Run this to deselect the currently selected tile
+     * Specifically resets the labels and icons that identify the selected tile and disables the buttons for
+     * manipulating said tile (as no tile can be deemed as being "selected" after this is run)
      */
     public void deselectTile() {
         drawer.switchTextButton(claimTileButton, false, Color.GRAY);

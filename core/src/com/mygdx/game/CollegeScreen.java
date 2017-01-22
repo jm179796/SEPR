@@ -13,24 +13,96 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 /**
- * Created by Nico on 25/11/2016.
+ * @author Duck-Related Team Name in BIG MASSIVE LETTERS
+ * @version READ ASSESSMENT 2
  */
 public class CollegeScreen implements Screen {
 
+    /**
+     * !!!!!!!!!!!!!!!!!!!!
+     * !!NOT YET FINISHED!!
+     * !!!!!!!!!!!!!!!!!!!!
+     * !!NOT YET FINISHED!!
+     * !!!!!!!!!!!!!!!!!!!!
+     * !!NOT YET FINISHED!!
+     * !!!!!!!!!!!!!!!!!!!!
+     * !!NOT YET FINISHED!!
+     * !!!!!!!!!!!!!!!!!!!!
+     * !!NOT YET FINISHED!!
+     * !!!!!!!!!!!!!!!!!!!!
+     * !!NOT YET FINISHED!!
+     * !!!!!!!!!!!!!!!!!!!!
+     * !!NOT YET FINISHED!!
+     * !!!!!!!!!!!!!!!!!!!!
+     * !!NOT YET FINISHED!!
+     * !!!!!!!!!!!!!!!!!!!!
+     *
+     *
+     *
+     * !!!!!!!!!!!!!!!!!!!!
+     * !!NOT YET FINISHED!!
+     * !!NOT YET FINISHED!!
+     * !!NOT YET FINISHED!!
+     * !!NOT YET FINISHED!!
+     * !!NOT YET FINISHED!!
+     * !!NOT YET FINISHED!!
+     * !!!!!!!!!!!!!!!!!!!!     *
+     */
 
+    /**
+     * Holds game-state for the purpose of establishing the QOL Drawer class, which directly interfaces with the
+     * game's renderer
+     */
     private Game game; //Stores current game-state, enabling transitions between screens
+
+    /**
+     * On-screen stage which can be populated with actors
+     */
     private Stage stage;
+
+    /**
+     * Table which acts as the spatial framework for arranging all of the screen's visual elements
+     */
     private Table tableCentre;
-    private Table tableP1; //Player 1 Table
-    private Table tableP2; //Player 2 Table
-    private TTFont CollegeFont; //Establish college menu font
+
+    /**
+     * Sub-table for P1 setup interface
+     */
+    private Table tableP1;
+
+    /**
+     * Sub-table for P2 setup interface
+     */
+    private Table tableP2;
+
+    /**
+     * Font used to render text directly to the screen's stage
+     * See the TTFont class for more information about how this works
+     */
+    private TTFont CollegeFont;
+
+    /**
+     * Array of buttons to populate the screen's interface with
+     */
     private TextButton[] buttons = new TextButton[5]; //Establish menu environment and structure
 
+    /**
+     * The college-selection screen's initial constructor
+     *
+     * @param game Variable storing the game's state for rendering purposes
+     */
     public CollegeScreen(Game game) {
         this.game = game;
         //Import current game-state
     }
 
+    /**
+     * Executes when the college-selection screen is loaded up, typically from the point of another screen
+     * Serves as an extension of the screen's constructor that primarily builds visual elements
+     *
+     * Currently instantiates the main stage and the screen's fonts before setting up the tables to be rendered on the
+     * screen (providing the spatial framework for all of their respective actors)
+     */
     @Override
     public void show() {
 
@@ -54,6 +126,12 @@ public class CollegeScreen implements Screen {
 
     }
 
+    /**
+     * Renders all visual elements (set up in the [show()] subroutine and all of its subsiduaries) to the window
+     * This is called to prepare each and every frame that the screen deploys
+     *
+     * @param delta
+     */
     @Override
     public void render(float delta) {
 
@@ -94,6 +172,9 @@ public class CollegeScreen implements Screen {
 
     }
 
+    /**
+     * Builds and deploys the table which comprises the interface for P1 to select and customise their college of choice
+     */
     public void constructP1Table() {
         tableP1 = new Table();
         //Construct player 1 table
@@ -110,6 +191,10 @@ public class CollegeScreen implements Screen {
 
     }
 
+    /**
+     * Builds and deploys the table which comprises the interface for P2 to select and customise their college of choice
+     * Currently nothing more than visual guff (IE: headers and stuff)
+     */
     public void constructP2Table() {
         tableP2 = new Table();
         //Construct player 2 table
@@ -145,6 +230,11 @@ public class CollegeScreen implements Screen {
 
     }
 
+    /**
+     * Builds and deploys the central table containing a list of the colleges that players can choose to play for
+     * Currently sets up a header and a sequence of buttons to select individual colleges
+     * This is very bare-bones right now and definitely due to change in time
+     */
     public void constructCentreTable() {
         tableCentre = new Table();
         //construct centre table

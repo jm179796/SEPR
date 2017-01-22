@@ -14,35 +14,78 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 /**
- * Created by Joseph on 21/11/2016.
+ * @author Duck-Related Team Name in BIG MASSIVE LETTERS
+ * @version READ ASSESSMENT 2
  */
 public class MainMenu implements Screen {
 
+    /**
+     * Stores current game-state, enabling transitions between screens and external QOL drawing functions
+     */
     private Game game;
-    //Stores current game-state, enabling transitions between screens
 
+    /**
+     * On-screen stage which can be populated with actors
+     */
     private Stage stage;
+
+    /**
+     * Provides the spatial framework for menu buttons and labels to be organised over
+     */
     private Table table;
+
+    /**
+     * Array of all menu buttons
+     */
     private TextButton[] buttons = new TextButton[3];
-    //Establish menu environment and structure
 
+    /**
+     * Establishes the font which is used to encode the menu's options
+     */
     private TTFont menuFont;
-    private TTFont titleFont;
-    private TTFont tempFont;
-    //Establish menu font
 
+    /**
+     * Establishes the font which is used to encode the game's title
+     */
+    private TTFont titleFont;
+
+    /**
+     * Establishes the font which, at the moment, encodes a "Title TBC" message
+     */
+    private TTFont tempFont;
+
+    /**
+     * Object defining QOL drawing functions for rectangles and on-screen tables
+     * Used in this class accelerate table row creation
+     */
+    private Drawer drawer;
+
+    /**
+     * Batch that manages the rendering pipeline for all of the images to be displayed on the screen
+     */
+    private SpriteBatch batch;
+
+    /**
+     * The object which will encode the menu's background
+     */
+    private Sprite background;
+
+    /**
+     * The menu-screen's initial constructor
+     *
+     * @param game Variable storing the game's state for rendering purposes
+     */
     public MainMenu(Game game) {
         this.game = game;
     }
     //Import current game-state
 
-    private Drawer drawer;
-    //Import standard drawing functions
-
-    private SpriteBatch batch;
-    private Sprite background;
-    //Declare background image sprite and render-batch in which to put it
-
+    /**
+     * Secondary constructor of the main menu which focuses on preparing visual elements
+     * Specifically instantiates the menu's stage; spatial construction table; fonts; background image and buttons
+     * before adding the stage containing the table (which itself contains the menu's labels, buttons and background
+     * image) to the screen's rendering pipeline, which is also set up at the beginning of this method
+     */
     @Override
     public void show() {
         drawer = new Drawer(game);
@@ -101,9 +144,16 @@ public class MainMenu implements Screen {
         //FINALISE TABLE
         stage.addActor(table);
 
-        drawer.debug(stage);
+        //Draw temporary debug lines
+        //drawer.debug(stage);
     }
 
+    /**
+     * Renders all visual elements (set up in the [show()] subroutine and all of its subsiduaries) to the window
+     * This is called to prepare each and every frame that the screen deploys
+     *
+     * @param delta
+     */
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
@@ -114,6 +164,7 @@ public class MainMenu implements Screen {
         batch.begin();
         background.draw(batch);
         batch.end();
+        //Run through the rendering pipeline to draw the menu's background image to the screen
 
         stage.act(delta);
         stage.draw();
@@ -140,6 +191,10 @@ public class MainMenu implements Screen {
 
     }
 
+    /**
+     * Disposes of all visual data used to construct previous frames
+     * This is called after each frame is rendered, and remains necessary to prevent memory leaks
+     */
     @Override
     public void dispose() {
         menuFont.dispose();

@@ -16,7 +16,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 
 /**
- * Created by Joseph on 30/11/2016.
+ * @author Duck-Related Team Name in BIG MASSIVE LETTERS
+ * @version READ ASSESSMENT 2
  */
 public class Drawer {
     /**
@@ -37,6 +38,7 @@ public class Drawer {
 
     /**
      * Draws a rectangle on the next frame to be rendered
+     * Works by kickstarting a rendering pipeline and drawing a rectangle in that pipeline before disposing of it again
      *
      * @param type Defines the type of rectangle to be drawn: it can be filled or line-only
      * @param color Defines the colour of the rectangle to be drawn
@@ -69,6 +71,8 @@ public class Drawer {
 
     /**
      * Draws a solid-coloured rectangle on the next frame to be rendered
+     * Overloaded variant of the [rectangle()] method which automatically determines the resultant rectangle's
+     * rendering method
      *
      * @param color Defines the colour of the rectangle to be drawn
      * @param x X-coordinate of the new rectangle's top-left corner
@@ -82,6 +86,8 @@ public class Drawer {
 
     /**
      * Draws a line-only rectangle on the next frame to be rendered
+     * Overloaded variant of the [rectangle()] method which automatically determines the resultant rectangle's
+     * rendering method
      *
      * @param color Defines the colour of the rectangle to be drawn
      * @param x X-coordinate of the new rectangle's top-left corner
@@ -110,7 +116,9 @@ public class Drawer {
     }
 
     /**
-     * Prints text directly on to the next frame
+     * Prints text directly on to the next frame, foregoing the need to generate any labels or scenes
+     * Works by orthographically projecting the bitmaps in the provided TTFont object's internal BitmapFont during
+     * a rendering pipeline which only exists while the method itself exists
      *
      * @param text The text to be printed
      * @param font The font of the text to be printed
@@ -295,7 +303,7 @@ public class Drawer {
     }
 
     /**
-     * Simplifies enabling and disabling TextButtons
+     * Simplifies simultaneously changing TextButtons' colours and enabling/disabling them on the fly
      *
      * @param button The button to be enabled/disabled
      * @param enabled The button's new status
@@ -305,22 +313,6 @@ public class Drawer {
         button.getLabel().setColor(buttonColor);
         //Assign a new colour to the specified label
 
-        if (enabled == true) {
-            button.setTouchable(Touchable.enabled);
-        } else {
-            button.setTouchable(Touchable.disabled);
-        }
-        //Enable or disable the button as specified
-    }
-
-    /**
-     * Simplifies enabling and disabling TextButtons
-     * This alternative method doesn't change buttons' colours
-     *
-     * @param button The button to be enabled/disabled
-     * @param enabled The button's new status
-     */
-    public void switchTextButton(TextButton button, boolean enabled) {
         if (enabled == true) {
             button.setTouchable(Touchable.enabled);
         } else {

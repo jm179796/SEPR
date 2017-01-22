@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
  */
 public class TileTest extends TesterFile {
     private Game game = new Main();
-    private Player TestPlayer = new Player(0);
+    private Player TestPlayer = new Player(1);
     private Tile TestTile = new Tile(game, 0, 5, 5, 5, true, new Runnable() {
         @Override
         public void run() {
@@ -22,11 +22,12 @@ public class TileTest extends TesterFile {
     });
     private Roboticon TestRoboticon = new Roboticon(0, TestPlayer, TestTile);
 
+
     /**
      * Test confirming that the Player's resources are updated with roboticon production modifiers after tile.produce has completed
      */
     @Test
-    public void ValidProduce() {
+    public void testProduce() {
         Integer TestValues[] = {TestPlayer.getEnergyCount(), TestPlayer.getFoodCount(), TestPlayer.getOreCount()};
 
         TestPlayer = TestTile.Produce(TestPlayer);
@@ -38,12 +39,30 @@ public class TileTest extends TesterFile {
     }
 
     @Test
-    public void ValidToggleAcquire() {
-
+    public void testAssignRoboticon(){
+        TestTile.assignRoboticon(TestRoboticon);
+        assertTrue(TestTile.hasRoboticon());
+    }
+    @Test
+    public void testUnassignRoboticon(){
+        TestTile.assignRoboticon(TestRoboticon);
+        TestTile.unassignRoboticon(TestRoboticon);
+        assertFalse(TestTile.hasRoboticon());
     }
 
     @Test
-    public void ValidConfirmAcquire() {
+    public void testisOwned(){
+        assertFalse(TestTile.isOwned());
+        TestTile.setOwner(TestPlayer);
+        assertTrue(TestTile.isOwned());
+
+    }
+    @Test
+    public void testhasRoboticon(){
+        TestTile.unassignRoboticon(TestRoboticon);
+        assertFalse(TestTile.hasRoboticon());
+        TestTile.assignRoboticon(TestRoboticon);
+        assertTrue(TestTile.hasRoboticon());
 
     }
 

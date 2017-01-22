@@ -4,7 +4,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.Timer;
 
 /**
- * Created by Joseph on 29/11/2016.
+ * @author Duck-Related Team Name in BIG MASSIVE LETTERS
+ * @version READ ASSESSMENT 2
  */
 public class GameTimer extends com.badlogic.gdx.scenes.scene2d.ui.Label {
 
@@ -28,24 +29,41 @@ public class GameTimer extends com.badlogic.gdx.scenes.scene2d.ui.Label {
      */
     private Runnable terminalMethod;
 
+    /***
+     * Holds the colour that the timer's label assumes while it's running
+     */
+    private Color runColour;
+
+    /**
+     * Holds the colour that the timer's label assumes while it's stalled
+     */
+    private Color pauseColour;
+
     /**
      * Sets up the timer for later use
+     * Works by instantiating the timer as label, changing that label's appearance to reflect the provided time and
+     * setting up the label's internal Timer object to run the provided terminal method when the "minutes" and "seconds"
+     * variables both reach 0 (after being changed enough times following each Timer interval)
      *
      * @param minutes The number of minutes to which the timer should initially be clocked
      * @param seconds The number of seconds to which the timer should initially be clocked
      * @param font The font of the timer's visual interface
-     * @param color The colour of the timer's visual interface
+     * @param runColour The colour that the timer will assume while it's running
+     * @param pauseColour The colour that the timer will assume while it's paused
      * @param end The runnable subroutine to be executed when the timer reaches zero
      */
-    public GameTimer(int minutes, int seconds, TTFont font, Color color, Runnable end) {
-        super("", new LabelStyle(font.font(), color));
+    public GameTimer(int minutes, int seconds, TTFont font, Color runColour, Color pauseColour, Runnable end) {
+        super("", new LabelStyle(font.font(), Color.WHITE));
         //Set up timer label with the provided TTFont
 
-        if ((minutes == 0 && seconds == 0) || minutes < 0 || seconds < 0) {
-            throw new RuntimeException("Invalid Internal Time");
-        } else {
-            setTime(minutes, seconds);
-        }
+        this.runColour = runColour;
+        this.pauseColour = pauseColour;
+        //Import the colours that the timer will assume when it's running and when it's paused
+
+        this.setColor(pauseColour);
+        //Set the timer's interface to appear as if it's paused
+
+        setTime(minutes, seconds);
         //Set and render the provided amount of time
 
         this.terminalMethod = end;
@@ -65,58 +83,111 @@ public class GameTimer extends com.badlogic.gdx.scenes.scene2d.ui.Label {
 
     /**
      * Sets up the timer for later use
-     * Forgoes setting a terminal method
+     * Overloaded constructor that forgoes setting a terminal method
      *
      * @param minutes The number of minutes to which the timer should initially be clocked
      * @param seconds The number of seconds to which the timer should initially be clocked
      * @param font The font of the timer's visual interface
-     * @param color The colour of the timer's visual interface
+     * @param runColour The colour that the timer will assume while it's running
+     * @param pauseColour The colour that the timer will assume while it's paused
      */
-    public GameTimer(int minutes, int seconds, TTFont font, Color color) {
-        this(minutes, seconds, font, color, new Runnable() {
+    public GameTimer(int minutes, int seconds, TTFont font, Color runColour, Color pauseColour) {
+        this(minutes, seconds, font, runColour, pauseColour, new Runnable() {
             @Override
             public void run() {
                 return;
             }
         });
     }
-    //Alternative constructor that establishes a timer without a useful terminal method
 
     /**
      * Sets up the timer for later use
-     * Clocks the timer to a set number of seconds rather than set numbers of minutes and seconds together
+     * Overloaded constructor that sets the timer based on a total number of seconds (rather than a combination
+     * of minutes and seconds)
      *
      * @param seconds The number of seconds to which the timer should initially be clocked
      * @param font The font of the timer's visual interface
-     * @param color The colour of the timer's visual interface
+     * @param runColour The colour that the timer will assume while it's running
+     * @param pauseColour The colour that the timer will assume while it's paused
      * @param end The runnable subroutine to be executed when the timer reaches zero
      */
-    public GameTimer(int seconds, TTFont font, Color color, Runnable end) {
-        this(0, seconds, font, color, end);
+    public GameTimer(int seconds, TTFont font, Color runColour, Color pauseColour, Runnable end) {
+        this(0, seconds, font, runColour, pauseColour, end);
     }
-    //Alternative constructor that sets a timer to count down from a number of seconds
 
     /**
      * Sets up the timer for later use
-     * Forgoes setting a terminal method
-     * Clocks the timer to a set number of seconds rather than set numbers of minutes and seconds together
+     * Overloaded constructor that sets the timer based on a total number of seconds (rather than a combination
+     * of minutes and seconds) and forgoes setting a terminal method
      *
      * @param seconds The number of seconds to which the timer should initially be clocked
      * @param font The font of the timer's visual interface
-     * @param color The colour of the timer's visual interface
+     * @param runColour The colour that the timer will assume while it's running
+     * @param pauseColour The colour that the timer will assume while it's paused
      */
-    public GameTimer(int seconds, TTFont font, Color color) {
-        this(0, seconds, font, color, new Runnable() {
+    public GameTimer(int seconds, TTFont font, Color runColour, Color pauseColour) {
+        this(0, seconds, font, runColour, pauseColour, new Runnable() {
             @Override
             public void run() {
                 return;
             }
         });
     }
-    //Alternative constructor that sets a timer without a useful terminal method to count down from a number of seconds
+
+    /**
+     * Sets up the timer for later use
+     * Overloaded constructor that forgoes setting a terminal method and renders the timer gray when paused
+     *
+     * @param minutes The number of minutes to which the timer should initially be clocked
+     * @param seconds The number of seconds to which the timer should initially be clocked
+     * @param font The font of the timer's visual interface
+     * @param runColour The colour that the timer will assume while it's running
+     */
+    public GameTimer(int minutes, int seconds, TTFont font, Color runColour) {
+        this(minutes, seconds, font, runColour, Color.GRAY, new Runnable() {
+            @Override
+            public void run() {
+                return;
+            }
+        });
+    }
+
+    /**
+     * Sets up the timer for later use
+     * Overloaded constructor that sets the timer based on a total number of seconds (rather than a combination
+     * of minutes and seconds) and renders the timer gray when paused
+     *
+     * @param seconds The number of seconds to which the timer should initially be clocked
+     * @param font The font of the timer's visual interface
+     * @param runColour The colour that the timer will assume while it's running
+     * @param end The runnable subroutine to be executed when the timer reaches zero
+     */
+    public GameTimer(int seconds, TTFont font, Color runColour, Runnable end) {
+        this(0, seconds, font, runColour, Color.GRAY, end);
+    }
+
+    /**
+     * Sets up the timer for later use
+     * Overloaded constructor that sets the timer based on a total number of seconds (rather than a combination
+     * of minutes and seconds), forgoes setting a terminal method and renders the timer gray when paused
+     *
+     * @param seconds The number of seconds to which the timer should initially be clocked
+     * @param font The font of the timer's visual interface
+     * @param runColour The colour that the timer will assume while it's running
+     */
+    public GameTimer(int seconds, TTFont font, Color runColour) {
+        this(0, seconds, font, runColour, Color.GRAY, new Runnable() {
+            @Override
+            public void run() {
+                return;
+            }
+        });
+    }
 
     /**
      * Clocks the timer to the provided time
+     * Specifically changes the internal minutes/seconds variables as necessary and updates the core label's
+     * appearance to visualise the new timer provided
      *
      * @param minutes The number of minutes to which the timer should be clocked
      * @param seconds The number of seconds to which the timer should be clocked
@@ -149,6 +220,21 @@ public class GameTimer extends com.badlogic.gdx.scenes.scene2d.ui.Label {
     }
 
     /**
+     * Increments the internal timer by 1 second upon being called
+     * This is required to circumvent a bug that causes the timer to lose a second whenever it's started from a state
+     * where it has previously been stopped
+     */
+    public void increment() {
+        if (seconds == 59) {
+            setTime(minutes + 1, 0);
+            //Roll over on to the next minute if the seconds' counter is at 59 and it's due to be incremented
+        } else {
+            setTime(minutes, seconds + 1);
+            //Increment the seconds' counter
+        }
+    }
+
+    /**
      * Returns the number of minutes currently clocked on the timer
      *
      * @return Integer The number of minutes left on the clock
@@ -167,17 +253,21 @@ public class GameTimer extends com.badlogic.gdx.scenes.scene2d.ui.Label {
     }
 
     /**
-     * Starts the timer
+     * Starts the timer (and changes the timer's colour appropriately)
      */
     public void start() {
+        this.setColor(runColour);
+
         timer.start();
     }
 
     /**
-     * Stops the timer
+     * Stops the timer (and changes the timer's colour appropriately)
      */
     public void stop() {
         timer.stop();
+
+        this.setColor(pauseColour);
     }
 
     /**

@@ -6,16 +6,19 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Timer;
 
+/**
+ * @author Duck-Related Team Name in BIG MASSIVE LETTERS
+ * @version READ ASSESSMENT 2
+ */
+
 public class Tile extends Button {
 
     /**
-     * Holds game-state
+     * Holds game-state for the purpose of accessing the game's renderer
      */
     private Game game;
     /**
@@ -96,20 +99,15 @@ public class Tile extends Button {
      * Determines the thickness of the tile's border (in pixels)
      */
     private int tileBorderThickness;
-    /**
-     * Table holding the icons to be rendered in the tile's tooltip
-     */
-    private Table tooltipIcons;
-
-    private Image tileOwnerIcon;
-
-    private Image tileRoboticonIcon;
 
     /**
-     * The constructor for the object
+     * Construct's the tile's visual interface and logical underpinnings. Sets the sizes of the tile's associated
+     * tooltip and border before setting its resource yields and implementing Listeners to detect when the tile is
+     * clicked on (for individual tile selection) and hovered over (to determine when the tile's tooltip should be
+     * drawn).
      *
      * @param game Variable storing the game's state
-     * @param ID   The tile's distictive ID value
+     * @param ID   The tile's distictive getID value
      * @param EnergyCount The multiplier for the production of energy
      * @param OreCount    The multiplier for the production of ore
      * @param landmark    A boolean to signify if the tile is to be a landmark or not
@@ -117,12 +115,16 @@ public class Tile extends Button {
      */
     public Tile(Game game, int ID, int EnergyCount, int OreCount, int FoodCount, boolean landmark, final Runnable runnable) {
         super(new ButtonStyle());
+        //Execute the constructor for the class' parent Button class using default visual parameters
 
         this.game = game;
+        //Import and save the game's state
 
         this.drawer = new Drawer(this.game);
+        //Use the game's state to establish a new Drawer class that can directly interface with (and modify) it
 
         this.ID = ID;
+        //Import and save the tile's assigned getID
 
         tooltipWidth = 100;
         tooltipHeight = 50;
@@ -133,26 +135,27 @@ public class Tile extends Button {
         tooltipLineColor = Color.BLACK;
 
         tooltipFont = new TTFont(Gdx.files.internal("font/testfontbignoodle.ttf"), 24);
+        //Visual parameters of the tile's tooltip
 
         tooltipActive = false;
-
-        tooltipIcons = new Table();
-        tileOwnerIcon = new Image();
-        tileRoboticonIcon = new Image();
-        drawer.addTableRow(tooltipIcons, tileOwnerIcon, 64, 60);
-        tooltipIcons.add(tileRoboticonIcon).size(60, 60);
+        //Initialise boolean variable to track when the tile's tooltip is on-screen
 
         tileBorderColor = Color.BLACK;
         tileBorderThickness = 3;
+        //Initialise the tile's border to default visual parameters
 
         this.EnergyCount = EnergyCount;
         this.FoodCount = FoodCount;
         this.OreCount = OreCount;
+        //Import and save the tile's determined resource yields
 
         this.landmark = landmark;
+        //Import and save the tile's landmark status
 
         this.runnable = runnable;
         this.Owner = new Player(0);
+        //Establish the function that the tile should execute when interacted with
+        //Currently, "interacting" with the tile means clicking on it
 
         addListener(new ChangeListener() {
             @Override
@@ -160,15 +163,25 @@ public class Tile extends Button {
                 runnable.run();
             }
         });
+        //Set up the tile to run the provided Runnable function when it's interacted with
 
         addListener(new ClickListener() {
+            /**
+             * Determines whether or not the cursor is hovering over the tile at the current time
+             */
             Boolean mouseOver = false;
+            //Initialise the tile's hover status
 
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor actor) {
                 mouseOver = true;
+                //When a cursor hovers over the tile, register its presence by switching this boolean variable
 
+                /**
+                 * Temporary timer measuring the time since the cursor previously started hovering over the tile
+                 */
                 Timer timer = new Timer();
+                //Establish a temporary timer to measure how long the mouse stays over the tile for
 
                 timer.scheduleTask(new Timer.Task() {
                     @Override
@@ -178,8 +191,11 @@ public class Tile extends Button {
                         }
                     }
                 }, (float) 0.5);
+                //If the cursor stays over the tile for one half of a second, allow for the tile's tooltip to be
+                //drawn by the drawTooltip() function
 
                 timer.start();
+                //Start the tile's hovering timer as soon as the cursor enters its domain
             }
 
             @Override
@@ -187,8 +203,11 @@ public class Tile extends Button {
                 mouseOver = false;
 
                 tooltipActive = false;
+                //Once the cursor leaves the tile's domain, prevent the render from drawing its tooltip
             }
         });
+        //Set up mouse-hovering detection over the tiles
+        //This is used to trigger the appearance of tooltips after the cursor hovers over the tile for a short period
     }
 
     /**
@@ -199,17 +218,18 @@ public class Tile extends Button {
      */
     public Player Produce(Player player) {
         if (roboticonStored != null) {
-
-
             Integer[] modifiers = this.roboticonStored.productionModifier();
             Integer OreProduce = modifiers[0] * this.OreCount;
             player.varyResource("Ore", OreProduce);
+            //Add the tile's ore yields to the player's resource-counters
 
             Integer EnergyProduce = modifiers[1] * this.EnergyCount;
             player.varyResource("Energy", EnergyProduce);
+            //Add the tile's energy yields to the player's resource-counters
 
             Integer FoodProduce = modifiers[2] * this.FoodCount;
             player.varyResource("Food", FoodProduce);
+            //Add the tile's food yields to the player's resource-counters
         }
         return player;
     }
@@ -221,6 +241,7 @@ public class Tile extends Button {
      * @param quantity The amount that it is to be set to.
      */
     public void setResource(String Resource, int quantity) {
+        //Nothing here?
     }
 
     /**
@@ -230,8 +251,6 @@ public class Tile extends Button {
      */
     public void setOwner(Player Owner) {
         this.Owner = Owner;
-
-        tileOwnerIcon = Owner.getCollege().getLogo();
     }
 
     /**
@@ -267,7 +286,6 @@ public class Tile extends Button {
      */
     public void assignRoboticon( Roboticon roboticon) {
         this.roboticonStored = roboticon;
-
     }
 
     /**
@@ -281,6 +299,8 @@ public class Tile extends Button {
 
     /**
      * Returns the tile's associated function
+     *
+     * @return Runnable The function that the tile executes when interacted with
      */
     public Runnable getFunction() {
         return runnable;
@@ -295,39 +315,52 @@ public class Tile extends Button {
 
     /**
      * Draws the tile's tooltip on the game's stage
+     * Specifically draws the tooltip region in the space to the top- or bottom-left of the cursor's position
+     * (depending on how high up the cursor is in the game's window) before drawing textual and visual contents inside
+     * that region
+     *
      * This must be called during the construction of each frame in which the tooltip is to be shown
      */
     public void drawTooltip() {
         if (tooltipActive == true) {
             if (Gdx.input.getY() < tooltipHeight) {
                 drawer.borderedRectangle(tooltipFillColor, tooltipLineColor, Gdx.input.getX() - tooltipWidth - tooltipCursorSpace, Gdx.input.getY() + tooltipCursorSpace, tooltipWidth, tooltipHeight, 1);
+                //Draw the tooltip's main space onto the screen in the region to the top-left of the cursor
                 drawer.text("Tile " + this.ID, tooltipFont, Gdx.input.getX() - tooltipWidth - tooltipCursorSpace + tooltipTextSpace, Gdx.input.getY() + tooltipCursorSpace + tooltipTextSpace);
+                //Draw an identification label in that space
             } else {
                 drawer.borderedRectangle(tooltipFillColor, tooltipLineColor, Gdx.input.getX() - tooltipWidth - tooltipCursorSpace, Gdx.input.getY() - tooltipHeight - tooltipCursorSpace, tooltipWidth, tooltipHeight, 1);
                 drawer.text("Tile " + this.ID, tooltipFont, Gdx.input.getX() - tooltipWidth - tooltipCursorSpace + tooltipTextSpace, Gdx.input.getY() - tooltipHeight - tooltipCursorSpace + tooltipTextSpace);
+                //Do the same thing, but in the region to the bottom-left of the cursor if the cursor is near the
+                //top of the game's window
             }
         }
     }
 
+    /**
+     * Draws the tile's coloured border on the game's stage
+     * This must be called during the construction of each frame in which the border is to be shown
+     * Note that the border must only be shown if the tile is owned by someone
+     */
     public void drawBorder() {
         if (isOwned()) {
-            drawer.lineRectangle(tileBorderColor, (128 * ((ID() - 1) % 4)) + 260, (128 * ((ID() - 1) / 4)) + 3, (int) (this.getWidth() - 5), (int) (this.getHeight() - 4), tileBorderThickness);
+            drawer.lineRectangle(tileBorderColor, (128 * ((getID() - 1) % 4)) + 260, (128 * ((getID() - 1) / 4)) + 3, (int) (this.getWidth() - 5), (int) (this.getHeight() - 4), tileBorderThickness);
         }
     }
 
     /**
-     * Returns the tile's associated ID value
+     * Returns the tile's associated getID value
      *
-     * @return Integer The tile's associated ID value
+     * @return Integer The tile's associated getID value
      */
-    public int ID() {
+    public int getID() {
         return this.ID;
     }
 
     /**
      * Returns a boolean value that's true if/when the tile is owned by a player and false otherwise
      *
-     * @return Boolean The tile's ownership state
+     * @return Boolean The ownership status of the tile
      */
     public boolean isOwned() {
         if(Owner.getPlayerID() != 0 ){
@@ -338,14 +371,30 @@ public class Tile extends Button {
         }
     }
 
+    /**
+     * Sets the colour of the tile's border
+     * This must only be called if and when a player acquires the tile
+     *
+     * @param color The new colour of the tile's border
+     */
     public void setTileBorderColor(Color color) {
         tileBorderColor = color;
     }
 
+    /**
+     * Returns the colour of the tile's border
+     *
+     * @return Color The current colour of the tile's border
+     */
     public Color tileBorderColor() {
         return tileBorderColor;
     }
 
+    /**
+     * Returns a value that's true if a Roboticon is assigned to the tile, and false otherwise
+     *
+     * @return Boolean The presence of a Roboticon on the tile
+     */
     public boolean hasRoboticon(){
         if(this.roboticonStored != null){
             return true;
@@ -356,6 +405,11 @@ public class Tile extends Button {
 
     }
 
+    /**
+     * Retuns the Roboticon assigned to this tile
+     *
+     * @return Roboticon The Roboticon assigned to this tile
+     */
     public Roboticon getRoboticonStored(){
         return this.roboticonStored;
     }

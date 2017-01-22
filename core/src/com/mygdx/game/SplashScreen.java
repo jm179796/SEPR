@@ -1,7 +1,8 @@
 package com.mygdx.game;
 
 /**
- * Created by Joseph on 21/11/2016.
+ * @author Duck-Related Team Name in BIG MASSIVE LETTERS
+ * @version READ ASSESSMENT 2
  */
 
 import com.badlogic.gdx.Game;
@@ -16,25 +17,42 @@ import com.badlogic.gdx.utils.Timer;
 
 public class SplashScreen implements Screen {
 
+    /**
+     * Stores current game-state, enabling transitions between screens
+     */
     private Game game;
-    //Stores current game-state, enabling transitions between screens
 
+    /**
+     * Batch that manages the rendering pipeline for all of the images to be displayed on the screen
+     */
     private SpriteBatch batch;
+
+    /**
+     * The object which will encode the team's logo
+     */
     private Sprite logo;
-    //Declare logo sprite and render-batch in which to put it
 
+    /**
+     * Timer which will temporarily stall the splash screen before it gives way to the main menu
+     */
     private Timer timer;
-    //Declare the timer which will be used to stall the splash screen
 
+    /**
+     * Variable storing the number of seconds over which the splash screen will hang
+     */
     private int delay;
-    //Establish the delay over which the splash-screen will remain active
 
+    /**
+     * Enables keyboard inputs to be registered and bound to functions
+     * Used in this context to permit skipping the splash screen by hitting the keyboard or clicking the mouse
+     */
     private InputProcessor inputProcessor = new InputProcessor() {
         @Override
         public boolean keyDown(int keycode) {
             timer.stop();
             game.setScreen(new MainMenu(game));
             return false;
+            //Skip past the splash screen if the game receives any keyboard input
         }
 
         @Override
@@ -52,6 +70,7 @@ public class SplashScreen implements Screen {
             timer.stop();
             game.setScreen(new MainMenu(game));
             return false;
+            //Skip past the splash screen if the game receives any mouse input
         }
 
         @Override
@@ -74,17 +93,27 @@ public class SplashScreen implements Screen {
             return false;
         }
     };
-    //Required to detect inputs
 
+    /**
+     * The constructor for the splash screen. Imports the game's state to facilitate screen-switching and access to
+     * QOL rendering functions.
+     *
+     * @param game Variable storing the game's state
+     */
     public SplashScreen(Game game) {
         this.game = game;
     }
-    //Import current game-state
 
+    /**
+     * Acts as a secondary constructor for the screen. Works by setting up a rendering pipeline in which to draw the
+     * team's logo and a timer in which to time the period over which the screen should "hang". Also sets the splash
+     * screen to recognise user input, so that the user can skip the screen simply by sending mouse/keyboard input to
+     * the game's window.
+     */
     @Override
     public void show() {
         batch = new SpriteBatch();
-        //Initialise sprite-batch
+        //Initialise sprite rendering pipeline
 
         logo = new Sprite(new Texture("image/logo.png"));
         logo.setSize(logo.getWidth() / (float) 2.3, logo.getHeight() / (float) 2.3);
@@ -101,13 +130,20 @@ public class SplashScreen implements Screen {
                 game.setScreen(new MainMenu(game));
             }
         }, delay);
-        //Establish and configure delay timer
+        //Open the game's main menu when the timer reaches its first interval
+        //This interval is set by the value of the "delay" variable
 
         Gdx.input.setInputProcessor(inputProcessor);
         //Set the splash-screen to detect inputs
         //If a keystroke or a mouse-click is detected, open the menu straight away
     }
 
+    /**
+     * Renders all visual elements (set up in the [show()] subroutine and all of its subsiduaries) to the window
+     * This is called to prepare each and every frame that the screen deploys
+     *
+     * @param delta
+     */
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
@@ -147,8 +183,13 @@ public class SplashScreen implements Screen {
 
     }
 
+    /**
+     * Disposes of all visual data used to construct previous frames
+     * This is called after each frame is rendered, and remains necessary to prevent memory leaks
+     */
     @Override
     public void dispose() {
         batch.dispose();
     }
+    //Dispose of the splash-screen's data once the main menu opens up
 }

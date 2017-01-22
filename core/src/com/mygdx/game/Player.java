@@ -2,6 +2,10 @@ package com.mygdx.game;
 
 import java.util.*;
 
+/**
+ * @author Duck-Related Team Name in BIG MASSIVE LETTERS
+ * @version READ ASSESSMENT 2
+ */
 public class Player {
     /**
      * Unique numerical identifier of the player.
@@ -48,12 +52,15 @@ public class Player {
      */
     private List<Roboticon> RoboticonList = new ArrayList<Roboticon>();
 
+    /**
+     * The number of Roboticons that the player owns
+     */
     private Integer inventoryRoboticons = 0;
 
     /**
      * The constructor of the class
      *
-     * @param PlayerID The id of the player that is being created.
+     * @param PlayerID The id of the player that is being created. Should be an integer > 0.
      */
     public Player(Integer PlayerID) {
         this.PlayerID = PlayerID;
@@ -158,11 +165,7 @@ public class Player {
      * Toggles the 'active' attribute of the player from True to False or False to True.
      */
     public void toggleActive() {
-        if (this.Active == true) {
-            this.Active = false;
-        } else {
-            this.Active = true;
-        }
+        this.Active = !this.Active;
     }
 
     /**
@@ -201,40 +204,64 @@ public class Player {
      */
 
     public void varyResource(String resource, int amount) {
-        if (resource == "Ore") {
+        if (resource.equals("Ore")) {
             this.OreCount += amount;
-        } else if (resource == "Energy") {
+        } else if (resource.equals("Energy")) {
             this.EnergyCount += amount;
-        } else if (resource == "Food") {
+        } else if (resource.equals("Food")) {
             this.FoodCount += amount;
-        } else if (resource == "Money") {
+        } else if (resource.equals("Money")) {
             this.Money += amount;
-        } else {
-            //exception for unknown value entered
         }
+
     }
 
     /**
      * Calculates the score of the player based on the resources that they own.
+     *
+     * @return Integer The player's current score
      */
     public Integer calculateScore() {
-        Integer Score = this.EnergyCount + this.FoodCount + this.OreCount;
-        return Score;
+        return this.EnergyCount + this.FoodCount + this.OreCount;
+
     }
 
+    /**
+     * Increments the number of Roboticons owned by the player
+     */
     public void increaseRoboticonInventory() {
         this.inventoryRoboticons += 1;
     }
 
+    /**
+     * Decrements the number of Roboticons owned by the player
+     */
     public void decreaseRoboticonInventory() {
         this.inventoryRoboticons -= 1;
     }
 
+    /**
+     * Getter for Inventory Roboticon Count
+     * @return Integer value for roboticons in inventory.
+     */
+    public Integer getInventoryRoboticons(){
+        return this.inventoryRoboticons;
+    }
+
+    /**
+     * Returns the number of Roboticons owned by the player
+     *
+     * @return Integer The number of Roboticons owned by the player
+     */
     public Integer getRoboticonInventory() {
         return this.inventoryRoboticons;
     }
 
-
+    /**
+     * Returns the college assigned to the player
+     *
+     * @return College The player's associated college
+     */
     public College getCollege() {
         return this.College;
     }
@@ -247,7 +274,4 @@ public class Player {
     public List<Roboticon> getRoboticons() {
         return this.RoboticonList;
     }
-
-
-
 }
