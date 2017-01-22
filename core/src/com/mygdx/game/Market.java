@@ -209,19 +209,17 @@ public class Market extends Table {
         /**
          * Button that attempts to buy a Roboticon for the current player when clicked on
          */
-        buyRoboticon = new TextButton(getRoboticonBuyPrice().toString(), tableButtonStyle);
+        buyRoboticon = new TextButton("-" + getRoboticonBuyPrice().toString(), tableButtonStyle);
         buyRoboticon.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if(engine.phase() == 2) {
-
                     try {
                         buyRoboticon(engine.currentPlayer());
-                        engine.updateLabels();
+                        engine.updateInventoryLabels();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                }
+                refreshButtonAvailability();
 
             }
         });
@@ -230,19 +228,17 @@ public class Market extends Table {
         /**
          * Button that attempts to buy a unit of ore for the current player when clicked on
          */
-        buyOre = new TextButton(getOreBuyPrice().toString(), tableButtonStyle);
+        buyOre = new TextButton("-" + getOreBuyPrice().toString(), tableButtonStyle);
         buyOre.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                if (engine.phase() == 5) {
-
                     try {
                         engine.updateCurrentPlayer(buy("ore", 1, engine.currentPlayer()));
-                        engine.updateLabels();
+                        engine.updateInventoryLabels();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                }
+                refreshButtonAvailability();
             }
         });
         //Set the button for purchasing ore to do just that (but only when the game is in phase 5)
@@ -250,19 +246,17 @@ public class Market extends Table {
         /**
          * Button that attempts to buy a unit of food for the current player when clicked on
          */
-        buyFood = new TextButton(getFoodBuyPrice().toString(), tableButtonStyle);
+        buyFood = new TextButton("-" + getFoodBuyPrice().toString(), tableButtonStyle);
         buyFood.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                if (engine.phase() == 5) {
-
                     try {
                         engine.updateCurrentPlayer(buy("food", 1, engine.currentPlayer()));
-                        engine.updateLabels();
+                        engine.updateInventoryLabels();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                }
+                refreshButtonAvailability();
             }
         });
         //Set the button for purchasing food to do just that (but only when the game is in phase 5)
@@ -270,19 +264,17 @@ public class Market extends Table {
         /**
          * Button that attempts to buy a unit of energy for the current player when clicked on
          */
-        buyEnergy = new TextButton(getEnergyBuyPrice().toString(), tableButtonStyle);
+        buyEnergy = new TextButton("-" + getEnergyBuyPrice().toString(), tableButtonStyle);
         buyEnergy.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                if (engine.phase() == 5) {
-
                     try {
                         engine.updateCurrentPlayer(buy("energy", 1, engine.currentPlayer()));
-                        engine.updateLabels();
+                        engine.updateInventoryLabels();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                }
+                refreshButtonAvailability();
             }
         });
         //Set the button for purchasing energy to do just that (but only when the game is in phase 5)
@@ -291,20 +283,18 @@ public class Market extends Table {
          * Button that attempts to take a unit of energy from the player's inventory and sell it back to the market
          * when clicked on
          */
-        sellEnergy = new TextButton(getEnergySellPrice().toString(), tableButtonStyle);
+        sellEnergy = new TextButton("+" + getEnergySellPrice().toString(), tableButtonStyle);
         sellEnergy.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                if (engine.phase() == 5) {
 
                     try {
                         engine.updateCurrentPlayer(sell("energy", 1, engine.currentPlayer()));
-                        engine.updateLabels();
+                        engine.updateInventoryLabels();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                }
-
+                refreshButtonAvailability();
             }
         });
         //Set the button for selling energy to do just that (but only when the game is in phase 5)
@@ -313,20 +303,17 @@ public class Market extends Table {
          * Button that attempts to take a unit of ore from the player's inventory and sell it back to the market
          * when clicked on
          */
-        sellOre = new TextButton(getOreSellPrice().toString(), tableButtonStyle);
+        sellOre = new TextButton("+" + getOreSellPrice().toString(), tableButtonStyle);
         sellOre.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                if (engine.phase() == 5) {
-
                     try {
                         engine.updateCurrentPlayer(sell("ore", 1, engine.currentPlayer()));
-                        engine.updateLabels();
+                        engine.updateInventoryLabels();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                }
-
+                refreshButtonAvailability();
             }
         });
         //Set the button for selling ore to do just that (but only when the game is in phase 5)
@@ -335,23 +322,24 @@ public class Market extends Table {
          * Button that attempts to take a unit of food from the player's inventory and sell it back to the market
          * when clicked on
          */
-        sellFood = new TextButton(getFoodSellPrice().toString(), tableButtonStyle);
+        sellFood = new TextButton("+" + getFoodSellPrice().toString(), tableButtonStyle);
         sellFood.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
-                if (engine.phase() == 5) {
 
                     try {
                         engine.updateCurrentPlayer(sell("food", 1, engine.currentPlayer()));
-                        engine.updateLabels();
+                        engine.updateInventoryLabels();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                }
-
+                refreshButtonAvailability();
             }
         });
         //Set the button for selling food to do just that (but only when the game is in phase 5)
+
+        refreshButtonAvailability();
+        //Ensure that these buttons are disabled at the beginning of the game
     }
 
     /**
@@ -667,7 +655,7 @@ public class Market extends Table {
                     OreBuyPrice = calculateNewCost(OreStock, "buy");
                     OreSellPrice = calculateNewCost(OreStock, "sell");
                     oreStockLabel.setText(getOreStock().toString());
-                    buyOre.setText(getOreBuyPrice().toString());
+                    buyOre.setText("-" + getOreBuyPrice().toString());
                 } else {
                     throw new Exception("Insufficient money");
                 }
@@ -686,7 +674,7 @@ public class Market extends Table {
                     FoodBuyPrice = calculateNewCost(FoodStock, "buy");
                     FoodSellPrice = calculateNewCost(FoodStock, "sell");
                     foodStockLabel.setText(getFoodStock().toString());
-                    buyFood.setText(getFoodBuyPrice().toString());
+                    buyFood.setText("-" + getFoodBuyPrice().toString());
                 } else {
                     throw new Exception("Insufficient money");
                 }
@@ -706,7 +694,7 @@ public class Market extends Table {
                     EnergyBuyPrice = calculateNewCost(EnergyStock, "buy");
                     EnergySellPrice = calculateNewCost(EnergyStock, "sell");
                     energyStockLabel.setText(getEnergyStock().toString());
-                    buyEnergy.setText(getEnergyBuyPrice().toString());
+                    buyEnergy.setText("-" + getEnergyBuyPrice().toString());
                 } else {
                     throw new Exception("Insufficient money");
                 }
@@ -751,7 +739,7 @@ public class Market extends Table {
                 OreBuyPrice = calculateNewCost(OreStock, "buy");
                 OreSellPrice = calculateNewCost(OreStock, "sell");
                 oreStockLabel.setText(getOreStock().toString());
-                sellOre.setText(getOreSellPrice().toString());
+                sellOre.setText("+" + getOreSellPrice().toString());
             } else {
                 throw new Exception("Insufficient resources");
 
@@ -768,7 +756,7 @@ public class Market extends Table {
                 FoodBuyPrice = calculateNewCost(FoodStock, "buy");
                 FoodSellPrice = calculateNewCost(FoodStock, "sell");
                 foodStockLabel.setText(getFoodStock().toString());
-                sellFood.setText(getFoodSellPrice().toString());
+                sellFood.setText("+" + getFoodSellPrice().toString());
             } else {
                 throw new Exception("Insufficient resources");
             }
@@ -783,7 +771,7 @@ public class Market extends Table {
                 EnergyBuyPrice = calculateNewCost(EnergyStock, "buy");
                 EnergySellPrice = calculateNewCost(EnergyStock, "sell");
                 energyStockLabel.setText(getEnergyStock().toString());
-                sellEnergy.setText(getEnergySellPrice().toString());
+                sellEnergy.setText("+" + getEnergySellPrice().toString());
             } else {
                 throw new Exception("Insufficient resources");
             }
@@ -888,12 +876,93 @@ public class Market extends Table {
                 player.increaseRoboticonInventory();
 
                 roboticonStockLabel.setText(this.getRoboticonStock().toString());
-                buyRoboticon.setText(getRoboticonBuyPrice().toString());
+                buyRoboticon.setText("-" + getRoboticonBuyPrice().toString());
             } else {
                 throw new Exception("Insufficient money");
             }
         } else {
             throw new Exception("No available Roboticons");
+        }
+    }
+
+    /**
+     * Enables/disables the market's purchase/sale buttons and updates their colours to reflect the player's current
+     * amount of money, the game's current phase and the player's inventory
+     *
+     * GRAY: Cannot buy/sell resource on the current phase
+     * GREEN: Can buy/sell resource
+     * RED: Cannot buy/sell resource due to a lack of money or stock
+     */
+    public void refreshButtonAvailability() {
+        if (engine.phase() == 2) {
+            if (engine.currentPlayer().getMoney() >= RoboticonBuyPrice && RoboticonStock > 0) {
+                drawer.switchTextButton(buyRoboticon, true, Color.GREEN);
+            } else {
+                drawer.switchTextButton(buyRoboticon, false, Color.RED);
+            }
+            //If the game is in phase 2, enable the roboticon purchase button ONLY (and only if the current player can
+            //afford one while one is in stock)
+
+            drawer.switchTextButton(buyOre, false, Color.GRAY);
+            drawer.switchTextButton(buyFood, false, Color.GRAY);
+            drawer.switchTextButton(buyEnergy, false, Color.GRAY);
+            //Disable all of the market's other functions in phase 2
+        } else if (engine.phase() == 5) {
+            if (engine.currentPlayer().getMoney() >= OreBuyPrice && OreStock > 0) {
+                drawer.switchTextButton(buyOre, true, Color.GREEN);
+            } else {
+                drawer.switchTextButton(buyOre, false, Color.RED);
+            }
+            //Conditionally enable the ore purchase button
+
+            if (engine.currentPlayer().getMoney() >= EnergyBuyPrice && EnergyStock > 0) {
+                drawer.switchTextButton(buyEnergy, true, Color.GREEN);
+            } else {
+                drawer.switchTextButton(buyEnergy, false, Color.RED);
+            }
+            //Conditionally enable the energy purchase button
+
+            if (engine.currentPlayer().getMoney() >= FoodBuyPrice && FoodStock > 0) {
+                drawer.switchTextButton(buyFood, true, Color.GREEN);
+            } else {
+                drawer.switchTextButton(buyFood, false, Color.RED);
+            }
+            //Conditionally enable the food purchase button
+
+            drawer.switchTextButton(buyRoboticon, false, Color.GRAY);
+            //Disable the roboticon purchase button in round 5
+
+            if (engine.currentPlayer().getOreCount() > 0) {
+                drawer.switchTextButton(sellOre, true, Color.GREEN);
+            } else {
+                drawer.switchTextButton(sellOre, false, Color.RED);
+            }
+            //Conditionally enable the ore sale button
+
+            if (engine.currentPlayer().getEnergyCount() > 0) {
+                drawer.switchTextButton(sellEnergy, true, Color.GREEN);
+            } else {
+                drawer.switchTextButton(sellEnergy, false, Color.RED);
+            }
+            //Conditionally enable the energy sale button
+
+            if (engine.currentPlayer().getFoodCount() > 0) {
+                drawer.switchTextButton(sellFood, true, Color.GREEN);
+            } else {
+                drawer.switchTextButton(sellFood, false, Color.RED);
+            }
+            //Conditionally enable the food sale button
+        } else {
+            drawer.switchTextButton(buyOre, false, Color.GRAY);
+            drawer.switchTextButton(buyFood, false, Color.GRAY);
+            drawer.switchTextButton(buyEnergy, false, Color.GRAY);
+
+            drawer.switchTextButton(buyRoboticon, false, Color.GRAY);
+
+            drawer.switchTextButton(sellOre, false, Color.GRAY);
+            drawer.switchTextButton(sellFood, false, Color.GRAY);
+            drawer.switchTextButton(sellEnergy, false, Color.GRAY);
+            //Disable the entire market if the game is in one of phases 1, 3 and 4
         }
     }
 }
