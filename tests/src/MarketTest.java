@@ -12,7 +12,8 @@ import static org.junit.Assert.*;
 public class MarketTest extends TesterFile{
     private Player TestPlayer = new Player(0);
     private Game testGame;
-    private GameEngine testGameEngine;
+    private GameScreen testScreen;
+    private GameEngine testGameEngine = new GameEngine(testGame,testScreen);
     private Market TestMarket = new Market(testGame,testGameEngine);
 
     /**
