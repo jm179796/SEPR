@@ -1,15 +1,19 @@
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.mygdx.game.*;
+import com.mygdx.game.GameTimer;
+import com.mygdx.game.TTFont;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
- * @author Kieran Hall KJH532
- * @version 1.0
- * @since 1.0
+ * @author Duck Related Team Name in Big Massive Letters
+ * @since Assessment 2
+ * @version Assessment 2
+ *
+ * An executable version of the game can be found at: https://jm179796.github.io/SEPR/DRTN-Assessment2.jar
+ * Our website is: https://jm179796.github.io/SEPR/
  */
 public class GameTimerTest extends TesterFile {
     private boolean complete = false;

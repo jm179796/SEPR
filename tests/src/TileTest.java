@@ -4,13 +4,19 @@ import com.mygdx.game.Player;
 import com.mygdx.game.Roboticon;
 import com.mygdx.game.Tile;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
- * @author Kieran Hall KJH532
- * @version 1.0
- * @since 1.0
+ * @author Duck Related Team Name in Big Massive Letters
+ * @since Assessment 2
+ * @version Assessment 2
+ *
+ * An executable version of the game can be found at: https://jm179796.github.io/SEPR/DRTN-Assessment2.jar
+ * Our website is: https://jm179796.github.io/SEPR/
  */
+
 public class TileTest extends TesterFile {
     private Game game = new Main();
     private Player TestPlayer = new Player(1);

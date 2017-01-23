@@ -1,13 +1,19 @@
 import com.badlogic.gdx.Game;
-import com.mygdx.game.*;
+import com.mygdx.game.GameEngine;
+import com.mygdx.game.GameScreen;
+import com.mygdx.game.Market;
+import com.mygdx.game.Player;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
 /**
- * @author Kieran Hall KJH532
- * @version 1.0
- * @since 1.0
+ * @author Duck Related Team Name in Big Massive Letters
+ * @since Assessment 2
+ * @version Assessment 2
+ *
+ * An executable version of the game can be found at: https://jm179796.github.io/SEPR/DRTN-Assessment2.jar
+ * Our website is: https://jm179796.github.io/SEPR/
  */
 public class MarketTest extends TesterFile{
     private Player TestPlayer = new Player(0);

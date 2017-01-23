@@ -9,8 +9,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import java.util.List;
 
 /**
- * @author Duck-Related Team Name in BIG MASSIVE LETTERS
- * @version READ ASSESSMENT 2
+ * @author Duck Related Team Name in Big Massive Letters
+ * @since Assessment 2
+ * @version Assessment 2
+ *
+ * An executable version of the game can be found at: https://jm179796.github.io/SEPR/DRTN-Assessment2.jar
+ * Our website is: https://jm179796.github.io/SEPR/
  */
 public class GameEngine {
     /**
@@ -458,15 +462,6 @@ public class GameEngine {
     }
 
     /**
-     * Encodes possible play-states
-     * These are not to be confused with the game-state (which is directly linked to the renderer)
-     */
-    public enum State {
-        RUN,
-        PAUSE
-    }
-
-    /**
      * Return's the game's current play-state, which can either be [State.RUN] or [State.PAUSE]
      * This is not to be confused with the game-state (which is directly linked to the renderer)
      *
@@ -597,5 +592,14 @@ public class GameEngine {
         //0: ORE
         //1: ENERGY
         //2: FOOD
+    }
+
+    /**
+     * Encodes possible play-states
+     * These are not to be confused with the game-state (which is directly linked to the renderer)
+     */
+    public enum State {
+        RUN,
+        PAUSE
     }
 }

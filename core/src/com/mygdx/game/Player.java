@@ -1,10 +1,15 @@
 package com.mygdx.game;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * @author Duck-Related Team Name in BIG MASSIVE LETTERS
- * @version READ ASSESSMENT 2
+ * @author Duck Related Team Name in Big Massive Letters
+ * @since Assessment 2
+ * @version Assessment 2
+ *
+ * An executable version of the game can be found at: https://jm179796.github.io/SEPR/DRTN-Assessment2.jar
+ * Our website is: https://jm179796.github.io/SEPR/
  */
 public class Player {
     /**
@@ -103,12 +108,30 @@ public class Player {
     }
 
     /**
+     * Setter for Orecount
+     *
+     * @param Newcount Integer value that the Orecount is set to
+     */
+    public void setOreCount(Integer Newcount) {
+        this.OreCount = Newcount;
+    }
+
+    /**
      * Getter for EnergyCount
      *
      * @return this.EnergyCount the Energycount of the player as an integer
      */
     public Integer getEnergyCount() {
         return this.EnergyCount;
+    }
+
+    /**
+     * Setter for Energycount
+     *
+     * @param Newcount Integer value that the Energycount is set to
+     */
+    public void setEnergyCount(Integer Newcount) {
+        this.EnergyCount = Newcount;
     }
 
     /**
@@ -127,24 +150,6 @@ public class Player {
      */
     public void setFoodCount(Integer Newcount) {
         this.FoodCount = Newcount;
-    }
-
-    /**
-     * Setter for Orecount
-     *
-     * @param Newcount Integer value that the Orecount is set to
-     */
-    public void setOreCount(Integer Newcount) {
-        this.OreCount = Newcount;
-    }
-
-    /**
-     * Setter for Energycount
-     *
-     * @param Newcount Integer value that the Energycount is set to
-     */
-    public void setEnergyCount(Integer Newcount) {
-        this.EnergyCount = Newcount;
     }
 
     /**

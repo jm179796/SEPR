@@ -4,8 +4,12 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.utils.Timer;
 
 /**
- * @author Duck-Related Team Name in BIG MASSIVE LETTERS
- * @version READ ASSESSMENT 2
+ * @author Duck Related Team Name in Big Massive Letters
+ * @since Assessment 2
+ * @version Assessment 2
+ *
+ * An executable version of the game can be found at: https://jm179796.github.io/SEPR/DRTN-Assessment2.jar
+ * Our website is: https://jm179796.github.io/SEPR/
  */
 public class GameTimer extends com.badlogic.gdx.scenes.scene2d.ui.Label {
 
@@ -271,21 +275,21 @@ public class GameTimer extends com.badlogic.gdx.scenes.scene2d.ui.Label {
     }
 
     /**
-     * Sets a new method for the timer to execute when it hits 0
-     *
-     * @param terminalMethod The timer's new terminal method
-     */
-    public void setTerminalMethod(Runnable terminalMethod) {
-        this.terminalMethod = terminalMethod;
-    }
-
-    /**
      * Returns the timer's terminal method inside of a Runnable object
      *
      * @return Runnable Object containing the timer's terminal method
      */
     public Runnable getTerminalMethod() {
         return this.terminalMethod;
+    }
+
+    /**
+     * Sets a new method for the timer to execute when it hits 0
+     *
+     * @param terminalMethod The timer's new terminal method
+     */
+    public void setTerminalMethod(Runnable terminalMethod) {
+        this.terminalMethod = terminalMethod;
     }
 
     /**
