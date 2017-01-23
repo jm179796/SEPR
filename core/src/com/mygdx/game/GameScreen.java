@@ -780,7 +780,7 @@ public class GameScreen implements Screen{
      * Returns the button used to allow for players to prematurely end their turns
      * This method is required to allow for the GameEngine class to turn the button off during phase 1
      *
-     * @Getter
+     *
      * @return TextButton The in-game "End Turn" button
      */
     public TextButton endTurnButton() {
@@ -791,7 +791,7 @@ public class GameScreen implements Screen{
      * Returns the icon object used to visualise the logo of the current player's associated college
      * The GameEngine class uses this method to update said logo when it changes the active player
      *
-     * @Getter
+     *
      * @return Image The image object visualising the current player's associated college
      */
     public Image currentPlayerIcon() {
