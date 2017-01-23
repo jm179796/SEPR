@@ -545,10 +545,10 @@ public class GameEngine {
      *
      * @return Boolean Determines if the game has ended or not
      */
-    public boolean checkGameEnd(){
+    private boolean checkGameEnd(){
         boolean end = true;
         for(Tile Tile : tiles){
-            if(Tile.getOwner().PlayerID == 0){
+            if(Tile.getOwner().getPlayerID() == 0){
                 end = false;
             }
         }

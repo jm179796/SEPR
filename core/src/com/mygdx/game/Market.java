@@ -202,7 +202,7 @@ public class Market extends Table {
      * Instantiates the purchase/sale buttons to be placed in the market and sets their on-click functions
      * Obviously, these buttons enable players to buy and sell resources during certain game-phases
      */
-    public void constructButtons() {
+    private void constructButtons() {
         TextButton.TextButtonStyle tableButtonStyle = new TextButton.TextButtonStyle();
         tableButtonStyle.font = tableFont.font();
         tableButtonStyle.fontColor = Color.WHITE;
@@ -343,7 +343,7 @@ public class Market extends Table {
      * Builds the market's visual interface by populating it with labels and buttons
      * Once this method has finished executing, the market can be drawn to a stage like any other actor
      */
-    public void constructInterface() {
+    private void constructInterface() {
         tableFont.setSize(36);
         drawer.addTableRow(this, new Label("Market", new Label.LabelStyle(tableFont.font(), Color.WHITE)), 0, 0, 5, 0, 3);
         //Add a heading to the market interface
