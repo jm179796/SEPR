@@ -27,7 +27,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 
-public class GameScreen implements Screen{
+public class GameScreen implements Screen {
 
     /**
      * Stores current game-state, enabling transitions between screens and external QOL drawing functions
@@ -314,7 +314,7 @@ public class GameScreen implements Screen{
      * Sets up the buttons to be placed onto the interface later by defining their visual representations and their
      * on-click functions together
      */
-    public void constructButtons() {
+    private void constructButtons() {
         gameButtonStyle = new TextButton.TextButtonStyle();
         gameButtonStyle.font = gameFont.font();
         gameButtonStyle.fontColor = Color.WHITE;
@@ -453,7 +453,7 @@ public class GameScreen implements Screen{
      * and counters visualising the numbers of ore, energy, food and Roboticon stocks (and the money) that the
      * current player holds
      */
-    public void constructLeftTable() {
+    private void constructLeftTable() {
         /**
          * Establishes the metadata for the interface's left-hand table
          */
@@ -524,7 +524,7 @@ public class GameScreen implements Screen{
      * the selected tile's name-label and college/roboticon icons, along with buttons to claim and deploy/upgrade
      * Roboticons on the selected tile and the whole interface for the game's market
      */
-    public void constructRightTable() {
+    private void constructRightTable() {
         /**
          * Establishes the metadata for the interface's right-hand table
          */
@@ -585,7 +585,7 @@ public class GameScreen implements Screen{
      * The tiles on this grid take the form of invisible buttons that are directly laid over the map image at the
      * centre of this screen
      */
-    public void constructTileGrid(){
+    private void constructTileGrid(){
         tileGrid = new Table();
         //Initialise tile-grid
 
@@ -603,7 +603,7 @@ public class GameScreen implements Screen{
     /**
      * Set up the pause menu to allow for the game to be successfully paused
      */
-    public void constructPauseMenu() {
+    private void constructPauseMenu() {
 
         /**
          * Establishes the visual framework for the pause screen
@@ -657,7 +657,7 @@ public class GameScreen implements Screen{
      * Set up an overlay which shows up when the current player opts to upgrade their roboticon
      * This will allow them to upgrade its food, energy or ore production stats
      */
-    public void constructUpgradeOverlay() {
+    private void constructUpgradeOverlay() {
         upgradeOverlay = new Overlay(this.game, Color.GRAY, Color.WHITE, 250, 200, 3);
         //Establish the upgrade overlay
 
@@ -685,7 +685,7 @@ public class GameScreen implements Screen{
     /**
      * Draw auxiliary rectangles to provide window-dressing for the interface
      */
-    public void drawRectangles() {
+    private void drawRectangles() {
         drawer.lineRectangle(Color.WHITE, (int) map.getX(), (int) map.getY(), (int) map.getWidth() + 1, (int) map.getHeight(), 1);
         //Draw border around the map
 
@@ -752,7 +752,7 @@ public class GameScreen implements Screen{
      *
      * @param value The ID value of the tile to be described on the interface
      */
-    public void updateSelectedTileLabel(int value) {
+    private void updateSelectedTileLabel(int value) {
         if (value < 1 || value > 16) {
             selectedTileLabel.setText("NO TILE SELECTED");
         } else {

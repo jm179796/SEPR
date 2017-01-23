@@ -15,7 +15,7 @@ public class Player {
     /**
      * Unique numerical identifier of the player.
      */
-    public Integer PlayerID;
+    private Integer playerID;
 
     /**
      * An integer storing the amount of ore the player owns.
@@ -63,12 +63,12 @@ public class Player {
      * @param PlayerID The id of the player that is being created. Should be an integer greater than 0.
      */
     public Player(Integer PlayerID) {
-        this.PlayerID = PlayerID;
+        this.playerID = PlayerID;
     }
 
 
     public int getPlayerID() {
-        return PlayerID;
+        return playerID;
     }
 
     /**
