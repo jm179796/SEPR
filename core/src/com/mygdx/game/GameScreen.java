@@ -494,7 +494,7 @@ public class GameScreen implements Screen{
         energyCounter.setAlignment(Align.right);
         oreCounter = new Label(engine.currentPlayer().getOreCount().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
         oreCounter.setAlignment(Align.right);
-        roboticonCounter = new Label(engine.currentPlayer().getRoboticonCount().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
+        roboticonCounter = new Label(engine.currentPlayer().getRoboticonInventory().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
         roboticonCounter.setAlignment(Align.right);
         moneyCounter = new Label(engine.currentPlayer().getMoney().toString(), new Label.LabelStyle(gameFont.font(), Color.WHITE));
         moneyCounter.setAlignment(Align.right);

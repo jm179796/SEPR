@@ -443,21 +443,17 @@ public class GameEngine {
      * Deploys a Roboticon on the last tile to have been selected
      * Draws a Roboticon from the active player's Roboticon count and assigns it to the tile in question
      */
-    public void deployRoboticon(){
+    public void deployRoboticon() {
         if (phase == 3) {
             if (selectedTile.hasRoboticon() == false) {
                 if (players[currentPlayerID].getRoboticonInventory() > 0) {
                     Roboticon Roboticon = new Roboticon(roboticonIDCounter, players[currentPlayerID], selectedTile);
-                    players[currentPlayerID].addRoboticon(Roboticon);
                     selectedTile.assignRoboticon(Roboticon);
                     roboticonIDCounter += 1;
                     players[currentPlayerID].decreaseRoboticonInventory();
                     gameScreen.updateInventoryLabels();
                 }
-            } else if(phase == 2 && selectedTile.hasRoboticon()) {
-                //selectedTile.getRoboticonStored().upgrade();
             }
-
         }
     }
 
