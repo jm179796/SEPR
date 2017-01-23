@@ -60,7 +60,7 @@ public class Player {
     /**
      * The constructor of the class
      *
-     * @param PlayerID The id of the player that is being created. Should be an integer > 0.
+     * @param PlayerID The id of the player that is being created. Should be an integer greater than 0.
      */
     public Player(Integer PlayerID) {
         this.PlayerID = PlayerID;
@@ -269,7 +269,7 @@ public class Player {
     /**
      * Returns the array of Roboticons owned by the player
      *
-     * @return List<Roboticon> List of Roboticons owned by the player
+     * @return List of Roboticons owned by the player
      */
     public List<Roboticon> getRoboticons() {
         return this.RoboticonList;
