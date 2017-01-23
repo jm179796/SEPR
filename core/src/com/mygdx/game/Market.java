@@ -214,8 +214,7 @@ public class Market extends Table {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                     try {
-                        buyRoboticon(engine.currentPlayer());
-                        engine.updateInventoryLabels();
+                        engine.updateCurrentPlayer(buy("roboticon", 1, engine.currentPlayer()));
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -234,7 +233,6 @@ public class Market extends Table {
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                     try {
                         engine.updateCurrentPlayer(buy("ore", 1, engine.currentPlayer()));
-                        engine.updateInventoryLabels();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -252,7 +250,6 @@ public class Market extends Table {
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                     try {
                         engine.updateCurrentPlayer(buy("food", 1, engine.currentPlayer()));
-                        engine.updateInventoryLabels();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -270,7 +267,6 @@ public class Market extends Table {
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                     try {
                         engine.updateCurrentPlayer(buy("energy", 1, engine.currentPlayer()));
-                        engine.updateInventoryLabels();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -290,7 +286,6 @@ public class Market extends Table {
 
                     try {
                         engine.updateCurrentPlayer(sell("energy", 1, engine.currentPlayer()));
-                        engine.updateInventoryLabels();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -309,7 +304,6 @@ public class Market extends Table {
             public void changed(ChangeListener.ChangeEvent event, Actor actor) {
                     try {
                         engine.updateCurrentPlayer(sell("ore", 1, engine.currentPlayer()));
-                        engine.updateInventoryLabels();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -329,7 +323,6 @@ public class Market extends Table {
 
                     try {
                         engine.updateCurrentPlayer(sell("food", 1, engine.currentPlayer()));
-                        engine.updateInventoryLabels();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -701,6 +694,22 @@ public class Market extends Table {
             } else {
                 throw new Exception("Insufficient resources");
             }
+        } else if ("roboticon".equals(Stock_Type)) {
+            if (RoboticonStock > 0) {
+                if (Player.getMoney() >= RoboticonBuyPrice) {
+                    RoboticonStock -= 1;
+                    Player.setMoney(Player.getMoney() - RoboticonBuyPrice);
+                    RoboticonBuyPrice += 5;
+                    Player.increaseRoboticonInventory();
+
+                    roboticonStockLabel.setText(this.getRoboticonStock().toString());
+                    buyRoboticon.setText("-" + getRoboticonBuyPrice().toString());
+                } else {
+                    throw new Exception("Insufficient money");
+                }
+            } else {
+                throw new Exception("No available Roboticons");
+            }
         } else {
 
             throw new Exception("Wrong Stock_Type passed");
@@ -855,34 +864,6 @@ public class Market extends Table {
         }
         return costOfResources;
 
-    }
-
-    /**
-     * A method that allows to buy a Roboticon.
-     * <p>
-     * First method checks whether there are any available roboticons left. Then it is checked whether player has enough
-     * money to buy Roboticon. Roboticon object is created and assigned to Tile and to Player objects. Robotikon stock
-     * number is decreased by one. Player's money are decreased by amount that was spent on purchase.
-     * </p>
-     *
-     * @param player      A Player object that owns the Roboticon.
-     */
-    public void buyRoboticon(Player player) throws Exception {
-        if (RoboticonStock > 0) {
-            if (player.getMoney() >= RoboticonBuyPrice) {
-                RoboticonStock -= 1;
-                player.setMoney(player.getMoney() - RoboticonBuyPrice);
-                RoboticonBuyPrice += 5;
-                player.increaseRoboticonInventory();
-
-                roboticonStockLabel.setText(this.getRoboticonStock().toString());
-                buyRoboticon.setText("-" + getRoboticonBuyPrice().toString());
-            } else {
-                throw new Exception("Insufficient money");
-            }
-        } else {
-            throw new Exception("No available Roboticons");
-        }
     }
 
     /**

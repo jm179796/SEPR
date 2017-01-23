@@ -326,9 +326,6 @@ public class GameScreen implements Screen{
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 engine.nextPhase();
-
-                deselectTile();
-                //Refresh tile information and tile management UI
             }
         });
         drawer.switchTextButton(endTurnButton, false, Color.GRAY);
@@ -373,10 +370,10 @@ public class GameScreen implements Screen{
                     engine.deployRoboticon();
 
                     selectTile(engine.selectedTile());
-                    //Refresh tile information and tile management UI
+                    //Re-select the current tile to update the UI
                 } else {
-                    //CHECK UPGRADE PRICES
-                    //NEED TO DISABLE CERTAIN BUTTONS IF THE CURRENT PLAYER CAN'T AFFORD UPGRADES
+                    updateUpgradeOptions();
+                    //Refresh the upgrade options shown on the roboticon upgrade overlay
 
                     upgradeOverlayVisible = true;
                     //Set the renderer to show the upgrade overlay if this button is clicked after a tile with a
@@ -398,9 +395,10 @@ public class GameScreen implements Screen{
         foodUpgradeButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                engine.selectedTile().getRoboticonStored().upgrade("Food");
+                engine.upgradeRoboticon(2);
 
                 closeUpgradeOverlay();
+                updateInventoryLabels();
             }
         });
 
@@ -411,9 +409,10 @@ public class GameScreen implements Screen{
         oreUpgradeButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                engine.selectedTile().getRoboticonStored().upgrade("Ore");
+                engine.upgradeRoboticon(0);
 
                 closeUpgradeOverlay();
+                updateInventoryLabels();
             }
         });
 
@@ -424,9 +423,10 @@ public class GameScreen implements Screen{
         energyUpgradeButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                engine.selectedTile().getRoboticonStored().upgrade("Energy");
+                engine.upgradeRoboticon(1);
 
                 closeUpgradeOverlay();
+                updateInventoryLabels();
             }
         });
 
@@ -879,7 +879,7 @@ public class GameScreen implements Screen{
      * Specifically resets the labels and icons that identify the selected tile and disables the buttons for
      * manipulating said tile (as no tile can be deemed as being "selected" after this is run)
      */
-    private void deselectTile() {
+    public void deselectTile() {
         drawer.switchTextButton(claimTileButton, false, Color.GRAY);
         drawer.switchTextButton(deployRoboticonButton, false, Color.GRAY);
 
@@ -900,5 +900,48 @@ public class GameScreen implements Screen{
 
         Gdx.input.setInputProcessor(gameStage);
         //Direct user inputs back towards the main stage
+    }
+
+    /**
+     * Updates the on-screen counters for food, energy, ore, money and Roboticons
+     * This is typically called when the active player switches or when a market transaction is made
+     */
+    public void updateInventoryLabels(){
+        setFoodCounterValue(engine.currentPlayer().getFoodCount());
+        setEnergyCounterValue(engine.currentPlayer().getEnergyCount());
+        setOreCounterValue(engine.currentPlayer().getOreCount());
+        setMoneyCounterValue(engine.currentPlayer().getMoney());
+        setRoboticonCounterValue(engine.currentPlayer().getRoboticonInventory());
+    }
+
+    /**
+     * Updates the options available to the current player on the roboticon upgrade screen based on their money count
+     */
+    private void updateUpgradeOptions() {
+        oreUpgradeButton.setText(String.valueOf(engine.selectedTile().getRoboticonStored().getOreUpgradeCost()));
+        energyUpgradeButton.setText(String.valueOf(engine.selectedTile().getRoboticonStored().getEnergyUpgradeCost()));
+        foodUpgradeButton.setText(String.valueOf(engine.selectedTile().getRoboticonStored().getFoodUpgradeCost()));
+        //Refresh prices shown on upgrade screen
+
+        if (engine.currentPlayer().getMoney() >= engine.selectedTile().getRoboticonStored().getOreUpgradeCost()) {
+            drawer.switchTextButton(oreUpgradeButton, true, Color.GREEN);
+        } else {
+            drawer.switchTextButton(oreUpgradeButton, false, Color.RED);
+        }
+        //Conditionally enable ore upgrade button
+
+        if (engine.currentPlayer().getMoney() >= engine.selectedTile().getRoboticonStored().getEnergyUpgradeCost()) {
+            drawer.switchTextButton(energyUpgradeButton, true, Color.GREEN);
+        } else {
+            drawer.switchTextButton(energyUpgradeButton, false, Color.RED);
+        }
+        //Conditionally enable energy upgrade button
+
+        if (engine.currentPlayer().getMoney() >= engine.selectedTile().getRoboticonStored().getFoodUpgradeCost()) {
+            drawer.switchTextButton(foodUpgradeButton, true, Color.GREEN);
+        } else {
+            drawer.switchTextButton(foodUpgradeButton, false, Color.RED);
+        }
+        //Conditionally enable food upgrade button
     }
 }
