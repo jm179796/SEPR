@@ -31,14 +31,6 @@ public class PlayerTest extends TesterFile {
     }
 
     @Test
-    public void testAddRoboticon() {
-        Integer count = TestPlayer.getRoboticonCount();
-        count += 1;
-        TestPlayer.addRoboticon(TestRoboticon);
-        assertEquals(count, TestPlayer.getRoboticonCount());
-    }
-
-    @Test
     public void testAssignTile() {
         List<Tile> TileList = new ArrayList<Tile>();
         assertEquals(TestPlayer.getTileList(),TileList);
