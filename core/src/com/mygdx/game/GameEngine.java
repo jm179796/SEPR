@@ -226,6 +226,9 @@ public class GameEngine {
 
                 switchCurrentPlayer();
             }
+
+            gameScreen.selectTile(selectedTile);
+            //Re-select the current tile to prevent buttons from being enabled mistakenly
         }
         else if(phase == 3){
             if(currentPlayerID == 1){
@@ -244,6 +247,9 @@ public class GameEngine {
 
                 switchCurrentPlayer();
             }
+
+            gameScreen.selectTile(selectedTile);
+            //Re-select the current tile to prevent buttons from being enabled mistakenly
         }
         else if(phase == 4){
             List<Tile> tileList = players[1].getTileList();
@@ -270,6 +276,9 @@ public class GameEngine {
 
             market.refreshButtonAvailability();
             //Open the market again
+
+            gameScreen.selectTile(selectedTile);
+            //Re-select the current tile to prevent buttons from being enabled mistakenly
         }
         else if(phase == 5){
             if (currentPlayerID == 1) {
@@ -289,6 +298,9 @@ public class GameEngine {
                 //Disable the "end turn" button during phase 1 to force players into claiming tiles
                 switchCurrentPlayer();
             }
+
+            gameScreen.selectTile(selectedTile);
+            //Re-select the current tile to prevent buttons from being enabled mistakenly
         }
 
         if(checkGameEnd() == true){
@@ -322,21 +334,9 @@ public class GameEngine {
         gameScreen.currentPlayerIcon().setSize(64, 64);
         //Find and draw the icon representing the "new" player's associated college
 
-        updateInventoryLabels();
+        gameScreen.updateInventoryLabels();
         //Display the "new" player's inventory on-screen
 
-    }
-
-    /**
-     * Updates the on-screen counters for food, energy, ore, money and Roboticons
-     * This is typically called when the active player switches or when a market transaction is made
-     */
-    public void updateInventoryLabels(){
-        gameScreen.setFoodCounterValue(currentPlayer().getFoodCount());
-        gameScreen.setEnergyCounterValue(currentPlayer().getEnergyCount());
-        gameScreen.setOreCounterValue(currentPlayer().getOreCount());
-        gameScreen.setMoneyCounterValue(currentPlayer().getMoney());
-        gameScreen.setRoboticonCounterValue(currentPlayer().getRoboticonInventory());
     }
 
     /**
@@ -452,7 +452,7 @@ public class GameEngine {
                     selectedTile.assignRoboticon(Roboticon);
                     roboticonIDCounter += 1;
                     players[currentPlayerID].decreaseRoboticonInventory();
-                    updateInventoryLabels();
+                    gameScreen.updateInventoryLabels();
                 }
             } else if(phase == 2 && selectedTile.hasRoboticon()) {
                 //selectedTile.getRoboticonStored().upgrade();
@@ -572,5 +572,34 @@ public class GameEngine {
      */
     public void updateCurrentPlayer(Player currentPlayer) {
         players[currentPlayerID] = currentPlayer;
+
+        gameScreen.updateInventoryLabels();
+        //Refresh the on-screen inventory labels to reflect the new object's possessions
+    }
+
+    /**
+     * Function for upgrading a particular level of the roboticon stored on the last tile to have been selected
+     * @param resource The type of resource which the roboticon will gather more of {0: ore | 1: energy | 2: food}
+     */
+    public void upgradeRoboticon(int resource) {
+        if (selectedTile().getRoboticonStored().getLevel()[resource] < selectedTile().getRoboticonStored().getMaxLevel()) {
+            switch (resource) {
+                case (0):
+                    currentPlayer().setMoney(currentPlayer().getMoney() - selectedTile.getRoboticonStored().getOreUpgradeCost());
+                    break;
+                case (1):
+                    currentPlayer().setMoney(currentPlayer().getMoney() - selectedTile.getRoboticonStored().getEnergyUpgradeCost());
+                    break;
+                case (2):
+                    currentPlayer().setMoney(currentPlayer().getMoney() - selectedTile.getRoboticonStored().getFoodUpgradeCost());
+                    break;
+            }
+
+            selectedTile().getRoboticonStored().upgrade(resource);
+        }
+        //Upgrade the specified resource
+        //0: ORE
+        //1: ENERGY
+        //2: FOOD
     }
 }

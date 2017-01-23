@@ -128,7 +128,7 @@ public class Tile extends Button {
         //Import and save the tile's assigned getID
 
         tooltipWidth = 76;
-        tooltipHeight = 31;
+        tooltipHeight = 33;
         tooltipCursorSpace = 3;
         tooltipTextSpace = 3;
 
