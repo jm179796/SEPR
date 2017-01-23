@@ -100,6 +100,18 @@ public class MarketTest extends TesterFile{
         assertEquals(TestBuyPrice, TestMarket.getFoodBuyPrice());
         TestFoodStock = 0;
         assertEquals(TestFoodStock, TestMarket.getFoodStock());
+
+        //Roboticon
+        TestPlayer.setMoney(1000);
+        TestMarket.setRoboticonBuyPrice(10);
+        TestMarket.setRoboticonStock(10);
+
+        try {
+            TestMarket.buy("roboticon", 1, TestPlayer);
+        } catch (Exception e) {
+            fail("Expected to pass");
+        }
+
     }
 
     /**
@@ -191,6 +203,29 @@ public class MarketTest extends TesterFile{
         assertEquals(TestBuyPrice, TestMarket.getFoodBuyPrice());
         Integer TestFoodStock = 100;
         assertEquals(TestFoodStock, TestMarket.getFoodStock());
+
+        //Roboticon
+        TestPlayer.setMoney(1);
+        TestMarket.setRoboticonBuyPrice(10);
+        TestMarket.setRoboticonStock(10);
+
+        try {
+            TestMarket.buy("roboticon", 10, TestPlayer);
+            fail("Expected an exception to be thrown");
+        } catch (Exception e) {
+            assertEquals(e.getMessage(), "Insufficient money");
+        }
+
+        TestPlayer.setMoney(100);
+        TestMarket.setRoboticonBuyPrice(10);
+        TestMarket.setRoboticonStock(0);
+
+        try {
+            TestMarket.buy("roboticon", 10, TestPlayer);
+            fail("Expected an exception to be thrown");
+        } catch (Exception e) {
+            assertEquals(e.getMessage(), "No available Roboticons");
+        }
     }
 
     /**
@@ -371,32 +406,5 @@ public class MarketTest extends TesterFile{
         assertTrue(initialsellprice > TestMarket.getFoodSellPrice());
     }
 
-    @Test
-    public void testBuyRoboticon() throws Exception{
-        TestMarket.setRoboticonBuyPrice(10);
-        TestMarket.setRoboticonStock(1);
-        TestPlayer.setMoney(1);
 
-        try{
-            TestMarket.buyRoboticon(TestPlayer);
-            fail("Expected an exception to be thrown");
-        } catch (Exception e) {
-            assertEquals(e.getMessage(), "Insufficient money");
-        }
-
-        TestPlayer.setMoney(10);
-
-        try{
-            TestMarket.buyRoboticon(TestPlayer);
-        } catch (Exception e) {
-            fail("Expected to pass");
-        }
-
-        try{
-            TestMarket.buyRoboticon(TestPlayer);
-            fail("Expected an exception to be thrown");
-        } catch (Exception e) {
-            assertEquals(e.getMessage(), "No available Roboticons");
-        }
-    }
 }
