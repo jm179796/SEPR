@@ -415,7 +415,7 @@ public class Market extends Table {
     /**
      * Returns the number of Roboticons currently held in the market
      *
-     * @Getter
+     *
      * @return Integer The number of Roboticons currently held in the market
      */
     public Integer getRoboticonStock() {
@@ -829,7 +829,6 @@ public class Market extends Table {
     /**
      * A method that calculates cost of market selling and buying prices.
      * <p>
-     * <p>
      * When Stock value equals 0 and wanted operation is "buy", costOfResource value is set to 0. When Stock value is
      * equal to 0 and wanted operation is "sell", costOfResource value is set to 200.
      * If wanted operation is "buy", new buying price is calculated. If wanted operation is "sell", then new selling
@@ -838,6 +837,9 @@ public class Market extends Table {
      *
      * @param Stock Integer values of market resources.
      * @param oper  String value representing operations "buy" and "sell".
+     *
+     * @return costofresources Integer value of the resource's new cost
+     * @throws Exception Thrown if there's a wrong operator used with the function
      */
     private int calculateNewCost(int Stock, String oper) throws Exception {
         double cost;
