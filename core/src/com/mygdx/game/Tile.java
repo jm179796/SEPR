@@ -11,12 +11,45 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Timer;
 
 /**
- * @author Duck-Related Team Name in BIG MASSIVE LETTERS
- * @version READ ASSESSMENT 2
+ * @author Duck Related Team Name in Big Massive Letters
+ * @since Assessment 2
+ * @version Assessment 2
+ *
+ * An executable version of the game can be found at: https://jm179796.github.io/SEPR/DRTN-Assessment2.jar
+ * Our website is: https://jm179796.github.io/SEPR/
  */
 
 public class Tile extends Button {
 
+    /**
+     * Defines width of the tile's tooltip
+     */
+    private final int tooltipWidth;
+    /**
+     * Defines height of the tile's tooltip
+     */
+    private final int tooltipHeight;
+    /**
+     * Defines distance (in pixels) from cursor point to the lower-right (or upper-right) corner of the tile's tooltip
+     * (on both axes)
+     */
+    private final int tooltipCursorSpace;
+    /**
+     * Defines internal padding within the tile's tooltip (in pixels)
+     */
+    private final int tooltipTextSpace;
+    /**
+     * Defines the fill-colour for the tile's tooltip
+     */
+    private final Color tooltipFillColor;
+    /**
+     * Defines the line-colour for the tile's tooltip
+     */
+    private final Color tooltipLineColor;
+    /**
+     * Defines the font of the text inside the tile's tooltip
+     */
+    private final TTFont tooltipFont;
     /**
      * Holds game-state for the purpose of accessing the game's renderer
      */
@@ -58,35 +91,6 @@ public class Tile extends Button {
      * Used in this class to render tooltip regions
      */
     private Drawer drawer;
-    /**
-     * Defines width of the tile's tooltip
-     */
-    private final int tooltipWidth;
-    /**
-     * Defines height of the tile's tooltip
-     */
-    private final int tooltipHeight;
-    /**
-     * Defines distance (in pixels) from cursor point to the lower-right (or upper-right) corner of the tile's tooltip
-     * (on both axes)
-     */
-    private final int tooltipCursorSpace;
-    /**
-     * Defines internal padding within the tile's tooltip (in pixels)
-     */
-    private final int tooltipTextSpace;
-    /**
-     * Defines the fill-colour for the tile's tooltip
-     */
-    private final Color tooltipFillColor;
-    /**
-     * Defines the line-colour for the tile's tooltip
-     */
-    private final Color tooltipLineColor;
-    /**
-     * Defines the font of the text inside the tile's tooltip
-     */
-    private final TTFont tooltipFont;
     /**
      * Boolean variable that's true whenever the tile's tooltip is visible and false otherwise
      */
@@ -246,21 +250,21 @@ public class Tile extends Button {
     }
 
     /**
-     * Changes the owner of the tile to the one specified
-     *
-     * @param Owner The new owner.
-     */
-    public void setOwner(Player Owner) {
-        this.Owner = Owner;
-    }
-
-    /**
      * Returns the class of the player who owns the tile
      *
      * @return Player The tile's owner
      */
     public Player getOwner() {
         return this.Owner;
+    }
+
+    /**
+     * Changes the owner of the tile to the one specified
+     *
+     * @param Owner The new owner.
+     */
+    public void setOwner(Player Owner) {
+        this.Owner = Owner;
     }
 
     /**
@@ -364,12 +368,7 @@ public class Tile extends Button {
      * @return Boolean The ownership status of the tile
      */
     public boolean isOwned() {
-        if(Owner.getPlayerID() != 0 ){
-            return true;
-        }
-        else {
-            return false;
-        }
+        return Owner.getPlayerID() != 0;
     }
 
     /**
@@ -397,12 +396,7 @@ public class Tile extends Button {
      * @return Boolean The presence of a Roboticon on the tile
      */
     public boolean hasRoboticon(){
-        if(this.roboticonStored != null){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return this.roboticonStored != null;
 
     }
 

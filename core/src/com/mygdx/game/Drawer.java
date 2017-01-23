@@ -6,18 +6,19 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g3d.particles.ParticleShader;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.Align;
-
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 /**
- * @author Duck-Related Team Name in BIG MASSIVE LETTERS
- * @version READ ASSESSMENT 2
+ * @author Duck Related Team Name in Big Massive Letters
+ * @since Assessment 2
+ * @version Assessment 2
+ *
+ * An executable version of the game can be found at: https://jm179796.github.io/SEPR/DRTN-Assessment2.jar
+ * Our website is: https://jm179796.github.io/SEPR/
  */
 public class Drawer {
     /**

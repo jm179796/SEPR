@@ -1,18 +1,16 @@
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import org.junit.Test;
-import com.mygdx.game.*;
-import org.junit.runner.RunWith;
-import java.util.Arrays;
 
-import static org.hamcrest.Matcher.*;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 
 /**
- * @author Kieran Hall KJH532
- * @version 1.0
- * @since 1.0
+ * @author Duck Related Team Name in Big Massive Letters
+ * @since Assessment 2
+ * @version Assessment 2
+ *
+ * An executable version of the game can be found at: https://jm179796.github.io/SEPR/DRTN-Assessment2.jar
+ * Our website is: https://jm179796.github.io/SEPR/
  */
 public class ResourceAccessTest extends TesterFile{
 

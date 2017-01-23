@@ -1,11 +1,16 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
-
-import java.awt.*;
-
+/**
+ * @author Duck Related Team Name in Big Massive Letters
+ * @version Assessment 2
+ *          <p>
+ *          An executable version of the game can be found at: https://jm179796.github.io/SEPR/DRTN-Assessment2.jar
+ *          Our website is: https://jm179796.github.io/SEPR/
+ * @since Assessment 2
+ */
 public class College {
 
   /**

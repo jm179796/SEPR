@@ -12,8 +12,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import java.util.Random;
 
 /**
- * @author Duck-Related Team Name in BIG MASSIVE LETTERS
- * @version READ ASSESSMENT 2
+ * @author Duck Related Team Name in Big Massive Letters
+ * @since Assessment 2
+ * @version Assessment 2
+ *
+ * An executable version of the game can be found at: https://jm179796.github.io/SEPR/DRTN-Assessment2.jar
+ * Our website is: https://jm179796.github.io/SEPR/
  */
 public class Market extends Table {
     /**
