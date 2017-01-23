@@ -28,7 +28,7 @@ public class Roboticon {
     /**
      * Integer variable determining the maximum level of roboticons allowed in the game.
      */
-    private Integer MaxLevel = 3;
+    private Integer MaxLevel = 10;
 
     /**
      * Array of integers holding the current level of the roboticon, stored as: [Ore, Energy, Food]
@@ -169,5 +169,18 @@ public class Roboticon {
      */
     public Texture getIconTexture() {
         return iconTexture;
+    }
+
+
+    /**
+     * Function to provide the upgrade cost of the roboticons levels
+     * @return Integer[] of the upgrade prices to be displayed in the format: [Ore, Energy, Food]
+     */
+    public Integer[] getUpgradeCost(){
+        Integer[] cost = this.Level;
+        for (int i = 0; i < 3; i ++){
+            cost[i] = cost[i] + (cost[i] * 5);
+        }
+        return cost;
     }
 }

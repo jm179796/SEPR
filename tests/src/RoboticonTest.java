@@ -5,9 +5,7 @@ import com.mygdx.game.Roboticon;
 import com.mygdx.game.Tile;
 import org.junit.Test;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * @author Kieran Hall KJH532
@@ -67,6 +65,18 @@ public class RoboticonTest extends TesterFile {
                 assertTrue(Modifiers[i] < 6);
             }
         }
+    }
+
+    /**
+     * Test confirming the getUpgradeCost returns the correct array
+     */
+    @Test
+    public void testgetUpgradeCost(){
+        Integer TestUpgrades[] = TestRobot.getLevel();
+        for (int i = 0; i < 3;i++){
+            TestUpgrades[i] = TestUpgrades[i] + (TestUpgrades[i] * 5);
+        }
+        assertTrue(TestUpgrades == TestRobot.getUpgradeCost());
     }
 }
 
