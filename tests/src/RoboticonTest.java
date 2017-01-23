@@ -5,9 +5,7 @@ import com.mygdx.game.Roboticon;
 import com.mygdx.game.Tile;
 import org.junit.Test;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * @author Kieran Hall KJH532
@@ -31,16 +29,16 @@ public class RoboticonTest extends TesterFile {
      */
     @Test
     public void testupgrade() {
-        Integer NewLevel[] = {2, 1, 1};
-        TestRobot.upgrade("Ore");
-        assertArrayEquals(NewLevel, TestRobot.getLevel());
+        int NewLevel[] = {2, 1, 1};
+        TestRobot.upgrade(0);
+        assertTrue(NewLevel[0] == TestRobot.getLevel()[0]);
         NewLevel[1] = 2;
-        TestRobot.upgrade("Energy");
-        assertArrayEquals(NewLevel, TestRobot.getLevel());
+        TestRobot.upgrade(1);
+        assertTrue(NewLevel[1] == TestRobot.getLevel()[1]);
         NewLevel[2] = 2;
-        TestRobot.upgrade("Food");
-        assertArrayEquals(NewLevel, TestRobot.getLevel());
-        assertFalse(TestRobot.upgrade("invalid"));
+        TestRobot.upgrade(2);
+        assertTrue(NewLevel[2] == TestRobot.getLevel()[2]);
+
     }
 
     /**
@@ -48,7 +46,7 @@ public class RoboticonTest extends TesterFile {
      */
     @Test
     public void testpossibleUpgrades() {
-        Integer TestUpgrades[] = TestRobot.getLevel();
+        int TestUpgrades[] = TestRobot.getLevel();
         for (int i = 0; i < 3; i++){
             TestUpgrades[i] += 1;
         }
@@ -68,5 +66,6 @@ public class RoboticonTest extends TesterFile {
             }
         }
     }
+
 }
 

@@ -110,6 +110,7 @@ public class Tile extends Button {
      * @param ID   The tile's distictive getID value
      * @param EnergyCount The multiplier for the production of energy
      * @param OreCount    The multiplier for the production of ore
+     * @param FoodCount The multiplier for the production of food
      * @param landmark    A boolean to signify if the tile is to be a landmark or not
      * @param runnable    An object encapsulating a method that can be executed when the tile is clicked on
      */
@@ -127,7 +128,7 @@ public class Tile extends Button {
         //Import and save the tile's assigned getID
 
         tooltipWidth = 76;
-        tooltipHeight = 31;
+        tooltipHeight = 33;
         tooltipCursorSpace = 3;
         tooltipTextSpace = 3;
 

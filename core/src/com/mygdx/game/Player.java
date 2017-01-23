@@ -48,11 +48,6 @@ public class Player {
     private List<Tile> TileList = new ArrayList<Tile>();
 
     /**
-     * A list of the roboticons that the player owns.
-     */
-    private List<Roboticon> RoboticonList = new ArrayList<Roboticon>();
-
-    /**
      * The number of Roboticons that the player owns
      */
     private Integer inventoryRoboticons = 0;
@@ -60,7 +55,7 @@ public class Player {
     /**
      * The constructor of the class
      *
-     * @param PlayerID The id of the player that is being created. Should be an integer > 0.
+     * @param PlayerID The id of the player that is being created. Should be an integer greater than 0.
      */
     public Player(Integer PlayerID) {
         this.PlayerID = PlayerID;
@@ -126,15 +121,6 @@ public class Player {
     }
 
     /**
-     * Returns the number of Roboticons owned by the player
-     *
-     * @return Integer Quantity of Roboticons owned by the player
-     */
-    public Integer getRoboticonCount() {
-        return this.RoboticonList.size();
-    }
-
-    /**
      * Setter for Foodcount
      *
      * @param Newcount Integer value that the Foodcount is set to
@@ -175,15 +161,6 @@ public class Player {
      */
     public void assignCollege(College College) {
         this.College = College;
-    }
-
-    /**
-     * Adds a roboticon to the list that the player owns.
-     *
-     * @param Roboticon The roboticon that is to be added
-     */
-    public void addRoboticon(Roboticon Roboticon) {
-        RoboticonList.add(Roboticon);
     }
 
     /**
@@ -264,14 +241,5 @@ public class Player {
      */
     public College getCollege() {
         return this.College;
-    }
-
-    /**
-     * Returns the array of Roboticons owned by the player
-     *
-     * @return List<Roboticon> List of Roboticons owned by the player
-     */
-    public List<Roboticon> getRoboticons() {
-        return this.RoboticonList;
     }
 }

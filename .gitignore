@@ -23,3 +23,20 @@ gradle-app.setting
 .DS_Store
 Thumbs.db
 
+/tests/build/
+Images/
+desktop/build/tmp/dist/
+reports/
+tests/build/reports/tests/classes/ResourceAccessTest.html
+tests/build/reports/tests/classes/RoboticonTest.html
+tests/build/reports/tests/classes/TileTest.html
+tests/build/reports/tests/css/
+tests/build/reports/tests/index.html
+tests/build/reports/tests/js/
+tests/build/reports/tests/packages/
+tests/build/resources/test/image/Roboticon.png
+tests/build/tmp/test/jar_extract_4398026260512175248_tmp
+tests/build/tmp/test/jar_extract_6169253101592092999_tmp
+tests/build/tmp/test/jar_extract_8600742285130688885_tmp
+/core/build/
+/desktop/build/
