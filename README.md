@@ -6,6 +6,14 @@ Master Build Status:      [![Build Status](https://travis-ci.org/jm179796/SEPR.s
 
 Development Build Status: [![Build Status](https://travis-ci.org/jm179796/SEPR.svg?branch=Development)](https://travis-ci.org/jm179796/SEPR)
 
+
+## Using our project
+- Our project utilises Gradle, we highly recommend using IntelliJ IDEA as your IDE as we've already set up all the Run Configrations you'll need for it
+- To load the project ensure you have gradle installed, and when prompted by IDEA to import a new project, navigate to the build.gradle in the main directory and import all gradle builds when selected.
+- If you have any issues drop one of us a message and we should be able to help out.
+
+---
+
 ## Build System Guide
 
 1. We will be working in groups (of 2 or 3 people) on a specific feature at a time
@@ -14,7 +22,7 @@ Development Build Status: [![Build Status](https://travis-ci.org/jm179796/SEPR.s
 	* Make sure you're working in the branch created for developing that feature!
 	* After you commit to the remote repository it'll trigger Travis to start compiling and testing the build
 	* If the build fails at this point go back to step 2 until it passes this point.
-	* If your build passes this point, check (preferably with someone) that the tests you have written in *SEPR/tests/src/de/tomgrill/gdxtesting* are valid and test the feature fully.
+	* If your build passes this point, check (preferably with someone) that the tests you have written in *SEPR/tests/src/* are valid and test the feature fully.
 4. If we're at this point we're really cooking with gas and if you or your sub-team are happy with the feature, submit a pull request to the development branch from your feature branch.
 	* Travis will then check if these two branches are compatible as-is. 
 	* If this passes, someone outside of your team, typically Jack or myself will confirm the merge.
